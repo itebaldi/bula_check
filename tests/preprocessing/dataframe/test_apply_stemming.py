@@ -1,10 +1,10 @@
 import pandas as pd
 import pytest
 
-from bula_check.preprocessing.dataframe import apply_snowball_stemming
+from bula_check.preprocessing.dataframe import apply_stemming
 
 
-def test_apply_snowball_stemming():
+def test_apply_stemming():
     data = {
         "text": [
             "Eu estou correndo na praia",
@@ -14,7 +14,7 @@ def test_apply_snowball_stemming():
     }
     df = pd.DataFrame(data)
 
-    result_df = apply_snowball_stemming(df, column="text", language="portuguese")
+    result_df = apply_stemming(df, column="text", language="portuguese")
 
     expected = [
         "eu estou corr na pra",
@@ -24,11 +24,11 @@ def test_apply_snowball_stemming():
     assert result_df["text"].tolist() == expected
 
 
-def test_apply_snowball_stemming__with_output_column():
+def test_apply_stemming__with_output_column():
     data = {"text": ["amigavelmente"]}
     df = pd.DataFrame(data)
 
-    result_df = apply_snowball_stemming(
+    result_df = apply_stemming(
         df, column="text", language="portuguese", output_column="text_stemmed"
     )
 
@@ -37,17 +37,17 @@ def test_apply_snowball_stemming__with_output_column():
     assert result_df["text_stemmed"].tolist() == ["amig"]
 
 
-def test_apply_snowball_stemming__with_non_string_values():
+def test_apply_stemming__with_non_string_values():
     data = {"mixed_data": ["texto", 123, "outro texto"]}
     df = pd.DataFrame(data)
 
     with pytest.raises(TypeError):
-        apply_snowball_stemming(df, column="mixed_data", language="portuguese")
+        apply_stemming(df, column="mixed_data", language="portuguese")
 
 
-def test_apply_snowball_stemming__with_unsupported_language():
+def test_apply_stemming__with_unsupported_language():
     data = {"text": ["some text"]}
     df = pd.DataFrame(data)
 
     with pytest.raises(ValueError):
-        apply_snowball_stemming(df, column="text", language="klingon")  # type: ignore
+        apply_stemming(df, column="text", language="klingon")  # type: ignore

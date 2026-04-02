@@ -160,7 +160,7 @@ def remove_stopwords(
 
 
 @curry
-def apply_snowball_stemming(
+def apply_stemming(
     df: pd.DataFrame,
     column: str,
     language: LANGUAGES,

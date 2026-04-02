@@ -1,6 +1,11 @@
-from typing import Callable
+from collections.abc import Callable
+from collections.abc import Sequence
 
 import pandas as pd
+
+from bula_check.tools import curry
+
+TextTransform = Callable[[str], str]
 
 
 def _validate_text_column(df: pd.DataFrame, column: str) -> None:
@@ -70,3 +75,60 @@ def apply_text_transform(
         lambda value: transform(value) if pd.notna(value) else value
     )
     return result
+
+
+def _apply_text_transforms(text: str, transforms: Sequence[TextTransform]) -> str:
+    """
+    Apply a sequence of text transformations to a string.
+
+    Parameters
+    ----------
+    text : str
+        Input text.
+    transforms : Sequence[TextTransform]
+        Sequence of functions that receive a string and return a string.
+
+    Returns
+    -------
+    str
+        Transformed text.
+    """
+    result = text
+    for transform in transforms:
+        result = transform(result)
+    return result
+
+
+@curry
+def transform_text_column(
+    df: pd.DataFrame,
+    column: str,
+    transforms: Sequence[TextTransform],
+    output_column: str | None = None,
+) -> pd.DataFrame:
+    """
+    Apply a sequence of text transformations to a DataFrame text column.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Name of the source text column.
+    transforms : Sequence[TextTransform]
+        Sequence of functions that receive a string and return a string.
+    output_column : str | None, default=None
+        Name of the output column. If ``None``, the source column is
+        overwritten.
+
+    Returns
+    -------
+    pd.DataFrame
+        A copy of the input DataFrame with transformed text.
+    """
+    return apply_text_transform(
+        df,
+        column,
+        lambda text: _apply_text_transforms(text, transforms),
+        output_column=output_column,
+    )

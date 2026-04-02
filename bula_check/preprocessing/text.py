@@ -1,9 +1,9 @@
 import re
-from collections.abc import Collection
 
 from nltk.stem import SnowballStemmer
 
 from bula_check.constants import LANGUAGES
+from bula_check.tools import curry
 
 
 def lowercase_text(text: str) -> str:
@@ -40,7 +40,8 @@ def remove_text_punctuation(text: str) -> str:
     return re.sub(r"[^\w\s]", "", text)
 
 
-def remove_text_stopwords(text: str, stop_words: Collection[str]) -> str:
+@curry
+def remove_text_stopwords(text: str, stop_words: set[str]) -> str:
     """
     Remove stop words from a string.
 
@@ -62,6 +63,7 @@ def remove_text_stopwords(text: str, stop_words: Collection[str]) -> str:
     )
 
 
+@curry
 def stem_text(
     text: str,
     language: LANGUAGES,
