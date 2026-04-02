@@ -1,6 +1,8 @@
 from typing import Any
 
 import pandas as pd
+from bula_check.constants import LANGUAGES
+from nltk.stem import SnowballStemmer
 
 from bula_check.tools import curry
 
@@ -217,6 +219,78 @@ def remove_stopwords(
             " ".join(
                 token for token in text.split() if token.lower() not in stopword_set
             )
+            if pd.notna(text)
+            else text
+        )
+    )
+
+    return result
+
+
+@curry
+def apply_snowball_stemming(
+    df: pd.DataFrame,
+    column: str,
+    language: LANGUAGES,
+    output_column: str | None = None,
+    ignore_stopwords: bool = False,
+) -> pd.DataFrame:
+    """
+    Apply Snowball stemming to a text column.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Name of the source text column.
+    language : str
+        Language used by the Snowball stemmer.
+    output_column : str | None, default=None
+        Name of the output column. If ``None``, the source column is
+        overwritten.
+    ignore_stopwords : bool, default=False
+        Whether stopwords should be ignored by the stemmer.
+
+    Returns
+    -------
+    pd.DataFrame
+        A copy of the input DataFrame with stemmed text.
+
+    Raises
+    ------
+    KeyError
+        If ``column`` does not exist in the DataFrame.
+    TypeError
+        If the column contains non-string, non-null values.
+    ValueError
+        If ``language`` is not supported by NLTK SnowballStemmer.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    non_string_mask = df[column].notna() & ~df[column].map(
+        lambda value: isinstance(value, str)
+    )
+    if non_string_mask.any():
+        raise TypeError(
+            f"Column '{column}' contains non-string values and cannot be processed."
+        )
+
+    if language not in SnowballStemmer.languages:
+        raise ValueError(
+            f"Unsupported language '{language}'. "
+            f"Supported languages are: {sorted(SnowballStemmer.languages)}."
+        )
+
+    stemmer = SnowballStemmer(language, ignore_stopwords=ignore_stopwords)
+
+    result = df.copy()
+    target_column = output_column or column
+
+    result[target_column] = result[column].map(
+        lambda text: (
+            " ".join(stemmer.stem(token) for token in text.split())
             if pd.notna(text)
             else text
         )
