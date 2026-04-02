@@ -3,10 +3,11 @@ from pathlib import Path
 from toolz.functoolz import pipe
 
 from bula_check.importing import read_csv
-from bula_check.utils import map_column_values
-from bula_check.utils import remove_punctuation
-from bula_check.utils import remove_stopwords
-from bula_check.utils import to_lowercase
+from bula_check.preprocessing.dataframe import apply_snowball_stemming
+from bula_check.preprocessing.dataframe import map_column_values
+from bula_check.preprocessing.dataframe import remove_punctuation
+from bula_check.preprocessing.dataframe import remove_stopwords
+from bula_check.preprocessing.dataframe import to_lowercase
 from inputs.stopwords import get_english_stopwords
 
 
@@ -27,6 +28,7 @@ def test_knime_project():
         to_lowercase(column="sentence"),
         remove_punctuation(column="sentence"),
         remove_stopwords(column="sentence", stop_words=get_english_stopwords()),
+        apply_snowball_stemming(column="sentence", language="english"),
     )
 
     assert set(table["sentiment"].unique()) == {"negative", "positive"}

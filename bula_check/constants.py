@@ -1,4 +1,4 @@
-from typing import Literal, TypeAlias
+from typing import Literal
 
 LANGUAGES = Literal[
     "arabic",

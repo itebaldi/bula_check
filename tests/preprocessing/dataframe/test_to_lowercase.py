@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from bula_check.utils import to_lowercase
+from bula_check.preprocessing.dataframe import to_lowercase
 
 
 def test_to_lowercase():

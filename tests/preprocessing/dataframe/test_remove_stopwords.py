@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from bula_check.utils import remove_stopwords
+from bula_check.preprocessing.dataframe import remove_stopwords
 from inputs.stopwords import get_portuguese_stopwords
 
 STOP_WORDS = get_portuguese_stopwords()

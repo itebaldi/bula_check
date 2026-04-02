@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from bula_check.utils import remove_punctuation
+from bula_check.preprocessing.dataframe import remove_punctuation
 
 
 def test_remove_punctuation():

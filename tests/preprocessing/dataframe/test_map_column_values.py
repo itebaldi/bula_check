@@ -3,7 +3,7 @@ from pathlib import Path
 from toolz.functoolz import pipe
 
 from bula_check.importing import read_csv
-from bula_check.utils import map_column_values
+from bula_check.preprocessing.dataframe import map_column_values
 
 
 def test_knime_project():

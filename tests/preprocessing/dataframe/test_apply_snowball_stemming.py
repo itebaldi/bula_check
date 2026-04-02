@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from bula_check.utils import apply_snowball_stemming
+from bula_check.preprocessing.dataframe import apply_snowball_stemming
 
 
 def test_apply_snowball_stemming():
