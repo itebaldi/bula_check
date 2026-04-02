@@ -1,12 +1,15 @@
+from collections import Counter
 from typing import Any
 
 import pandas as pd
 
 from bula_check.constants import LANGUAGES
+from bula_check.preprocessing.text import generate_ngram_range
 from bula_check.preprocessing.text import lowercase_text
 from bula_check.preprocessing.text import remove_text_punctuation
 from bula_check.preprocessing.text import remove_text_stopwords
 from bula_check.preprocessing.text import stem_text
+from bula_check.preprocessing.utils import _validate_text_column
 from bula_check.preprocessing.utils import apply_text_transform
 from bula_check.tools import curry
 
@@ -197,4 +200,100 @@ def apply_stemming(
             ignore_stopwords=ignore_stopwords,
         ),
         output_column=output_column,
+    )
+
+
+@curry
+def generate_ngrams_column(
+    df: pd.DataFrame,
+    column: str,
+    ngram_range: tuple[int, int] = (1, 1),
+    output_column: str | None = None,
+) -> pd.DataFrame:
+    """
+    Generate n-grams from a text column.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Name of the source text column.
+    ngram_range : tuple[int, int], default=(1, 1)
+        Inclusive range of n-gram sizes.
+    output_column : str, default="ngrams"
+        Name of the output column.
+
+    Returns
+    -------
+    pd.DataFrame
+        A copy of the input DataFrame with a column of n-gram lists.
+    """
+    return apply_text_transform(
+        df,
+        column,
+        lambda text: generate_ngram_range(text, ngram_range=ngram_range),
+        output_column=output_column,
+    )
+
+
+@curry
+def create_bag_of_words_matrix(
+    df: pd.DataFrame,
+    column: str,
+    ngram_range: tuple[int, int] = (1, 1),
+    preserve_columns: list[str] | None = None,
+) -> pd.DataFrame:
+    """
+    Create a document-term matrix from a text column.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Name of the source text column.
+    ngram_range : tuple[int, int], default=(1, 1)
+        Inclusive range of n-gram sizes.
+    preserve_columns : list[str] | None, default=None
+        List of columns to preserve in the output before the term columns.
+
+    Returns
+    -------
+    pd.DataFrame
+        Document-term matrix where each row represents a document and
+        each column represents a term frequency.
+
+    Raises
+    ------
+    KeyError
+        If ``column`` or any preserved column does not exist in the DataFrame.
+    """
+    _validate_text_column(df, column)
+
+    preserve_columns = preserve_columns or []
+
+    missing_columns = [col for col in preserve_columns if col not in df.columns]
+    if missing_columns:
+        raise KeyError(f"Columns not found: {missing_columns}")
+
+    term_counts = df[column].map(
+        lambda value: (
+            Counter(generate_ngram_range(value, ngram_range=ngram_range))
+            if pd.notna(value)
+            else Counter()
+        )
+    )
+
+    term_matrix = (
+        pd.DataFrame.from_records(term_counts, index=df.index).fillna(0).astype(int)
+    )
+
+    if not preserve_columns:
+        return term_matrix
+
+    preserved_df = df[preserve_columns].copy()
+    return pd.concat(
+        [preserved_df.reset_index(drop=True), term_matrix.reset_index(drop=True)],
+        axis=1,
     )

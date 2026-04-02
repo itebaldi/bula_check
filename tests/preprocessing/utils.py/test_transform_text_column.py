@@ -1,8 +1,6 @@
-from pathlib import Path
-
+import pandas as pd
 from toolz.functoolz import pipe
 
-from bula_check.importing import read_csv
 from bula_check.preprocessing.text import lowercase_text
 from bula_check.preprocessing.text import remove_text_punctuation
 from bula_check.preprocessing.text import remove_text_stopwords
@@ -13,12 +11,14 @@ from inputs.stopwords import get_english_stopwords
 
 def test_transform_text_column():
     table = pipe(
-        read_csv(
-            file_path=Path("inputs/yelp_labelled.txt"),
-            separator="\t",
-            header=None,
-            column_names=["sentence", "sentiment"],
-            dtypes={"sentence": "string", "sentiment": "int64"},
+        pd.DataFrame(
+            {
+                "sentence": [
+                    "Wow, I loved this place!",
+                    "This is another sentence.",
+                ],
+                "sentiment": [1, 0],
+            }
         ),
         transform_text_column(
             column="sentence",
@@ -31,7 +31,7 @@ def test_transform_text_column():
         ),
     )
 
-    expected_sentence = "wow love place"
-    assert table["sentence"].iloc[0] == expected_sentence
+    expected_sentences = ["wow love place", "anoth sentenc"]
+    assert table["sentence"].tolist() == expected_sentences
 
     assert set(table["sentiment"].unique()) == {0, 1}

@@ -99,3 +99,75 @@ def stem_text(
 
     stemmer = SnowballStemmer(language, ignore_stopwords=ignore_stopwords)
     return " ".join(stemmer.stem(token) for token in text.split())
+
+
+@curry
+def generate_ngram_range(
+    text: str,
+    ngram_range: tuple[int, int],
+) -> list[str]:
+    """
+    Generate n-grams for a range of sizes from a text.
+
+    Parameters
+    ----------
+    text : str
+        Input text.
+    ngram_range : tuple[int, int]
+        Inclusive range of n-gram sizes.
+
+    Returns
+    -------
+    list[str]
+        List of generated n-grams.
+
+    Raises
+    ------
+    ValueError
+        If ``ngram_range`` is invalid.
+    """
+    min_n, max_n = ngram_range
+
+    if min_n < 1 or max_n < min_n:
+        raise ValueError(
+            "ngram_range must contain positive integers with min_n <= max_n."
+        )
+
+    ngrams: list[str] = []
+    for n in range(min_n, max_n + 1):
+        ngrams.extend(generate_ngrams(text, n))
+
+    return ngrams
+
+
+@curry
+def generate_ngrams(text: str, n: int) -> list[str]:
+    """
+    Generate n-grams from a text.
+
+    Parameters
+    ----------
+    text : str
+        Input text.
+    n : int
+        N-gram size.
+
+    Returns
+    -------
+    list[str]
+        List of space-joined n-grams.
+
+    Raises
+    ------
+    ValueError
+        If ``n`` is less than 1.
+    """
+    if n < 1:
+        raise ValueError("n must be greater than or equal to 1.")
+
+    tokens = text.split()
+
+    if len(tokens) < n:
+        return []
+
+    return [" ".join(tokens[i : i + n]) for i in range(len(tokens) - n + 1)]

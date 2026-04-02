@@ -1,11 +1,39 @@
 from collections.abc import Callable
 from collections.abc import Sequence
+from typing import TypeVar
 
 import pandas as pd
 
 from bula_check.tools import curry
 
-TextTransform = Callable[[str], str]
+T = TypeVar("T")
+R = TypeVar("R")
+
+TextTransform = Callable[[str], T]
+
+
+def _validate_column_exists(df: pd.DataFrame, column: str) -> None:
+    """
+    Validate that a DataFrame column exists.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Column name.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    KeyError
+        If ``column`` does not exist in the DataFrame.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
 
 
 def _validate_text_column(df: pd.DataFrame, column: str) -> None:
@@ -30,8 +58,7 @@ def _validate_text_column(df: pd.DataFrame, column: str) -> None:
     TypeError
         If the column contains non-string, non-null values.
     """
-    if column not in df.columns:
-        raise KeyError(f"Column not found: {column}")
+    _validate_column_exists(df, column)
 
     non_string_mask = df[column].notna() & ~df[column].map(
         lambda value: isinstance(value, str)
@@ -45,7 +72,7 @@ def _validate_text_column(df: pd.DataFrame, column: str) -> None:
 def apply_text_transform(
     df: pd.DataFrame,
     column: str,
-    transform: Callable[[str], str],
+    transform: Callable[[str], T],
     output_column: str | None = None,
 ) -> pd.DataFrame:
     """
@@ -68,13 +95,12 @@ def apply_text_transform(
         A copy of the input DataFrame with the transformed text column.
     """
     _validate_text_column(df, column)
-
-    result = df.copy()
-    target_column = output_column or column
-    result[target_column] = result[column].map(
-        lambda value: transform(value) if pd.notna(value) else value
+    return apply_column_transform(
+        df,
+        column,
+        transform,
+        output_column=output_column,
     )
-    return result
 
 
 def _apply_text_transforms(text: str, transforms: Sequence[TextTransform]) -> str:
@@ -132,3 +158,36 @@ def transform_text_column(
         lambda text: _apply_text_transforms(text, transforms),
         output_column=output_column,
     )
+
+
+def apply_column_transform(
+    df: pd.DataFrame,
+    column: str,
+    transform: Callable[[T], R],
+    output_column: str | None = None,
+) -> pd.DataFrame:
+    """
+    Apply a transformation function to a DataFrame column.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Name of the source column.
+    transform : Callable[[T], R]
+        Function applied to each non-null value in the column.
+    output_column : str | None, default=None
+        Name of the output column. If ``None``, the source column is overwritten.
+
+    Returns
+    -------
+    pd.DataFrame
+        A copy of the input DataFrame with the transformed column.
+    """
+    _validate_column_exists(df, column)
+
+    result = df.copy()
+    target_column = output_column or column
+    result[target_column] = result[column].map(transform, na_action="ignore")
+    return result
