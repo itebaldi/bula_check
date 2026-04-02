@@ -10,7 +10,7 @@ def test_knime_project():
 
     table = pipe(
         read_csv(
-            file_path=Path("tests/inputs/yelp_labelled.txt"),
+            file_path=Path("inputs/yelp_labelled.txt"),
             separator="\t",
             header=None,
             column_names=["sentence", "sentiment"],

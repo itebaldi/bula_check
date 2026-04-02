@@ -5,7 +5,7 @@ from bula_check.importing import read_csv
 
 def test_read_csv():
     df = read_csv(
-        file_path=Path("tests/inputs/yelp_labelled.txt"),
+        file_path=Path("inputs/yelp_labelled.txt"),
         separator="\t",
         header=None,
         column_names=["sentence", "sentiment"],

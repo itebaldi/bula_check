@@ -160,3 +160,66 @@ def remove_punctuation(
     )
 
     return result
+
+
+@curry
+def remove_stopwords(
+    df: pd.DataFrame,
+    column: str,
+    stop_words: set[str],
+    output_column: str | None = None,
+) -> pd.DataFrame:
+    """
+    Remove stopwords from a text column.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Name of the source text column.
+    stop_words : Collection[str]
+        Collection of stopwords to remove.
+    output_column : str | None, default=None
+        Name of the output column. If ``None``, the source column is
+        overwritten.
+
+    Returns
+    -------
+    pd.DataFrame
+        A copy of the input DataFrame with stopwords removed from the
+        selected column.
+
+    Raises
+    ------
+    KeyError
+        If ``column`` does not exist in the DataFrame.
+    TypeError
+        If the column contains non-string, non-null values.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    non_string_mask = df[column].notna() & ~df[column].map(
+        lambda value: isinstance(value, str)
+    )
+    if non_string_mask.any():
+        raise TypeError(
+            f"Column '{column}' contains non-string values and cannot be processed."
+        )
+
+    stopword_set = {word.lower() for word in stop_words}
+    target_column = output_column or column
+    result = df.copy()
+
+    result[target_column] = result[column].map(
+        lambda text: (
+            " ".join(
+                token for token in text.split() if token.lower() not in stopword_set
+            )
+            if pd.notna(text)
+            else text
+        )
+    )
+
+    return result
