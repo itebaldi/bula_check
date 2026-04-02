@@ -14,6 +14,7 @@ pypdf = "^6.9.2"
 bs4 = "^0.0.2"
 pandas = "^3.0.2"
 toolz = "^1.1.0"
+nltk = "^3.9.4"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
