@@ -4,12 +4,11 @@ from toolz.functoolz import pipe
 
 from bula_check.importing import read_csv
 from bula_check.utils import map_column_values
-from tests.importing import test_read_csv
 
 
 def test_knime_project():
 
-    teste = pipe(
+    table = pipe(
         read_csv(
             file_path=Path("tests/inputs/yelp_labelled.txt"),
             separator="\t",
@@ -23,4 +22,4 @@ def test_knime_project():
         ),
     )
 
-    assert test_read_csv
+    assert set(table["sentiment"].unique()) == {"negative", "positive"}

@@ -1,7 +1,5 @@
 from pathlib import Path
 
-import pandas as pd
-
 from bula_check.importing import read_csv
 
 

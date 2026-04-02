@@ -1,7 +1,8 @@
 from typing import Any
 
 import pandas as pd
-from toolz import curry
+
+from bula_check.tools import curry
 
 
 @curry
@@ -54,4 +55,53 @@ def map_column_values(
         )
 
     result[target_column] = mapped_values
+    return result
+
+
+@curry
+def to_lowercase(
+    df: pd.DataFrame,
+    column: str,
+    output_column: str | None = None,
+) -> pd.DataFrame:
+    """
+    Convert all string values in a DataFrame column to lowercase.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input DataFrame.
+    column : str
+        Name of the source column.
+    output_column : str | None, default=None
+        Name of the output column. If ``None``, the source column is
+        overwritten.
+
+    Returns
+    -------
+    pd.DataFrame
+        A copy of the input DataFrame with the lowercased column.
+
+    Raises
+    ------
+    KeyError
+        If ``column`` does not exist in the DataFrame.
+    TypeError
+        If the column contains non-string, non-null values.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    non_string_mask = df[column].notna() & ~df[column].map(
+        lambda value: isinstance(value, str)
+    )
+    if non_string_mask.any():
+        raise TypeError(
+            f"Column '{column}' contains non-string values and cannot be lowercased."
+        )
+
+    result = df.copy()
+    target_column = output_column or column
+    result[target_column] = result[column].str.lower()
+
     return result

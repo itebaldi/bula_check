@@ -4,6 +4,7 @@ from toolz.functoolz import pipe
 
 from bula_check.importing import read_csv
 from bula_check.utils import map_column_values
+from bula_check.utils import to_lowercase
 
 
 def test_knime_project():
@@ -20,6 +21,7 @@ def test_knime_project():
             column="sentiment",
             mapping={0: "negative", 1: "positive"},
         ),
+        to_lowercase(column="sentence"),
     )
 
     assert set(table["sentiment"].unique()) == {"negative", "positive"}
