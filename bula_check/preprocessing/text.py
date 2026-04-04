@@ -1,4 +1,5 @@
 import re
+import unicodedata
 
 from nltk.stem import SnowballStemmer
 
@@ -21,6 +22,63 @@ def lowercase_text(text: str) -> str:
         Lowercased text.
     """
     return text.lower()
+
+
+def remove_text_accents(text: str) -> str:
+    """
+    Remove accent marks from a string.
+
+    Parameters
+    ----------
+    text : str
+        Input text.
+
+    Returns
+    -------
+    str
+        Text without accent marks.
+    """
+    normalized = unicodedata.normalize("NFKD", text)
+    return "".join(ch for ch in normalized if not unicodedata.combining(ch))
+
+
+def normalize_text_whitespace(text: str) -> str:
+    """
+    Collapse repeated whitespace and trim leading/trailing spaces.
+
+    Parameters
+    ----------
+    text : str
+        Input text.
+
+    Returns
+    -------
+    str
+        Text with normalized whitespace.
+    """
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def replace_text_underscores_with_spaces(text: str) -> str:
+    """
+    Replace underscores with spaces.
+
+    Parameters
+    ----------
+    text : str
+        Input text.
+
+    Returns
+    -------
+    str
+        Text with underscores replaced by spaces.
+    """
+    return text.replace("_", " ")
+
+
+def replace_spaces_with_text_underscores(text: str) -> str:
+
+    return text.replace(" ", "_")
 
 
 def remove_text_punctuation(text: str) -> str:
