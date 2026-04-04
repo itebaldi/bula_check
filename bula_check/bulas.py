@@ -66,20 +66,22 @@ class Bula(BaseModel):
     """
     Result entry returned from Bula Grátis.
 
-    Parameters
+    Attributes
     ----------
     drug_name : str
         Drug name extracted from the bula page.
     company_name : str | None
         Manufacturer or laboratory name, if available.
-    bula_url : str
-        URL of the medication page.
-    patient_bula_url : str
+    source_url : str
+        Original URL of the medication page.
+    patient_url : str
         URL of the patient bula page.
-    pdf_url : str | None
-        Direct PDF URL, if found.
-    local_pdf_path : Path | None, optional
-        Local path of the downloaded PDF, if downloaded.
+    raw_text : str
+        The full, concatenated text content of the bula.
+    created_at : datetime
+        Timestamp of when the instance was created.
+    sections : Sections
+        Extracted content from specific sections of the bula.
     """
 
     drug_name: str
@@ -268,8 +270,8 @@ class BulaGratisClient:
         ----------
         med_url : str
             Medication page URL.
-        download_pdf : bool, default=False
-            Whether to download the PDF file when available.
+        save_json : bool, default=False
+            Whether to save the bula as a JSON file.
 
         Returns
         -------
@@ -290,13 +292,13 @@ class BulaGratisClient:
         ----------
         med_url : str
             Medication page URL.
-        download_pdf : bool
-            Whether to download the PDF.
+        save_json : bool
+            Whether to save the bula as a JSON file.
 
         Returns
         -------
-        LeafletResult | None
-            Parsed result, or ``None`` if no patient bula PDF is found.
+        Bula | None
+            Parsed result, or ``None`` if parsing fails.
         """
         patient_url = _build_patient_url(med_url)
         patient_html = self._get_parsed_html(patient_url)
@@ -486,6 +488,8 @@ class BulaGratisClient:
             Maximum number of bulas to process. If ``None``, process all.
         continue_on_error : bool, default=True
             Whether to continue processing after an error.
+        save_logs : bool, default=True
+            Whether to save a JSON log file with processing summary.
 
         Returns
         -------
@@ -576,6 +580,19 @@ def _normalize_text(text: str) -> str:
 
 
 def _build_patient_url(med_url: str) -> str:
+    """
+    Ensure the bula URL points to the patient version.
+
+    Parameters
+    ----------
+    med_url : str
+        A URL for a medication on bula.gratis.
+
+    Returns
+    -------
+    str
+        The URL for the patient-specific bula.
+    """
     return (
         med_url
         if med_url.endswith("/paciente")
@@ -584,6 +601,21 @@ def _build_patient_url(med_url: str) -> str:
 
 
 def gen_bula_instance(med_url: str, patient_html: BeautifulSoup) -> Bula:
+    """
+    Generate a Bula instance from its URL and parsed patient HTML.
+
+    Parameters
+    ----------
+    med_url : str
+        The source URL for the medication.
+    patient_html : BeautifulSoup
+        The parsed HTML content of the patient bula page.
+
+    Returns
+    -------
+    Bula
+        A populated Bula instance with extracted information.
+    """
 
     patient_url = _build_patient_url(med_url)
 
@@ -601,6 +633,22 @@ def gen_bula_instance(med_url: str, patient_html: BeautifulSoup) -> Bula:
 
 
 def _get_drug_name(soup: BeautifulSoup) -> str | None:
+    """
+    Extract the drug name from the parsed HTML of a bula page.
+
+    It first attempts to find the name in the ``#nome_medicamento`` element.
+    If that fails, it falls back to parsing the page's ``<title>`` tag.
+
+    Parameters
+    ----------
+    soup : BeautifulSoup
+        The parsed HTML of the bula page.
+
+    Returns
+    -------
+    str | None
+        The extracted drug name, or ``None`` if it cannot be found.
+    """
     tag = soup.select_one("#nome_medicamento")
     if tag:
         return normalize_text_whitespace(tag.get_text())
@@ -610,6 +658,22 @@ def _get_drug_name(soup: BeautifulSoup) -> str | None:
 
 
 def _get_company_name(soup: BeautifulSoup) -> str | None:
+    """
+    Extract the company name from the parsed HTML of a bula page.
+
+    It looks for the ``#empresa_medicamento`` element and cleans the
+    extracted text by removing the trailing CNPJ identifier.
+
+    Parameters
+    ----------
+    soup : BeautifulSoup
+        The parsed HTML of the bula page.
+
+    Returns
+    -------
+    str | None
+        The extracted company name, or ``None`` if it cannot be found.
+    """
     tag = soup.select_one("#empresa_medicamento")
     if tag:
         text = normalize_text_whitespace(tag.get_text(" ", strip=True))
@@ -620,6 +684,24 @@ def _get_company_name(soup: BeautifulSoup) -> str | None:
 
 
 def _find_bula_article(soup: BeautifulSoup) -> Tag:
+    """
+    Find the main <article> tag containing the bula content.
+
+    Parameters
+    ----------
+    soup : BeautifulSoup
+        The parsed HTML of the bula page.
+
+    Returns
+    -------
+    Tag
+        The BeautifulSoup ``Tag`` for the <article> element.
+
+    Raises
+    ------
+    ValueError
+        If the <article> tag cannot be found in the document.
+    """
     article = soup.find("article")
     if article is None:
         raise ValueError("Could not find bula article content in HTML.")
@@ -627,6 +709,19 @@ def _find_bula_article(soup: BeautifulSoup) -> Tag:
 
 
 def _collect_heading_blocks(root: Tag) -> list[dict[str, str]]:
+    """
+    Group bula content into blocks based on <h3> headings.
+
+    Parameters
+    ----------
+    root : Tag
+        The root HTML element (typically the <article>) to search within.
+
+    Returns
+    -------
+    list[dict[str, str]]
+        A list of dictionaries, each containing a "heading" and its "content".
+    """
     blocks: list[dict[str, str]] = []
     current_heading: str | None = None
     current_parts: list[str] = []
@@ -664,6 +759,19 @@ def _collect_heading_blocks(root: Tag) -> list[dict[str, str]]:
 
 
 def _build_raw_text(blocks: list[dict[str, str]]) -> str:
+    """
+    Concatenate all heading and content blocks into a single raw text string.
+
+    Parameters
+    ----------
+    blocks : list[dict[str, str]]
+        A list of heading/content blocks from ``_collect_heading_blocks``.
+
+    Returns
+    -------
+    str
+        The full, formatted raw text of the bula.
+    """
     parts: list[str] = []
     for block in blocks:
         parts.append(block["heading"])
@@ -673,6 +781,19 @@ def _build_raw_text(blocks: list[dict[str, str]]) -> str:
 
 
 def _extract_sections(blocks: list[dict[str, str]]) -> Sections:
+    """
+    Extract specific, predefined sections from the bula content blocks.
+
+    Parameters
+    ----------
+    blocks : list[dict[str, str]]
+        A list of heading/content blocks from ``_collect_heading_blocks``.
+
+    Returns
+    -------
+    Sections
+        A ``Sections`` instance populated with the extracted content.
+    """
     sections: dict[str, str | None] = {
         "indications": None,
         "contraindications": None,
