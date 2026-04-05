@@ -7,7 +7,7 @@ def test_search():
         sleep_between_requests=1.0,
     )
 
-    results = client.search("paracetamol", limit=5, save_json=True)
+    results = client.search("paracetamol", limit=5, save_json=False)
 
     for result in results:
         print(result)

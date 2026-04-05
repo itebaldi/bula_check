@@ -334,17 +334,20 @@ class BulaGratisClient:
         dict[str, list[dict[str, str]]]
             Dictionary mapping initial letter to result entries.
         """
-        if self._index_cache is not None:
+        if medication:
+            letters = medication[:1].upper()
+        else:
+            letters = string.ascii_uppercase
+
+        if (
+            self._index_cache is not None
+            and len(self._index_cache.get(letters)) > 50  # type: ignore
+        ):
             return self._index_cache
 
         links_by_letter: dict[str, list[dict[str, str]]] = {
             letter: [] for letter in string.ascii_uppercase
         }
-
-        if medication:
-            letters = medication[:1].upper()
-        else:
-            letters = string.ascii_uppercase
 
         for letter in letters:
             letter_url = f"{self.INDEX_URL}/{letter}"
