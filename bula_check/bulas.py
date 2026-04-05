@@ -20,7 +20,9 @@ from bula_check.preprocessing.text import lowercase_text
 from bula_check.preprocessing.text import normalize_text_whitespace
 from bula_check.preprocessing.text import remove_text_accents
 from bula_check.preprocessing.text import remove_text_punctuation
+from bula_check.preprocessing.text import remove_text_stopwords
 from bula_check.preprocessing.text import replace_spaces_with_text_underscores
+from inputs.stopwords import get_portuguese_stopwords
 
 
 class Logs(BaseModel):
@@ -85,6 +87,7 @@ class Bula(BaseModel):
     """
 
     drug_name: str
+    reference_brand: Optional[str] = None
     company_name: Optional[str]
     source_url: str
     patient_url: str
@@ -216,7 +219,7 @@ class BulaGratisClient:
             Matching bula results.
         """
         medication_norm = _normalize_text(medication)
-        links_by_letter = self._get_index_links()
+        links_by_letter = self._get_index_links(medication_norm)
 
         first_letter = medication_norm[:1].upper()
         candidate_items: list[dict[str, str]]
@@ -320,7 +323,9 @@ class BulaGratisClient:
 
         return bula_instance
 
-    def _get_index_links(self) -> dict[str, list[dict[str, str]]]:
+    def _get_index_links(
+        self, medication: str | None = None
+    ) -> dict[str, list[dict[str, str]]]:
         """
         Retrieve and cache medication links from the A-Z index.
 
@@ -332,8 +337,39 @@ class BulaGratisClient:
         if self._index_cache is not None:
             return self._index_cache
 
-        index_html = self._get_parsed_html(self.INDEX_URL)
-        self._index_cache = self._group_links_by_letter(index_html)
+        links_by_letter: dict[str, list[dict[str, str]]] = {
+            letter: [] for letter in string.ascii_uppercase
+        }
+
+        if medication:
+            letters = medication[:1].upper()
+        else:
+            letters = string.ascii_uppercase
+
+        for letter in letters:
+            letter_url = f"{self.INDEX_URL}/{letter}"
+            index_html = self._get_parsed_html(letter_url)
+            partial_links = self._group_links_by_letter(index_html)
+
+            for key, items in partial_links.items():
+                links_by_letter[key].extend(items)
+
+            if self.sleep_between_requests > 0:
+                time.sleep(self.sleep_between_requests)
+
+        for letter, items in links_by_letter.items():
+            deduped: list[dict[str, str]] = []
+            seen_urls: set[str] = set()
+
+            for item in items:
+                if item["url"] in seen_urls:
+                    continue
+                seen_urls.add(item["url"])
+                deduped.append(item)
+
+            links_by_letter[letter] = deduped
+
+        self._index_cache = links_by_letter
         return self._index_cache
 
     def _get_parsed_html(self, url: str) -> BeautifulSoup:
@@ -392,8 +428,8 @@ class BulaGratisClient:
             parsed = urlparse(full_url)
             path_parts = [part for part in parsed.path.split("/") if part]
 
-            if len(path_parts) >= 3 and path_parts[1] in {"0", "1"}:
-                first_char = text[0].upper()
+            if len(path_parts) >= 3 and path_parts[-2] in {"0", "1"}:
+                first_char = _normalize_text(text)[:1].upper()
                 if first_char in links_by_letter:
                     links_by_letter[first_char].append(
                         {
@@ -621,13 +657,17 @@ def gen_bula_instance(med_url: str, patient_html: BeautifulSoup) -> Bula:
 
     root = _find_bula_article(patient_html)
     blocks = _collect_heading_blocks(root)
+    raw_text = _build_raw_text(blocks)
+
+    reference_brand = _get_reference_brand(raw_text)
 
     return Bula(
         drug_name=_get_drug_name(patient_html) or "medication",
+        reference_brand=reference_brand,
         company_name=_get_company_name(patient_html),
         source_url=med_url,
         patient_url=patient_url,
-        raw_text=_build_raw_text(blocks),
+        raw_text=raw_text,
         sections=_extract_sections(blocks),
     )
 
@@ -810,3 +850,47 @@ def _extract_sections(blocks: list[dict[str, str]]) -> Sections:
                 sections[section_name] = block["content"] or None
 
     return Sections(**sections)
+
+
+def _get_reference_brand(raw_text: str) -> str | None:
+    """
+    Extract reference brand from the bula page.
+
+    Parameters
+    ----------
+    raw_text : str
+        Extracted raw text from the bula.
+
+    Returns
+    -------
+    str | None
+        Reference brand if found.
+    """
+
+    processed_text = pipe(
+        lowercase_text(raw_text),
+        remove_text_accents,
+        remove_text_punctuation,
+        remove_text_stopwords(stop_words=get_portuguese_stopwords()),
+    )
+
+    tail_words = r"(?:publicada|registrada|fabricada|bulario|eletronico|anvisa)"
+
+    patterns = [
+        rf"\bmedicamento referencia\s+([a-z0-9]+(?:\s+[a-z0-9]+){{0,3}}?)(?=\s+{tail_words}\b|$)",
+        rf"\breferencia\s+([a-z0-9]+(?:\s+[a-z0-9]+){{0,3}}?)(?=\s+{tail_words}\b|$)",
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, processed_text, flags=re.IGNORECASE)
+        if match:
+            value = match.group(1).strip()
+            value = re.sub(
+                rf"\b{tail_words}\b.*$",
+                "",
+                value,
+                flags=re.IGNORECASE,
+            ).strip()
+            return value
+
+    return None
