@@ -323,7 +323,7 @@ class AnvisaBularioClient:
 
         conn: sqlite3.Connection | None = None
         if save_sqlite:
-            conn = self._init_sqlite_db(dir / "bulas.db")
+            conn = self._init_sqlite_db(dir / "bulas_anvisa.db")
 
         failures: list[dict[str, str]] = []
         saved_count = 0
@@ -472,7 +472,9 @@ class AnvisaBularioClient:
                 timeout=self.timeout * 1000,
             )
             try:
-                page.wait_for_load_state("networkidle", timeout=min(20_000, self.timeout * 1000))
+                page.wait_for_load_state(
+                    "networkidle", timeout=min(20_000, self.timeout * 1000)
+                )
             except Exception:
                 pass
             page.wait_for_timeout(2500)
@@ -660,7 +662,9 @@ class AnvisaBularioClient:
                 + ", ".join(missing)
             )
 
-    def _try_fill_date_range_pair(self, page: Any, start_fmt: str, end_fmt: str) -> bool:
+    def _try_fill_date_range_pair(
+        self, page: Any, start_fmt: str, end_fmt: str
+    ) -> bool:
         di = page.locator('input[placeholder="Data inicial"]')
         df = page.locator('input[placeholder="Data final"]')
         try:
@@ -968,8 +972,7 @@ class AnvisaBularioClient:
                 continue
             links = row.find_all("a", href=True)
             has_med_link = any(
-                "/medicamentos/" in (ln.get("href") or "")
-                for ln in links
+                "/medicamentos/" in (ln.get("href") or "") for ln in links
             )
             if not has_med_link and not any(
                 keyword in text.lower()
