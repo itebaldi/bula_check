@@ -311,6 +311,11 @@ class AnvisaBularioClient:
         The public UI allows filtering by publication period. To make bulk
         extraction more reliable, this method can sweep the catalog year by year,
         paginating through the results and downloading each patient PDF.
+
+        When ``limit`` is set, each chunk only collects up to that many remaining
+        rows from the API (not the entire year), and years are processed from
+        newest to oldest so small limits finish quickly instead of walking from
+        1900 with a full browser session per year.
         """
         dir = Path("inputs/bulas")
         output_dir = dir / "json"
@@ -328,16 +333,28 @@ class AnvisaBularioClient:
         end = _coerce_date(publication_end) if publication_end else date.today()
 
         chunks = _year_chunks(start, end) if chunk_by_year else [(start, end)]
+        if limit is not None and chunk_by_year:
+            chunks = list(reversed(chunks))
 
         seen_keys: set[str] = set()
 
         for chunk_start, chunk_end in chunks:
+            if limit is not None and saved_count >= limit:
+                break
+            remaining: int | None
+            if limit is None:
+                remaining = None
+            else:
+                remaining = limit - saved_count
+                if remaining <= 0:
+                    break
+
             try:
                 records = self._collect_records_via_browser(
                     medication=None,
                     publication_start=chunk_start.isoformat(),
                     publication_end=chunk_end.isoformat(),
-                    limit=None,
+                    limit=remaining,
                 )
             except Exception as exc:
                 failures.append(
