@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import sqlite3
 import string
 import time
 from datetime import datetime
@@ -512,11 +513,12 @@ class BulaGratisClient:
 
         return list(dict.fromkeys(all_urls))
 
-    def save_all_to_json(
+    def save_all(
         self,
         limit: int | None = None,
         continue_on_error: bool = True,
         save_logs: bool = True,
+        save_sqlite: bool = False,
     ) -> Logs:
         """
         Fetch all bulas from the index and save one JSON file per bula.
@@ -529,6 +531,10 @@ class BulaGratisClient:
             Whether to continue processing after an error.
         save_logs : bool, default=True
             Whether to save a JSON log file with processing summary.
+        save_sqlite : bool, default=False
+            Whether to also export the parsed bulas to SQLite.
+        sqlite_path : str | Path, default="inputs/bulas/bulas.db"
+            Path to the SQLite database file.
 
         Returns
         -------
@@ -539,6 +545,11 @@ class BulaGratisClient:
 
         output_dir = dir / "json"
         output_dir.mkdir(parents=True, exist_ok=True)
+
+        conn: sqlite3.Connection | None = None
+        if save_sqlite:
+            "inputs/bulas/bulas.db"
+            conn = self._init_sqlite_db(dir / "bulas.db")
 
         urls = self._iter_all_bula_urls()
         if limit is not None:
@@ -559,15 +570,19 @@ class BulaGratisClient:
                     )
                     continue
 
-                safe_name = self._gen_safe_filename(bula.drug_name or "medication")
-                safe_company = self._gen_safe_filename(
-                    bula.company_name or "unknown_company"
-                )
-                filename = f"{safe_name}__{safe_company}.json"
-                output_path = output_dir / filename
+                # safe_name = self._gen_safe_filename(bula.drug_name or "medication")
+                # safe_company = self._gen_safe_filename(
+                #     bula.company_name or "unknown_company"
+                # )
+                # filename = f"{safe_name}__{safe_company}.json"
+                # output_path = output_dir / filename
 
-                bula.write_to_json(output_path)
-                saved_paths.append(output_path)
+                # bula.write_to_json(output_path)
+                # saved_paths.append(output_path)
+
+                if save_sqlite and conn is not None:
+                    self._save_bula_to_sqlite(bula, conn)
+                    conn.commit()
 
             except Exception as exc:
                 failures.append(
@@ -577,6 +592,8 @@ class BulaGratisClient:
                     }
                 )
                 if not continue_on_error:
+                    if conn is not None:
+                        conn.close()
                     raise
 
             if self.sleep_between_requests > 0:
@@ -593,7 +610,107 @@ class BulaGratisClient:
             logs_path = dir / "logs.json"
             logs.write_to_json(logs_path)
 
+        if conn is not None:
+            conn.close()
+
         return logs
+
+    def _init_sqlite_db(self, sqlite_path: str | Path) -> sqlite3.Connection:
+        """
+        Initialize SQLite database and required tables.
+
+        Parameters
+        ----------
+        sqlite_path : str | Path
+            Path to the SQLite database file.
+
+        Returns
+        -------
+        sqlite3.Connection
+            Open SQLite connection.
+        """
+        db_path = Path(sqlite_path)
+        db_path.parent.mkdir(parents=True, exist_ok=True)
+
+        conn = sqlite3.connect(db_path)
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS bulas (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                drug_name TEXT NOT NULL,
+                reference_brand TEXT,
+                company_name TEXT,
+                source_url TEXT NOT NULL UNIQUE,
+                patient_url TEXT NOT NULL,
+                raw_text TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                indications TEXT,
+                contraindications TEXT,
+                warnings_and_precautions TEXT,
+                adverse_reactions TEXT
+            )
+            """
+        )
+        conn.commit()
+        return conn
+
+    def _save_bula_to_sqlite(
+        self,
+        bula: Bula,
+        conn: sqlite3.Connection,
+    ) -> None:
+        """
+        Insert or update a Bula in SQLite.
+
+        Parameters
+        ----------
+        bula : Bula
+            Parsed bula instance.
+        conn : sqlite3.Connection
+            Open SQLite connection.
+        """
+        conn.execute(
+            """
+            INSERT INTO bulas (
+                drug_name,
+                reference_brand,
+                company_name,
+                source_url,
+                patient_url,
+                raw_text,
+                created_at,
+                indications,
+                contraindications,
+                warnings_and_precautions,
+                adverse_reactions
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(source_url) DO UPDATE SET
+                drug_name = excluded.drug_name,
+                reference_brand = excluded.reference_brand,
+                company_name = excluded.company_name,
+                patient_url = excluded.patient_url,
+                raw_text = excluded.raw_text,
+                created_at = excluded.created_at,
+                indications = excluded.indications,
+                contraindications = excluded.contraindications,
+                warnings_and_precautions = excluded.warnings_and_precautions,
+                adverse_reactions = excluded.adverse_reactions
+            """,
+            (
+                bula.drug_name,
+                bula.reference_brand,
+                bula.company_name,
+                bula.source_url,
+                bula.patient_url,
+                bula.raw_text,
+                bula.created_at.isoformat(),
+                bula.sections.indications,
+                bula.sections.contraindications,
+                bula.sections.warnings_and_precautions,
+                bula.sections.adverse_reactions,
+            ),
+        )
 
 
 def _normalize_text(text: str) -> str:
@@ -670,7 +787,7 @@ def gen_bula_instance(med_url: str, patient_html: BeautifulSoup) -> Bula:
         company_name=_get_company_name(patient_html),
         source_url=med_url,
         patient_url=patient_url,
-        raw_text=raw_text,
+        raw_text="",  # raw_text,
         sections=_extract_sections(blocks),
     )
 
