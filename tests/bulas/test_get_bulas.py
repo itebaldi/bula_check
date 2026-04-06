@@ -13,16 +13,17 @@ def test_search():
         print(result)
 
 
-def test_save_all_to_json():
+def test_save_all():
     client = BulaGratisClient(
         timeout=30,
         sleep_between_requests=1.0,
     )
 
-    summary = client.save_all_to_json(
-        limit=2,
+    summary = client.save_all(
+        # limit=2,
         continue_on_error=True,
-        save_logs=False,
+        save_logs=True,
+        save_sqlite=True,
     )
 
     print(summary.saved)
