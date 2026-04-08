@@ -1,6 +1,515 @@
 {
-    "processed": 3,
-    "saved": 3,
-    "failure": 0,
-    "failures": []
+    "processed": 0,
+    "saved": 0,
+    "failure": 127,
+    "failures": [
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1900-01-01..1900-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1901-01-01..1901-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1902-01-01..1902-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1903-01-01..1903-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1904-01-01..1904-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1905-01-01..1905-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1906-01-01..1906-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1907-01-01..1907-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1908-01-01..1908-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1909-01-01..1909-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1910-01-01..1910-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1911-01-01..1911-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1912-01-01..1912-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1913-01-01..1913-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1914-01-01..1914-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1915-01-01..1915-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1916-01-01..1916-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1917-01-01..1917-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1918-01-01..1918-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1919-01-01..1919-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1920-01-01..1920-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1921-01-01..1921-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1922-01-01..1922-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1923-01-01..1923-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1924-01-01..1924-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1925-01-01..1925-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1926-01-01..1926-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1927-01-01..1927-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1928-01-01..1928-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1929-01-01..1929-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1930-01-01..1930-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1931-01-01..1931-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1932-01-01..1932-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1933-01-01..1933-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1934-01-01..1934-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1935-01-01..1935-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1936-01-01..1936-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1937-01-01..1937-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1938-01-01..1938-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1939-01-01..1939-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1940-01-01..1940-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1941-01-01..1941-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1942-01-01..1942-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1943-01-01..1943-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1944-01-01..1944-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1945-01-01..1945-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1946-01-01..1946-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1947-01-01..1947-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1948-01-01..1948-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1949-01-01..1949-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1950-01-01..1950-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1951-01-01..1951-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1952-01-01..1952-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1953-01-01..1953-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1954-01-01..1954-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1955-01-01..1955-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1956-01-01..1956-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1957-01-01..1957-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1958-01-01..1958-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1959-01-01..1959-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1960-01-01..1960-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1961-01-01..1961-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1962-01-01..1962-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1963-01-01..1963-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1964-01-01..1964-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1965-01-01..1965-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1966-01-01..1966-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1967-01-01..1967-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1968-01-01..1968-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1969-01-01..1969-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1970-01-01..1970-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1971-01-01..1971-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1972-01-01..1972-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1973-01-01..1973-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1974-01-01..1974-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1975-01-01..1975-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1976-01-01..1976-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1977-01-01..1977-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1978-01-01..1978-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1979-01-01..1979-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1980-01-01..1980-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1981-01-01..1981-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1982-01-01..1982-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1983-01-01..1983-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1984-01-01..1984-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1985-01-01..1985-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1986-01-01..1986-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1987-01-01..1987-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1988-01-01..1988-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1989-01-01..1989-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1990-01-01..1990-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1991-01-01..1991-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1992-01-01..1992-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1993-01-01..1993-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1994-01-01..1994-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1995-01-01..1995-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1996-01-01..1996-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1997-01-01..1997-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1998-01-01..1998-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 1999-01-01..1999-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2000-01-01..2000-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2001-01-01..2001-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2002-01-01..2002-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2003-01-01..2003-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2004-01-01..2004-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2005-01-01..2005-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2006-01-01..2006-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2007-01-01..2007-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2008-01-01..2008-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2009-01-01..2009-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2010-01-01..2010-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2011-01-01..2011-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2012-01-01..2012-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2013-01-01..2013-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2014-01-01..2014-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2015-01-01..2015-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2016-01-01..2016-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2017-01-01..2017-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2018-01-01..2018-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2019-01-01..2019-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2020-01-01..2020-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2021-01-01..2021-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2022-01-01..2022-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2023-01-01..2023-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2024-01-01..2024-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2025-01-01..2025-12-31: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        },
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario",
+            "error": "Failed to collect records for chunk 2026-01-01..2026-04-05: Could not fill Anvisa publication date field(s): publication start (início / período), publication end (fim / até)"
+        }
+    ]
 }
