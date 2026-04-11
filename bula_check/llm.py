@@ -32,6 +32,7 @@ class PrecheckResult(BaseModel):
     needs_evidence: bool
     justification: str
     summary: str
+    evidence_used: list[str]
 
 
 class ValidateResult(BaseModel):
@@ -41,7 +42,23 @@ class ValidateResult(BaseModel):
 
 
 def precheck_llm(claim: str) -> PrecheckResult:
-    return PrecheckResult(**_connect_to_llm(gen_precheck_prompt(claim)))
+    result = _connect_to_llm(gen_precheck_prompt(claim))
+
+    return PrecheckResult(
+        drug_name=result.get("drug_name"),
+        active_ingredient=result.get("active_ingredient"),
+        claim_type=ClaimType(result.get("claim_type")),
+        claimed_effect=result.get("claimed_effect"),
+        target=result.get("target"),
+        verdict=Verdict(result.get("verdict")),
+        confidence=result.get("confidence"),
+        needs_evidence=result.get("needs_evidence"),
+        justification=result.get("justification"),
+        summary=result.get(
+            "summary", "Não consigo afirmar nada sobre esse medicamento."
+        ),
+        evidence_used=result.get("evidence_used"),
+    )
 
 
 def validate_llm(claim: str, drug_name: str, text: str) -> ValidateResult:
@@ -81,10 +98,11 @@ Campos obrigatórios:
 - verdict: um entre supported, refuted, insufficient
 - confidence: número entre 0 e 1
 - needs_evidence: true ou false
-- justification: apresentar uma justificativa
+- justification: apresentar uma justificativa. Se needs_evidence for True, diga que precisa de mais evidências. Se for False, diga quais evidências usou.
 - summary: frase curta em português, natural e clara, voltada ao usuário final. Deve 
 resumir o medicamento identificado e o veredito preliminar. Não deve inventar informações nem repetir o JSON literalmente.
 Se tiver confiança ou não precisar de evidência, notificar o usuário.
+- evidence_used: se needs_evidence for False, diga quais evidencias foram usadas para sua justificativa. Caso contrário, retorne uma lista vazia
 
 Regras:
 - Se houver incerteza, ambiguidade ou risco de erro, use "insufficient".
@@ -94,6 +112,7 @@ Regras:
 - Para efeitos adversos, interações, contraindicações e posologia, seja conservador.
 - Para alegações sobre medicamentos, prefira "needs_evidence": true, exceto se a afirmação for extremamente óbvia.
 - Não escreva nada fora do JSON.
+- Retorne todos os campos
 
 Alegação:
 {claim}
@@ -110,6 +129,8 @@ Formato:
   "needs_evidence": true,
   "summary": "",
   "justification": ""
+  "justification": "",
+  "evidence_used": []
 }}
 """,
         "stream": False,
@@ -149,6 +170,7 @@ Regras:
 - Não invente fontes.
 - Não trate conhecimento incerto como fato.
 - Não escreva nada fora do JSON.
+- Retorne todos os campos
 
 Alegação:
 {claim}

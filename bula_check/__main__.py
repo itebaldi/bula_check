@@ -36,14 +36,17 @@ def main():
 
             print(validate.justification)
             print("")
-            print("Achei esses trechos na bula...")
-            print("")
+            # print("Achei esses trechos na bula...")
+            # print("")
 
-            for evidence in validate.evidence_used:
-                print(evidence)
+            # for evidence in validate.evidence_used:
+            #     print(evidence)
 
-        if not precheck.needs_evidence:
-            print(precheck)
+        elif precheck.needs_evidence and not "paracetamol" in claim.lower():
+            print("Preciso de mais bulas para avaliar...")
+
+        else:
+            print(precheck.justification)
 
         continuar = input("\nDeseja continuar? (s/n): ").strip().lower()
         if continuar != "s":
