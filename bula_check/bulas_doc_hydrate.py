@@ -9,21 +9,18 @@ from an environment where direct downloads work, or use a separate tunnel.
 from __future__ import annotations
 
 import io
-import json
 import re
 import sqlite3
 from datetime import datetime
 from datetime import timezone
 from pathlib import Path
-from typing import Any
-from urllib.parse import urlparse
 
 import requests
 from pypdf import PdfReader
 
-from bula_check.bulas_anvisa import Bula
-from bula_check.bulas_anvisa import _extract_sections_from_raw_text
-from bula_check.bulas_anvisa import _get_reference_brand
+from bula_check.bulas import _get_reference_brand
+from bula_check.bulas import _normalize_text
+from bula_check.constants import SECTION_PATTERNS
 from bula_check.preprocessing.text import normalize_text_whitespace
 
 DEFAULT_BULAS_DOC_DB = Path("inputs/bulas/bulas_doc.db")
@@ -34,7 +31,15 @@ _BROWSER_UA = (
 )
 
 
+def _normalize_anvisa_parecer_url(pdf_url: str) -> str:
+    """Older crawls stored ``...?Authorization=``; the portal expects ``Guest``."""
+    if pdf_url.endswith("?Authorization="):
+        return f"{pdf_url}Guest"
+    return pdf_url
+
+
 def _download_pdf_bytes(pdf_url: str, *, timeout: float) -> bytes:
+    pdf_url = _normalize_anvisa_parecer_url(pdf_url)
     response = requests.get(
         pdf_url,
         headers={"User-Agent": _BROWSER_UA},
@@ -65,53 +70,67 @@ def _extract_text_from_pdf_bytes(pdf_bytes: bytes) -> str:
     return raw_text
 
 
-def _guess_drug_name_from_text_or_url(raw_text: str, pdf_url: str) -> str:
-    patterns = [
-        r"\b(?:nome comercial|medicamento|nome do medicamento)\s*:?\s*([A-ZÀ-Ú0-9][^\n]{2,120})",
-        r"\b([A-ZÀ-Ú][A-ZÀ-Ú0-9\-\s]{2,80})\s+(?:é um medicamento|contém|apresenta)",
-    ]
-    for pattern in patterns:
-        match = re.search(pattern, raw_text, flags=re.IGNORECASE)
-        if match:
-            value = normalize_text_whitespace(match.group(1))
-            if 2 <= len(value) <= 120:
-                return value.title()
-    path = (urlparse(pdf_url).path or "").rstrip("/")
-    frag = path.split("/")[-1] if path else ""
-    if frag and frag not in ("parecer", "bula"):
-        slug = normalize_text_whitespace(frag.replace("-", " "))
-        if slug:
-            return slug
-    return "medication"
+def _split_text_into_heading_blocks(raw_text: str) -> list[dict[str, str]]:
+    blocks: list[dict[str, str]] = []
+    lines = [normalize_text_whitespace(line) for line in raw_text.splitlines()]
+    lines = [line for line in lines if line]
 
-
-def _build_bula_from_pdf_http(
-    pdf_url: str,
-    *,
-    source_url: str,
-    drug_name: str | None,
-    company_name: str | None,
-    patient_url: str | None,
-    professional_url: str | None,
-    metadata: dict[str, Any],
-    timeout: float,
-) -> Bula:
-    pdf_bytes = _download_pdf_bytes(pdf_url, timeout=timeout)
-    raw_text = _extract_text_from_pdf_bytes(pdf_bytes)
-    sections = _extract_sections_from_raw_text(raw_text)
-    reference_brand = _get_reference_brand(raw_text)
-    resolved_name = drug_name or _guess_drug_name_from_text_or_url(raw_text, pdf_url)
-    return Bula(
-        drug_name=resolved_name,
-        reference_brand=reference_brand,
-        company_name=company_name,
-        source_url=source_url or pdf_url,
-        patient_url=patient_url or pdf_url,
-        professional_url=professional_url,
-        raw_text=raw_text,
-        sections=sections,
-        metadata=metadata,
+    heading_pattern = re.compile(
+        r"^(?:\d+\.\s*)?(?:para que este medicamento e indicado|quando nao devo usar este medicamento|o que devo saber antes de usar este medicamento|quais os males que este medicamento pode me causar|indica(?:c|ç)(?:o|õ)es|contraindica(?:c|ç)(?:a|ã)o|advert(?:e|ê)ncias(?: e precau(?:c|ç)(?:o|õ)es)?|rea(?:c|ç)(?:o|õ)es adversas)\b",
+        flags=re.IGNORECASE,
     )
+
+    current_heading: str | None = None
+    current_parts: list[str] = []
+
+    for line in lines:
+        if heading_pattern.search(line):
+            if current_heading is not None:
+                blocks.append(
+                    {
+                        "heading": current_heading,
+                        "content": normalize_text_whitespace(
+                            " ".join(current_parts)
+                        ),
+                    }
+                )
+            current_heading = line
+            current_parts = []
+        elif current_heading is not None:
+            current_parts.append(line)
+
+    if current_heading is not None:
+        blocks.append(
+            {
+                "heading": current_heading,
+                "content": normalize_text_whitespace(" ".join(current_parts)),
+            }
+        )
+
+    if not blocks:
+        blocks.append({"heading": "document", "content": raw_text})
+
+    return blocks
+
+
+def _section_dict_from_raw_text(raw_text: str) -> dict[str, str | None]:
+    blocks = _split_text_into_heading_blocks(raw_text)
+    sections: dict[str, str | None] = {
+        "indications": None,
+        "contraindications": None,
+        "warnings_and_precautions": None,
+        "adverse_reactions": None,
+    }
+
+    for block in blocks:
+        heading_norm = _normalize_text(block["heading"])
+        for section_name, patterns in SECTION_PATTERNS.items():
+            if sections[section_name] is not None:
+                continue
+            if any(pattern in heading_norm for pattern in patterns):
+                sections[section_name] = block["content"] or None
+
+    return sections
 
 
 def hydrate_pending_bulas_doc_rows(
@@ -160,31 +179,14 @@ def hydrate_pending_bulas_doc_rows(
             pdf_url = row["patient_pdf_url"] or row["professional_pdf_url"]
             if not pdf_url:
                 continue
-            meta_raw = row["metadata_json"]
-            metadata: dict[str, Any] = {}
-            if meta_raw:
-                try:
-                    loaded = json.loads(meta_raw)
-                    if isinstance(loaded, dict):
-                        raw_row = loaded.get("raw_row")
-                        if isinstance(raw_row, dict):
-                            metadata = dict(raw_row)
-                        if loaded.get("category") is not None:
-                            metadata["category"] = loaded["category"]
-                except json.JSONDecodeError:
-                    metadata = {}
 
-            bula = _build_bula_from_pdf_http(
-                pdf_url,
-                source_url=row["source_url"],
-                drug_name=row["drug_name"],
-                company_name=row["company_name"],
-                patient_url=row["patient_pdf_url"],
-                professional_url=row["professional_pdf_url"],
-                metadata=metadata,
-                timeout=timeout,
-            )
+            pdf_bytes = _download_pdf_bytes(pdf_url, timeout=timeout)
+            raw_text = _extract_text_from_pdf_bytes(pdf_bytes)
+            sections = _section_dict_from_raw_text(raw_text)
+            reference_brand = _get_reference_brand(raw_text)
+
             documented = datetime.now(timezone.utc).isoformat()
+            created_at = documented
             conn.execute(
                 """
                 UPDATE bula_doc_index SET
@@ -202,15 +204,15 @@ def hydrate_pending_bulas_doc_rows(
                 """,
                 (
                     documented,
-                    bula.reference_brand,
-                    bula.patient_url,
-                    bula.professional_url,
-                    bula.raw_text,
-                    bula.created_at.isoformat(),
-                    bula.sections.indications,
-                    bula.sections.contraindications,
-                    bula.sections.warnings_and_precautions,
-                    bula.sections.adverse_reactions,
+                    reference_brand,
+                    row["patient_pdf_url"],
+                    row["professional_pdf_url"],
+                    raw_text,
+                    created_at,
+                    sections["indications"],
+                    sections["contraindications"],
+                    sections["warnings_and_precautions"],
+                    sections["adverse_reactions"],
                     row["id"],
                 ),
             )

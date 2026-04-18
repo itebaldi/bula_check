@@ -7,7 +7,7 @@ def test_search():
         sleep_between_requests=1.0,
     )
 
-    results = client.search("paracetamol", limit=5, save_json=False)
+    results = client.search("paracetamol", limit=1, save_json=True)
 
     for result in results:
         print(result)
@@ -20,9 +20,10 @@ def test_save_all():
     )
 
     summary = client.save_all(
-        limit=2,
+        limit=1,
         continue_on_error=True,
         save_logs=True,
+        save_json=False,
         # save_sqlite=True,
     )
 

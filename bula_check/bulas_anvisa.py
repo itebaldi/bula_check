@@ -6,13 +6,13 @@ import json
 import re
 import sqlite3
 import time
+from dataclasses import asdict
 from dataclasses import dataclass
 from datetime import date
 from datetime import datetime
 from datetime import timezone
 from pathlib import Path
 from typing import Any
-from typing import Optional
 from urllib.parse import urljoin
 from urllib.parse import urlparse
 
@@ -21,14 +21,12 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel
 from toolz.functoolz import pipe
 
-from bula_check.constants import SECTION_PATTERNS
+from bula_check.bulas import _get_reference_brand
 from bula_check.preprocessing.text import lowercase_text
 from bula_check.preprocessing.text import normalize_text_whitespace
 from bula_check.preprocessing.text import remove_text_accents
 from bula_check.preprocessing.text import remove_text_punctuation
-from bula_check.preprocessing.text import remove_text_stopwords
 from bula_check.preprocessing.text import replace_spaces_with_text_underscores
-from inputs.stopwords import get_portuguese_stopwords
 
 try:
     from pypdf import PdfReader
@@ -36,11 +34,9 @@ except Exception:  # pragma: no cover
     PdfReader = None  # type: ignore
 
 try:
-    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except Exception:  # pragma: no cover
     sync_playwright = None  # type: ignore
-    PlaywrightTimeoutError = Exception  # type: ignore
 
 
 class Logs(BaseModel):
@@ -60,55 +56,53 @@ class Logs(BaseModel):
         return path
 
 
-class Sections(BaseModel):
-    indications: Optional[str] = None
-    contraindications: Optional[str] = None
-    warnings_and_precautions: Optional[str] = None
-    adverse_reactions: Optional[str] = None
-
-
-class Bula(BaseModel):
-    drug_name: str
-    reference_brand: Optional[str] = None
-    company_name: Optional[str] = None
-    source_url: str
-    patient_url: str
-    professional_url: Optional[str] = None
-    raw_text: str
-    created_at: datetime = datetime.now()
-    sections: Sections
-    metadata: dict[str, Any] = {}
-
-    def write_to_json(
-        self,
-        output_path: str | Path,
-        indent: int = 4,
-    ) -> Path:
-        path = Path(output_path)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(self.model_dump_json(indent=indent), encoding="utf-8")
-        return path
-
-    @classmethod
-    def read_from_json(cls, input_path: str | Path) -> "Bula":
-        path = Path(input_path)
-        json_data = path.read_text(encoding="utf-8")
-        return cls.model_validate_json(json_data)
-
-
 @dataclass
-class AnvisaSearchRecord:
+class AnvisaRecord:
+    """
+    Índice mínimo de um medicamento na consulta Anvisa (JSON persistido).
+
+    ``patient_url`` / ``professional_url`` usam JWT de curta duração no path;
+    use ``source_url`` e os identificadores de registro para obter links novos.
+    """
+
     drug_name: str
     company_name: str | None
-    category: str | None
     source_url: str
-    patient_pdf_url: str | None
-    professional_pdf_url: str | None
-    raw_row: dict[str, Any]
+    patient_url: str | None
+    professional_url: str | None
+    created_at: str
+    registration_number: str | None
+    cnpj: str | None
+    product_id: int | None
+    reference_brand: str | None
+    process_number: str | None
 
 
-def _pdf_fetch_key_for_record(record: AnvisaSearchRecord) -> str | None:
-    return record.patient_pdf_url or record.professional_pdf_url
+def _anvisa_created_at_iso() -> str:
+    return datetime.now().isoformat()
+
+
+def _write_anvisa_record_json(path: Path, record: AnvisaRecord) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(asdict(record), indent=4, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _str_or_none(v: Any) -> str | None:
+    if v is None:
+        return None
+    return str(v).strip() or None
+
+
+def _int_or_none(v: Any) -> int | None:
+    if v is None or v == "":
+        return None
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return None
 
 
 class AnvisaBularioClient:
@@ -141,7 +135,6 @@ class AnvisaBularioClient:
     # Trailing slash matters: `/#/bulario` is rewritten to `/#/` and the view
     # never loads; the portal link uses `/#/bulario/` (AngularJS ui-router).
     BULARIO_URL = f"{BASE_URL}/#/bulario/"
-    MEDICAMENTOS_URL = f"{BASE_URL}/#/medicamentos/"
     BULAS_DOC_DB_DEFAULT = Path("inputs/bulas/bulas_doc.db")
 
     _BROWSER_USER_AGENT = (
@@ -177,14 +170,14 @@ class AnvisaBularioClient:
         medication: str,
         limit: int = 10,
         save_json: bool = False,
-    ) -> list[Bula]:
+    ) -> list[AnvisaRecord]:
         records = self.search_records(medication=medication, limit=limit)
-        results: list[Bula] = []
+        results: list[AnvisaRecord] = []
 
         for record in records:
-            bula = self.get_by_record(record, save_json=save_json)
-            if bula is not None:
-                results.append(bula)
+            filled = self.get_by_record(record, save_json=save_json)
+            if filled is not None:
+                results.append(filled)
 
             if self.sleep_between_requests > 0:
                 time.sleep(self.sleep_between_requests)
@@ -195,7 +188,7 @@ class AnvisaBularioClient:
         self,
         medication: str,
         limit: int = 10,
-    ) -> list[AnvisaSearchRecord]:
+    ) -> list[AnvisaRecord]:
         return self._collect_records_via_browser(
             medication=medication,
             publication_start=None,
@@ -205,40 +198,39 @@ class AnvisaBularioClient:
 
     def get_by_record(
         self,
-        record: AnvisaSearchRecord,
+        record: AnvisaRecord,
         save_json: bool = False,
         prefer_patient_bula: bool = True,
-    ) -> Optional[Bula]:
+    ) -> AnvisaRecord | None:
         pdf_url = (
-            record.patient_pdf_url
-            if prefer_patient_bula and record.patient_pdf_url
-            else record.professional_pdf_url or record.patient_pdf_url
+            record.patient_url
+            if prefer_patient_bula and record.patient_url
+            else record.professional_url or record.patient_url
         )
         if not pdf_url:
             return None
 
-        bula = self.get_by_pdf_url(
-            pdf_url=pdf_url,
+        return self.get_by_pdf_url(
+            pdf_url,
             source_url=record.source_url,
             drug_name=record.drug_name,
             company_name=record.company_name,
-            patient_url=record.patient_pdf_url,
-            professional_url=record.professional_pdf_url,
-            metadata={
-                "category": record.category,
-                **record.raw_row,
-            },
+            patient_url=record.patient_url,
+            professional_url=record.professional_url,
+            registration_number=record.registration_number,
+            cnpj=record.cnpj,
+            product_id=record.product_id,
+            process_number=record.process_number,
             save_json=save_json,
         )
-        return bula
 
     def get_by_url(
         self,
         med_url: str,
         save_json: bool = False,
-    ) -> Optional[Bula]:
+    ) -> AnvisaRecord | None:
         """
-        Build a Bula from an Anvisa medicamento detail URL.
+        Build a record from an Anvisa medicamento detail URL.
 
         Expected examples
         -----------------
@@ -260,42 +252,48 @@ class AnvisaBularioClient:
     def get_by_pdf_url(
         self,
         pdf_url: str,
+        *,
         source_url: str | None = None,
         drug_name: str | None = None,
         company_name: str | None = None,
         patient_url: str | None = None,
         professional_url: str | None = None,
-        metadata: dict[str, Any] | None = None,
+        registration_number: str | None = None,
+        cnpj: str | None = None,
+        product_id: int | None = None,
+        process_number: str | None = None,
         save_json: bool = False,
-    ) -> Bula:
+    ) -> AnvisaRecord:
         pdf_bytes = self._download_pdf(pdf_url)
         raw_text = self._extract_text_from_pdf_bytes(pdf_bytes)
-        sections = _extract_sections_from_raw_text(raw_text)
         reference_brand = _get_reference_brand(raw_text)
-
-        bula = Bula(
-            drug_name=drug_name
-            or self._guess_drug_name_from_text_or_url(raw_text, pdf_url),
-            reference_brand=reference_brand,
+        resolved_name = drug_name or self._guess_drug_name_from_text_or_url(
+            raw_text, pdf_url
+        )
+        out = AnvisaRecord(
+            drug_name=resolved_name,
             company_name=company_name,
             source_url=source_url or pdf_url,
             patient_url=patient_url or pdf_url,
             professional_url=professional_url,
-            raw_text=raw_text,
-            sections=sections,
-            metadata=metadata or {},
+            created_at=_anvisa_created_at_iso(),
+            registration_number=registration_number,
+            cnpj=cnpj,
+            product_id=product_id,
+            reference_brand=reference_brand,
+            process_number=process_number,
         )
 
         if save_json:
             output_dir = Path("inputs/bulas/json")
-            safe_name = self._gen_safe_filename(bula.drug_name or "medication")
+            safe_name = self._gen_safe_filename(out.drug_name or "medication")
             safe_company = self._gen_safe_filename(
-                bula.company_name or "unknown_company"
+                out.company_name or "unknown_company"
             )
             filename = f"{safe_name}__{safe_company}.json"
-            bula.write_to_json(output_dir / filename)
+            _write_anvisa_record_json(output_dir / filename, out)
 
-        return bula
+        return out
 
     def save_all(
         self,
@@ -306,7 +304,7 @@ class AnvisaBularioClient:
         publication_start: str = "1900-01-01",
         publication_end: str | None = None,
         chunk_by_year: bool = True,
-        save_json: bool = True,
+        save_json: bool = False,
     ) -> Logs:
         """
         Download many bulas from the official Anvisa portal.
@@ -380,8 +378,8 @@ class AnvisaBularioClient:
 
             for record in records:
                 dedupe_key = (
-                    record.patient_pdf_url
-                    or record.professional_pdf_url
+                    record.patient_url
+                    or record.professional_url
                     or record.source_url
                 )
                 if dedupe_key in seen_keys:
@@ -399,19 +397,18 @@ class AnvisaBularioClient:
                             conn.commit()
 
                     if save_json:
-                        bula = self.get_by_record(record, save_json=False)
-                        if bula is None:
+                        if not (record.patient_url or record.professional_url):
                             raise ValueError(
                                 "Record does not expose patient/professional PDF URL."
                             )
                         safe_name = self._gen_safe_filename(
-                            bula.drug_name or "medication"
+                            record.drug_name or "medication"
                         )
                         safe_company = self._gen_safe_filename(
-                            bula.company_name or "unknown_company"
+                            record.company_name or "unknown_company"
                         )
                         filename = f"{safe_name}__{safe_company}.json"
-                        bula.write_to_json(output_dir / filename)
+                        _write_anvisa_record_json(output_dir / filename, record)
 
                     if inserted_index or save_json:
                         saved_count += 1
@@ -459,77 +456,81 @@ class AnvisaBularioClient:
         publication_start: str | None,
         publication_end: str | None,
         limit: int | None,
-    ) -> list[AnvisaSearchRecord]:
+    ) -> list[AnvisaRecord]:
         self._ensure_playwright_available()
 
-        with sync_playwright() as pw:
+        with sync_playwright() as pw:  # type: ignore
             browser = pw.chromium.launch(headless=self.headless)
-            page = browser.new_page(user_agent=self._BROWSER_USER_AGENT)
-            api_rows: list[dict[str, Any]] = []
-
-            def _on_bulario_list_response(response: Any) -> None:
-                if "/api/consulta/bulario" not in response.url:
-                    return
-                if response.status != 200:
-                    return
-                try:
-                    payload = response.json()
-                except Exception:
-                    return
-                content = payload.get("content")
-                if isinstance(content, list):
-                    api_rows.extend(content)
-
-            page.on("response", _on_bulario_list_response)
-            page.goto(
-                self.BULARIO_URL,
-                wait_until="domcontentloaded",
-                timeout=self.timeout * 1000,
-            )
             try:
-                page.wait_for_load_state(
-                    "networkidle", timeout=min(20_000, self.timeout * 1000)
+                page = browser.new_page(user_agent=self._BROWSER_USER_AGENT)
+                api_rows: list[dict[str, Any]] = []
+
+                def _on_bulario_list_response(response: Any) -> None:
+                    if "/api/consulta/bulario" not in response.url:
+                        return
+                    if response.status != 200:
+                        return
+                    try:
+                        payload = response.json()
+                    except Exception:
+                        return
+                    content = payload.get("content")
+                    if isinstance(content, list):
+                        api_rows.extend(content)
+
+                page.on("response", _on_bulario_list_response)
+                page.goto(
+                    self.BULARIO_URL,
+                    wait_until="domcontentloaded",
+                    timeout=self.timeout * 1000,
                 )
-            except Exception:
-                pass
-            page.wait_for_timeout(2500)
-            self._wait_for_bulario_form(page)
+                try:
+                    page.wait_for_load_state(
+                        "networkidle", timeout=min(20_000, self.timeout * 1000)
+                    )
+                except Exception:
+                    pass
+                page.wait_for_timeout(2500)
+                self._wait_for_bulario_form(page)
 
-            self._fill_search_form(
-                page=page,
-                medication=medication,
-                publication_start=publication_start,
-                publication_end=publication_end,
-            )
-            self._trigger_search(page)
-            self._wait_for_results(page)
-
-            records = self._records_from_bulario_api_items(api_rows)
-            if not records:
-                records = self._scrape_result_pages(page, limit=limit)
-            else:
-                records = self._paginate_bulario_api_results(
-                    page, api_rows, records, limit
+                self._fill_search_form(
+                    page=page,
+                    medication=medication,
+                    publication_start=publication_start,
+                    publication_end=publication_end,
                 )
-            browser.close()
-            return records
+                self._trigger_search(page)
+                self._wait_for_results(page)
 
-    def _collect_record_from_detail_page(
-        self, med_url: str
-    ) -> AnvisaSearchRecord | None:
+                records = self._records_from_bulario_api_items(api_rows)
+                if not records:
+                    records = self._scrape_result_pages(page, limit=limit)
+                else:
+                    records = self._paginate_bulario_api_results(
+                        page, api_rows, records, limit
+                    )
+                return records
+            finally:
+                browser.close()
+
+    def _collect_record_from_detail_page(self, med_url: str) -> AnvisaRecord | None:
         self._ensure_playwright_available()
 
-        with sync_playwright() as pw:
+        with sync_playwright() as pw:  # type: ignore
             browser = pw.chromium.launch(headless=self.headless)
-            page = browser.new_page(user_agent=self._BROWSER_USER_AGENT)
-            page.goto(
-                med_url, wait_until="domcontentloaded", timeout=self.timeout * 1000
-            )
-            page.wait_for_timeout(2500)
+            try:
+                page = browser.new_page(user_agent=self._BROWSER_USER_AGENT)
+                page.goto(
+                    med_url,
+                    wait_until="domcontentloaded",
+                    timeout=self.timeout * 1000,
+                )
+                page.wait_for_timeout(2500)
 
-            pdf_links = self._extract_pdf_links_from_page(page)
-            html = page.content()
-            browser.close()
+                pdf_links = self._extract_pdf_links_from_page(page)
+                html = page.content()
+            finally:
+                browser.close()
 
         text = BeautifulSoup(html, "html.parser").get_text(" ", strip=True)
         text = normalize_text_whitespace(text)
@@ -542,14 +543,18 @@ class AnvisaBularioClient:
         if not pdf_links["patient"] and not pdf_links["professional"]:
             return None
 
-        return AnvisaSearchRecord(
+        return AnvisaRecord(
             drug_name=drug_name,
             company_name=None,
-            category=None,
             source_url=med_url,
-            patient_pdf_url=pdf_links["patient"],
-            professional_pdf_url=pdf_links["professional"],
-            raw_row={},
+            patient_url=pdf_links["patient"],
+            professional_url=pdf_links["professional"],
+            created_at=_anvisa_created_at_iso(),
+            registration_number=None,
+            cnpj=None,
+            product_id=None,
+            reference_brand=None,
+            process_number=None,
         )
 
     def _fill_search_form(
@@ -819,21 +824,21 @@ class AnvisaBularioClient:
     def _bula_parecer_pdf_url(self, protected_token: str) -> str:
         return (
             f"{self.BASE_URL}/api/consulta/medicamentos/arquivo/bula/parecer/"
-            f"{protected_token.strip()}/?Authorization="
+            f"{protected_token.strip()}/?Authorization=Guest"
         )
 
     def _records_from_bulario_api_items(
         self,
         raw_rows: list[dict[str, Any]],
-    ) -> list[AnvisaSearchRecord]:
+    ) -> list[AnvisaRecord]:
         """
         Build records from the paginated JSON returned by ``/api/consulta/bulario``.
 
         The results table uses ``ng-click`` for PDFs, not ``href``; tokens in the
-        API map to ``.../arquivo/bula/parecer/{token}/?Authorization=``.
+        API map to ``.../arquivo/bula/parecer/{token}/?Authorization=Guest``.
         """
         seen: set[tuple[Any, ...]] = set()
-        out: list[AnvisaSearchRecord] = []
+        out: list[AnvisaRecord] = []
 
         for item in raw_rows:
             key = (
@@ -877,14 +882,18 @@ class AnvisaBularioClient:
             source_url = urljoin(f"{self.BASE_URL}/", med_href)
 
             out.append(
-                AnvisaSearchRecord(
+                AnvisaRecord(
                     drug_name=str(nome),
                     company_name=company,
-                    category=None,
                     source_url=source_url,
-                    patient_pdf_url=patient_url,
-                    professional_pdf_url=professional_url,
-                    raw_row=dict(item),
+                    patient_url=patient_url,
+                    professional_url=professional_url,
+                    created_at=_anvisa_created_at_iso(),
+                    registration_number=_str_or_none(item.get("numeroRegistro")),
+                    cnpj=_str_or_none(item.get("cnpj")),
+                    product_id=_int_or_none(item.get("idProduto")),
+                    reference_brand=None,
+                    process_number=_str_or_none(item.get("numProcesso")),
                 )
             )
         return out
@@ -893,9 +902,9 @@ class AnvisaBularioClient:
         self,
         page: Any,
         api_rows: list[dict[str, Any]],
-        current: list[AnvisaSearchRecord],
+        current: list[AnvisaRecord],
         limit: int | None,
-    ) -> list[AnvisaSearchRecord]:
+    ) -> list[AnvisaRecord]:
         records = list(current)
         if limit is not None and len(records) >= limit:
             return records[:limit]
@@ -920,8 +929,8 @@ class AnvisaBularioClient:
 
     def _scrape_result_pages(
         self, page: Any, limit: int | None
-    ) -> list[AnvisaSearchRecord]:
-        records: list[AnvisaSearchRecord] = []
+    ) -> list[AnvisaRecord]:
+        records: list[AnvisaRecord] = []
         seen_keys: set[str] = set()
 
         while True:
@@ -930,8 +939,8 @@ class AnvisaBularioClient:
 
             for record in partial:
                 key = (
-                    record.patient_pdf_url
-                    or record.professional_pdf_url
+                    record.patient_url
+                    or record.professional_url
                     or record.source_url
                 )
                 if key in seen_keys:
@@ -976,10 +985,10 @@ class AnvisaBularioClient:
     # ------------------------------------------------------------------
     # HTML / PDF parsing
     # ------------------------------------------------------------------
-    def _extract_records_from_html(self, html: str) -> list[AnvisaSearchRecord]:
+    def _extract_records_from_html(self, html: str) -> list[AnvisaRecord]:
         soup = BeautifulSoup(html, "html.parser")
         rows = soup.find_all("tr")
-        records: list[AnvisaSearchRecord] = []
+        records: list[AnvisaRecord] = []
 
         for row in rows:
             text = normalize_text_whitespace(row.get_text(" ", strip=True))
@@ -1001,12 +1010,12 @@ class AnvisaBularioClient:
             ):
                 continue
 
-            patient_pdf_url: str | None = None
-            professional_pdf_url: str | None = None
+            patient_url: str | None = None
+            professional_url: str | None = None
             source_url: str | None = None
 
             for link in links:
-                href = urljoin(self.BASE_URL, link["href"])
+                href = urljoin(self.BASE_URL, link["href"])  # type: ignore
                 label = normalize_text_whitespace(
                     link.get_text(" ", strip=True)
                 ).lower()
@@ -1017,19 +1026,19 @@ class AnvisaBularioClient:
 
                 if "/arquivo/bula/" in href_lower or href_lower.endswith(".pdf"):
                     nearby = normalize_text_whitespace(
-                        link.parent.get_text(" ", strip=True)
+                        link.parent.get_text(" ", strip=True)  # type: ignore
                     ).lower()
                     context = f"{label} {nearby}"
-                    if "paciente" in context and patient_pdf_url is None:
-                        patient_pdf_url = href
-                    elif "profissional" in context and professional_pdf_url is None:
-                        professional_pdf_url = href
-                    elif patient_pdf_url is None:
-                        patient_pdf_url = href
+                    if "paciente" in context and patient_url is None:
+                        patient_url = href
+                    elif "profissional" in context and professional_url is None:
+                        professional_url = href
+                    elif patient_url is None:
+                        patient_url = href
                     else:
-                        professional_pdf_url = professional_pdf_url or href
+                        professional_url = professional_url or href
 
-            if not patient_pdf_url and not professional_pdf_url:
+            if not patient_url and not professional_url:
                 continue
 
             columns = [
@@ -1042,21 +1051,21 @@ class AnvisaBularioClient:
                 or "medication"
             )
             company_name = self._pick_company_name_from_columns(columns)
-            category = self._pick_category_from_columns(columns)
 
             records.append(
-                AnvisaSearchRecord(
+                AnvisaRecord(
                     drug_name=drug_name,
                     company_name=company_name,
-                    category=category,
                     source_url=source_url
-                    or (patient_pdf_url or professional_pdf_url or self.BULARIO_URL),
-                    patient_pdf_url=patient_pdf_url,
-                    professional_pdf_url=professional_pdf_url,
-                    raw_row={
-                        "columns": columns,
-                        "row_text": text,
-                    },
+                    or (patient_url or professional_url or self.BULARIO_URL),
+                    patient_url=patient_url,
+                    professional_url=professional_url,
+                    created_at=_anvisa_created_at_iso(),
+                    registration_number=None,
+                    cnpj=None,
+                    product_id=None,
+                    reference_brand=None,
+                    process_number=None,
                 )
             )
 
@@ -1072,7 +1081,7 @@ class AnvisaBularioClient:
         }
 
         for link in soup.find_all("a", href=True):
-            href = urljoin(self.BASE_URL, link["href"])
+            href = urljoin(self.BASE_URL, link["href"])  # type: ignore
             context = normalize_text_whitespace(
                 link.get_text(" ", strip=True)
             ).lower()
@@ -1098,6 +1107,8 @@ class AnvisaBularioClient:
         return result
 
     def _download_pdf(self, pdf_url: str) -> bytes:
+        if pdf_url.endswith("?Authorization="):
+            pdf_url = f"{pdf_url}Guest"
         headers = {"User-Agent": self._BROWSER_USER_AGENT}
         try:
             response = self.session.get(
@@ -1122,7 +1133,7 @@ class AnvisaBularioClient:
         ``fetch`` (same cookies as a normal visit).
         """
         self._ensure_playwright_available()
-        with sync_playwright() as p:
+        with sync_playwright() as p:  # type: ignore
             browser = p.chromium.launch(headless=self.headless)
             try:
                 context = browser.new_context(user_agent=self._BROWSER_USER_AGENT)
@@ -1226,15 +1237,26 @@ class AnvisaBularioClient:
     def _save_bula_doc_crawl_row(
         self,
         conn: sqlite3.Connection,
-        record: AnvisaSearchRecord,
+        record: AnvisaRecord,
         crawled_at: str,
     ) -> bool:
-        key = _pdf_fetch_key_for_record(record)
+        key = record.patient_url or record.professional_url
         if key is None:
             raise ValueError(
                 "Record does not expose patient or professional PDF URL."
             )
-        meta = {"category": record.category, "raw_row": record.raw_row}
+        meta = {
+            "raw_row": {
+                k: v
+                for k, v in (
+                    ("numeroRegistro", record.registration_number),
+                    ("cnpj", record.cnpj),
+                    ("idProduto", record.product_id),
+                    ("numProcesso", record.process_number),
+                )
+                if v is not None
+            },
+        }
         cur = conn.execute(
             """
             INSERT OR IGNORE INTO bula_doc_index (
@@ -1252,12 +1274,12 @@ class AnvisaBularioClient:
             """,
             (
                 key,
-                record.patient_pdf_url,
-                record.professional_pdf_url,
+                record.patient_url,
+                record.professional_url,
                 record.source_url,
                 record.drug_name,
                 record.company_name,
-                record.category,
+                None,
                 json.dumps(meta, ensure_ascii=False),
                 crawled_at,
             ),
@@ -1358,24 +1380,6 @@ class AnvisaBularioClient:
                 return col
         return None
 
-    def _pick_category_from_columns(self, columns: list[str]) -> str | None:
-        for col in columns:
-            lower = col.lower()
-            if any(
-                token in lower
-                for token in [
-                    "genérico",
-                    "generico",
-                    "similar",
-                    "novo",
-                    "biológico",
-                    "específico",
-                    "fitoterápico",
-                ]
-            ):
-                return col
-        return None
-
     def _get_last_path_segment(self, url: str) -> str:
         parsed = urlparse(url)
         parts = [part for part in parsed.path.split("/") if part]
@@ -1393,38 +1397,6 @@ class AnvisaBularioClient:
             remove_text_punctuation,
             normalize_text_whitespace,
         )
-
-
-def hydrate_pending_bulas_doc_rows(
-    db_path: str | Path | None = None,
-    *,
-    client: object | None = None,
-    limit: int | None = None,
-    timeout: float = 60.0,
-) -> int:
-    """
-    Deprecated import path; delegates to :mod:`bula_check.bulas_doc_hydrate`.
-
-    The ``client`` argument is ignored (hydration uses HTTP only).
-    """
-    _ = client
-    from bula_check.bulas_doc_hydrate import (
-        hydrate_pending_bulas_doc_rows as _hydrate_bulas_doc,
-    )
-
-    return _hydrate_bulas_doc(db_path, timeout=timeout, limit=limit)
-
-
-BulaGratisClient = AnvisaBularioClient
-
-
-def _normalize_text(text: str) -> str:
-    return pipe(
-        lowercase_text(text),
-        remove_text_accents,
-        remove_text_punctuation,
-        normalize_text_whitespace,
-    )
 
 
 def _format_date_for_ui(value: str) -> str:
@@ -1451,96 +1423,3 @@ def _year_chunks(start: date, end: date) -> list[tuple[date, date]]:
         chunks.append((chunk_start, chunk_end))
         current_year += 1
     return chunks
-
-
-def _split_text_into_heading_blocks(raw_text: str) -> list[dict[str, str]]:
-    blocks: list[dict[str, str]] = []
-    lines = [normalize_text_whitespace(line) for line in raw_text.splitlines()]
-    lines = [line for line in lines if line]
-
-    heading_pattern = re.compile(
-        r"^(?:\d+\.\s*)?(?:para que este medicamento e indicado|quando nao devo usar este medicamento|o que devo saber antes de usar este medicamento|quais os males que este medicamento pode me causar|indica(?:c|ç)(?:o|õ)es|contraindica(?:c|ç)(?:a|ã)o|advert(?:e|ê)ncias(?: e precau(?:c|ç)(?:o|õ)es)?|rea(?:c|ç)(?:o|õ)es adversas)\b",
-        flags=re.IGNORECASE,
-    )
-
-    current_heading: str | None = None
-    current_parts: list[str] = []
-
-    for line in lines:
-        if heading_pattern.search(line):
-            if current_heading is not None:
-                blocks.append(
-                    {
-                        "heading": current_heading,
-                        "content": normalize_text_whitespace(
-                            " ".join(current_parts)
-                        ),
-                    }
-                )
-            current_heading = line
-            current_parts = []
-        elif current_heading is not None:
-            current_parts.append(line)
-
-    if current_heading is not None:
-        blocks.append(
-            {
-                "heading": current_heading,
-                "content": normalize_text_whitespace(" ".join(current_parts)),
-            }
-        )
-
-    if not blocks:
-        blocks.append({"heading": "document", "content": raw_text})
-
-    return blocks
-
-
-def _extract_sections_from_raw_text(raw_text: str) -> Sections:
-    blocks = _split_text_into_heading_blocks(raw_text)
-    sections: dict[str, str | None] = {
-        "indications": None,
-        "contraindications": None,
-        "warnings_and_precautions": None,
-        "adverse_reactions": None,
-    }
-
-    for block in blocks:
-        heading_norm = _normalize_text(block["heading"])
-        for section_name, patterns in SECTION_PATTERNS.items():
-            if sections[section_name] is not None:
-                continue
-            if any(pattern in heading_norm for pattern in patterns):
-                sections[section_name] = block["content"] or None
-
-    return Sections(**sections)
-
-
-def _get_reference_brand(raw_text: str) -> str | None:
-    processed_text = pipe(
-        lowercase_text(raw_text),
-        remove_text_accents,
-        remove_text_punctuation,
-        remove_text_stopwords(stop_words=get_portuguese_stopwords()),
-    )
-
-    tail_words = r"(?:publicada|registrada|fabricada|bulario|eletronico|anvisa)"
-
-    patterns = [
-        rf"\bmedicamento referencia\s+([a-z0-9]+(?:\s+[a-z0-9]+){{0,3}}?)(?=\s+{tail_words}\b|$)",
-        rf"\breferencia\s+([a-z0-9]+(?:\s+[a-z0-9]+){{0,3}}?)(?=\s+{tail_words}\b|$)",
-    ]
-
-    for pattern in patterns:
-        match = re.search(pattern, processed_text, flags=re.IGNORECASE)
-        if match:
-            value = match.group(1).strip()
-            value = re.sub(
-                rf"\b{tail_words}\b.*$",
-                "",
-                value,
-                flags=re.IGNORECASE,
-            ).strip()
-            return value
-
-    return None
