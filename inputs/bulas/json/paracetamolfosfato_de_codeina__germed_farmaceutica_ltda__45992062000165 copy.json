@@ -1,0 +1,13 @@
+{
+    "drug_name": "paracetamol+fosfato de codeina",
+    "company_name": "GERMED FARMACEUTICA LTDA - 45992062000165",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/1164911?numeroProcesso=25351407569201619",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyNjI0NDQ3NCIsIm5iZiI6MTc3NjIxMDMwMiwiZXhwIjoxNzc2MjEwNjAyfQ.KwtY-efInFPEmfaCWEEMxyjURARY6qUgjp7EwqYhflKBt_99PmQHTBuJFpfQtwo451pzteQPOxIh0wx1Shp7Wg/?Authorization=",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyNjI0NDQ3NiIsIm5iZiI6MTc3NjIxMDMwMiwiZXhwIjoxNzc2MjEwNjAyfQ.2I1lJ688cj6telx_Ve002SHp5Ba5xvV8FKFKPBxgWNoD9s31uGu8PwksSSJaIqd2GfJfQ_sXfa3Euh4fkrysCA/?Authorization=",
+    "created_at": "2026-04-14T20:44:55.550389",
+    "numeroRegistro": "105830898",
+    "cnpj": "45992062000165",
+    "idProduto": 1164911,
+    "reference_brand": null,
+    "numProcesso": "25351407569201619"
+}
