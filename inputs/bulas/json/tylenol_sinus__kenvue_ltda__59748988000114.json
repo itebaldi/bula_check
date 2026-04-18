@@ -2,14 +2,20 @@
     "drug_name": "TYLENOL SINUS",
     "company_name": "KENVUE LTDA. - 59748988000114",
     "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3651455?numeroProcesso=25351464493202358",
-    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMSIsIm5iZiI6MTc3NjU0NjM5OSwiZXhwIjoxNzc2NTQ2Njk5fQ.9CxioIdkSJIvPxratwAADjrKQiLVc6n1DolRWDJzu2wMnTPTaOv7a04QsdhmGTuygrgXWl25qI_pZM-Lhv8qkQ/?Authorization=Guest",
-    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMiIsIm5iZiI6MTc3NjU0NjM5OSwiZXhwIjoxNzc2NTQ2Njk5fQ.vRvdSYq9DGQySo6NVdrywLtd8qH-PdppByOeJUeb5wXz9QwDJDknCoNuPi4Lpo7HyQFTXlaYAqeKTyPI70fgig/?Authorization=Guest",
-    "created_at": "2026-04-18T18:06:44.570304",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMSIsIm5iZiI6MTc3NjU0NzY1NSwiZXhwIjoxNzc2NTQ3OTU1fQ.6IQepl6cEp5f8D8wTg9pHDGJ3gmKdoynNrajvFEoGIGP9GBXgde53ygLa_pdTnpz6a0FJG_wB10mZ8lcGGSqLw/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMiIsIm5iZiI6MTc3NjU0NzY1NSwiZXhwIjoxNzc2NTQ3OTU1fQ.bcqZ0kXhOFJqAC0ec_l81lVGLlcbvW2rxSWzMXTrchyqd9ziUushRlKsfdqcySv0Dxf-Znw3JERdkrJTX3u7Ug/?Authorization=Guest",
+    "created_at": "2026-04-18T18:27:41.043989",
     "registration_number": "157211208",
     "cnpj": "59748988000114",
     "product_id": 3651455,
     "reference_brand": null,
     "process_number": "25351464493202358",
     "file_name": "tylenol_sinus__kenvue_ltda__59748988000114.pdf",
-    "active_ingredient": "PARACETAMOL, CLORIDRATO DE PSEUDOEFEDRINA"
+    "active_ingredient": [
+        "PARACETAMOL",
+        "CLORIDRATO DE PSEUDOEFEDRINA"
+    ],
+    "therapeutic_classes": [
+        "PRODUTO P.TERAPIA SINTOMATICA DA GRIPE"
+    ]
 }

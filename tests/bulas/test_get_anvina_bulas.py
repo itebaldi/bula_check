@@ -23,7 +23,7 @@ def test_save_all():
         limit=2,
         continue_on_error=True,
         save_logs=True,
-        # save_json=True,
+        save_json=True,
         save_pdf=True,
         save_sqlite=True,
         # Um intervalo curto + um chunk evita dezenas de aberturas Playwright

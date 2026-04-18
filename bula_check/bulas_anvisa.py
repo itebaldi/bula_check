@@ -76,7 +76,8 @@ class AnvisaRecord:
     reference_brand: str | None
     process_number: str | None
     file_name: str | None = None
-    active_ingredient: str | None = None
+    active_ingredient: list[str] | None = None
+    therapeutic_classes: list[str] | None = None
 
 
 def _anvisa_created_at_iso() -> str:
@@ -106,6 +107,41 @@ def _int_or_none(v: Any) -> int | None:
         return None
 
 
+def _string_list_or_none(v: Any) -> list[str] | None:
+    if v is None:
+        return None
+    if isinstance(v, list):
+        out: list[str] = []
+        for item in v:
+            s = str(item).strip()
+            if s and s not in out:
+                out.append(s)
+        return out or None
+    if isinstance(v, str):
+        raw = v.strip()
+        if not raw:
+            return None
+        try:
+            loaded = json.loads(raw)
+        except json.JSONDecodeError:
+            loaded = None
+        if isinstance(loaded, list):
+            out: list[str] = []
+            for item in loaded:
+                s = str(item).strip()
+                if s and s not in out:
+                    out.append(s)
+            return out or None
+        return [part.strip() for part in raw.split(",") if part.strip()] or None
+    return None
+
+
+def _serialize_string_list(v: list[str] | None) -> str | None:
+    if not v:
+        return None
+    return json.dumps(v, ensure_ascii=False)
+
+
 # Colunas do crawl = chaves do JSON (``asdict(AnvisaRecord)``). ``id`` é PK.
 ANVISA_RECORD_DB_COLUMNS: tuple[str, ...] = (
     "drug_name",
@@ -121,6 +157,7 @@ ANVISA_RECORD_DB_COLUMNS: tuple[str, ...] = (
     "process_number",
     "file_name",
     "active_ingredient",
+    "therapeutic_classes",
 )
 
 # Com ``limit`` e ``chunk_by_year=True``, vários anos seguidos sem resultados do
@@ -160,11 +197,12 @@ def _legacy_bula_doc_schema(cols: list[str]) -> bool:
 
 
 def _stale_bula_doc_schema(cols: list[str]) -> bool:
-    """Tabela existe mas não tem o layout atual (ex.: sem ``registration_number``, ``file_name`` ou ``active_ingredient``)."""
+    """Tabela existe mas não tem o layout atual (ex.: sem ``registration_number``, ``file_name``, ``active_ingredient`` ou ``therapeutic_classes``)."""
     return bool(cols) and (
         "registration_number" not in cols
         or "file_name" not in cols
         or "active_ingredient" not in cols
+        or "therapeutic_classes" not in cols
     )
 
 
@@ -206,6 +244,10 @@ def _migrate_bula_doc_index_from_legacy(conn: sqlite3.Connection) -> None:
                 product_id=_int_or_none(rr.get("idProduto")),
                 reference_brand=rd.get("reference_brand"),
                 process_number=_str_or_none(rr.get("numProcesso")),
+                active_ingredient=_string_list_or_none(rd.get("active_ingredient")),
+                therapeutic_classes=_string_list_or_none(
+                    rd.get("therapeutic_classes")
+                ),
             )
             if not rec.source_url:
                 continue
@@ -244,6 +286,8 @@ def _upsert_bula_doc_record(conn: sqlite3.Connection, record: AnvisaRecord) -> b
     (sem isso o SQLite falha e nada é gravado).
     """
     row = asdict(record)
+    row["active_ingredient"] = _serialize_string_list(record.active_ingredient)
+    row["therapeutic_classes"] = _serialize_string_list(record.therapeutic_classes)
     # assignments = ", ".join(
     #     f"{c} = ?" for c in ANVISA_RECORD_DB_COLUMNS if c != "source_url"
     # )
@@ -401,6 +445,7 @@ class AnvisaBularioClient:
             product_id=record.product_id,
             process_number=record.process_number,
             active_ingredient=record.active_ingredient,
+            therapeutic_classes=record.therapeutic_classes,
             save_json=save_json,
             save_pdf=save_pdf,
         )
@@ -445,7 +490,8 @@ class AnvisaBularioClient:
         cnpj: str | None = None,
         product_id: int | None = None,
         process_number: str | None = None,
-        active_ingredient: str | None = None,
+        active_ingredient: list[str] | None = None,
+        therapeutic_classes: list[str] | None = None,
         save_json: bool = False,
         save_pdf: bool = False,
     ) -> AnvisaRecord:
@@ -480,6 +526,7 @@ class AnvisaBularioClient:
             process_number=process_number,
             file_name=pdf_file_name if save_pdf else None,
             active_ingredient=active_ingredient,
+            therapeutic_classes=therapeutic_classes,
         )
 
         if save_json:
@@ -1105,7 +1152,7 @@ class AnvisaBularioClient:
             if patient_url is None and professional_url is None:
                 continue
 
-            id_prod = item.get("idProduto")
+            id_prod = _int_or_none(item.get("idProduto"))
             nproc = item.get("numProcesso")
             nome = item.get("nomeProduto") or "medication"
             razao = item.get("razaoSocial")
@@ -1117,6 +1164,10 @@ class AnvisaBularioClient:
                 company = str(razao)
             else:
                 company = None
+
+            detail = self._fetch_product_detail(id_prod)
+            active_ingredient = self._fetch_active_ingredient_from_detail(detail)
+            therapeutic_classes = self._fetch_therapeutic_classes_from_detail(detail)
 
             med_href = f"#/medicamentos/{id_prod}?numeroProcesso={nproc}"
             source_url = urljoin(f"{self.BASE_URL}/", med_href)
@@ -1131,24 +1182,16 @@ class AnvisaBularioClient:
                     created_at=_anvisa_created_at_iso(),
                     registration_number=_str_or_none(item.get("numeroRegistro")),
                     cnpj=_str_or_none(item.get("cnpj")),
-                    product_id=_int_or_none(item.get("idProduto")),
+                    product_id=id_prod,
                     reference_brand=None,
                     process_number=_str_or_none(item.get("numProcesso")),
-                    active_ingredient=self._fetch_active_ingredient(
-                        _int_or_none(item.get("idProduto"))
-                    ),
+                    active_ingredient=active_ingredient,
+                    therapeutic_classes=therapeutic_classes,
                 )
             )
         return out
 
-    def _fetch_active_ingredient(self, product_id: int | None) -> str | None:
-        """
-        Fetch ``principioAtivo`` from the Anvisa medicamento detail endpoint.
-
-        The browser sends ``Authorization: Guest`` as a request header, not as a
-        query parameter. This method mirrors that behavior using the shared
-        session headers configured in ``__init__``.
-        """
+    def _fetch_product_detail(self, product_id: int | None) -> dict[str, Any] | None:
         if product_id is None:
             return None
 
@@ -1161,33 +1204,58 @@ class AnvisaBularioClient:
             data = resp.json()
             if not isinstance(data, dict):
                 return None
-
-            active_ingredient = _str_or_none(data.get("principioAtivo"))
-            if active_ingredient:
-                return active_ingredient
-
-            apresentacoes = data.get("apresentacoes")
-            if isinstance(apresentacoes, list):
-                unique_principles: list[str] = []
-                for ap in apresentacoes:
-                    if not isinstance(ap, dict):
-                        continue
-                    principios = ap.get("principiosAtivos")
-                    if not isinstance(principios, list):
-                        continue
-                    for principle in principios:
-                        principle = str(principle).strip()
-                        if principle and principle not in unique_principles:
-                            unique_principles.append(principle)
-                if unique_principles:
-                    return ", ".join(unique_principles)
-
-            return None
+            return data
         except Exception as exc:
-            print(
-                f"[ANVISA] erro ao buscar principio ativo para {product_id}: {exc}"
-            )
+            print(f"[ANVISA] erro ao buscar detalhe do produto {product_id}: {exc}")
             return None
+
+    def _fetch_active_ingredient_from_detail(
+        self, detail: dict[str, Any] | None
+    ) -> list[str] | None:
+        if not isinstance(detail, dict):
+            return None
+
+        apresentacoes = detail.get("apresentacoes")
+        if isinstance(apresentacoes, list):
+            unique_principles: list[str] = []
+            for ap in apresentacoes:
+                if not isinstance(ap, dict):
+                    continue
+                principios = ap.get("principiosAtivos")
+                if not isinstance(principios, list):
+                    continue
+                for principle in principios:
+                    principle = str(principle).strip()
+                    if principle and principle not in unique_principles:
+                        unique_principles.append(principle)
+            if unique_principles:
+                return unique_principles
+
+        active_ingredient = _str_or_none(detail.get("principioAtivo"))
+        if active_ingredient:
+            return [
+                part.strip() for part in active_ingredient.split(",") if part.strip()
+            ] or None
+
+        return None
+
+    def _fetch_therapeutic_classes_from_detail(
+        self, detail: dict[str, Any] | None
+    ) -> list[str] | None:
+        if not isinstance(detail, dict):
+            return None
+
+        therapeutic_classes = detail.get("classesTerapeuticas")
+        if not isinstance(therapeutic_classes, list):
+            return None
+
+        cleaned: list[str] = []
+        for item in therapeutic_classes:
+            value = str(item).strip()
+            if value and value not in cleaned:
+                cleaned.append(value)
+
+        return cleaned or None
 
     def _paginate_bulario_api_results(
         self,
@@ -1502,6 +1570,7 @@ class AnvisaBularioClient:
         elif _legacy_bula_doc_schema(cols):
             _migrate_bula_doc_index_from_legacy(conn)
         elif _stale_bula_doc_schema(cols):
+            conn.execute("DROP TABLE IF EXISTS bula_doc_index__replaced")
             conn.execute(
                 "ALTER TABLE bula_doc_index RENAME TO bula_doc_index__replaced"
             )
