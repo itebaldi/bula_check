@@ -76,6 +76,7 @@ class AnvisaRecord:
     reference_brand: str | None
     process_number: str | None
     file_name: str | None = None
+    active_ingredient: str | None = None
 
 
 def _anvisa_created_at_iso() -> str:
@@ -119,6 +120,7 @@ ANVISA_RECORD_DB_COLUMNS: tuple[str, ...] = (
     "reference_brand",
     "process_number",
     "file_name",
+    "active_ingredient",
 )
 
 # Com ``limit`` e ``chunk_by_year=True``, vários anos seguidos sem resultados do
@@ -158,9 +160,11 @@ def _legacy_bula_doc_schema(cols: list[str]) -> bool:
 
 
 def _stale_bula_doc_schema(cols: list[str]) -> bool:
-    """Tabela existe mas não tem o layout atual (ex.: sem ``registration_number`` ou ``file_name``)."""
+    """Tabela existe mas não tem o layout atual (ex.: sem ``registration_number``, ``file_name`` ou ``active_ingredient``)."""
     return bool(cols) and (
-        "registration_number" not in cols or "file_name" not in cols
+        "registration_number" not in cols
+        or "file_name" not in cols
+        or "active_ingredient" not in cols
     )
 
 
@@ -1124,9 +1128,37 @@ class AnvisaBularioClient:
                     product_id=_int_or_none(item.get("idProduto")),
                     reference_brand=None,
                     process_number=_str_or_none(item.get("numProcesso")),
+                    active_ingredient=self._fetch_active_ingredient(
+                        _int_or_none(item.get("idProduto"))
+                    ),
                 )
             )
         return out
+
+    def _fetch_active_ingredient(self, product_id: int | None) -> str | None:
+        """
+        Fetch ``principioAtivo`` from the Anvisa medicamento detail endpoint.
+
+        GET /api/consulta/medicamento/produtos/codigo/{idProduto}
+        returns a product detail object with ``principioAtivo`` at the top level.
+        Returns ``None`` on any error.
+        """
+        if product_id is None:
+            return None
+        url = (
+            f"{self.BASE_URL}/api/consulta/medicamento/produtos/codigo/{product_id}"
+            f"?Authorization=Guest"
+        )
+        try:
+            resp = self.session.get(url, timeout=self.timeout)
+            if resp.status_code != 200:
+                return None
+            data = resp.json()
+            if isinstance(data, list):
+                data = data[0] if data else {}
+            return _str_or_none(data.get("principioAtivo"))
+        except Exception:
+            return None
 
     def _paginate_bulario_api_results(
         self,

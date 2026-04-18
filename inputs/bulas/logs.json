@@ -1,15 +1,6 @@
 {
-    "processed": 10,
-    "saved": 8,
-    "failure": 2,
-    "failures": [
-        {
-            "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzMTUxMjIwOCIsIm5iZiI6MTc3NjUyOTIzNywiZXhwIjoxNzc2NTI5NTM3fQ.3ScHQVwX7X0EWhZncqM1JnnGfT9tQb6A3QFrMD5bRqUbesQTdFRKhr6ZI4_EoI02oP2WzXkJXclVo1CrgdSx9g/?Authorization=Guest",
-            "error": "UNIQUE constraint failed: bula_doc_index.source_url"
-        },
-        {
-            "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNTA5NDY1NiIsIm5iZiI6MTc3NjUyOTIzNywiZXhwIjoxNzc2NTI5NTM3fQ.G_RU7jloInb_P1Z25oXxdaFIH4ESv1c8ShH8SfvyY2e1mEN6LJXcKK0sZaR6V03g3Syfj_fHQ_RczGrfq4mSrw/?Authorization=Guest",
-            "error": "UNIQUE constraint failed: bula_doc_index.source_url"
-        }
-    ]
+    "processed": 2,
+    "saved": 2,
+    "failure": 0,
+    "failures": []
 }
