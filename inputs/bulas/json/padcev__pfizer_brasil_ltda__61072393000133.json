@@ -1,0 +1,13 @@
+{
+    "drug_name": "PADCEV",
+    "company_name": "PFIZER BRASIL LTDA - 61072393000133",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3865484?numeroProcesso=25351148428202540",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNTA5NDY1NiIsIm5iZiI6MTc3NjUyNDEzNCwiZXhwIjoxNzc2NTI0NDM0fQ.dfWRZX3d8_GrJrFKIqZ__QGxLvDxA3c_oVs4__SvPVXp57dncHshnGQwVQ_HwG4l1ZVNMjGAfNwduhvuAbEB1g/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNTA5NDY1NyIsIm5iZiI6MTc3NjUyNDEzNCwiZXhwIjoxNzc2NTI0NDM0fQ.Eawr0YySlesy2szvt9R9YDlTMMs7rUREPNjkIagaQxtBYFBV2TsCgILHRmYUjkq0Vo6NYatjpgkg83Z5qFlxHQ/?Authorization=Guest",
+    "created_at": "2026-04-18T11:55:35.939919",
+    "registration_number": "121100501",
+    "cnpj": "61072393000133",
+    "product_id": 3865484,
+    "reference_brand": null,
+    "process_number": "25351148428202540"
+}

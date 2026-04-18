@@ -10,7 +10,6 @@ from dataclasses import asdict
 from dataclasses import dataclass
 from datetime import date
 from datetime import datetime
-from datetime import timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin
@@ -105,9 +104,174 @@ def _int_or_none(v: Any) -> int | None:
         return None
 
 
+# Colunas do crawl = chaves do JSON (``asdict(AnvisaRecord)``). ``id`` é PK.
+ANVISA_RECORD_DB_COLUMNS: tuple[str, ...] = (
+    "drug_name",
+    "company_name",
+    "source_url",
+    "patient_url",
+    "professional_url",
+    "created_at",
+    "registration_number",
+    "cnpj",
+    "product_id",
+    "reference_brand",
+    "process_number",
+)
+
+# Com ``limit`` e ``chunk_by_year=True``, vários anos seguidos sem resultados do
+# Bulário implicam uma sessão Playwright por ano (muito lento). Abortar após N
+# chunks vazios evita percorrer >100 anos.
+_SAVE_ALL_MAX_EMPTY_YEAR_CHUNKS = 10
+
+_CREATE_BULA_DOC_INDEX_SQL = f"""
+CREATE TABLE IF NOT EXISTS bula_doc_index (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    {", ".join(f"{c} TEXT" if c != "product_id" else "product_id INTEGER" for c in ANVISA_RECORD_DB_COLUMNS)},
+    UNIQUE (source_url)
+)
+"""
+
+# documented_at TEXT,
+# raw_text TEXT,
+# indications TEXT,
+# contraindications TEXT,
+# warnings_and_precautions TEXT,
+# adverse_reactions TEXT,
+
+
+def _bula_doc_table_columns(conn: sqlite3.Connection) -> list[str]:
+    cur = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='bula_doc_index'"
+    )
+    if cur.fetchone() is None:
+        return []
+    return [
+        r[1] for r in conn.execute("PRAGMA table_info(bula_doc_index)").fetchall()
+    ]
+
+
+def _legacy_bula_doc_schema(cols: list[str]) -> bool:
+    return bool(cols) and "pdf_fetch_key" in cols
+
+
+def _stale_bula_doc_schema(cols: list[str]) -> bool:
+    """Tabela existe mas não tem o layout atual (ex.: sem ``registration_number``)."""
+    return bool(cols) and "registration_number" not in cols
+
+
+def _migrate_bula_doc_index_from_legacy(conn: sqlite3.Connection) -> None:
+    conn.execute("ALTER TABLE bula_doc_index RENAME TO bula_doc_index__legacy")
+    conn.execute(_CREATE_BULA_DOC_INDEX_SQL)
+    prev_factory = conn.row_factory
+    conn.row_factory = sqlite3.Row
+    try:
+        legacy_rows = conn.execute("SELECT * FROM bula_doc_index__legacy").fetchall()
+        for row in legacy_rows:
+            rd = {k: row[k] for k in row.keys()}
+            meta: dict[str, Any] = {}
+            raw = rd.get("metadata_json")
+            if raw:
+                try:
+                    loaded = json.loads(raw)
+                    if isinstance(loaded, dict):
+                        meta = loaded
+                except json.JSONDecodeError:
+                    pass
+            rr = meta.get("raw_row") if isinstance(meta.get("raw_row"), dict) else {}
+            patient = rd.get("patient_pdf_url") or rd.get("patient_url")
+            prof = rd.get("professional_pdf_url") or rd.get("professional_url")
+            created = (
+                rd.get("created_at")
+                or rd.get("crawled_at")
+                or _anvisa_created_at_iso()
+            )
+            rec = AnvisaRecord(
+                drug_name=(rd.get("drug_name") or "").strip() or "medication",
+                company_name=rd.get("company_name"),
+                source_url=(rd.get("source_url") or "").strip(),
+                patient_url=patient,
+                professional_url=prof,
+                created_at=str(created),
+                registration_number=_str_or_none(rr.get("numeroRegistro")),
+                cnpj=_str_or_none(rr.get("cnpj")),
+                product_id=_int_or_none(rr.get("idProduto")),
+                reference_brand=rd.get("reference_brand"),
+                process_number=_str_or_none(rr.get("numProcesso")),
+            )
+            if not rec.source_url:
+                continue
+            _upsert_bula_doc_record(conn, rec)
+            # if rd.get("documented_at") is not None or rd.get("raw_text"):
+            #     conn.execute(
+            #         """
+            #         UPDATE bula_doc_index SET
+            #             documented_at = ?,
+            #             raw_text = ?,
+            #             indications = ?,
+            #             contraindications = ?,
+            #             warnings_and_precautions = ?,
+            #             adverse_reactions = ?
+            #         WHERE source_url = ?
+            #         """,
+            #         (
+            #             rd.get("documented_at"),
+            #             rd.get("raw_text"),
+            #             rd.get("indications"),
+            #             rd.get("contraindications"),
+            #             rd.get("warnings_and_precautions"),
+            #             rd.get("adverse_reactions"),
+            #             rec.source_url,
+            #         ),
+            #     )
+        conn.execute("DROP TABLE bula_doc_index__legacy")
+    finally:
+        conn.row_factory = prev_factory
+
+
+def _upsert_bula_doc_record(conn: sqlite3.Connection, record: AnvisaRecord) -> bool:
+    """
+    Atualiza por ``source_url``; se não existir linha, insere. Não usa
+    ``ON CONFLICT`` para não depender de haver ``UNIQUE`` na BD antiga
+    (sem isso o SQLite falha e nada é gravado).
+    """
+    row = asdict(record)
+    # assignments = ", ".join(
+    #     f"{c} = ?" for c in ANVISA_RECORD_DB_COLUMNS if c != "source_url"
+    # )
+    # upd_vals = tuple(row[c] for c in ANVISA_RECORD_DB_COLUMNS if c != "source_url")
+    # cur = conn.execute(
+    #     f"""
+    #     UPDATE bula_doc_index SET
+    #         {assignments},
+    #         documented_at = NULL
+    #     WHERE source_url = ?
+    #     """,
+    #     upd_vals + (row["source_url"],),
+    # )
+    # if cur.rowcount > 0:
+    #     return True
+    cols_sql = ", ".join(ANVISA_RECORD_DB_COLUMNS)
+    placeholders = ", ".join("?" for _ in ANVISA_RECORD_DB_COLUMNS)
+    values = tuple(row[c] for c in ANVISA_RECORD_DB_COLUMNS)
+    conn.execute(
+        f"INSERT INTO bula_doc_index ({cols_sql}) VALUES ({placeholders})",
+        values,
+    )
+    return True
+
+
 class AnvisaBularioClient:
     """
     Bulk-capable client for the official Anvisa Bulário Eletrônico.
+
+    Parecer PDF URLs (``.../bula/parecer/{jwt}/``) expire within minutes. There is
+    no documented public API only to mint a new JWT: the SPA reads
+    ``idBulaPacienteProtegido`` / ``idBulaProfissionalProtegido`` from Bulário
+    JSON (e.g. ``/api/consulta/bulario``). Calling those endpoints with plain
+    ``requests`` sometimes works but often fails (403 / Cloudflare / cookies). The
+    supported flow here is **Playwright** (``save_all`` with ``save_sqlite=True``)
+    to store fresh URLs in ``bulas_doc.db``, then ``bulas_doc_hydrate`` over HTTP.
 
     Important
     ---------
@@ -318,12 +482,25 @@ class AnvisaBularioClient:
         When ``limit`` is set, each chunk only collects up to that many remaining
         rows from the API (not the entire year), and years are processed from
         newest to oldest so small limits finish quickly instead of walking from
-        1900 with a full browser session per year.
+        1900 with a full browser session per year. If many consecutive year chunks
+        return no rows, the loop stops after
+        10 consecutive empty year chunks
+        (each chunk still pays the full Playwright startup cost).
+
+        The SQLite file is only written when ``save_sqlite=True``; otherwise
+        ``bulas_doc.db`` is left unchanged.
 
         When ``save_sqlite`` is true, rows are stored in ``bulas_doc.db`` with PDF
         URLs and crawl time only (no PDF download). Use
         :func:`bula_check.bulas_doc_hydrate.hydrate_pending_bulas_doc_rows` later
-        to fetch PDFs over HTTP and fill text and sections.
+        to fetch PDFs over HTTP and fill text and sections. Re-run this crawl
+        when parecer JWTs expire, so ``patient_url`` / ``professional_url``
+        are refreshed in place (matched by ``source_url``).
+
+        When neither ``save_json`` nor ``save_sqlite`` is true, ``limit`` still
+        applies: each distinct record processed counts toward ``limit`` so the
+        year sweep stops (otherwise ``saved`` would never increase and every
+        year chunk would run).
         """
         dir = Path("inputs/bulas")
         output_dir = dir / "json"
@@ -332,8 +509,6 @@ class AnvisaBularioClient:
         conn: sqlite3.Connection | None = None
         if save_sqlite:
             conn = self._init_bulas_doc_db(self.BULAS_DOC_DB_DEFAULT)
-        crawl_ts = datetime.now(timezone.utc).isoformat()
-
         failures: list[dict[str, str]] = []
         saved_count = 0
         processed_count = 0
@@ -346,6 +521,7 @@ class AnvisaBularioClient:
             chunks = list(reversed(chunks))
 
         seen_keys: set[str] = set()
+        empty_year_chunks = 0
 
         for chunk_start, chunk_end in chunks:
             if limit is not None and saved_count >= limit:
@@ -376,6 +552,15 @@ class AnvisaBularioClient:
                     break
                 continue
 
+            if not records:
+                if limit is not None and chunk_by_year:
+                    empty_year_chunks += 1
+                    if empty_year_chunks >= _SAVE_ALL_MAX_EMPTY_YEAR_CHUNKS:
+                        break
+                continue
+
+            empty_year_chunks = 0
+
             for record in records:
                 dedupe_key = (
                     record.patient_url
@@ -388,13 +573,10 @@ class AnvisaBularioClient:
                 processed_count += 1
 
                 try:
-                    inserted_index = False
+                    persisted = False
                     if save_sqlite and conn is not None:
-                        inserted_index = self._save_bula_doc_crawl_row(
-                            conn, record, crawl_ts
-                        )
-                        if inserted_index:
-                            conn.commit()
+                        persisted = self._save_bula_doc_crawl_row(conn, record)
+                        conn.commit()
 
                     if save_json:
                         if not (record.patient_url or record.professional_url):
@@ -409,8 +591,9 @@ class AnvisaBularioClient:
                         )
                         filename = f"{safe_name}__{safe_company}.json"
                         _write_anvisa_record_json(output_dir / filename, record)
+                        persisted = True
 
-                    if inserted_index or save_json:
+                    if persisted or (not save_sqlite and not save_json):
                         saved_count += 1
 
                 except Exception as exc:
@@ -1205,32 +1388,16 @@ class AnvisaBularioClient:
         db_path.parent.mkdir(parents=True, exist_ok=True)
 
         conn = sqlite3.connect(db_path)
-        conn.execute(
-            """
-            CREATE TABLE IF NOT EXISTS bula_doc_index (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                pdf_fetch_key TEXT NOT NULL UNIQUE,
-                patient_pdf_url TEXT,
-                professional_pdf_url TEXT,
-                source_url TEXT NOT NULL,
-                drug_name TEXT,
-                company_name TEXT,
-                category TEXT,
-                metadata_json TEXT,
-                crawled_at TEXT NOT NULL,
-                documented_at TEXT,
-                reference_brand TEXT,
-                patient_url TEXT,
-                professional_url TEXT,
-                raw_text TEXT,
-                created_at TEXT,
-                indications TEXT,
-                contraindications TEXT,
-                warnings_and_precautions TEXT,
-                adverse_reactions TEXT
+        cols = _bula_doc_table_columns(conn)
+        if not cols:
+            conn.execute(_CREATE_BULA_DOC_INDEX_SQL)
+        elif _legacy_bula_doc_schema(cols):
+            _migrate_bula_doc_index_from_legacy(conn)
+        elif _stale_bula_doc_schema(cols):
+            conn.execute(
+                "ALTER TABLE bula_doc_index RENAME TO bula_doc_index__replaced"
             )
-            """
-        )
+            conn.execute(_CREATE_BULA_DOC_INDEX_SQL)
         conn.commit()
         return conn
 
@@ -1238,53 +1405,17 @@ class AnvisaBularioClient:
         self,
         conn: sqlite3.Connection,
         record: AnvisaRecord,
-        crawled_at: str,
     ) -> bool:
-        key = record.patient_url or record.professional_url
-        if key is None:
+        """
+        Grava no SQLite as mesmas chaves que o JSON (``AnvisaRecord``) + ``id``
+        autogerado. ``ON CONFLICT(source_url)`` atualiza o crawl e repõe
+        ``documented_at`` a NULL para voltar a hidratar.
+        """
+        if not (record.patient_url or record.professional_url):
             raise ValueError(
                 "Record does not expose patient or professional PDF URL."
             )
-        meta = {
-            "raw_row": {
-                k: v
-                for k, v in (
-                    ("numeroRegistro", record.registration_number),
-                    ("cnpj", record.cnpj),
-                    ("idProduto", record.product_id),
-                    ("numProcesso", record.process_number),
-                )
-                if v is not None
-            },
-        }
-        cur = conn.execute(
-            """
-            INSERT OR IGNORE INTO bula_doc_index (
-                pdf_fetch_key,
-                patient_pdf_url,
-                professional_pdf_url,
-                source_url,
-                drug_name,
-                company_name,
-                category,
-                metadata_json,
-                crawled_at
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                key,
-                record.patient_url,
-                record.professional_url,
-                record.source_url,
-                record.drug_name,
-                record.company_name,
-                None,
-                json.dumps(meta, ensure_ascii=False),
-                crawled_at,
-            ),
-        )
-        return cur.rowcount == 1
+        return _upsert_bula_doc_record(conn, record)
 
     # ------------------------------------------------------------------
     # Helpers

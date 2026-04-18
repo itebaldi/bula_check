@@ -20,11 +20,15 @@ def test_save_all():
     )
 
     summary = client.save_all(
-        limit=1,
+        limit=2,
         continue_on_error=True,
         save_logs=True,
-        save_json=False,
-        # save_sqlite=True,
+        save_json=True,
+        save_sqlite=True,
+        # Um intervalo curto + um chunk evita dezenas de aberturas Playwright
+        # (um por ano) quando vários anos vêm vazios do Bulário.
+        chunk_by_year=False,
+        publication_start="2022-01-01",
     )
 
     print(summary.saved)

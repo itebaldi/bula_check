@@ -4,6 +4,11 @@ Fill ``bula_doc_index`` rows created during Anvisa crawl with PDF text.
 Uses plain HTTP (``requests``) and ``pypdf`` only — no Playwright or browser
 automation. If the Anvisa endpoint returns 403 for your network, run hydration
 from an environment where direct downloads work, or use a separate tunnel.
+
+Parecer paths ``.../bula/parecer/{jwt}/`` expire quickly (*Token expirado*).
+This package does not implement a standalone HTTP client to mint new JWTs:
+re-run the Anvisa crawl (Playwright) with ``save_sqlite=True`` so fresh URLs are
+written (``UPDATE`` by ``source_url``), then run this hydrator.
 """
 
 from __future__ import annotations
@@ -164,11 +169,10 @@ def hydrate_pending_bulas_doc_rows(
     try:
         rows = conn.execute(
             """
-            SELECT id, patient_pdf_url, professional_pdf_url, source_url,
-                   drug_name, company_name, metadata_json
+            SELECT id, patient_url, professional_url
             FROM bula_doc_index
             WHERE documented_at IS NULL
-              AND (patient_pdf_url IS NOT NULL OR professional_pdf_url IS NOT NULL)
+              AND (patient_url IS NOT NULL OR professional_url IS NOT NULL)
             ORDER BY id
             """
         ).fetchall()
@@ -176,7 +180,7 @@ def hydrate_pending_bulas_doc_rows(
         for row in rows:
             if limit is not None and done >= limit:
                 break
-            pdf_url = row["patient_pdf_url"] or row["professional_pdf_url"]
+            pdf_url = row["patient_url"] or row["professional_url"]
             if not pdf_url:
                 continue
 
@@ -186,16 +190,12 @@ def hydrate_pending_bulas_doc_rows(
             reference_brand = _get_reference_brand(raw_text)
 
             documented = datetime.now(timezone.utc).isoformat()
-            created_at = documented
             conn.execute(
                 """
                 UPDATE bula_doc_index SET
                     documented_at = ?,
                     reference_brand = ?,
-                    patient_url = ?,
-                    professional_url = ?,
                     raw_text = ?,
-                    created_at = ?,
                     indications = ?,
                     contraindications = ?,
                     warnings_and_precautions = ?,
@@ -205,10 +205,7 @@ def hydrate_pending_bulas_doc_rows(
                 (
                     documented,
                     reference_brand,
-                    row["patient_pdf_url"],
-                    row["professional_pdf_url"],
                     raw_text,
-                    created_at,
                     sections["indications"],
                     sections["contraindications"],
                     sections["warnings_and_precautions"],

@@ -1,0 +1,13 @@
+{
+    "drug_name": "EZ-MDP",
+    "company_name": "ECKERT & ZIEGLER BRASIL COMERCIAL LTDA - 02887124000247",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3870866?numeroProcesso=25351130604202597",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzMTUxMjIwOCIsIm5iZiI6MTc3NjUyNDEzNCwiZXhwIjoxNzc2NTI0NDM0fQ.FotLFx0eLSzYlvaLVXZWNn-riLhrXUdVwWWptrJ1Fw53N444S3ThQwG38Z1xwB6wK-js8UazF5r1HT1Jm1BNCg/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzMTUxMjIxMCIsIm5iZiI6MTc3NjUyNDEzNCwiZXhwIjoxNzc2NTI0NDM0fQ.efzTrrib61hCZYCoW7QAgvYrgy5N5VFUTDvU-dr0cWoBeAWcQBQxkWFLzl-4hpb6w5z6C0cQPmkOg2TcSdk9Ow/?Authorization=Guest",
+    "created_at": "2026-04-18T11:55:35.939897",
+    "registration_number": "150920004",
+    "cnpj": "02887124000247",
+    "product_id": 3870866,
+    "reference_brand": null,
+    "process_number": "25351130604202597"
+}
