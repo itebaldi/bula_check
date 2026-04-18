@@ -7,7 +7,7 @@ def test_search():
         sleep_between_requests=1.0,
     )
 
-    results = client.search("paracetamol", limit=1, save_json=True)
+    results = client.search("paracetamol", limit=1, save_json=True, save_pdf=True)
 
     for result in results:
         print(result)
@@ -20,15 +20,15 @@ def test_save_all():
     )
 
     summary = client.save_all(
-        # limit=2,
+        limit=2,
         continue_on_error=True,
         save_logs=True,
         # save_json=True,
         save_sqlite=True,
         # Um intervalo curto + um chunk evita dezenas de aberturas Playwright
         # (um por ano) quando vários anos vêm vazios do Bulário.
-        chunk_by_year=False,
-        publication_start="1950-01-01",
+        # chunk_by_year=False,
+        # publication_start="1950-01-01",
     )
 
     print(summary.saved)

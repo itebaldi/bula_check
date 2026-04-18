@@ -75,6 +75,7 @@ class AnvisaRecord:
     product_id: int | None
     reference_brand: str | None
     process_number: str | None
+    file_name: str | None = None
 
 
 def _anvisa_created_at_iso() -> str:
@@ -117,6 +118,7 @@ ANVISA_RECORD_DB_COLUMNS: tuple[str, ...] = (
     "product_id",
     "reference_brand",
     "process_number",
+    "file_name",
 )
 
 # Com ``limit`` e ``chunk_by_year=True``, vários anos seguidos sem resultados do
@@ -156,8 +158,10 @@ def _legacy_bula_doc_schema(cols: list[str]) -> bool:
 
 
 def _stale_bula_doc_schema(cols: list[str]) -> bool:
-    """Tabela existe mas não tem o layout atual (ex.: sem ``registration_number``)."""
-    return bool(cols) and "registration_number" not in cols
+    """Tabela existe mas não tem o layout atual (ex.: sem ``registration_number`` ou ``file_name``)."""
+    return bool(cols) and (
+        "registration_number" not in cols or "file_name" not in cols
+    )
 
 
 def _migrate_bula_doc_index_from_legacy(conn: sqlite3.Connection) -> None:
@@ -334,12 +338,15 @@ class AnvisaBularioClient:
         medication: str,
         limit: int = 10,
         save_json: bool = False,
+        save_pdf: bool = False,
     ) -> list[AnvisaRecord]:
         records = self.search_records(medication=medication, limit=limit)
         results: list[AnvisaRecord] = []
 
         for record in records:
-            filled = self.get_by_record(record, save_json=save_json)
+            filled = self.get_by_record(
+                record, save_json=save_json, save_pdf=save_pdf
+            )
             if filled is not None:
                 results.append(filled)
 
@@ -364,6 +371,7 @@ class AnvisaBularioClient:
         self,
         record: AnvisaRecord,
         save_json: bool = False,
+        save_pdf: bool = False,
         prefer_patient_bula: bool = True,
     ) -> AnvisaRecord | None:
         pdf_url = (
@@ -386,12 +394,14 @@ class AnvisaBularioClient:
             product_id=record.product_id,
             process_number=record.process_number,
             save_json=save_json,
+            save_pdf=save_pdf,
         )
 
     def get_by_url(
         self,
         med_url: str,
         save_json: bool = False,
+        save_pdf: bool = False,
     ) -> AnvisaRecord | None:
         """
         Build a record from an Anvisa medicamento detail URL.
@@ -406,12 +416,13 @@ class AnvisaBularioClient:
                 pdf_url=med_url,
                 source_url=med_url,
                 save_json=save_json,
+                save_pdf=save_pdf,
             )
 
         record = self._collect_record_from_detail_page(med_url)
         if record is None:
             return None
-        return self.get_by_record(record, save_json=save_json)
+        return self.get_by_record(record, save_json=save_json, save_pdf=save_pdf)
 
     def get_by_pdf_url(
         self,
@@ -427,6 +438,7 @@ class AnvisaBularioClient:
         product_id: int | None = None,
         process_number: str | None = None,
         save_json: bool = False,
+        save_pdf: bool = False,
     ) -> AnvisaRecord:
         pdf_bytes = self._download_pdf(pdf_url)
         raw_text = self._extract_text_from_pdf_bytes(pdf_bytes)
@@ -434,6 +446,17 @@ class AnvisaBularioClient:
         resolved_name = drug_name or self._guess_drug_name_from_text_or_url(
             raw_text, pdf_url
         )
+
+        safe_name = self._gen_safe_filename(resolved_name or "medication")
+        safe_company = self._gen_safe_filename(company_name or "unknown_company")
+        base_filename = f"{safe_name}__{safe_company}"
+        pdf_file_name = f"{base_filename}.pdf"
+
+        if save_pdf:
+            pdf_output_dir = Path("inputs/bulas/pdf")
+            pdf_output_dir.mkdir(parents=True, exist_ok=True)
+            (pdf_output_dir / pdf_file_name).write_bytes(pdf_bytes)
+
         out = AnvisaRecord(
             drug_name=resolved_name,
             company_name=company_name,
@@ -446,16 +469,12 @@ class AnvisaBularioClient:
             product_id=product_id,
             reference_brand=reference_brand,
             process_number=process_number,
+            file_name=pdf_file_name if save_pdf else None,
         )
 
         if save_json:
             output_dir = Path("inputs/bulas/json")
-            safe_name = self._gen_safe_filename(out.drug_name or "medication")
-            safe_company = self._gen_safe_filename(
-                out.company_name or "unknown_company"
-            )
-            filename = f"{safe_name}__{safe_company}.json"
-            _write_anvisa_record_json(output_dir / filename, out)
+            _write_anvisa_record_json(output_dir / f"{base_filename}.json", out)
 
         return out
 
@@ -469,6 +488,7 @@ class AnvisaBularioClient:
         publication_end: str | None = None,
         chunk_by_year: bool = True,
         save_json: bool = False,
+        save_pdf: bool = False,
     ) -> Logs:
         """
         Download many bulas from the official Anvisa portal.
@@ -497,10 +517,15 @@ class AnvisaBularioClient:
         when parecer JWTs expire, so ``patient_url`` / ``professional_url``
         are refreshed in place (matched by ``source_url``).
 
-        When neither ``save_json`` nor ``save_sqlite`` is true, ``limit`` still
-        applies: each distinct record processed counts toward ``limit`` so the
-        year sweep stops (otherwise ``saved`` would never increase and every
-        year chunk would run).
+        When ``save_pdf`` is true, the patient PDF for each record is downloaded
+        and saved to ``inputs/bulas/pdf/`` using the same base filename as the
+        JSON. ``file_name`` is populated on the record (and in SQLite when
+        ``save_sqlite`` is also true).
+
+        When neither ``save_json``, ``save_sqlite``, nor ``save_pdf`` is true,
+        ``limit`` still applies: each distinct record processed counts toward
+        ``limit`` so the year sweep stops (otherwise ``saved`` would never
+        increase and every year chunk would run).
         """
         dir = Path("inputs/bulas")
         output_dir = dir / "json"
@@ -574,6 +599,31 @@ class AnvisaBularioClient:
 
                 try:
                     persisted = False
+
+                    safe_name = self._gen_safe_filename(
+                        record.drug_name or "medication"
+                    )
+                    safe_company = self._gen_safe_filename(
+                        record.company_name or "unknown_company"
+                    )
+                    base_filename = f"{safe_name}__{safe_company}"
+                    pdf_file_name = f"{base_filename}.pdf"
+
+                    if save_pdf:
+                        pdf_url = record.patient_url or record.professional_url
+                        if not pdf_url:
+                            raise ValueError(
+                                "Record does not expose patient/professional PDF URL."
+                            )
+                        pdf_bytes = self._download_pdf(pdf_url)
+                        pdf_output_dir = Path("inputs/bulas/pdf")
+                        pdf_output_dir.mkdir(parents=True, exist_ok=True)
+                        (pdf_output_dir / pdf_file_name).write_bytes(pdf_bytes)
+                        record.file_name = pdf_file_name
+                        persisted = True
+                    else:
+                        record.file_name = pdf_file_name
+
                     if save_sqlite and conn is not None:
                         persisted = self._save_bula_doc_crawl_row(conn, record)
                         conn.commit()
@@ -583,17 +633,14 @@ class AnvisaBularioClient:
                             raise ValueError(
                                 "Record does not expose patient/professional PDF URL."
                             )
-                        safe_name = self._gen_safe_filename(
-                            record.drug_name or "medication"
+                        _write_anvisa_record_json(
+                            output_dir / f"{base_filename}.json", record
                         )
-                        safe_company = self._gen_safe_filename(
-                            record.company_name or "unknown_company"
-                        )
-                        filename = f"{safe_name}__{safe_company}.json"
-                        _write_anvisa_record_json(output_dir / filename, record)
                         persisted = True
 
-                    if persisted or (not save_sqlite and not save_json):
+                    if persisted or (
+                        not save_sqlite and not save_json and not save_pdf
+                    ):
                         saved_count += 1
 
                 except Exception as exc:
