@@ -327,10 +327,13 @@ class AnvisaBularioClient:
         self.session = requests.Session()
         self.session.headers.update(
             {
-                "User-Agent": (
-                    "Mozilla/5.0 (compatible; AnvisaBularioClient/1.0; "
-                    "+https://consultas.anvisa.gov.br/)"
-                )
+                "User-Agent": self._BROWSER_USER_AGENT,
+                "Accept": "application/json, text/plain, */*",
+                "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+                "Authorization": "Guest",
+                "Referer": f"{self.BASE_URL}/",
+                "Pragma": "no-cache",
+                "Cache-Control": "no-cache",
             }
         )
 
@@ -397,6 +400,7 @@ class AnvisaBularioClient:
             cnpj=record.cnpj,
             product_id=record.product_id,
             process_number=record.process_number,
+            active_ingredient=record.active_ingredient,
             save_json=save_json,
             save_pdf=save_pdf,
         )
@@ -441,6 +445,7 @@ class AnvisaBularioClient:
         cnpj: str | None = None,
         product_id: int | None = None,
         process_number: str | None = None,
+        active_ingredient: str | None = None,
         save_json: bool = False,
         save_pdf: bool = False,
     ) -> AnvisaRecord:
@@ -474,6 +479,7 @@ class AnvisaBularioClient:
             reference_brand=reference_brand,
             process_number=process_number,
             file_name=pdf_file_name if save_pdf else None,
+            active_ingredient=active_ingredient,
         )
 
         if save_json:
@@ -1139,25 +1145,48 @@ class AnvisaBularioClient:
         """
         Fetch ``principioAtivo`` from the Anvisa medicamento detail endpoint.
 
-        GET /api/consulta/medicamento/produtos/codigo/{idProduto}
-        returns a product detail object with ``principioAtivo`` at the top level.
-        Returns ``None`` on any error.
+        The browser sends ``Authorization: Guest`` as a request header, not as a
+        query parameter. This method mirrors that behavior using the shared
+        session headers configured in ``__init__``.
         """
         if product_id is None:
             return None
+
         url = (
             f"{self.BASE_URL}/api/consulta/medicamento/produtos/codigo/{product_id}"
-            f"?Authorization=Guest"
         )
         try:
             resp = self.session.get(url, timeout=self.timeout)
-            if resp.status_code != 200:
-                return None
+            resp.raise_for_status()
             data = resp.json()
-            if isinstance(data, list):
-                data = data[0] if data else {}
-            return _str_or_none(data.get("principioAtivo"))
-        except Exception:
+            if not isinstance(data, dict):
+                return None
+
+            active_ingredient = _str_or_none(data.get("principioAtivo"))
+            if active_ingredient:
+                return active_ingredient
+
+            apresentacoes = data.get("apresentacoes")
+            if isinstance(apresentacoes, list):
+                unique_principles: list[str] = []
+                for ap in apresentacoes:
+                    if not isinstance(ap, dict):
+                        continue
+                    principios = ap.get("principiosAtivos")
+                    if not isinstance(principios, list):
+                        continue
+                    for principle in principios:
+                        principle = str(principle).strip()
+                        if principle and principle not in unique_principles:
+                            unique_principles.append(principle)
+                if unique_principles:
+                    return ", ".join(unique_principles)
+
+            return None
+        except Exception as exc:
+            print(
+                f"[ANVISA] erro ao buscar principio ativo para {product_id}: {exc}"
+            )
             return None
 
     def _paginate_bulario_api_results(

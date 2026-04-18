@@ -2,14 +2,14 @@
     "drug_name": "TYLENOL SINUS",
     "company_name": "KENVUE LTDA. - 59748988000114",
     "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3651455?numeroProcesso=25351464493202358",
-    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMSIsIm5iZiI6MTc3NjU0NTU5OSwiZXhwIjoxNzc2NTQ1ODk5fQ.-t42hlQdkKLnkcS5N__QD-dLevHoGMmVBVXMiUtKaahUw1MAnm9UkDLim1o8spdW-ufcQdVIzAs76zeJ5H7scA/?Authorization=Guest",
-    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMiIsIm5iZiI6MTc3NjU0NTU5OSwiZXhwIjoxNzc2NTQ1ODk5fQ.7Sf0t6hkJCK_UAyGZmSAxOHbyP9miG2TOtbAKlj2NKdc4xnOmzKNIFyXllbUneSjpBGiIoJTzQodbTNJsIH7MA/?Authorization=Guest",
-    "created_at": "2026-04-18T17:53:22.592821",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMSIsIm5iZiI6MTc3NjU0NjM5OSwiZXhwIjoxNzc2NTQ2Njk5fQ.9CxioIdkSJIvPxratwAADjrKQiLVc6n1DolRWDJzu2wMnTPTaOv7a04QsdhmGTuygrgXWl25qI_pZM-Lhv8qkQ/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY2NDExMiIsIm5iZiI6MTc3NjU0NjM5OSwiZXhwIjoxNzc2NTQ2Njk5fQ.vRvdSYq9DGQySo6NVdrywLtd8qH-PdppByOeJUeb5wXz9QwDJDknCoNuPi4Lpo7HyQFTXlaYAqeKTyPI70fgig/?Authorization=Guest",
+    "created_at": "2026-04-18T18:06:44.570304",
     "registration_number": "157211208",
     "cnpj": "59748988000114",
     "product_id": 3651455,
     "reference_brand": null,
     "process_number": "25351464493202358",
     "file_name": "tylenol_sinus__kenvue_ltda__59748988000114.pdf",
-    "active_ingredient": null
+    "active_ingredient": "PARACETAMOL, CLORIDRATO DE PSEUDOEFEDRINA"
 }
