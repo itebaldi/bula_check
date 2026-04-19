@@ -385,12 +385,12 @@ class AnvisaBularioClient:
                     limit=limit,
                 )
                 if cached_records:
-                    records = cached_records
-                else:
-                    records = self.search_records(medication=medication, limit=limit)
-                    for record in records:
-                        self._save_bula_doc_crawl_row(conn, record)
-                    conn.commit()
+                    return cached_records
+
+                records = self.search_records(medication=medication, limit=limit)
+                for record in records:
+                    self._save_bula_doc_crawl_row(conn, record)
+                conn.commit()
             else:
                 records = self.search_records(medication=medication, limit=limit)
 
