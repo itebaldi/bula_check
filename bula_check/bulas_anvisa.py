@@ -659,7 +659,11 @@ class AnvisaBularioClient:
         start = _coerce_date(publication_start)
         end = _coerce_date(publication_end) if publication_end else date.today()
 
-        chunks = _year_chunks(start, end) if chunk_by_year else [(start, end)]
+        chunks = (
+            list(reversed(_year_chunks(start, end)))
+            if chunk_by_year
+            else [(start, end)]
+        )
         if limit is not None and chunk_by_year:
             chunks = list(reversed(chunks))
 
