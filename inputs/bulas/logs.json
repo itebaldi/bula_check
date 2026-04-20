@@ -1,6 +1,11 @@
 {
-    "processed": 2,
-    "saved": 2,
-    "failure": 0,
-    "failures": []
+    "processed": 0,
+    "saved": 0,
+    "failure": 1,
+    "failures": [
+        {
+            "url": "https://consultas.anvisa.gov.br/#/bulario/",
+            "error": "Failed to collect records for chunk 2014-01-01..2014-01-01: Could not detect results table in Anvisa Bulário UI."
+        }
+    ]
 }

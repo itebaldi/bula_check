@@ -223,10 +223,10 @@ def _migrate_bula_doc_index_from_legacy(conn: sqlite3.Connection) -> None:
                 patient_url=patient,
                 professional_url=prof,
                 created_at=str(created),
-                registration_number=_str_or_none(rr.get("numeroRegistro")),
-                cnpj=_str_or_none(rr.get("cnpj")),
-                product_id=_int_or_none(rr.get("idProduto")),
-                process_number=_str_or_none(rr.get("numProcesso")),
+                registration_number=_str_or_none(rr.get("numeroRegistro")),  # type: ignore
+                cnpj=_str_or_none(rr.get("cnpj")),  # type: ignore
+                product_id=_int_or_none(rr.get("idProduto")),  # type: ignore
+                process_number=_str_or_none(rr.get("numProcesso")),  # type: ignore
                 active_ingredient=_normalize_string_list(
                     rd.get("active_ingredient")
                 ),

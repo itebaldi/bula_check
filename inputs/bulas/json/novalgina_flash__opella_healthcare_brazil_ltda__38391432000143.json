@@ -1,0 +1,15 @@
+{
+    "drug_name": "NOVALGINA FLASH",
+    "company_name": "OPELLA HEALTHCARE BRAZIL LTDA - 38391432000143",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3551564?numeroProcesso=25351304473202248",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNjUwMzYyOSIsIm5iZiI6MTc3NjU5ODgzNCwiZXhwIjoxNzc2NTk5MTM0fQ.BGoxK_nC0QoDFgJGmO42fhjq-x30RcL14lVIJ2iF3OvNKlM7RvU7Zd-FlK8d0TjXx4V5LPyNBVg8jJXJ2xqJrA/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNjUwMzYzMCIsIm5iZiI6MTc3NjU5ODgzNCwiZXhwIjoxNzc2NTk5MTM0fQ.QUXIpO3vti6YwPimqMEPead3GyENUJKnPFcsRYgatB0d3QzL8jBrpicU_BMvnm_QxcLrTJcoYUmm7FKArmNoBw/?Authorization=Guest",
+    "created_at": "2026-04-19T08:41:05.439632",
+    "registration_number": "186200023",
+    "cnpj": "38391432000143",
+    "product_id": 3551564,
+    "process_number": "25351304473202248",
+    "file_name": "novalgina_flash__opella_healthcare_brazil_ltda__38391432000143.pdf",
+    "active_ingredient": null,
+    "therapeutic_classes": null
+}

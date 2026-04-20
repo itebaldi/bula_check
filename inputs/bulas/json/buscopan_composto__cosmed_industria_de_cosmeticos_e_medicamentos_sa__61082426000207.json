@@ -1,0 +1,20 @@
+{
+    "drug_name": "BUSCOPAN COMPOSTO",
+    "company_name": "COSMED INDUSTRIA DE COSMETICOS E MEDICAMENTOS S.A. - 61082426000207",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3697414?numeroProcesso=25351045898202471",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyNjE2ODA5OCIsIm5iZiI6MTc3NjU5ODcyOCwiZXhwIjoxNzc2NTk5MDI4fQ.v8-HPVQD_px-o9Oh-pPQU4HrOvdaq4IobOjc10-oaFn27BUqM8MkW_7ntjFx2-dEKmUAJf_ht-8Y81nitalSow/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyNjE2ODA5OSIsIm5iZiI6MTc3NjU5ODcyOCwiZXhwIjoxNzc2NTk5MDI4fQ.LrtPOUsjbzrE-aCt6LbTaXsFnraZ1h7q8oapCUPnSb2JjHFwuEfjoobFQcra75tr2IA7L8j4JoFlgdUfsuo9YQ/?Authorization=Guest",
+    "created_at": "2026-04-19T08:38:50.294621",
+    "registration_number": "178170972",
+    "cnpj": "61082426000207",
+    "product_id": 3697414,
+    "process_number": "25351045898202471",
+    "file_name": "buscopan_composto__cosmed_industria_de_cosmeticos_e_medicamentos_sa__61082426000207.pdf",
+    "active_ingredient": [
+        "BUTILBROMETO DE ESCOPOLAMINA",
+        "dipirona monoidratada"
+    ],
+    "therapeutic_classes": [
+        "ANTIESPASMODICOS E ANTICOLINERGICOS-ASSOC  MEDICAMENTOSAS"
+    ]
+}

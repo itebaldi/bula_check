@@ -1,0 +1,20 @@
+{
+    "drug_name": "dipirona + cafeína",
+    "company_name": "BRAINFARMA INDÚSTRIA QUÍMICA E FARMACÊUTICA S.A - 05161069000110",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/1070625?numeroProcesso=25351671932201496",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDA3MzkxNCIsIm5iZiI6MTc3NjU5OTA2MywiZXhwIjoxNzc2NTk5MzYzfQ.BBL_KR6IvQwWETqMCRCb4T7QjCeffnWHldf50fpGI934NhR-kHJBVn-dtMEr6OHssj4OObc196ketwqah7ooZg/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDA3MzkxNSIsIm5iZiI6MTc3NjU5OTA2MywiZXhwIjoxNzc2NTk5MzYzfQ.uHc0MDCaC8MqQbQEKj9A4H1EodG94IwqNuYvzOjc8hLz_IAWnV5d_rv2ZkTQLZTXuR5e37rwFgv1gsBaDxydWw/?Authorization=Guest",
+    "created_at": "2026-04-19T08:44:26.029646",
+    "registration_number": "155840479",
+    "cnpj": "05161069000110",
+    "product_id": 1070625,
+    "process_number": "25351671932201496",
+    "file_name": "dipirona__cafeina__brainfarma_industria_quimica_e_farmaceutica_sa__05161069000110.pdf",
+    "active_ingredient": [
+        "DIPIRONA",
+        "CAFEÍNA"
+    ],
+    "therapeutic_classes": [
+        "ANALGESICOS NAO NARCOTICOS"
+    ]
+}
