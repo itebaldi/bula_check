@@ -1,3 +1,4 @@
+from collections import defaultdict
 import re
 from typing import ClassVar
 from typing import Optional
@@ -101,6 +102,8 @@ def gen_sections_from_pdf(documents: list[Document]) -> Sections:
         for section_name, patterns in Sections.section_patterns().items()
     }
 
+    gen_dictionary_from_pdf(documents)
+
     for document in documents:
         extracted_sections = _gen_sections_from_text(document.page_content)
         if not extracted_sections:
@@ -137,18 +140,217 @@ def _normalize_text(text: str) -> str:
     )
 
 
-def _gen_sections_from_text(text: str) -> dict[str, str]:
-    pattern = re.compile(r"(?m)^\s*(\d+)\.\s+(.+?)\?\s*$")
+UPPERCASE_HEADER_RE = re.compile(r"(?m)^[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ0-9®/\-\s]+$")
 
-    matches = list(pattern.finditer(text))
 
-    sections = {}
+def _split_paragraphs(text: str) -> list[str]:
+    # procura por final de frase . ! ou ?
+    # depois uma quebra de linha
+    # depois uma letra maiúscula
+    # transforma isso em separação de parágrafo com \n\n
+    text = re.sub(r"(?<=[.!?])\s*\n\s*(?=[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ])", "\n\n", text)
+    paragraphs = re.split(r"\n\s*\n+", text)
+    return [p.strip() for p in paragraphs if p.strip()]
 
-    for i, match in enumerate(matches):
-        title = match.group(2).strip()
-        start = match.end()
-        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
-        content = text[start:end].strip()
-        sections[_normalize_text(title)] = content
+
+def _is_probably_noise_header(line: str) -> bool:
+    norm = _normalize_text(line)
+
+    if not norm:
+        return True
+
+    if re.fullmatch(r"[\d\s]+", norm):
+        return True
+
+    if len(norm) < 4:
+        return True
+
+    blocked = {
+        "VPS",
+        "VPVPS",
+        "RESPONSAVEL TECNICO",
+        "RAZAO SOCIAL",
+        "INDUSTRIA BRASILEIRA",
+        "MARCA REGISTRADA",
+        "VENDA SOB PRESCRICAO",
+    }
+    return norm in blocked
+
+
+def _is_uppercase_header(line: str) -> bool:
+    line = line.strip()
+
+    if not line:
+        return False
+
+    if "?" in line:
+        return False
+
+    if not UPPERCASE_HEADER_RE.fullmatch(line):
+        return False
+
+    if _is_probably_noise_header(line):
+        return False
+
+    norm = _normalize_text(line)
+    if any(char.isdigit() for char in norm):
+        return False
+
+    return True
+
+
+def _extract_numbered_headers(text: str) -> list[tuple[int, int, int, str]]:
+    lines = text.splitlines(keepends=True)
+    matches: list[tuple[int, int, int, str]] = []
+
+    offset = 0
+    i = 0
+
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.strip()
+
+        number_match = re.match(r"^(\d+)\.\s*(.*)$", stripped)
+        if not number_match:
+            offset += len(line)
+            i += 1
+            continue
+
+        section_number = int(number_match.group(1))
+        start = offset
+        header_parts: list[str] = []
+
+        rest_of_line = number_match.group(2).strip()
+        if rest_of_line:
+            header_parts.append(rest_of_line)
+
+        end = offset + len(line)
+        j = i + 1
+
+        while "?" not in " ".join(header_parts) and j < len(lines):
+            next_line = lines[j].strip()
+
+            if next_line:
+                if re.match(r"^\d+\.\s*", next_line):
+                    break
+                header_parts.append(next_line)
+
+            end += len(lines[j])
+            j += 1
+
+        full_header = " ".join(header_parts).strip()
+
+        if "?" in full_header:
+            title = full_header.split("?", 1)[0].strip()
+            matches.append((section_number, start, end, title))
+            offset = end
+            i = j
+        else:
+            offset += len(line)
+            i += 1
+
+    return matches
+
+
+def _keep_first_sequential_block(
+    headers: list[tuple[int, int, int, str]],
+) -> list[tuple[int, int, str]]:
+    """
+    Keeps the first continuous numbered block: 1, 2, 3, ..., 9.
+    Stops when numbering breaks.
+    """
+    if not headers:
+        return []
+
+    headers = sorted(headers, key=lambda x: x[1])
+
+    kept: list[tuple[int, int, str]] = []
+    expected = 1
+    started = False
+
+    for number, start, end, title in headers:
+        if not started:
+            if number != 1:
+                continue
+            started = True
+
+        if number == expected:
+            kept.append((start, end, title))
+            expected += 1
+        elif started:
+            break
+
+    return kept
+
+
+def _gen_sections_from_text(text: str) -> dict[str, list[str]]:
+    numbered_headers = _extract_numbered_headers(text)
+    numbered_matches = _keep_first_sequential_block(numbered_headers)
+
+    if not numbered_matches:
+        return {}
+
+    first_numbered_start = numbered_matches[0][0]
+    last_numbered_end = numbered_matches[-1][1]
+
+    matches: list[tuple[int, int, str]] = list(numbered_matches)
+
+    non_numbered_whitelist = {
+        "APRESENTACOES",
+        "USO ORAL",
+        "COMPOSICAO",
+        "DIZERES LEGAIS",
+    }
+
+    pre_numbered_text = text[:first_numbered_start]
+
+    for line_match in re.finditer(r"(?m)^.*$", pre_numbered_text):
+        line = line_match.group(0).strip()
+        norm = _normalize_text(line)
+
+        if norm in non_numbered_whitelist and _is_uppercase_header(line):
+            matches.append((line_match.start(), line_match.end(), line))
+
+    # opcional: pegar DIZERES LEGAIS logo após a seção 9
+    post_numbered_text = text[last_numbered_end:]
+    for line_match in re.finditer(r"(?m)^.*$", post_numbered_text):
+        line = line_match.group(0).strip()
+        norm = _normalize_text(line)
+
+        if norm == "DIZERES LEGAIS" and _is_uppercase_header(line):
+            start = last_numbered_end + line_match.start()
+            end = last_numbered_end + line_match.end()
+            matches.append((start, end, line))
+            break
+
+    matches.sort(key=lambda item: item[0])
+
+    searchable_end = len(text)
+    for i, (_, _, title) in enumerate(matches):
+        if _normalize_text(title) == "DIZERES LEGAIS":
+            searchable_end = len(text)
+            break
+
+    sections: dict[str, list[str]] = {}
+
+    for i, (_, end, title) in enumerate(matches):
+        next_start = matches[i + 1][0] if i + 1 < len(matches) else searchable_end
+        content = text[end:next_start].strip()
+
+        normalized_title = _normalize_text(title)
+        if not normalized_title:
+            continue
+
+        sections[normalized_title] = _split_paragraphs(content)
 
     return sections
+
+
+def gen_dictionary_from_pdf(documents: list[Document]) -> dict[str, list[str]]:
+    full_text = "\n".join(
+        document.page_content
+        for document in documents
+        if document.page_content and document.page_content.strip()
+    )
+
+    return _gen_sections_from_text(full_text)

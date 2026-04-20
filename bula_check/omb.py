@@ -3,6 +3,7 @@ import os
 import requests
 
 
+# https://portal-obm.saude.gov.br/docs/#endpoints-GETapi-route
 def buscar_na_obm(medicine: str) -> list[dict]:
     """
     Busca apresentações comerciais relacionadas a 'Tylenol' na OBM.
