@@ -330,7 +330,9 @@ class AnvisaBularioClient:
     """
 
     BASE_URL = "https://consultas.anvisa.gov.br"
-    PRODUCTS_URL = f"{BASE_URL}/#/medicamentos/consulta/"
+    PRODUCTS_URL = f"{BASE_URL}/#/"
+    # Deep link evita depender do menu da home (e reduz uma etapa sob WAF/Cloudflare).
+    MEDICAMENTOS_URL = f"{BASE_URL}/#/medicamentos/"
     # Trailing slash matters: `/#/bulario` is rewritten to `/#/` and the view
     # never loads; the portal link uses `/#/bulario/` (AngularJS ui-router).
     BULARIO_URL = f"{BASE_URL}/#/bulario/"
@@ -862,12 +864,95 @@ class AnvisaBularioClient:
             prefer_patient_bula=prefer_patient_bula,
         )
 
-    def _extract_product_name_from_detail_page(self, page: Any) -> str | None:
+    def _raise_if_anvisa_bot_block(self, page: Any, step: str) -> None:
+        """Cloudflare (e páginas equivalentes) devolve HTML sem o app Angular."""
+        title = ""
+        try:
+            title = (page.title() or "").lower()
+        except Exception:
+            pass
+        if any(
+            token in title
+            for token in (
+                "attention required",
+                "just a moment",
+                "verificação de segurança",
+            )
+        ):
+            raise RuntimeError(
+                f"A consulta ANVISA foi bloqueada antes de {step} (título da página: "
+                f"{title!r}). Tente headless=False, atualizar o Chromium do Playwright, "
+                "ou outra rede/VPN; em datacenters o Cloudflare costuma barrar robôs."
+            )
+        # Não usar só "cdn-cgi/challenge" / "cf-challenge" no HTML: o portal pode
+        # carregar scripts da Cloudflare mesmo com a SPA Angular ativa, o que gera
+        # falso positivo. Interstitials reais costumem mudar o *title* (checado acima).
+
+    def _go_to_medicamentos_page(self, page: Any) -> None:
+        page.goto(
+            self.MEDICAMENTOS_URL,
+            wait_until="domcontentloaded",
+            timeout=self.timeout * 1000,
+        )
+        try:
+            page.wait_for_load_state(
+                "networkidle", timeout=min(20_000, self.timeout * 1000)
+            )
+        except Exception:
+            pass
+
+        page.wait_for_timeout(3000)
+        self._raise_if_anvisa_bot_block(page, "carregar Medicamentos")
+
+        registration_inputs = page.locator(
+            'input[placeholder*="Regularização"], '
+            'input[placeholder*="regularização"], '
+            'input[placeholder*="Registro"], '
+            'input[placeholder*="registro"]'
+        )
+        if registration_inputs.count() > 0:
+            try:
+                if registration_inputs.first.is_visible():
+                    return
+            except Exception:
+                pass
+
+        page.goto(
+            self.PRODUCTS_URL,
+            wait_until="domcontentloaded",
+            timeout=self.timeout * 1000,
+        )
+        try:
+            page.wait_for_load_state(
+                "networkidle", timeout=min(20_000, self.timeout * 1000)
+            )
+        except Exception:
+            pass
+
+        page.wait_for_timeout(3000)
+        self._raise_if_anvisa_bot_block(page, "carregar home ANVISA")
+
         candidates = [
-            'text="Nome do Produto"',
-            'text="Produto"',
+            'a[ui-sref="medicamentos"]',
+            'a[href="#/medicamentos/"]',
+            'a:has-text("Medicamentos")',
         ]
 
+        for selector in candidates:
+            loc = page.locator(selector)
+            if loc.count() == 0:
+                continue
+            try:
+                loc.first.click(timeout=3000)
+                page.wait_for_timeout(3000)
+                self._raise_if_anvisa_bot_block(page, "abrir Medicamentos pelo menu")
+                return
+            except Exception:
+                continue
+
+        raise ValueError("Could not open Anvisa Medicamentos page from home.")
+
+    def _extract_product_name_from_detail_page(self, page: Any) -> str | None:
         html = page.content()
         soup = BeautifulSoup(html, "html.parser")
         text = normalize_text_whitespace(soup.get_text(" ", strip=True))
@@ -1020,10 +1105,8 @@ class AnvisaBularioClient:
         page: Any,
         registration_number: str,
     ) -> None:
-        # espera a tela estabilizar melhor
         page.wait_for_timeout(4000)
 
-        # 1) tenta pelos seletores mais comuns
         candidates = [
             'input[placeholder*="Regularização"]',
             'input[placeholder*="regularização"]',
@@ -1041,69 +1124,31 @@ class AnvisaBularioClient:
             'input[id*="registro"]',
             'input[formcontrolname*="regularizacao"]',
             'input[formcontrolname*="registro"]',
-            'input[type="text"]',
-            'input:not([type="hidden"])',
         ]
 
         if self._fill_first_visible(page, candidates, registration_number):
             page.wait_for_timeout(500)
             return
 
-        # 2) tenta por label acessível
-        accessible_patterns = [
-            re.compile(r"n[uú]mero.*regulariza", re.I),
-            re.compile(r"regulariza", re.I),
-            re.compile(r"n[uú]mero.*registro", re.I),
-            re.compile(r"registro", re.I),
-        ]
-
-        for pattern in accessible_patterns:
-            try:
-                loc = page.get_by_label(pattern)
-                if loc.count() > 0 and loc.first.is_visible():
-                    loc.first.click(timeout=2000)
-                    loc.first.fill(registration_number, timeout=5000)
-                    page.wait_for_timeout(500)
-                    return
-            except Exception:
-                pass
-
-            try:
-                loc = page.get_by_placeholder(pattern)
-                if loc.count() > 0 and loc.first.is_visible():
-                    loc.first.click(timeout=2000)
-                    loc.first.fill(registration_number, timeout=5000)
-                    page.wait_for_timeout(500)
-                    return
-            except Exception:
-                pass
-
-        # 3) fallback bruto: pega o primeiro input visível editável da página
-        try:
-            inputs = page.locator('input:not([type="hidden"]):not([disabled])')
-            n = inputs.count()
-            for i in range(n):
-                target = inputs.nth(i)
-                try:
-                    if not target.is_visible():
-                        continue
-                    target.click(timeout=2000)
-                    target.fill(registration_number, timeout=5000)
-                    page.wait_for_timeout(500)
-                    return
-                except Exception:
-                    continue
-        except Exception:
-            pass
-
-        # 4) debug para você ver o DOM real
-        page.screenshot(
-            path="debug_products_registration_search.png",
-            full_page=True,
+        # fallback: qualquer input visível de texto
+        generic = page.locator(
+            'input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([disabled])'
         )
-        html = page.content()
-        Path("debug_products_registration_search.html").write_text(
-            html,
+        for i in range(generic.count()):
+            target = generic.nth(i)
+            try:
+                if not target.is_visible():
+                    continue
+                target.click(timeout=2000)
+                target.fill(registration_number, timeout=5000)
+                page.wait_for_timeout(500)
+                return
+            except Exception:
+                continue
+
+        page.screenshot(path="debug_products_registration_fail.png", full_page=True)
+        Path("debug_products_registration_fail.html").write_text(
+            page.content(),
             encoding="utf-8",
         )
 
@@ -1122,31 +1167,36 @@ class AnvisaBularioClient:
             browser = pw.chromium.launch(headless=self.headless)
             try:
                 page = browser.new_page(user_agent=self._BROWSER_USER_AGENT)
-                page.goto(
-                    self.PRODUCTS_URL,
-                    wait_until="domcontentloaded",
-                    timeout=self.timeout * 1000,
+
+                self._go_to_medicamentos_page(page)
+
+                page.screenshot(path="debug_medicamentos_page.png", full_page=True)
+                Path("debug_medicamentos_page.html").write_text(
+                    page.content(),
+                    encoding="utf-8",
                 )
-                try:
-                    page.wait_for_load_state(
-                        "networkidle", timeout=min(20_000, self.timeout * 1000)
+
+                search_tokens = [base_registration_number]
+                if (
+                    full_registration_number
+                    and full_registration_number != base_registration_number
+                ):
+                    search_tokens.append(full_registration_number)
+
+                row: dict[str, str] | None = None
+                for token in search_tokens:
+                    self._fill_products_registration_search(page, token)
+                    self._trigger_search(page)
+                    self._wait_for_products_results(page)
+
+                    row = self._open_matching_product_row(
+                        page=page,
+                        base_registration_number=base_registration_number,
+                        full_registration_number=full_registration_number,
                     )
-                except Exception:
-                    pass
+                    if row is not None:
+                        break
 
-                page.wait_for_timeout(5000)
-
-                self._fill_products_registration_search(
-                    page, base_registration_number
-                )
-                self._trigger_search(page)
-                self._wait_for_products_results(page)
-
-                row = self._open_matching_product_row(
-                    page=page,
-                    base_registration_number=base_registration_number,
-                    full_registration_number=full_registration_number,
-                )
                 if row is None:
                     return None
 
