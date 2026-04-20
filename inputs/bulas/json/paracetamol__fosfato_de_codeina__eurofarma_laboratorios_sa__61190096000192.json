@@ -1,0 +1,14 @@
+{
+    "drug_name": "paracetamol + fosfato de codeína",
+    "company_name": "EUROFARMA LABORATORIOS S.A. - 61190096000192",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/1040236?numeroProcesso=25351711335201410",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyMTIzMzQyNyIsIm5iZiI6MTc3NjU0MzA0NiwiZXhwIjoxNzc2NTQzMzQ2fQ.B5nDdxAvamuw8SYSql2Vp059-R3qqkGXPWCpj4YUzXorVmCpbyO9j7UHQ21ltpIRng04gryZa7NNDReRAOdLlg/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIyMTIzMzQyOCIsIm5iZiI6MTc3NjU0MzA0NiwiZXhwIjoxNzc2NTQzMzQ2fQ.yWy1V0bu6P9eamPH-rcA1Z8mfFLW8RUTVCJZr-Vd1LGFq4GeG-OZySuBA41eqjtIWzGhpALSRkpfpxBuc3yvrw/?Authorization=Guest",
+    "created_at": "2026-04-18T17:10:49.461592",
+    "registration_number": "100431135",
+    "cnpj": "61190096000192",
+    "product_id": 1040236,
+    "reference_brand": null,
+    "process_number": "25351711335201410",
+    "file_name": "paracetamol__fosfato_de_codeina__eurofarma_laboratorios_sa__61190096000192.pdf"
+}

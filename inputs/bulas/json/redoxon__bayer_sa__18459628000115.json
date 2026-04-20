@@ -1,0 +1,19 @@
+{
+    "drug_name": "REDOXON",
+    "company_name": "BAYER S.A. - 18459628000115",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/536405?numeroProcesso=25351211887200795",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY0Njg4MyIsIm5iZiI6MTc3NjU5ODU3NiwiZXhwIjoxNzc2NTk4ODc2fQ.bYWsOXq7O_N5n7ggOp79jjKwBwNGCEAY8tlRF5DxllmThyfI_xTei7DE0mCRABAF9IFDb6ztrOfsIgMZtxXWFw/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNDY0Njg4NCIsIm5iZiI6MTc3NjU5ODU3NiwiZXhwIjoxNzc2NTk4ODc2fQ.dVzosXKKOo14qU2UwlBiU6bOAsEcqfg4w65IWMrr5tKb679CJbGgUi5w-dmDYVj5OUpM_fOAWCHIT6_86A6LxA/?Authorization=Guest",
+    "created_at": "2026-04-19T08:36:18.588255",
+    "registration_number": "170560016",
+    "cnpj": "18459628000115",
+    "product_id": 536405,
+    "process_number": "25351211887200795",
+    "file_name": "redoxon__bayer_sa__18459628000115.pdf",
+    "active_ingredient": [
+        "ÁCIDO ASCÓRBICO"
+    ],
+    "therapeutic_classes": [
+        "MONOVITAMINAS EXCETO VITAMINA K"
+    ]
+}

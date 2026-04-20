@@ -1,0 +1,20 @@
+{
+    "drug_name": "PADCEV",
+    "company_name": "PFIZER BRASIL LTDA - 61072393000133",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3865484?numeroProcesso=25351148428202540",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNTA5NDY1NiIsIm5iZiI6MTc3NjU0NzY5NiwiZXhwIjoxNzc2NTQ3OTk2fQ.jKU53jvCzw3s_47TS_DBrvYI62xE5sOZRx8mzwZez5ncKkJLQROMeXJ6Oh-GMZJU4YigQSMhQNtJwKGie6tqCg/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNTA5NDY1NyIsIm5iZiI6MTc3NjU0NzY5NiwiZXhwIjoxNzc2NTQ3OTk2fQ.ap7xQHgHhOh0lzTBiW2W-UN_mj4trBFtKOpI1PR3L2dHZ6NAbsLVoySVQC36DLhJVrxrQqseOTlYQD3W80eUpg/?Authorization=Guest",
+    "created_at": "2026-04-18T18:28:19.321171",
+    "registration_number": "121100501",
+    "cnpj": "61072393000133",
+    "product_id": 3865484,
+    "reference_brand": null,
+    "process_number": "25351148428202540",
+    "file_name": "padcev__pfizer_brasil_ltda__61072393000133.pdf",
+    "active_ingredient": [
+        "ENFORTUMABE VEDOTINA"
+    ],
+    "therapeutic_classes": [
+        "AGENTES ANTINEOPLÁSICOS"
+    ]
+}

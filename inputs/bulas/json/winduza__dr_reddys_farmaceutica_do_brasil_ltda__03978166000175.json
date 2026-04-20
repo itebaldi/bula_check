@@ -1,0 +1,20 @@
+{
+    "drug_name": "WINDUZA",
+    "company_name": "DR. REDDYS FARMACÊUTICA DO BRASIL LTDA - 03978166000175",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/3863917?numeroProcesso=25351117533202537",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNjc3NDg3OCIsIm5iZiI6MTc3NjU0NzY5NiwiZXhwIjoxNzc2NTQ3OTk2fQ.IqX2NhRxgyFcJo9WQLOFQAzrpIkIBDhpcKlyvNggteayM1HgRSUKDuWdDWA6kchWoP5g6vM6gWnxIgKohbZxwA/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzNjc3NDg3OSIsIm5iZiI6MTc3NjU0NzY5NiwiZXhwIjoxNzc2NTQ3OTk2fQ.ZGDYArFlI8ReWPI4GaIIdYEBO2Ls02O7jcZZKMY2AyMfjucMt_ZoEPTxrDvdYQ_2rfr1SSd3ZR4vHxF7fSJ_NQ/?Authorization=Guest",
+    "created_at": "2026-04-18T18:28:20.092944",
+    "registration_number": "151430096",
+    "cnpj": "03978166000175",
+    "product_id": 3863917,
+    "reference_brand": null,
+    "process_number": "25351117533202537",
+    "file_name": "winduza__dr_reddys_farmaceutica_do_brasil_ltda__03978166000175.pdf",
+    "active_ingredient": [
+        "AZACITIDINA"
+    ],
+    "therapeutic_classes": [
+        "ANTINEOPLASICO"
+    ]
+}

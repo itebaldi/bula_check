@@ -1,30 +1,40 @@
-# from bula_check.bulas_anvisa import AnvisaBularioClient
+from bula_check.bulas_anvisa import AnvisaBularioClient
 
 
-# def test_search():
-#     client = AnvisaBularioClient(
-#         timeout=30,
-#         sleep_between_requests=1.0,
-#     )
+def test_search():
+    client = AnvisaBularioClient(
+        timeout=30,
+        sleep_between_requests=1.0,
+    )
 
-#     results = client.search("paracetamol", limit=5, save_json=True)
+    results = client.search(
+        "tylenol", limit=1, save_json=True, save_pdf=True, save_sqlite=True
+    )
 
-#     for result in results:
-#         print(result)
+    for result in results:
+        print(result)
 
 
-# def test_save_all():
-#     client = AnvisaBularioClient(
-#         timeout=30,
-#         sleep_between_requests=1.0,
-#     )
+def test_save_all():
+    client = AnvisaBularioClient(
+        timeout=30,
+        sleep_between_requests=1.0,
+    )
 
-#     summary = client.save_all(
-#         limit=2,
-#         continue_on_error=True,
-#         save_logs=True,
-#         # save_sqlite=True,
-#     )
+    summary = client.save_all(
+        limit=2,
+        continue_on_error=True,
+        save_logs=True,
+        # save_json=True,
+        save_pdf=True,
+        save_sqlite=True,
+        # Um intervalo curto + um chunk evita dezenas de aberturas Playwright
+        # (um por ano) quando vários anos vêm vazios do Bulário.
+        # chunk_by_year=False,
+        publication_end="2014-12-01",
+        # publication_end="2014--01",
+        publication_start="2013-01-01",
+    )
 
-#     print(summary.saved)
-#     print(summary.failure)
+    print(summary.saved)
+    print(summary.failure)
