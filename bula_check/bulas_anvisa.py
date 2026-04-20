@@ -17,14 +17,13 @@ from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
+from nemo.preprocessing.text import lowercase_text
+from nemo.preprocessing.text import normalize_text_whitespace
+from nemo.preprocessing.text import remove_text_accents
+from nemo.preprocessing.text import remove_text_punctuation
+from nemo.preprocessing.text import replace_spaces_with_text_underscores
 from pydantic import BaseModel
 from toolz.functoolz import pipe
-
-from bula_check.preprocessing.text import lowercase_text
-from bula_check.preprocessing.text import normalize_text_whitespace
-from bula_check.preprocessing.text import remove_text_accents
-from bula_check.preprocessing.text import remove_text_punctuation
-from bula_check.preprocessing.text import replace_spaces_with_text_underscores
 
 try:
     from pypdf import PdfReader
