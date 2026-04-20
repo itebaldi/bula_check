@@ -17,6 +17,7 @@ toolz = "^1.1.0"
 nltk = "^3.9.4"
 playwright = "^1.58.0"
 pydantic = "^2.12.5"
+nemo = { git = "ssh://git@github.com/itebaldi/nemo.git", branch = "main" }
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

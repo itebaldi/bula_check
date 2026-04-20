@@ -1,7 +1,8 @@
 from pathlib import Path
 
+from nemo.files.html import read_html
+
 from bula_check.bulas import gen_bula_instance
-from bula_check.importing import read_html
 
 SAVE_JSON = False
 
