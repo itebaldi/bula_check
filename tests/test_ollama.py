@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bula_check.bulas import Bula
+from bula_check.bula_gratis import Bula
 from bula_check.llm import precheck_llm
 from bula_check.llm import validate_llm
 

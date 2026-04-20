@@ -9,5 +9,9 @@ def test_read_pdf():
 
     loader = PyPDFLoader(str(path))
 
-    docs = loader.load()
+    documents = loader.load()
+
+    for document in documents:
+        content = document.page_content
+
     x = 10

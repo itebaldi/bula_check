@@ -1,4 +1,4 @@
-from bula_check.bulas import BulaGratisClient
+from bula_check.bula_gratis import BulaGratisClient
 
 
 def test_search():
