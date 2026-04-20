@@ -330,6 +330,7 @@ class AnvisaBularioClient:
     """
 
     BASE_URL = "https://consultas.anvisa.gov.br"
+    PRODUCTS_URL = f"{BASE_URL}/#/medicamentos/consulta/"
     # Trailing slash matters: `/#/bulario` is rewritten to `/#/` and the view
     # never loads; the portal link uses `/#/bulario/` (AngularJS ui-router).
     BULARIO_URL = f"{BASE_URL}/#/bulario/"
@@ -455,6 +456,15 @@ class AnvisaBularioClient:
         finally:
             conn.row_factory = prev_factory
         return [self._row_to_anvisa_record(row) for row in rows]
+
+    def _normalize_registration_digits(self, value: str) -> str:
+        return "".join(ch for ch in str(value) if ch.isdigit())
+
+    def _split_registration_number(self, value: str) -> tuple[str, str | None]:
+        digits = self._normalize_registration_digits(value)
+        if len(digits) <= 9:
+            return digits, None
+        return digits[:9], digits[9:]
 
     def _row_to_anvisa_record(self, row: sqlite3.Row) -> AnvisaRecord:
         return AnvisaRecord(
@@ -797,6 +807,369 @@ class AnvisaBularioClient:
             conn.close()
 
         return logs
+
+    def get_by_registration_number(
+        self,
+        registration_number: str,
+        save_json: bool = False,
+        save_pdf: bool = False,
+        save_sqlite: bool = False,
+        prefer_patient_bula: bool = True,
+    ) -> AnvisaRecord | None:
+        """
+        Busca diretamente na Anvisa a partir do número de registro/apresentação.
+
+        Fluxo:
+        1. Consulta de produtos por número base da regularização.
+        2. Seleciona a apresentação exata pelo número completo, se disponível.
+        3. Obtém o nome comercial do produto.
+        4. Busca a bula no Bulário pelo nome comercial.
+        """
+        product_data = self._find_product_by_registration_number(registration_number)
+        if product_data is None:
+            return None
+
+        drug_name = product_data["drug_name"]
+        full_registration_number = product_data["full_registration_number"]
+
+        records = self.search_records(medication=drug_name, limit=20)
+        if not records:
+            return None
+
+        target_digits = self._normalize_registration_digits(full_registration_number)
+
+        exact = [
+            r
+            for r in records
+            if self._normalize_registration_digits(r.registration_number or "")
+            == target_digits
+        ]
+
+        record = exact[0] if exact else records[0]
+
+        if save_sqlite:
+            conn = self._init_bulas_doc_db(self.BULAS_DOC_DB_DEFAULT)
+            try:
+                self._save_bula_doc_crawl_row(conn, record)
+                conn.commit()
+            finally:
+                conn.close()
+
+        return self.get_by_record(
+            record=record,
+            save_json=save_json,
+            save_pdf=save_pdf,
+            prefer_patient_bula=prefer_patient_bula,
+        )
+
+    def _extract_product_name_from_detail_page(self, page: Any) -> str | None:
+        candidates = [
+            'text="Nome do Produto"',
+            'text="Produto"',
+        ]
+
+        html = page.content()
+        soup = BeautifulSoup(html, "html.parser")
+        text = normalize_text_whitespace(soup.get_text(" ", strip=True))
+
+        patterns = [
+            r"Nome do Produto\s+([A-ZÀ-Úa-zà-ú0-9\-\s]+)",
+            r"Produto\s+([A-ZÀ-Úa-zà-ú0-9\-\s]+)",
+        ]
+        for pattern in patterns:
+            m = re.search(pattern, text)
+            if m:
+                value = normalize_text_whitespace(m.group(1))
+                if value:
+                    return value
+
+        return None
+
+    def _open_matching_product_row(
+        self,
+        page: Any,
+        base_registration_number: str,
+        full_registration_number: str,
+    ) -> dict[str, str] | None:
+        page.wait_for_timeout(2000)
+
+        row_locator = page.locator("tr")
+        row_count = row_locator.count()
+
+        target_index: int | None = None
+        target_drug_name: str | None = None
+
+        for i in range(row_count):
+            row = row_locator.nth(i)
+            try:
+                text = normalize_text_whitespace(row.inner_text())
+            except Exception:
+                continue
+
+            if not text:
+                continue
+
+            digits_in_row = "".join(ch for ch in text if ch.isdigit())
+
+            if (
+                full_registration_number in digits_in_row
+                or base_registration_number in digits_in_row
+            ):
+                target_index = i
+                tds = row.locator("td")
+                if tds.count() > 1:
+                    try:
+                        target_drug_name = normalize_text_whitespace(
+                            tds.nth(1).inner_text()
+                        )
+                    except Exception:
+                        target_drug_name = None
+                break
+
+        if target_index is None:
+            return None
+
+        row = row_locator.nth(target_index)
+
+        checkbox = row.locator('input[type="checkbox"]')
+        if checkbox.count() > 0:
+            try:
+                checkbox.first.check(timeout=3000)
+            except Exception:
+                checkbox.first.click(timeout=3000)
+        else:
+            try:
+                row.click(timeout=3000)
+            except Exception:
+                pass
+
+        page.wait_for_timeout(1000)
+
+        detail_button_candidates = [
+            'button:has-text("Detalhe")',
+            'button:has-text("Detalhes")',
+            'button:has-text("Consultar")',
+            'button:has-text("Visualizar")',
+            'a:has-text("Detalhe")',
+            'a:has-text("Detalhes")',
+        ]
+
+        opened = False
+        for selector in detail_button_candidates:
+            loc = page.locator(selector)
+            if loc.count() == 0:
+                continue
+            try:
+                loc.first.click(timeout=3000)
+                opened = True
+                break
+            except Exception:
+                continue
+
+        if not opened:
+            try:
+                row.dblclick(timeout=3000)
+                opened = True
+            except Exception:
+                pass
+
+        if not opened:
+            return {
+                "drug_name": target_drug_name or "",
+                "full_registration_number": full_registration_number,
+            }
+
+        page.wait_for_timeout(2500)
+
+        detail_text = normalize_text_whitespace(page.content())
+        full_match = full_registration_number in detail_text
+
+        if not full_match:
+            # mesmo sem confirmar o detalhe, pelo menos devolve o nome da linha
+            return {
+                "drug_name": target_drug_name or "",
+                "full_registration_number": full_registration_number,
+            }
+
+        if not target_drug_name:
+            target_drug_name = self._extract_product_name_from_detail_page(page)
+
+        return {
+            "drug_name": target_drug_name or "",
+            "full_registration_number": full_registration_number,
+        }
+
+    def _wait_for_products_results(self, page: Any) -> None:
+        candidates = [
+            'text="Resultado da Consulta de Produtos"',
+            "table",
+            '[role="table"]',
+            'text="Número da Regularização"',
+            'text="Nome do Produto"',
+        ]
+        for selector in candidates:
+            try:
+                page.locator(selector).first.wait_for(timeout=self.timeout * 1000)
+                return
+            except Exception:
+                pass
+        raise TimeoutError("Could not detect results table in Anvisa products page.")
+
+    def _fill_products_registration_search(
+        self,
+        page: Any,
+        registration_number: str,
+    ) -> None:
+        # espera a tela estabilizar melhor
+        page.wait_for_timeout(4000)
+
+        # 1) tenta pelos seletores mais comuns
+        candidates = [
+            'input[placeholder*="Regularização"]',
+            'input[placeholder*="regularização"]',
+            'input[placeholder*="Regularizacao"]',
+            'input[placeholder*="regularizacao"]',
+            'input[placeholder*="Registro"]',
+            'input[placeholder*="registro"]',
+            'input[aria-label*="Regularização"]',
+            'input[aria-label*="regularização"]',
+            'input[aria-label*="Registro"]',
+            'input[aria-label*="registro"]',
+            'input[name*="regularizacao"]',
+            'input[name*="registro"]',
+            'input[id*="regularizacao"]',
+            'input[id*="registro"]',
+            'input[formcontrolname*="regularizacao"]',
+            'input[formcontrolname*="registro"]',
+            'input[type="text"]',
+            'input:not([type="hidden"])',
+        ]
+
+        if self._fill_first_visible(page, candidates, registration_number):
+            page.wait_for_timeout(500)
+            return
+
+        # 2) tenta por label acessível
+        accessible_patterns = [
+            re.compile(r"n[uú]mero.*regulariza", re.I),
+            re.compile(r"regulariza", re.I),
+            re.compile(r"n[uú]mero.*registro", re.I),
+            re.compile(r"registro", re.I),
+        ]
+
+        for pattern in accessible_patterns:
+            try:
+                loc = page.get_by_label(pattern)
+                if loc.count() > 0 and loc.first.is_visible():
+                    loc.first.click(timeout=2000)
+                    loc.first.fill(registration_number, timeout=5000)
+                    page.wait_for_timeout(500)
+                    return
+            except Exception:
+                pass
+
+            try:
+                loc = page.get_by_placeholder(pattern)
+                if loc.count() > 0 and loc.first.is_visible():
+                    loc.first.click(timeout=2000)
+                    loc.first.fill(registration_number, timeout=5000)
+                    page.wait_for_timeout(500)
+                    return
+            except Exception:
+                pass
+
+        # 3) fallback bruto: pega o primeiro input visível editável da página
+        try:
+            inputs = page.locator('input:not([type="hidden"]):not([disabled])')
+            n = inputs.count()
+            for i in range(n):
+                target = inputs.nth(i)
+                try:
+                    if not target.is_visible():
+                        continue
+                    target.click(timeout=2000)
+                    target.fill(registration_number, timeout=5000)
+                    page.wait_for_timeout(500)
+                    return
+                except Exception:
+                    continue
+        except Exception:
+            pass
+
+        # 4) debug para você ver o DOM real
+        page.screenshot(
+            path="debug_products_registration_search.png",
+            full_page=True,
+        )
+        html = page.content()
+        Path("debug_products_registration_search.html").write_text(
+            html,
+            encoding="utf-8",
+        )
+
+        raise ValueError(
+            f"Could not find products search input for registration number: {registration_number}"
+        )
+
+    def _collect_product_from_products_page(
+        self,
+        base_registration_number: str,
+        full_registration_number: str,
+    ) -> dict[str, str] | None:
+        self._ensure_playwright_available()
+
+        with sync_playwright() as pw:  # type: ignore
+            browser = pw.chromium.launch(headless=self.headless)
+            try:
+                page = browser.new_page(user_agent=self._BROWSER_USER_AGENT)
+                page.goto(
+                    self.PRODUCTS_URL,
+                    wait_until="domcontentloaded",
+                    timeout=self.timeout * 1000,
+                )
+                try:
+                    page.wait_for_load_state(
+                        "networkidle", timeout=min(20_000, self.timeout * 1000)
+                    )
+                except Exception:
+                    pass
+
+                page.wait_for_timeout(5000)
+
+                self._fill_products_registration_search(
+                    page, base_registration_number
+                )
+                self._trigger_search(page)
+                self._wait_for_products_results(page)
+
+                row = self._open_matching_product_row(
+                    page=page,
+                    base_registration_number=base_registration_number,
+                    full_registration_number=full_registration_number,
+                )
+                if row is None:
+                    return None
+
+                return row
+            finally:
+                browser.close()
+
+    def _find_product_by_registration_number(
+        self,
+        registration_number: str,
+    ) -> dict[str, str] | None:
+        """
+        Busca na Consulta de Produtos da Anvisa pelo número base da regularização
+        e tenta localizar a apresentação exata pelo número completo.
+        """
+        base_reg, _ = self._split_registration_number(registration_number)
+        full_reg = self._normalize_registration_digits(registration_number)
+
+        result = self._collect_product_from_products_page(
+            base_registration_number=base_reg,
+            full_registration_number=full_reg,
+        )
+        return result
 
     # ------------------------------------------------------------------
     # Browser automation
