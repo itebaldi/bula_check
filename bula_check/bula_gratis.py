@@ -23,7 +23,7 @@ from nemo.stopwords import get_portuguese_stopwords
 from pydantic import BaseModel
 from toolz.functoolz import pipe
 
-from bula_check.constants import SECTION_PATTERNS
+from bula_check.bula import Sections as BulaSections
 
 
 class Logs(BaseModel):
@@ -963,7 +963,7 @@ def _extract_sections(blocks: list[dict[str, str]]) -> Sections:
 
     for block in blocks:
         heading_norm = _normalize_text(block["heading"])
-        for section_name, patterns in SECTION_PATTERNS.items():
+        for section_name, patterns in BulaSections.section_patterns().items():
             if sections[section_name] is not None:
                 continue
             if any(pattern in heading_norm for pattern in patterns):

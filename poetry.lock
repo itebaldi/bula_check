@@ -909,13 +909,13 @@ six = "*"
 
 [[package]]
 name = "langsmith"
-version = "0.7.32"
+version = "0.7.33"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "langsmith-0.7.32-py3-none-any.whl", hash = "sha256:e1fde928990c4c52f47dc5132708cec674355d9101723d564183e965f383bf5f"},
-    {file = "langsmith-0.7.32.tar.gz", hash = "sha256:b59b8e106d0e4c4842e158229296086e2aa7c561e3f602acda73d3ad0062e915"},
+    {file = "langsmith-0.7.33-py3-none-any.whl", hash = "sha256:5b535b991d52d3b664ebb8dc6f95afcf8d0acb42e062ac45a54a6a4820139f20"},
+    {file = "langsmith-0.7.33.tar.gz", hash = "sha256:fa2d81ad6e8374a81fda9291894f6fcae714e55fbf11a0b07578e3cd4b1ea384"},
 ]
 
 [package.dependencies]
@@ -1164,7 +1164,7 @@ toolz = "^1.1.0"
 type = "git"
 url = "ssh://git@github.com/itebaldi/nemo.git"
 reference = "main"
-resolved_reference = "8ab1647d966a7c47c9e48b408624b46f49b92941"
+resolved_reference = "cdc5ffaac9db3ac44e58ae3ae831855fafe3cf50"
 
 [[package]]
 name = "nltk"
