@@ -19,11 +19,11 @@ from nemo.preprocessing.text import remove_text_accents
 from nemo.preprocessing.text import remove_text_punctuation
 from nemo.preprocessing.text import remove_text_stopwords
 from nemo.preprocessing.text import replace_spaces_with_text_underscores
+from nemo.stopwords import get_portuguese_stopwords
 from pydantic import BaseModel
 from toolz.functoolz import pipe
 
 from bula_check.constants import SECTION_PATTERNS
-from inputs.stopwords import get_portuguese_stopwords
 
 
 class Logs(BaseModel):
