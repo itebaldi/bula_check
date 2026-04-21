@@ -1,0 +1,22 @@
+{
+    "drug_name": "CORISTINA D",
+    "company_name": "COSMED INDUSTRIA DE COSMETICOS E MEDICAMENTOS S.A. - 61082426000207",
+    "source_url": "https://consultas.anvisa.gov.br/#/medicamentos/1060235?numeroProcesso=25351268780201542",
+    "patient_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNDEzODI3MCIsIm5iZiI6MTc3NjcwMDI1NywiZXhwIjoxNzc2NzAwNTU3fQ.4e4ZxIci8ew2tcx8Me_vAbIzgtUEdjhWW-IrhlmXWR3L59HrSzz-uLcChKJZck5iWaCe3scOyevesxhDZGqJVw/?Authorization=Guest",
+    "professional_url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNDEzODI3NCIsIm5iZiI6MTc3NjcwMDI1NywiZXhwIjoxNzc2NzAwNTU3fQ.7vC5Yy3Mme7Xn7iEWx_2ZF22RyYBvXhtCxSo21lkA8k2nHUGYC2Y6y7sxFCFtVqCLvI4Gcq02guPizYLXe8CsA/?Authorization=Guest",
+    "created_at": "2026-04-20T12:51:00.944174",
+    "registration_number": "178170797",
+    "cnpj": "61082426000207",
+    "product_id": 1060235,
+    "process_number": "25351268780201542",
+    "file_name": "coristina_d__cosmed_industria_de_cosmeticos_e_medicamentos_sa__61082426000207.pdf",
+    "active_ingredient": [
+        "MALEATO DE DEXCLORFENIRAMINA",
+        "CLORIDRATO DE FENILEFRINA",
+        "CAFEÍNA",
+        "ÁCIDO ACETIL SALICILICO"
+    ],
+    "therapeutic_classes": [
+        "PRODUTO P.TERAPIA SINTOMATICA DA GRIPE"
+    ]
+}

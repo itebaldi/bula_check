@@ -161,6 +161,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+*.db-shm
+*.db-wal
+
 # pytype static type analyzer
 .pytype/
 
