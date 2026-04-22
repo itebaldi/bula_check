@@ -8,7 +8,7 @@ def test_search():
     )
 
     results = client.search(
-        "tylenol", limit=1, save_json=True, save_pdf=True, save_sqlite=True
+        "PREDSUL", limit=1, save_json=True, save_pdf=True, save_sqlite=True
     )
 
     for result in results:
