@@ -37,30 +37,28 @@ def test_search_in_db__normalized_text():
 
         search = search_in_db(
             db_connection=conn,
-            keyword="ÓXIDO DE ZINCO + NISTATINA",
+            keyword="oxido de zinco nistatina",
             table_name="produto",
         )
 
         assert len(search) == 15
 
 
-def test_search_in_db__json_principio_ativo():
+def test_search_in_db__search_by_filters():
 
-    db_path = Path("inputs/bulas/bulas_doc.db")
+    db_path = Path("inputs/anvisa_crawler/medicamentos.db")
 
     with closing(sqlite3.connect(db_path)) as conn:
-        search = search_in_db(
-            db_connection=conn,
-            keyword="cloreto de cálcio",
-            table_name="bula_doc_index",
-        )
-
-        assert len(search) == 2
-
         search = search_by_filters(
             db_connection=conn,
-            table_name="bula_doc_index",
-            filters={"active_ingredient": "cloreto de cálcio"},
+            table_name="produto",
+            filters={"principioAtivo": "NISTATINA, ÓXIDO DE ZINCO"},
         )
+        # search = search_in_db(
+        #     db_connection=conn,
+        #     table_name="produto",
+        #     keyword="oxido de zinco nistatina",
+        #     columns=["principioAtivo"],
+        # )
 
-        assert len(search) == 2
+        assert len(search) == 11
