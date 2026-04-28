@@ -194,3 +194,125 @@ class DeCSC:
                 "format": "json",
             },
         )
+
+
+# t = {
+#     "attr": {"service": "", "tree_id": "D01.362.635.600"},
+#     "record_list": {
+#         "record": {
+#             "allowable_qualifier_list": [
+#                 {"allowable_qualifier": "AD", "attr": {"id": "22000"}},
+#                 {"allowable_qualifier": "AE", "attr": {"id": "22020"}},
+#                 {"allowable_qualifier": "AG", "attr": {"id": "32387"}},
+#                 {"allowable_qualifier": "AI", "attr": {"id": "22006"}},
+#                 {"allowable_qualifier": "AN", "attr": {"id": "22002"}},
+#                 {"allowable_qualifier": "BL", "attr": {"id": "22062"}},
+#                 {"allowable_qualifier": "CF", "attr": {"id": "22043"}},
+#                 {"allowable_qualifier": "CH", "attr": {"id": "29165"}},
+#                 {"allowable_qualifier": "CL", "attr": {"id": "22011"}},
+#                 {"allowable_qualifier": "CS", "attr": {"id": "22065"}},
+#                 {"allowable_qualifier": "EC", "attr": {"id": "22018"}},
+#                 {"allowable_qualifier": "HI", "attr": {"id": "22034"}},
+#                 {"allowable_qualifier": "IM", "attr": {"id": "22038"}},
+#                 {"allowable_qualifier": "IP", "attr": {"id": "22001"}},
+#                 {"allowable_qualifier": "ME", "attr": {"id": "22044"}},
+#                 {"allowable_qualifier": "PD", "attr": {"id": "22078"}},
+#                 {"allowable_qualifier": "PK", "attr": {"id": "22079"}},
+#                 {"allowable_qualifier": "PO", "attr": {"id": "22025"}},
+#                 {"allowable_qualifier": "RE", "attr": {"id": "22022"}},
+#                 {"allowable_qualifier": "SD", "attr": {"id": "22055"}},
+#                 {"allowable_qualifier": "ST", "attr": {"id": "22048"}},
+#                 {"allowable_qualifier": "TO", "attr": {"id": "22068"}},
+#                 {"allowable_qualifier": "TU", "attr": {"id": "22073"}},
+#                 {"allowable_qualifier": "UR", "attr": {"id": "22050"}},
+#             ],
+#             "attr": {"db": "decs", "lang": "pt", "mfn": "9770"},
+#             "definition": {
+#                 "occ": {
+#                     "attr": {
+#                         "n": "Óxido de nitrogênio (NO2). Um gás altamente venenoso cuja exposição produz inflamação dos pulmões causando uma leve dor ou mesmo passando despercebida, porém levando a um edema pulmonar muitos dias depois que pode causar a morte. É um dos principais poluentes da atmosfera, responsável por absorver os raios ultravioleta que não chegam a superfície da terra."
+#                     }
+#                 }
+#             },
+#             "descriptor_list": [
+#                 {"attr": {"lang": "en"}, "descriptor": "Nitrogen Dioxide"},
+#                 {"attr": {"lang": "es"}, "descriptor": "Dióxido de Nitrógeno"},
+#                 {"attr": {"lang": "pt-br"}, "descriptor": "Dióxido de Nitrogênio"},
+#                 {"attr": {"lang": "fr"}, "descriptor": "Dioxyde d'azote"},
+#                 {"attr": {"lang": "es-es"}, "descriptor": "dióxido de nitrógeno"},
+#             ],
+#             "entry_combination_list": [],
+#             "indexing_annotation": "um gas altamente venenoso",
+#             "pharmacological_action_list": [
+#                 {
+#                     "attr": {"lang": "pt"},
+#                     "pharmacological_action": "Oxidantes Fotoquímicos",
+#                 }
+#             ],
+#             "see_related_list": [],
+#             "synonym_list": [],
+#             "tree_id_list": [
+#                 {"tree_id": "D01.362.635.600"},
+#                 {"tree_id": "D01.625.550.525"},
+#                 {"tree_id": "D01.650.550.587.625"},
+#                 {"tree_id": "SP4.606.806.945.200.202"},
+#             ],
+#             "unique_identifier_nlm": "D009585",
+#         }
+#     },
+#     "tree": {
+#         "ancestors": {
+#             "attr": {"lang": "pt"},
+#             "term_list": [
+#                 {"attr": {"tree_id": "D"}, "term": "COMPOSTOS QUÍMICOS E DROGAS"},
+#                 {"attr": {"tree_id": "D01"}, "term": "Compostos Inorgânicos"},
+#                 {"attr": {"tree_id": "D01.362"}, "term": "Gases"},
+#                 {"attr": {"tree_id": "D01.362.635"}, "term": "Óxidos de Nitrogênio"},
+#                 {"attr": {"tree_id": "D"}, "term": "COMPOSTOS QUÍMICOS E DROGAS"},
+#                 {"attr": {"tree_id": "D01"}, "term": "Compostos Inorgânicos"},
+#                 {"attr": {"tree_id": "D01.625"}, "term": "Compostos de Nitrogênio"},
+#                 {"attr": {"tree_id": "D01.625.550"}, "term": "Óxidos de Nitrogênio"},
+#                 {"attr": {"tree_id": "D"}, "term": "COMPOSTOS QUÍMICOS E DROGAS"},
+#                 {"attr": {"tree_id": "D01"}, "term": "Compostos Inorgânicos"},
+#                 {"attr": {"tree_id": "D01.650"}, "term": "Compostos de Oxigênio"},
+#                 {"attr": {"tree_id": "D01.650.550"}, "term": "Óxidos"},
+#                 {
+#                     "attr": {"tree_id": "D01.650.550.587"},
+#                     "term": "Óxidos de Nitrogênio",
+#                 },
+#                 {"attr": {"tree_id": "SP"}, "term": "SAÚDE PÚBLICA"},
+#                 {"attr": {"tree_id": "SP4"}, "term": "Saúde Ambiental"},
+#                 {"attr": {"tree_id": "SP4.606"}, "term": "Meio Ambiente"},
+#                 {"attr": {"tree_id": "SP4.606.806"}, "term": "Poluição Ambiental"},
+#                 {
+#                     "attr": {"tree_id": "SP4.606.806.945"},
+#                     "term": "Poluentes Ambientais",
+#                 },
+#                 {
+#                     "attr": {"tree_id": "SP4.606.806.945.200"},
+#                     "term": "Poluentes Atmosféricos",
+#                 },
+#             ],
+#         },
+#         "descendants": {"attr": {"lang": "pt"}, "term_list": []},
+#         "following_sibling": {
+#             "attr": {"lang": "pt"},
+#             "term_list": [
+#                 {
+#                     "attr": {"leaf": "true", "tree_id": "D01.362.635.625"},
+#                     "term": "Óxido Nitroso",
+#                 }
+#             ],
+#         },
+#         "preceding_sibling": {"attr": {"lang": "pt"}, "term_list": []},
+#         "self": {
+#             "attr": {"lang": "pt"},
+#             "term_list": [
+#                 {
+#                     "attr": {"leaf": "true", "tree_id": "D01.362.635.600"},
+#                     "term": "Dióxido de Nitrogênio",
+#                 }
+#             ],
+#         },
+#     },
+# }
