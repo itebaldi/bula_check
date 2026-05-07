@@ -1,6 +1,6 @@
 [
   {
-    "id": "75724b11-7a93-4aeb-880b-12828a5b3bd8",
+    "id": "ff0bb181-2752-45de-b187-27775b62ed8f",
     "name": "ALICURA",
     "processed_name": "ALICURA",
     "active_ingredient": [
@@ -10,7 +10,7 @@
       "ACIDO ACETILSALICILICO CAFEINA"
     ],
     "source": "anvisa",
-    "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNTkzODI0NyIsIm5iZiI6MTc3ODE4NzQyNywiZXhwIjoxNzc4MTg3NzI3fQ.F3YYS4OV8yRehTYKyrsSa3XhJDyE4gA-D9cXOWi4ApPGtUg1KUt8A3OwFwl2vnO4L8NXYGyleQz70tSny6kLOQ/?Authorization=Guest",
+    "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNTkzODI0NyIsIm5iZiI6MTc3ODE5MjA1MSwiZXhwIjoxNzc4MTkyMzUxfQ.Dy1T7PTxMVIFKTLZxhF_3IPX4jywq-WoTDk4fxeMCMIQTHor8CZryE7q6OtUXeTsBz1PbbLUN0FTPR1xjE-9iw/?Authorization=Guest",
     "registration_number": 100660047,
     "therapeutic_classes": null,
     "company_name": "LABORATORIO CATARINENSE LTDA",

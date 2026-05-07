@@ -272,6 +272,88 @@ def _split_into_sentences(paragraph: str) -> list[str]:
     return [s.strip() for s in sentences if s.strip()]
 
 
+def _count_words(text: str) -> int:
+    return len(text.split())
+
+
+def _clean_text_for_embedding(text: str) -> str:
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def _split_paragraph_into_chunks(
+    paragraph: str,
+    max_words: int = 250,
+) -> list[str]:
+    """Split a paragraph into chunks with at most `max_words`.
+
+    The function first applies a light text cleanup for embedding. Then it
+    tries to split by sentence. If a single sentence is longer than
+    `max_words`, that sentence is split by words as a fallback.
+
+    Parameters
+    ----------
+    paragraph : str
+        Paragraph text to split.
+    max_words : int, optional
+        Maximum number of words per chunk, by default 250.
+
+    Returns
+    -------
+    list[str]
+        List of text chunks.
+    """
+    paragraph = _clean_text_for_embedding(paragraph)
+
+    if not paragraph:
+        return []
+
+    sentences = _split_into_sentences(paragraph)
+
+    chunks: list[str] = []
+    current_chunk: list[str] = []
+    current_word_count = 0
+
+    for sentence in sentences:
+        sentence = _clean_text_for_embedding(sentence)
+        sentence_word_count = _count_words(sentence)
+
+        if sentence_word_count == 0:
+            continue
+
+        if sentence_word_count > max_words:
+            if current_chunk:
+                chunks.append(_clean_text_for_embedding(" ".join(current_chunk)))
+                current_chunk = []
+                current_word_count = 0
+
+            words = sentence.split()
+
+            for start in range(0, len(words), max_words):
+                chunk_words = words[start : start + max_words]
+                chunk = _clean_text_for_embedding(" ".join(chunk_words))
+
+                if chunk:
+                    chunks.append(chunk)
+
+            continue
+
+        if current_word_count + sentence_word_count <= max_words:
+            current_chunk.append(sentence)
+            current_word_count += sentence_word_count
+        else:
+            if current_chunk:
+                chunks.append(_clean_text_for_embedding(" ".join(current_chunk)))
+
+            current_chunk = [sentence]
+            current_word_count = sentence_word_count
+
+    if current_chunk:
+        chunks.append(_clean_text_for_embedding(" ".join(current_chunk)))
+
+    return chunks
+
+
 def _build_chunks_for_medicine(
     medicine_id: str,
     medicine_name: str,
@@ -293,7 +375,9 @@ def _build_chunks_for_medicine(
             continue
 
         for para_idx, paragraph in enumerate(_split_into_paragraphs(text)):
-            for chunk_idx, sentence in enumerate(_split_into_sentences(paragraph)):
+            for chunk_idx, sentence in enumerate(
+                _split_paragraph_into_chunks(paragraph)
+            ):
                 chunks.append(
                     Chunks(
                         id=str(uuid.uuid4()),
@@ -329,6 +413,10 @@ def _embed_chunks(chunks: list[Chunks]) -> list[Chunks]:
             "openai não instalado — embeddings não gerados. pip install openai"
         )
         return chunks
+
+    from dotenv import load_dotenv
+
+    load_dotenv()
 
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
