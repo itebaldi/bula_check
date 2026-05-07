@@ -357,8 +357,10 @@ def get_by_name(
     name: str,
     save_jsons: bool = False,
     save_sqlite: bool = False,
+    download_pdf: bool = False,
     db_path: Path = DEFAULT_DB_PATH,
     json_output_dir: Path = Path("outputs/anvisa/json"),
+    pdf_output_dir: Path = Path("outputs/anvisa/pdfs"),
 ) -> list[Medicines]:
     """
     Busca medicamentos da ANVISA pelo nome e retorna lista de Medicines.
@@ -371,10 +373,14 @@ def get_by_name(
         Se True, salva um JSON único com a lista de resultados para debug.
     save_sqlite : bool
         Se True, upsert no banco SQLite (tabela medicines).
+    download_pdf : bool
+        Se True, baixa o PDF da bula de paciente quando houver URL disponível.
     db_path : Path
         Caminho do banco SQLite.
     json_output_dir : Path
         Diretório onde o JSON de debug será salvo.
+    pdf_output_dir : Path
+        Diretório onde os PDFs das bulas serão salvos.
 
     Returns
     -------
@@ -412,8 +418,18 @@ def get_by_name(
                 seen_ids.add(uid)
 
             med = _item_to_medicine(item, session)
-            if med is not None:
-                medicines.append(med)
+            if med is None:
+                continue
+
+            medicines.append(med)
+
+            if download_pdf:
+                _download_pdf(
+                    session=session,
+                    url=med.url,
+                    medicine=med,
+                    output_dir=pdf_output_dir,
+                )
 
         if page >= total_pages:
             break
@@ -443,6 +459,62 @@ def get_by_name(
             conn.close()
 
     return medicines
+
+
+def _download_pdf(
+    session: requests.Session,
+    url: str | None,
+    medicine: Medicines,
+    output_dir: Path,
+) -> Path | None:
+    """
+    Baixa o PDF da bula de paciente de um medicamento.
+
+    Parameters
+    ----------
+    session : requests.Session
+        Sessão HTTP já configurada.
+    url : str | None
+        URL da bula PDF.
+    medicine : Medicines
+        Medicamento usado para montar o nome do arquivo.
+    output_dir : Path
+        Diretório onde o PDF será salvo.
+
+    Returns
+    -------
+    Path | None
+        Caminho do PDF salvo, ou None se não houver PDF válido.
+    """
+    if not url or PDF_API not in url:
+        log.warning("Sem URL de PDF para %s", medicine.name)
+        return None
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    safe_name = re.sub(r"\W+", "_", medicine.name).strip("_").lower()
+    registration = medicine.registration_number or "sem_registro"
+    file_path = output_dir / f"{safe_name}_{registration}.pdf"
+
+    try:
+        resp = session.get(url, timeout=60)
+        resp.raise_for_status()
+
+        content_type = resp.headers.get("Content-Type", "")
+        if "pdf" not in content_type.lower():
+            log.warning(
+                "Resposta não parece ser PDF para %s. Content-Type=%s",
+                medicine.name,
+                content_type,
+            )
+
+        file_path.write_bytes(resp.content)
+        log.info("PDF salvo: %s", file_path)
+        return file_path
+
+    except Exception as exc:
+        log.error("Erro ao baixar PDF de %s: %s", medicine.name, exc)
+        return None
 
 
 # ---------------------------------------------------------------------------
