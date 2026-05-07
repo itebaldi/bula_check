@@ -308,24 +308,23 @@ def _item_to_medicine(
     )
     therapeutic_classes = _therapeutic_classes(detail)
 
-    # extras: campos adicionais do produto
-    extras = json.dumps(
-        {
-            "produto_codigo": product_id,
-            "registration_number_formatted": p.get("numeroRegistroFormatado"),
-            "tipo_autorizacao": p.get("tipoAutorizacao"),
-            "situacao": p.get("situacaoApresentacao"),
-            "categoria_regulatoria": (p.get("categoriaRegulatoria") or {}).get(
-                "descricao"
-            ),
-            "data_registro": p.get("dataRegistro"),
-            "data_vencimento": p.get("dataVencimentoRegistro"),
-            "medicamento_referencia": p.get("medicamentoReferencia"),
-            "processo": pr.get("numeroProcessoFormatado"),
-            "professional_url": None,  # pode ser preenchido manualmente se necessário
-        },
-        ensure_ascii=False,
-    )
+    # extras = json.dumps(
+    #     {
+    #         "produto_codigo": product_id,
+    #         "registration_number_formatted": p.get("numeroRegistroFormatado"),
+    #         "tipo_autorizacao": p.get("tipoAutorizacao"),
+    #         "situacao": p.get("situacaoApresentacao"),
+    #         "categoria_regulatoria": (p.get("categoriaRegulatoria") or {}).get(
+    #             "descricao"
+    #         ),
+    #         "data_registro": p.get("dataRegistro"),
+    #         "data_vencimento": p.get("dataVencimentoRegistro"),
+    #         "medicamento_referencia": p.get("medicamentoReferencia"),
+    #         "processo": pr.get("numeroProcessoFormatado"),
+    #         "professional_url": None,  # pode ser preenchido manualmente se necessário
+    #     },
+    #     ensure_ascii=False,
+    # )
 
     name = str(p.get("nome") or "Medicamento")
 
@@ -348,7 +347,6 @@ def _item_to_medicine(
         company_name=company_name,
         processed_company_name=normalize_processed_field(company_name),
         cnpj=cnpj,
-        extras=extras,
     )
 
 

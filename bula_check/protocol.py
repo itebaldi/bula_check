@@ -116,8 +116,6 @@ class Medicines(BaseModel):
         Nome da empresa normalizado.
     cnpj : str | None
         CNPJ da empresa.
-    extras : str
-        Informações adicionais em JSON.
     """
 
     id: str
@@ -132,7 +130,6 @@ class Medicines(BaseModel):
     company_name: str
     processed_company_name: str
     cnpj: str | None = None
-    extras: str = "{}"
 
 
 class Chunks(BaseModel):
@@ -225,8 +222,7 @@ CREATE TABLE IF NOT EXISTS medicines (
     therapeutic_classes         TEXT,          -- JSON array ou NULL
     company_name                TEXT NOT NULL,
     processed_company_name      TEXT NOT NULL,
-    cnpj                        TEXT,
-    extras                      TEXT NOT NULL DEFAULT '{}'
+    cnpj                        TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_medicines_processed_name  ON medicines(processed_name);
 CREATE INDEX IF NOT EXISTS idx_medicines_cnpj            ON medicines(cnpj);
@@ -253,15 +249,13 @@ _UPSERT_MEDICINE = """
 INSERT INTO medicines (
     id, name, processed_name,
     active_ingredient, processed_active_ingredient,
-    source, url, registration_number,
-    therapeutic_classes, company_name, processed_company_name,
-    cnpj, extras
+    source, url, registration_number, therapeutic_classes,
+    company_name, processed_company_name, cnpj
 ) VALUES (
     :id, :name, :processed_name,
-    :active_ingredient, :processed_active_ingredient,
-    :source, :url, :registration_number,
-    :therapeutic_classes, :company_name, :processed_company_name,
-    :cnpj, :extras
+    :active_ingredient, :processed_active_ingredient, :source, :url,
+    :registration_number, :therapeutic_classes, :company_name,
+    :processed_company_name, :cnpj
 )
 ON CONFLICT(url) DO UPDATE SET
     name                        = excluded.name,
@@ -272,8 +266,7 @@ ON CONFLICT(url) DO UPDATE SET
     therapeutic_classes         = excluded.therapeutic_classes,
     company_name                = excluded.company_name,
     processed_company_name      = excluded.processed_company_name,
-    cnpj                        = excluded.cnpj,
-    extras                      = excluded.extras;
+    cnpj                        = excluded.cnpj;
 """
 
 _UPSERT_CHUNK = """
@@ -315,13 +308,11 @@ def save_medicine(conn: sqlite3.Connection, medicine: Medicines) -> None:
             "id": medicine.id,
             "name": medicine.name,
             "processed_name": medicine.processed_name,
-            "active_ingredient": json.dumps(
-                medicine.active_ingredient, ensure_ascii=False
-            )
+            "active_ingredient": ", ".join(medicine.active_ingredient)
             if medicine.active_ingredient is not None
             else None,
-            "processed_active_ingredient": json.dumps(
-                medicine.processed_active_ingredient, ensure_ascii=False
+            "processed_active_ingredient": ", ".join(
+                medicine.processed_active_ingredient
             )
             if medicine.processed_active_ingredient is not None
             else None,
@@ -336,7 +327,6 @@ def save_medicine(conn: sqlite3.Connection, medicine: Medicines) -> None:
             "company_name": medicine.company_name,
             "processed_company_name": medicine.processed_company_name,
             "cnpj": medicine.cnpj,
-            "extras": medicine.extras,
         },
     )
 

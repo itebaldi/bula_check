@@ -406,14 +406,6 @@ def _scrape_bula(
         company_name=company_name,
         processed_company_name=normalize_processed_field(company_name),
         cnpj=cnpj,
-        extras=json.dumps(
-            {
-                "empresa_slug": link.get("empresa_slug"),
-                "medicamento_slug": link.get("medicamento_slug"),
-                "patient_url": patient_url,
-            },
-            ensure_ascii=False,
-        ),
     )
 
     chunks = _build_chunks_for_medicine(medicine_id, drug_name, sections)
