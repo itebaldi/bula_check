@@ -365,9 +365,7 @@ def save_json(records: list[dict], path: Path) -> None:
 _DDL = """
 CREATE TABLE IF NOT EXISTS empresa (
     cnpj               TEXT PRIMARY KEY,
-    razaoSocial        TEXT,
-    cnpjFormatado      TEXT,
-    numeroAutorizacao  TEXT
+    legal_name        TEXT
 );
 
 CREATE TABLE IF NOT EXISTS produto (
@@ -389,51 +387,16 @@ CREATE TABLE IF NOT EXISTS produto (
     empresa_cnpj              TEXT REFERENCES empresa(cnpj)
 );
 
-CREATE TABLE IF NOT EXISTS processo (
-    numeroFormatado  TEXT PRIMARY KEY,
-    situacao         INTEGER,
-    produto_codigo   INTEGER REFERENCES produto(codigo)
-);
-
 CREATE INDEX IF NOT EXISTS idx_produto_nome           ON produto(nome);
 CREATE INDEX IF NOT EXISTS idx_produto_numeroRegistro ON produto(numeroRegistro);
 CREATE INDEX IF NOT EXISTS idx_produto_empresa        ON produto(empresa_cnpj);
-
-CREATE VIEW IF NOT EXISTS medicamentos_view AS
-SELECT
-    p.codigo                    AS produto_codigo,
-    p.nome                      AS produto_nome,
-    p.numeroRegistro            AS produto_numeroRegistro,
-    p.numeroRegistroFormatado   AS produto_numeroRegistroFormatado,
-    p.tipoAutorizacao           AS produto_tipoAutorizacao,
-    p.situacaoApresentacao      AS produto_situacaoApresentacao,
-    p.principioAtivo            AS produto_principioAtivo,
-    p.categoriaRegulatoria      AS produto_categoriaRegulatoria,
-    p.mesAnoVencimentoFormatado AS produto_mesAnoVencimentoFormatado,
-    p.dataRegistro              AS produto_dataRegistro,
-    p.dataVencimentoRegistro    AS produto_dataVencimentoRegistro,
-    p.dataCancelamento          AS produto_dataCancelamento,
-    p.dataAtualizacao           AS produto_dataAtualizacao,
-    p.medicamentoReferencia     AS produto_medicamentoReferencia,
-    p.complemento               AS produto_complemento,
-    e.razaoSocial               AS empresa_razaoSocial,
-    e.cnpj                      AS empresa_cnpj,
-    e.cnpjFormatado             AS empresa_cnpjFormatado,
-    e.numeroAutorizacao         AS empresa_numeroAutorizacao,
-    pr.numeroFormatado          AS processo_numeroProcessoFormatado,
-    pr.situacao                 AS processo_situacao
-FROM produto p
-LEFT JOIN empresa  e  ON e.cnpj            = p.empresa_cnpj
-LEFT JOIN processo pr ON pr.produto_codigo = p.codigo;
 """
 
 _UPSERT_EMPRESA = """
-INSERT INTO empresa (cnpj, razaoSocial, cnpjFormatado, numeroAutorizacao)
-VALUES (:cnpj, :razaoSocial, :cnpjFormatado, :numeroAutorizacao)
+INSERT INTO empresa (cnpj, legal_name)
+VALUES (:cnpj, :legal_name)
 ON CONFLICT(cnpj) DO UPDATE SET
-    razaoSocial       = excluded.razaoSocial,
-    cnpjFormatado     = excluded.cnpjFormatado,
-    numeroAutorizacao = excluded.numeroAutorizacao;
+    legal_name       = excluded.legal_name,
 """
 
 _UPSERT_PRODUTO = """
@@ -468,14 +431,6 @@ ON CONFLICT(codigo) DO UPDATE SET
     empresa_cnpj              = excluded.empresa_cnpj;
 """
 
-_UPSERT_PROCESSO = """
-INSERT INTO processo (numeroFormatado, situacao, produto_codigo)
-VALUES (:numeroFormatado, :situacao, :produto_codigo)
-ON CONFLICT(numeroFormatado) DO UPDATE SET
-    situacao       = excluded.situacao,
-    produto_codigo = excluded.produto_codigo;
-"""
-
 
 def save_sqlite(records: list[dict], path: Path) -> None:
     conn = sqlite3.connect(path)
@@ -490,9 +445,7 @@ def save_sqlite(records: list[dict], path: Path) -> None:
                     _UPSERT_EMPRESA,
                     {
                         "cnpj": r["empresa_cnpj"],
-                        "razaoSocial": r["empresa_razaoSocial"],
-                        "cnpjFormatado": r["empresa_cnpjFormatado"],
-                        "numeroAutorizacao": r["empresa_numeroAutorizacao"],
+                        "legal_name": r["empresa_razaoSocial"],
                     },
                 )
             if r.get("produto_codigo"):
@@ -521,15 +474,6 @@ def save_sqlite(records: list[dict], path: Path) -> None:
                         "medicamentoReferencia": r["produto_medicamentoReferencia"],
                         "complemento": r["produto_complemento"],
                         "empresa_cnpj": r["empresa_cnpj"],
-                    },
-                )
-            if r.get("processo_numeroProcessoFormatado"):
-                conn.execute(
-                    _UPSERT_PROCESSO,
-                    {
-                        "numeroFormatado": r["processo_numeroProcessoFormatado"],
-                        "situacao": r["processo_situacao"],
-                        "produto_codigo": r["produto_codigo"],
                     },
                 )
 

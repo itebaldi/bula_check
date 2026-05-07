@@ -1,4 +1,3 @@
-from collections import defaultdict
 import re
 from typing import ClassVar
 from typing import Optional
