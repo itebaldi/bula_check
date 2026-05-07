@@ -603,7 +603,6 @@ if __name__ == "__main__":
         len(DEFAULT_PREFIXES),
         PAGE_SIZE,
     )
-    records = crawl(save_sqlite=True)
-    log.info(
-        "Pronto! %d medicamentos coletados. DB: %s", len(records), DEFAULT_DB_PATH
-    )
+    path = Path("bulas_anvisa.db")
+    records = crawl(save_sqlite=True, db_path=path, prefixes=["A"])
+    log.info("Pronto! %d medicamentos coletados. DB: %s", len(records), path)
