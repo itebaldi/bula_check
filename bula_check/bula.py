@@ -1,169 +1,82 @@
+"""
+bula.py
+-------
+Parser de bulas em PDF (fonte ANVISA).
+
+Recebe uma lista de `langchain_core.documents.Document` (páginas do PDF já
+extraídas) e produz:
+
+  - dict[str, list[str]]   — seções brutas (título → parágrafos)
+  - dict[str, str | None]  — seções mapeadas para os nomes canônicos
+  - list[Chunks]           — fragmentos prontos para embedding
+
+Uso típico:
+    from langchain_community.document_loaders import PyPDFLoader
+    docs = PyPDFLoader("bula_paciente.pdf").load()
+
+    sections = gen_sections_from_pdf(docs)
+    chunks   = gen_chunks_from_pdf(medicine_id, medicine_name, docs)
+"""
+
+from __future__ import annotations
+
 import re
-from typing import ClassVar
-from typing import Optional
+import uuid
 
 from langchain_core.documents import Document
-from nemo.preprocessing.text import normalize_text_whitespace
-from nemo.preprocessing.text import remove_text_accents
-from nemo.preprocessing.text import remove_text_punctuation
-from nemo.preprocessing.text import uppercase_text
-from nemo.protocol import _BaseModel
-from toolz.functoolz import pipe
+
+from bula_check.protocol import SECTION_PATTERNS
+from bula_check.protocol import Chunks
+from bula_check.protocol import Section
+from bula_check.protocol import normalize_for_matching
 
 
-class Sections(_BaseModel):
-    indications: Optional[str] = None
-    how_it_works: Optional[str] = None
-    contraindications: Optional[str] = None
-    warnings_and_precautions: Optional[str] = None
-    storage: Optional[str] = None
-    dosage_and_administration: Optional[str] = None
-    missed_dose: Optional[str] = None
-    adverse_reactions: Optional[str] = None
-    overdose: Optional[str] = None
-
-    _RAW_SECTION_PATTERNS: ClassVar[dict[str, list[str]]] = {
-        # 1. PARA QUE ESTE MEDICAMENTO É INDICADO?
-        "indications": [
-            "para que este medicamento e indicado",
-            "PARA QUE ESTE MEDICAMENTO E INDICADO",
-        ],
-        # 2. COMO ESTE MEDICAMENTO FUNCIONA?
-        "how_it_works": [
-            "como este medicamento funciona",
-            "COMO ESTE MEDICAMENTO FUNCIONA",
-        ],
-        # 3. QUANDO NÃO DEVO USAR ESTE MEDICAMENTO?
-        "contraindications": [
-            "quando nao devo usar este medicamento",
-            "quem nao deve usar este medicamento",
-            "QUANDO NAO DEVO USAR ESTE MEDICAMENTO",
-        ],
-        # 4. O QUE DEVO SABER ANTES DE USAR ESTE MEDICAMENTO?
-        "warnings_and_precautions": [
-            "o que devo saber antes de usar este medicamento",
-            "precaucoes",
-            "O QUE DEVO SABER ANTES DE USAR ESTE MEDICAMENTO",
-        ],
-        # 5. ONDE, COMO E POR QUANTO TEMPO POSSO GUARDAR ESTE MEDICAMENTO?
-        "storage": [
-            "onde como e por quanto tempo posso guardar este medicamento",
-            "ONDE, COMO E POR QUANTO TEMPO POSSO GUARDAR ESTE MEDICAMENTO",
-        ],
-        # 6. COMO DEVO USAR ESTE MEDICAMENTO?
-        "dosage_and_administration": [
-            "como devo usar este medicamento",
-            "COMO DEVO USAR ESTE MEDICAMENTO",
-        ],
-        # 7. O QUE DEVO FAZER QUANDO EU ME ESQUECER DE USAR ESTE MEDICAMENTO?
-        "missed_dose": [
-            "o que devo fazer quando eu me esquecer de usar este medicamento",
-            "O QUE DEVO FAZER QUANDO EU ME ESQUECER DE USAR ESTE MEDICAMENTO",
-        ],
-        # 8. QUAIS OS MALES QUE ESTE MEDICAMENTO PODE ME CAUSAR?
-        "adverse_reactions": [
-            "quais os males que este medicamento pode me causar",
-            "QUAIS OS MALES QUE ESTE MEDICAMENTO PODE ME CAUSAR",
-        ],
-        # 9. O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR DO QUE A INDICADA DESTE MEDICAMENTO?
-        "overdose": [
-            "o que fazer se alguem usar uma quantidade maior do que a indicada deste medicamento",
-            "O QUE FAZER SE ALGUEM USAR UMA QUANTIDADE MAIOR DO QUE A INDICADA DESTE MEDICAMENTO",
-        ],
-    }
-
-    @classmethod
-    def empty(cls) -> "Sections":
-        return cls(**{name: None for name in cls.model_fields})
-
-    @classmethod
-    def section_names(cls) -> list[str]:
-        return list(cls.model_fields)
-
-    @classmethod
-    def section_patterns(cls) -> dict[str, list[str]]:
-        missing = set(cls.model_fields) - set(cls._RAW_SECTION_PATTERNS)
-        extra = set(cls._RAW_SECTION_PATTERNS) - set(cls.model_fields)
-
-        if missing or extra:
-            raise ValueError(
-                f"Sections mismatch. Missing: {missing or None}, Extra: {extra or None}"
-            )
-
-        return {name: cls._RAW_SECTION_PATTERNS[name] for name in cls.model_fields}
-
-
-def gen_sections_from_pdf(documents: list[Document]) -> Sections:
-    sections = Sections.empty()
-
-    normalized_patterns = {
-        section_name: [_normalize_text(pattern) for pattern in patterns]
-        for section_name, patterns in Sections.section_patterns().items()
-    }
-
-    gen_dictionary_from_pdf(documents)
-
-    for document in documents:
-        extracted_sections = _gen_sections_from_text(document.page_content)
-        if not extracted_sections:
-            continue
-
-        normalized_extracted_sections = {
-            _normalize_text(title): content
-            for title, content in extracted_sections.items()
-        }
-
-        for section_name, patterns in normalized_patterns.items():
-            if sections[section_name] is not None:
-                continue
-
-            for (
-                extracted_title,
-                extracted_content,
-            ) in normalized_extracted_sections.items():
-                if any(pattern in extracted_title for pattern in patterns):
-                    sections[section_name] = (
-                        _normalize_text(extracted_content) or None
-                    )
-                    break
-
-    return sections
-
-
+# ---------------------------------------------------------------------------
+# Helpers de normalização (locais — sem dependência de nemo aqui)
+# ---------------------------------------------------------------------------
 def _normalize_text(text: str) -> str:
-    return pipe(
-        uppercase_text(text),
-        remove_text_accents,
-        remove_text_punctuation,
-        normalize_text_whitespace,
-    )
+    """Uppercase + remove acentos + remove pontuação + colapsa espaços."""
+    import unicodedata
+
+    text = text.upper()
+    nfd = unicodedata.normalize("NFD", text)
+    text = "".join(c for c in nfd if unicodedata.category(c) != "Mn")
+    text = re.sub(r"[^\w\s]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
 
 
-UPPERCASE_HEADER_RE = re.compile(r"(?m)^[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ0-9®/\-\s]+$")
+# ---------------------------------------------------------------------------
+# Splitting
+# ---------------------------------------------------------------------------
+_SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
+_UPPERCASE_HEADER_RE = re.compile(r"(?m)^[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ0-9®/\-\s]+$")
 
 
 def _split_paragraphs(text: str) -> list[str]:
-    # procura por final de frase . ! ou ?
-    # depois uma quebra de linha
-    # depois uma letra maiúscula
-    # transforma isso em separação de parágrafo com \n\n
+    """Divide um bloco de texto em parágrafos."""
     text = re.sub(r"(?<=[.!?])\s*\n\s*(?=[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ])", "\n\n", text)
     paragraphs = re.split(r"\n\s*\n+", text)
     return [p.strip() for p in paragraphs if p.strip()]
 
 
+def _split_sentences(paragraph: str) -> list[str]:
+    """Divide um parágrafo em sentenças."""
+    sentences = _SENTENCE_SPLIT.split(paragraph)
+    return [s.strip() for s in sentences if s.strip()]
+
+
+# ---------------------------------------------------------------------------
+# Detecção de cabeçalhos
+# ---------------------------------------------------------------------------
 def _is_probably_noise_header(line: str) -> bool:
     norm = _normalize_text(line)
-
     if not norm:
         return True
-
     if re.fullmatch(r"[\d\s]+", norm):
         return True
-
     if len(norm) < 4:
         return True
-
     blocked = {
         "VPS",
         "VPVPS",
@@ -178,27 +91,25 @@ def _is_probably_noise_header(line: str) -> bool:
 
 def _is_uppercase_header(line: str) -> bool:
     line = line.strip()
-
     if not line:
         return False
-
     if "?" in line:
         return False
-
-    if not UPPERCASE_HEADER_RE.fullmatch(line):
+    if not _UPPERCASE_HEADER_RE.fullmatch(line):
         return False
-
     if _is_probably_noise_header(line):
         return False
-
     norm = _normalize_text(line)
     if any(char.isdigit() for char in norm):
         return False
-
     return True
 
 
+# ---------------------------------------------------------------------------
+# Extração de cabeçalhos numerados (1. ... ? até 9. ... ?)
+# ---------------------------------------------------------------------------
 def _extract_numbered_headers(text: str) -> list[tuple[int, int, int, str]]:
+    """Retorna lista de (numero, start, end, title) para cada cabeçalho numerado."""
     lines = text.splitlines(keepends=True)
     matches: list[tuple[int, int, int, str]] = []
 
@@ -228,12 +139,10 @@ def _extract_numbered_headers(text: str) -> list[tuple[int, int, int, str]]:
 
         while "?" not in " ".join(header_parts) and j < len(lines):
             next_line = lines[j].strip()
-
             if next_line:
                 if re.match(r"^\d+\.\s*", next_line):
                     break
                 header_parts.append(next_line)
-
             end += len(lines[j])
             j += 1
 
@@ -254,15 +163,11 @@ def _extract_numbered_headers(text: str) -> list[tuple[int, int, int, str]]:
 def _keep_first_sequential_block(
     headers: list[tuple[int, int, int, str]],
 ) -> list[tuple[int, int, str]]:
-    """
-    Keeps the first continuous numbered block: 1, 2, 3, ..., 9.
-    Stops when numbering breaks.
-    """
+    """Mantém apenas o primeiro bloco contínuo 1, 2, 3, ..., 9."""
     if not headers:
         return []
 
     headers = sorted(headers, key=lambda x: x[1])
-
     kept: list[tuple[int, int, str]] = []
     expected = 1
     started = False
@@ -272,7 +177,6 @@ def _keep_first_sequential_block(
             if number != 1:
                 continue
             started = True
-
         if number == expected:
             kept.append((start, end, title))
             expected += 1
@@ -282,7 +186,13 @@ def _keep_first_sequential_block(
     return kept
 
 
+# ---------------------------------------------------------------------------
+# Extração de seções brutas de um texto
+# ---------------------------------------------------------------------------
 def _gen_sections_from_text(text: str) -> dict[str, list[str]]:
+    """
+    Retorna dict {titulo_normalizado: [paragrafos]} para um bloco de texto.
+    """
     numbered_headers = _extract_numbered_headers(text)
     numbered_matches = _keep_first_sequential_block(numbered_headers)
 
@@ -301,21 +211,19 @@ def _gen_sections_from_text(text: str) -> dict[str, list[str]]:
         "DIZERES LEGAIS",
     }
 
+    # cabeçalhos não-numerados antes da seção 1
     pre_numbered_text = text[:first_numbered_start]
-
     for line_match in re.finditer(r"(?m)^.*$", pre_numbered_text):
         line = line_match.group(0).strip()
         norm = _normalize_text(line)
-
         if norm in non_numbered_whitelist and _is_uppercase_header(line):
             matches.append((line_match.start(), line_match.end(), line))
 
-    # opcional: pegar DIZERES LEGAIS logo após a seção 9
+    # DIZERES LEGAIS após a seção 9
     post_numbered_text = text[last_numbered_end:]
     for line_match in re.finditer(r"(?m)^.*$", post_numbered_text):
         line = line_match.group(0).strip()
         norm = _normalize_text(line)
-
         if norm == "DIZERES LEGAIS" and _is_uppercase_header(line):
             start = last_numbered_end + line_match.start()
             end = last_numbered_end + line_match.end()
@@ -324,32 +232,143 @@ def _gen_sections_from_text(text: str) -> dict[str, list[str]]:
 
     matches.sort(key=lambda item: item[0])
 
-    searchable_end = len(text)
-    for i, (_, _, title) in enumerate(matches):
-        if _normalize_text(title) == "DIZERES LEGAIS":
-            searchable_end = len(text)
-            break
-
     sections: dict[str, list[str]] = {}
-
     for i, (_, end, title) in enumerate(matches):
-        next_start = matches[i + 1][0] if i + 1 < len(matches) else searchable_end
+        next_start = matches[i + 1][0] if i + 1 < len(matches) else len(text)
         content = text[end:next_start].strip()
-
         normalized_title = _normalize_text(title)
         if not normalized_title:
             continue
-
         sections[normalized_title] = _split_paragraphs(content)
 
     return sections
 
 
-def gen_dictionary_from_pdf(documents: list[Document]) -> dict[str, list[str]]:
-    full_text = "\n".join(
-        document.page_content
-        for document in documents
-        if document.page_content and document.page_content.strip()
-    )
+# ---------------------------------------------------------------------------
+# API pública: seções canônicas
+# ---------------------------------------------------------------------------
+def gen_sections_from_pdf(documents: list[Document]) -> dict[str, str | None]:
+    """
+    Processa uma lista de Documents (páginas de PDF) e retorna as seções
+    canônicas mapeadas para os nomes de `Section`.
 
+    Returns
+    -------
+    dict[str, str | None]
+        Chaves = Section.value (ex: "indications"), valores = texto da seção
+        ou None se não encontrada.
+    """
+    result: dict[str, str | None] = {s.value: None for s in Section}
+
+    # padrões já normalizados vindos de protocol.py
+    normalized_patterns = SECTION_PATTERNS
+
+    for document in documents:
+        raw_sections = _gen_sections_from_text(document.page_content)
+        if not raw_sections:
+            continue
+
+        # normaliza as chaves extraídas para matching
+        normalized_extracted = {
+            normalize_for_matching(title): paragraphs
+            for title, paragraphs in raw_sections.items()
+        }
+
+        for section_name, patterns in normalized_patterns.items():
+            if result[section_name] is not None:
+                continue
+            for extracted_title, paragraphs in normalized_extracted.items():
+                if any(pattern in extracted_title for pattern in patterns):
+                    joined = " ".join(paragraphs).strip()
+                    result[section_name] = joined or None
+                    break
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# API pública: dicionário bruto
+# ---------------------------------------------------------------------------
+def gen_dictionary_from_pdf(documents: list[Document]) -> dict[str, list[str]]:
+    """
+    Concatena todas as páginas e retorna as seções brutas.
+
+    Returns
+    -------
+    dict[str, list[str]]
+        Chaves = título normalizado, valores = lista de parágrafos.
+    """
+    full_text = "\n".join(
+        doc.page_content
+        for doc in documents
+        if doc.page_content and doc.page_content.strip()
+    )
     return _gen_sections_from_text(full_text)
+
+
+# ---------------------------------------------------------------------------
+# API pública: chunks
+# ---------------------------------------------------------------------------
+def gen_chunks_from_pdf(
+    medicine_id: str,
+    medicine_name: str,
+    documents: list[Document],
+) -> list[Chunks]:
+    """
+    Processa os Documents de uma bula e retorna os Chunks prontos para
+    embedding (embedding preenchido com zeros — use _embed_chunks do
+    bula_gratis_crawler para preencher via OpenAI, ou equivalente).
+
+    Estratégia:
+      página por página → extrai seções canônicas → divide em parágrafos
+      → divide em sentenças → gera um Chunk por sentença.
+
+    Parameters
+    ----------
+    medicine_id : str
+        UUID do medicamento (deve existir na tabela medicines).
+    medicine_name : str
+        Nome do medicamento (para o campo medicine_name do chunk).
+    documents : list[Document]
+        Páginas do PDF carregadas pelo loader do LangChain.
+
+    Returns
+    -------
+    list[Chunks]
+    """
+    from bula_check.protocol import (
+        OPENAI_EMBEDDING_DIM,
+    )  # importado aqui para evitar circular
+
+    dummy_embedding: list[float] = [0.0] * OPENAI_EMBEDDING_DIM
+
+    # coleta seções de todas as páginas (mantém contexto multi-página)
+    sections = gen_sections_from_pdf(documents)
+
+    chunks: list[Chunks] = []
+
+    for section_name, text in sections.items():
+        if not text:
+            continue
+
+        try:
+            section_enum = Section(section_name)
+        except ValueError:
+            continue
+
+        for para_idx, paragraph in enumerate(_split_paragraphs(text)):
+            for chunk_idx, sentence in enumerate(_split_sentences(paragraph)):
+                chunks.append(
+                    Chunks(
+                        id=str(uuid.uuid4()),
+                        medicine_id=medicine_id,
+                        medicine_name=medicine_name,
+                        section=section_enum,
+                        paragraph_idx=para_idx,
+                        chunk_idx=chunk_idx,
+                        text=sentence,
+                        embedding=dummy_embedding,
+                    )
+                )
+
+    return chunks
