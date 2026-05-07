@@ -598,6 +598,7 @@ def crawl(
 # Entry point
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
+    # python -m bula_check.anvisa_crawler
     log.info(
         "Iniciando crawler ANVISA — %d prefixos, PAGE_SIZE=%d",
         len(DEFAULT_PREFIXES),
