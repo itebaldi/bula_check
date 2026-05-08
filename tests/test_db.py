@@ -4,6 +4,15 @@ from pathlib import Path
 
 from bula_check.db import search_by_filters
 from bula_check.db import search_in_db
+from bula_check.protocol import DEFAULT_DB_PATH
+
+# Metoprolol — 25 mg / 1 dia
+# Olmesartana — 40 mg / 1 dia
+# Anlodipina — 5 mg / noite
+# Provavelmente é “Amlodipina”, mas a letra parece “Anlodipina”.
+# Plenance — 10 mg / dia
+# Esse quarto está difícil de ler com certeza. Parece algo como “Plenance” ou “Plenance”.
+# Duomo HP — 1 comp / noite
 
 
 def test_search_in_db__normalized_text():

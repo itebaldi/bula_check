@@ -151,3 +151,41 @@ def search_by_filters(
 
     cursor.execute(query, params)
     return [dict(row) for row in cursor.fetchall()]
+
+
+# def cosine_similarity(a: list[float], b: list[float]) -> float:
+#     a_vec = np.array(a, dtype=np.float32)
+#     b_vec = np.array(b, dtype=np.float32)
+
+#     return float(np.dot(a_vec, b_vec) / (np.linalg.norm(a_vec) * np.linalg.norm(b_vec)))
+
+
+# def search_by_embedding(
+#     db_connection: sqlite3.Connection,
+#     query_embedding: list[float],
+#     table_name: str = "chunks",
+#     limit: int = 10,
+# ) -> list[dict]:
+#     db_connection.row_factory = sqlite3.Row
+#     cursor = db_connection.cursor()
+
+#     cursor.execute(f"""
+#         SELECT *
+#         FROM {table_name}
+#         WHERE embedding IS NOT NULL
+#     """)
+
+#     results = []
+
+#     for row in cursor.fetchall():
+#         row_dict = dict(row)
+#         chunk_embedding = json.loads(row_dict["embedding"])
+
+#         score = cosine_similarity(query_embedding, chunk_embedding)
+
+#         row_dict["score"] = score
+#         results.append(row_dict)
+
+#     results.sort(key=lambda item: item["score"], reverse=True)
+
+#     return results[:limit]

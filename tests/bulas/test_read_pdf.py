@@ -2,7 +2,7 @@ from pathlib import Path
 
 from nemo.files.pdf import read_pdf
 
-from bula_check.bula import gen_sections_from_pdf
+from bula_check.bula_pdf import gen_sections_from_pdf
 
 
 def test_read_pdf():

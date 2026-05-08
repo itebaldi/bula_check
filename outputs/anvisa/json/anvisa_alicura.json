@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ff0bb181-2752-45de-b187-27775b62ed8f",
+    "name": "ALICURA",
+    "processed_name": "ALICURA",
+    "active_ingredient": [
+      "ÁCIDO ACETILSALICÍLICO, CAFEÍNA"
+    ],
+    "processed_active_ingredient": [
+      "ACIDO ACETILSALICILICO CAFEINA"
+    ],
+    "source": "anvisa",
+    "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos/arquivo/bula/parecer/eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNTkzODI0NyIsIm5iZiI6MTc3ODE5MjA1MSwiZXhwIjoxNzc4MTkyMzUxfQ.Dy1T7PTxMVIFKTLZxhF_3IPX4jywq-WoTDk4fxeMCMIQTHor8CZryE7q6OtUXeTsBz1PbbLUN0FTPR1xjE-9iw/?Authorization=Guest",
+    "registration_number": 100660047,
+    "therapeutic_classes": null,
+    "company_name": "LABORATORIO CATARINENSE LTDA",
+    "processed_company_name": "LABORATORIO CATARINENSE LTDA",
+    "cnpj": "84684620000187"
+  }
+]
