@@ -709,5 +709,5 @@ def _persist(
 if __name__ == "__main__":
     # python -m bula_check.bula_gratis_crawler
     log.info("Iniciando crawler BulaGratis — %d letras", len(DEFAULT_LETTERS))
-    crawl(save_sqlite=True, embed=False, db_path=DEFAULT_DB_PATH, letters="A")
+    crawl(save_sqlite=True, embed=True, db_path=DEFAULT_DB_PATH)
     log.info("Pronto! DB: %s  Log: %s", DEFAULT_DB_PATH, LOG_FILE)
