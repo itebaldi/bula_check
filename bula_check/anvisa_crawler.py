@@ -182,69 +182,37 @@ def _get_page(session: requests.Session, prefix: str, page: int) -> dict:
     )
 
 
-def _fetch_detail(session: requests.Session, product_id: int | None) -> dict | None:
-    if product_id is None:
-        return None
-    try:
-        resp = session.get(f"{DETAIL_API}/{product_id}", timeout=30)
-        resp.raise_for_status()
-        return resp.json()
-    except Exception:
-        return None
-
-
-def _fetch_bulario_by_registration(
-    session: requests.Session, registration: str, max_results: int = 5
-) -> list[dict]:
-    try:
-        qs = urlencode({"count": max_results, "order": "asc", "page": 1})
-        qs += f"&filter[numeroRegistro]={registration}"
-        resp = session.get(f"{BULARIO_API}?{qs}", timeout=30)
-        resp.raise_for_status()
-        return resp.json().get("content") or []
-    except Exception:
-        return []
-
-
 def _pdf_url(token: str | None) -> str | None:
     if not isinstance(token, str) or not token:
         return None
     return f"{PDF_API}/{token}/?Authorization=Guest"
 
 
+def fetch_bulario_url(session: requests.Session, registration: str) -> str | None:
+    """
+    Busca a URL do PDF do paciente para um número de registro específico.
+
+    NÃO é chamada durante o crawl principal — use para enriquecer um registro
+    pontualmente após a coleta, sem impactar a velocidade geral.
+    """
+    try:
+        digits = re.sub(r"\D", "", registration)
+        qs = urlencode({"count": 5, "order": "asc", "page": 1})
+        qs += f"&filter[numeroRegistro]={digits}"
+        resp = session.get(f"{BULARIO_API}?{qs}", timeout=30)
+        resp.raise_for_status()
+        for row in resp.json().get("content") or []:
+            token = row.get("idBulaPacienteProtegido")
+            if token:
+                return _pdf_url(token)
+    except Exception:
+        pass
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Conversão de raw API item → Medicines
 # ---------------------------------------------------------------------------
-def _active_ingredient(detail: dict | None) -> list[str] | None:
-    if not isinstance(detail, dict):
-        return None
-    apresentacoes = detail.get("apresentacoes")
-    if isinstance(apresentacoes, list):
-        seen: set[str] = set()
-        result: list[str] = []
-        for a in apresentacoes:
-            for part in (a.get("principioAtivo") or "").split("+"):
-                part = part.strip()
-                if part and part not in seen:
-                    seen.add(part)
-                    result.append(part)
-        return result or None
-    pa = detail.get("principioAtivo")
-    if isinstance(pa, str) and pa.strip():
-        return [pa.strip()]
-    return None
-
-
-def _therapeutic_classes(detail: dict | None) -> list[str] | None:
-    if not isinstance(detail, dict):
-        return None
-    classes = detail.get("classeTerapeutica") or detail.get("classesTA")
-    if isinstance(classes, list):
-        result = [str(c).strip() for c in classes if str(c).strip()]
-        return result or None
-    if isinstance(classes, str) and classes.strip():
-        return [classes.strip()]
-    return None
 
 
 def _int_or_none(v: Any) -> int | None:
@@ -259,54 +227,42 @@ def _str_or_none(v: Any) -> str | None:
     return s or None
 
 
-def _item_to_medicine(
-    item: dict,
-    session: requests.Session,
-) -> Medicines | None:
+def _item_to_medicine(item: dict) -> Medicines | None:
     """
-    Converte um item cru da API de produtos para Medicines.
-    Retorna None se o medicamento não tiver numeroRegistro.
+    Converte um item cru da listagem da API para Medicines.
+    Usa apenas os campos já presentes na resposta — sem requests extras.
+    Retorna None se o item não tiver numeroRegistro.
     """
     p = item.get("produto") or {}
     e = item.get("empresa") or {}
-    pr = item.get("processo") or {}
+    # pr = item.get("processo") or {}
 
     registration_str = _str_or_none(p.get("numeroRegistro"))
     if not registration_str:
         return None  # pula medicamentos sem número de registro
 
     registration_number = _int_or_none(re.sub(r"\D", "", registration_str) or None)
-
     product_id = _int_or_none(p.get("codigo"))
-    detail = _fetch_detail(session, product_id)
 
-    # Tenta obter URL da bula via bulário
-    patient_url: str | None = None
-    if registration_str:
-        digits = re.sub(r"\D", "", registration_str)
-        bulario_rows = _fetch_bulario_by_registration(session, digits)
-        for row in bulario_rows:
-            token = row.get("idBulaPacienteProtegido")
-            if token:
-                patient_url = _pdf_url(token)
-                break
+    # principioAtivo já vem no payload da listagem
+    pa_raw = p.get("principioAtivo")
+    active_ingredient: list[str] | None = None
+    if isinstance(pa_raw, str) and pa_raw.strip():
+        active_ingredient = [
+            part.strip() for part in pa_raw.split("+") if part.strip()
+        ]
 
     razao = e.get("razaoSocial") or ""
-    cnpj_raw = e.get("cnpj")
-    cnpj = _str_or_none(cnpj_raw)
-
+    cnpj = _str_or_none(e.get("cnpj"))
     company_name = razao.strip() if razao else "Desconhecida"
-    source_url = (
+
+    # URL aponta para a página do produto; PDF pode ser buscado depois com
+    # fetch_bulario_url(session, registration_str) se necessário
+    url = (
         f"{BASE_URL}/#/medicamentos/{product_id}"
         if product_id
         else f"{BASE_URL}/#/medicamentos"
     )
-    url = patient_url or source_url
-
-    active_ingredient = _active_ingredient(detail) or (
-        [p["principioAtivo"]] if p.get("principioAtivo") else None
-    )
-    therapeutic_classes = _therapeutic_classes(detail)
 
     # extras = json.dumps(
     #     {
@@ -321,13 +277,13 @@ def _item_to_medicine(
     #         "data_vencimento": p.get("dataVencimentoRegistro"),
     #         "medicamento_referencia": p.get("medicamentoReferencia"),
     #         "processo": pr.get("numeroProcessoFormatado"),
-    #         "professional_url": None,  # pode ser preenchido manualmente se necessário
     #     },
     #     ensure_ascii=False,
     # )
 
-    name = str(p.get("nome") or "Medicamento")
+    therapeutic_classes = (p.get("categoriaRegulatoria") or {}).get("descricao")
 
+    name = str(p.get("nome") or "Medicamento")
     processed_ai = (
         [normalize_processed_field(ai) for ai in active_ingredient]
         if active_ingredient
@@ -417,7 +373,7 @@ def get_by_name(
             if uid:
                 seen_ids.add(uid)
 
-            med = _item_to_medicine(item, session)
+            med = _item_to_medicine(item)
             if med is None:
                 continue
 
@@ -616,7 +572,7 @@ def crawl(
                     if uid:
                         seen_ids.add(uid)
 
-                    med = _item_to_medicine(item, session)
+                    med = _item_to_medicine(item)
                     if med is None:
                         continue  # sem numeroRegistro — pula
 
@@ -677,5 +633,5 @@ if __name__ == "__main__":
         PAGE_SIZE,
     )
     path = Path("bulas_anvisa.db")
-    records = crawl(save_sqlite=True, db_path=path, prefixes=["A"])
+    records = crawl(save_sqlite=True, db_path=path)
     log.info("Pronto! %d medicamentos coletados. DB: %s", len(records), path)

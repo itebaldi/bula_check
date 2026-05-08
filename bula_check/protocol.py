@@ -108,7 +108,7 @@ class Medicines(BaseModel):
         URL de origem.
     registration_number : int | None
         Número de registro ANVISA.
-    therapeutic_classes : list[str] | None
+    therapeutic_classes : str | None
         Classes terapêuticas.
     company_name : str
         Nome da empresa.
@@ -126,7 +126,7 @@ class Medicines(BaseModel):
     source: Literal["anvisa", "bula_gratis"]
     url: str
     registration_number: int | None = None
-    therapeutic_classes: list[str] | None = None
+    therapeutic_classes: str | None = None
     company_name: str
     processed_company_name: str
     cnpj: str | None = None
@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS medicines (
     source                      TEXT NOT NULL, -- 'anvisa' | 'bula_gratis'
     url                         TEXT NOT NULL UNIQUE,
     registration_number         INTEGER,
-    therapeutic_classes         TEXT,          -- JSON array ou NULL
+    therapeutic_classes         TEXT,          -- TEXT ou NULL
     company_name                TEXT NOT NULL,
     processed_company_name      TEXT NOT NULL,
     cnpj                        TEXT
@@ -319,11 +319,7 @@ def save_medicine(conn: sqlite3.Connection, medicine: Medicines) -> None:
             "source": medicine.source,
             "url": medicine.url,
             "registration_number": medicine.registration_number,
-            "therapeutic_classes": json.dumps(
-                medicine.therapeutic_classes, ensure_ascii=False
-            )
-            if medicine.therapeutic_classes is not None
-            else None,
+            "therapeutic_classes": medicine.therapeutic_classes,
             "company_name": medicine.company_name,
             "processed_company_name": medicine.processed_company_name,
             "cnpj": medicine.cnpj,
