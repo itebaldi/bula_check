@@ -67,7 +67,7 @@ def node_parse_query(state: BulaCheckState) -> dict:
                 "llm_model": config.llm_model,
             }
         )
-    except Exception as e:
+    except Exception as _:
         # Fallback manual. #TODO revisar isso
         parsed = ParsedQuery(
             medicine_name=str(user_text),

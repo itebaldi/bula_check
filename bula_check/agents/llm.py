@@ -15,7 +15,7 @@ def build_llm(config: BulaCheckConfig) -> BaseChatModel:
     if provider == LLMProvider.openai:
         from langchain_openai import ChatOpenAI
 
-        return ChatOpenAI(model=model, temperature=temperature)
+        return ChatOpenAI(model=model, temperature=temperature)  # type: ignore
 
     if provider == LLMProvider.anthropic:
         from langchain_anthropic import ChatAnthropic
