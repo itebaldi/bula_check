@@ -38,7 +38,7 @@ class DeCSC:
     BASE_URL: str = "https://api.bvsalud.org/decs/v2"
 
     def __init__(self, api_key: str | None = None, timeout: float = 20.0) -> None:
-        resolved_api_key = api_key or os.getenv("DECS_API_KEY")
+        resolved_api_key = api_key or os.environ.get("DECS_API_KEY")
         if resolved_api_key is None:
             raise ValueError(
                 "DeCS API key not found. Provide `api_key` or set "

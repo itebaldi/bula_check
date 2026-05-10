@@ -7,4 +7,4 @@ def test_anvisa_get_by_name():
         name="ALICURA", save_jsons=False, save_sqlite=True, download_pdf=False
     )
 
-    assert True
+    assert medices

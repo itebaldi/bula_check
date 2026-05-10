@@ -20,6 +20,12 @@ pydantic = "^2.12.5"
 nemo = { git = "ssh://git@github.com/itebaldi/nemo.git", branch = "main" }
 # nemo = { path = "../nemo", develop = true }
 openai = "^2.32.0"
+langgraph = "^1.1.10"
+langchain = "^1.2.18"
+langchain-openai = "^1.2.1"
+langchain-anthropic = "^1.4.3"
+langchain-ollama = "^1.1.0"
+gradio = "^6.14.0"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

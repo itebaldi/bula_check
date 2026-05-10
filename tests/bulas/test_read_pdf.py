@@ -11,6 +11,6 @@ def test_read_pdf():
 
     documents = read_pdf(path)
 
-    gen_sections_from_pdf(documents)
+    sections = gen_sections_from_pdf(documents)
 
-    x = 10
+    assert sections
