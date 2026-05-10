@@ -10,7 +10,7 @@ def test_omb():
     #     sleep_between_requests=1.0,
     # )
 
-    registration_number = obm[0]["NU_SANREG"]
+    assert obm[0]["NU_SANREG"]
 
     # results = client.get_by_registration_number(
     #     registration_number,

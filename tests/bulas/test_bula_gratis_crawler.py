@@ -9,4 +9,4 @@ def test_bula_gratis_get_by_name():
         embed=False,
     )
 
-    assert True
+    assert result
