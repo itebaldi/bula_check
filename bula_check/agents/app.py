@@ -13,7 +13,6 @@ Uso:
 import argparse
 import os
 import traceback
-from pathlib import Path
 
 import gradio as gr
 from dotenv import load_dotenv
@@ -234,8 +233,6 @@ def main() -> None:
         **DEFAULT_CONFIG,
         "llm_provider": LLMProvider(args.provider),
         "llm_model": model,
-        "decs_api_key": os.environ.get("DECS_API_KEY"),
-        "obm_token": os.environ.get("OBM_TOKEN"),
     }
 
     print(f"\n🔬 BulaCheck iniciando com {args.provider}/{model}")

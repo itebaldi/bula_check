@@ -1,6 +1,7 @@
 import json
 import math
 import sqlite3
+from difflib import SequenceMatcher
 from typing import Any
 
 from nemo.preprocessing.text import normalize_text_whitespace
@@ -82,36 +83,54 @@ def find_similar_medicines(
     limit: int = 3,
 ) -> list[MedicineCandidate]:
     """
-    Busca medicamentos com nome parecido usando tokens parciais.
-    Usado como sugestão quando o medicamento não é encontrado.
+    Busca medicamentos com nomes parecidos usando similaridade textual.
+
+    Usado como sugestão quando o medicamento não é encontrado exatamente.
     """
     name_norm = _normalize(name)
-    tokens = sorted(name_norm.split(), key=len, reverse=True)  # pega maior token
 
-    if not tokens:
+    if not name_norm:
         return []
-
-    anchor = tokens[0] if tokens else name_norm
 
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
+
     cursor.execute(
         """
         SELECT id, name, processed_name, active_ingredient,
                processed_active_ingredient, source, url, registration_number,
                therapeutic_classes, company_name, processed_company_name, cnpj
         FROM medicines
-        WHERE processed_name LIKE ?
-        LIMIT ?
-        """,
-        [f"%{anchor}%", limit * 3],
+        WHERE processed_name IS NOT NULL
+        """
     )
+
     rows = [dict(row) for row in cursor.fetchall()]
 
     candidates: list[MedicineCandidate] = []
 
     for row in rows:
-        score = _score_medicine_match(row, name_norm, None)
+        row_name = row.get("processed_name") or ""
+
+        similarity = SequenceMatcher(
+            None,
+            name_norm,
+            row_name,
+        ).ratio()
+
+        token_bonus = 0.0
+        for token in row_name.split():
+            token_similarity = SequenceMatcher(
+                None,
+                name_norm,
+                token,
+            ).ratio()
+            token_bonus = max(token_bonus, token_similarity)
+
+        score = max(similarity, token_bonus)
+
+        if score < 0.55:
+            continue
 
         candidates.append(
             MedicineCandidate(

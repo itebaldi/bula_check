@@ -129,20 +129,16 @@ class DeCSExpandInput(TypedDict):
         Lista de palavras-chave para expandir
     language : str
         Idioma para busca DeCS
-    decs_api_key : str
-        API key DeCS
     """
 
     keywords: list[str]
     language: LANGUAGES
-    decs_api_key: str | None
 
 
 @tool("expand_keywords_decs")
 def expand_keywords_decs(
     keywords: list[str],
     language: str = "portuguese",
-    decs_api_key: str | None = None,
 ) -> list[str]:
     """
     Expande uma lista de palavras-chave usando o vocabulário controlado DeCS
@@ -150,10 +146,9 @@ def expand_keywords_decs(
     com sinônimos e termos relacionados da ontologia médica.
     """
 
-    api_key = decs_api_key or os.environ.get("DECS_API_KEY")
+    api_key = os.environ.get("DECS_API_KEY")
     if not api_key:
         return keywords
-
     client = DeCSC(api_key=api_key)
     expanded = list(keywords)
 

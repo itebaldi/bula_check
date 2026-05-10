@@ -101,7 +101,6 @@ cp .env.example .env
 OPENAI_API_KEY=sk-...          # necessário para OpenAI e para embeddings
 ANTHROPIC_API_KEY=sk-ant-...   # necessário para Anthropic
 DECS_API_KEY=...               # opcional: expansão de keywords via DeCS
-OBM_TOKEN=...                  # opcional: lookup de apresentações OBM
 ```
 
 ## Como rodar

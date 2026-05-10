@@ -40,11 +40,7 @@ class BulaCheckConfig(TypedDict):
     max_response_words: int
 
     # DeCS
-    decs_api_key: str | None
     decs_lang: LANGUAGES
-
-    # OBM
-    obm_token: str | None
 
 
 DEFAULT_CONFIG: BulaCheckConfig = {
@@ -59,9 +55,7 @@ DEFAULT_CONFIG: BulaCheckConfig = {
     "lexical_weight": 0.4,
     "semantic_weight": 0.6,
     "max_response_words": 400,
-    "decs_api_key": None,
     "decs_lang": "portuguese",
-    "obm_token": None,
 }
 
 

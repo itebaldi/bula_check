@@ -106,11 +106,7 @@ def node_expand_decs(state: BulaCheckState) -> dict:
 
     try:
         expanded = expand_keywords_decs.invoke(
-            {
-                "keywords": base_keywords,
-                "language": config["decs_lang"],
-                "decs_api_key": config["decs_api_key"],
-            }
+            {"keywords": base_keywords, "language": config["decs_lang"]}
         )
     except Exception:
         expanded = base_keywords
