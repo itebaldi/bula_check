@@ -150,7 +150,7 @@ def expand_keywords_decs(
     com sinônimos e termos relacionados da ontologia médica.
     """
 
-    api_key = decs_api_key or os.getenv("DECS_API_KEY")
+    api_key = decs_api_key or os.environ.get("DECS_API_KEY")
     if not api_key:
         return keywords
 
@@ -195,7 +195,7 @@ def get_query_embedding(text: str) -> list[float] | None:
     Retorna None se a API key não estiver configurada.
     """
 
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return None
 

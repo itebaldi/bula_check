@@ -20,6 +20,7 @@ from bula_check.agents.search import hybrid_chunk_search
 from bula_check.agents.tools import expand_keywords_decs
 from bula_check.agents.tools import get_query_embedding
 from bula_check.agents.tools import parse_medicine_query
+from bula_check.protocol import Section
 from bula_check.protocol import pt_section_label
 
 
@@ -67,22 +68,19 @@ def node_parse_query(state: BulaCheckState) -> dict:
                 "llm_model": config["llm_model"],
             }
         )
-    except Exception as _:
+
+    except Exception as error:
         # Fallback manual. #TODO revisar isso
+        print(error)
         parsed = ParsedQuery(
             medicine_name=str(user_text),
             active_ingredient=None,
-            sections=list(  # TODO que coisa é essa? nao serve isso? {s.value for s in Section}
-                __import__(
-                    "bulacheck.config", fromlist=["Section"]
-                ).Section.__members__.keys()
-            ),
+            sections=list({s.value for s in Section}),
             expanded_keywords=[str(user_text)],
             claim_type="question",
             original_query=str(user_text),
         )
 
-    # TODO que dict é esse?
     return {
         "parsed_query": parsed,
         "search_attempted_bulagratis": False,
@@ -236,12 +234,12 @@ def node_fetch_chunks(state: BulaCheckState) -> dict:
     return {"retrieved_chunks": chunks}
 
 
-def _open_db(path: Path) -> sqlite3.Connection | None:
+def _open_db(path: Path) -> sqlite3.Connection:
     if path.exists():
         conn = sqlite3.connect(str(path))
         conn.row_factory = sqlite3.Row
         return conn
-    return None
+    raise Exception(f"Path does not exist {str(path)}")
 
 
 _VERIFY_PROMPT_SYSTEM = """

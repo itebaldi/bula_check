@@ -12,7 +12,7 @@ from bula_check.agents.protocol import BulaCheckConfig
 from bula_check.agents.protocol import BulaCheckState
 
 
-def build_graph(cfg: BulaCheckConfig) -> StateGraph:
+def build_graph(config: BulaCheckConfig) -> StateGraph:
     """
     Constrói e compila o grafo LangGraph com a configuração fornecida.
 
@@ -65,7 +65,7 @@ def build_graph(cfg: BulaCheckConfig) -> StateGraph:
         _route_after_suggest,
         {
             "fetch_chunks": "fetch_chunks",
-            END: END,
+            "end": END,
         },
     )
 
@@ -90,7 +90,8 @@ def _route_after_suggest(state: BulaCheckState) -> str:
     """Após sugestão: se confirmado, busca chunks; senão encerra."""
     if state.get("selected_medicine"):
         return "fetch_chunks"
-    return END
+
+    return "end"
 
 
 def make_initial_state(cfg: BulaCheckConfig) -> BulaCheckState:

@@ -136,21 +136,24 @@ def search_medicines_lexical(
     cursor = conn.cursor()
 
     name_norm = _normalize(name)
-    tokens = name_norm.split()
+    name_tokens = name_norm.split()
 
     where_parts: list[str] = []
     params: list[Any] = []
 
-    for token in tokens:
+    for token in name_tokens:
         where_parts.append("processed_name LIKE ?")
         params.append(f"%{token}%")
 
     if active_ingredient:
         ai_norm = _normalize(active_ingredient)
         ai_tokens = ai_norm.split()
+
         for token in ai_tokens:
-            where_parts.append("processed_active_ingredient LIKE ?")
-            params.append(f"%{token}%")
+            where_parts.append(
+                "(processed_active_ingredient LIKE ? OR processed_name LIKE ?)"
+            )
+            params.extend([f"%{token}%", f"%{token}%"])
 
     if not where_parts:
         return []
@@ -163,53 +166,63 @@ def search_medicines_lexical(
         WHERE {" OR ".join(where_parts)}
         LIMIT ?
     """
+
     params.append(limit)
     cursor.execute(query, params)
+
     return [dict(row) for row in cursor.fetchall()]
 
 
-def _score_medicine_match(row: dict, name_norm: str, ai_norm: str | None) -> float:
+def _score_medicine_match(
+    row: dict,
+    name_norm: str,
+    ai_norm: str | None,
+) -> float:
     """
-    Heurística de score para rankeamento lexical de medicamentos.
+    Heurística de score para ranqueamento lexical de medicamentos.
     Retorna valor em [0, 1].
     """
     name_tokens = set(name_norm.split())
-    row_name = row.get("processed_name", "")
+    row_name = row.get("processed_name") or ""
     row_tokens = set(row_name.split())
 
-    if not name_tokens or not row_tokens:
-        return 0.0
+    score = 0.0
 
-    intersection = name_tokens & row_tokens
-    union = name_tokens | row_tokens
+    if name_tokens and row_tokens:
+        intersection = name_tokens & row_tokens
+        union = name_tokens | row_tokens
 
-    # TODO explicar isso
-    jaccard = len(intersection) / len(union) if union else 0.0
+        jaccard = len(intersection) / len(union) if union else 0.0
 
-    exact_name_bonus = 0.3 if row_name == name_norm else 0.0
+        exact_name_bonus = 0.3 if row_name == name_norm else 0.0
+        contains_name_bonus = 0.2 if name_norm in row_name else 0.0
 
-    contains_name_bonus = 0.2 if name_norm in row_name else 0.0
+        name_parts = name_norm.split()
+        first_token = name_parts[0] if name_parts else ""
+        prefix_bonus = (
+            0.1 if first_token and row_name.startswith(first_token) else 0.0
+        )
 
-    prefix_bonus = 0.1 if row_name.startswith(name_norm.split()[0]) else 0.0
-
-    score = jaccard + exact_name_bonus + contains_name_bonus + prefix_bonus
+        score += jaccard + exact_name_bonus + contains_name_bonus + prefix_bonus
 
     if ai_norm:
-        row_ai = row.get("processed_active_ingredient", "")
+        row_ai = row.get("processed_active_ingredient") or ""
+        row_ai_search_text = f"{row_ai} {row_name}".strip()
+
         ai_tokens = set(ai_norm.split())
-        row_ai_tokens = set(row_ai.split())
+        row_ai_tokens = set(row_ai_search_text.split())
 
         if ai_tokens and row_ai_tokens:
             ai_intersection = ai_tokens & row_ai_tokens
             ai_union = ai_tokens | row_ai_tokens
             ai_jaccard = len(ai_intersection) / len(ai_union) if ai_union else 0.0
 
-            score += 0.25 * ai_jaccard
+            score += 0.35 * ai_jaccard
 
-            if ai_norm in row_ai:
-                score += 0.15
+        if ai_norm in row_ai_search_text:
+            score += 0.25
 
-    return score
+    return min(1.0, score)
 
 
 def _normalize(text: str) -> str:

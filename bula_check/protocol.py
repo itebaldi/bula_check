@@ -44,7 +44,7 @@ def pt_section_label(section: Section) -> str:
         "adverse_reactions": "Reações Adversas",
         "overdose": "Superdosagem",
     }
-    return labels.get(section.value, section.value)
+    return labels.get(section, section)
 
 
 # ---------------------------------------------------------------------------

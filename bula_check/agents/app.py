@@ -1,8 +1,8 @@
 """
 chatbot/app.py
 --------------
-Interface de chatbot local com Gradio
-Mantém estado de conversa entre turnos
+Interface de chatbot local com Gradio.
+Mantém estado de conversa entre turnos.
 
 Uso:
     python -m bula_check.agents.app
@@ -12,101 +12,21 @@ Uso:
 
 import argparse
 import os
+import traceback
 from pathlib import Path
 
 import gradio as gr
+from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 
 from bula_check.agents.pipeline import build_graph
 from bula_check.agents.pipeline import make_initial_state
 from bula_check.agents.protocol import DEFAULT_CONFIG
 from bula_check.agents.protocol import BulaCheckConfig
+from bula_check.agents.protocol import BulaCheckState
 from bula_check.agents.protocol import LLMProvider
 
-
-def _make_session(config: BulaCheckConfig) -> dict:
-    return {
-        "graph": build_graph(config),
-        "state": make_initial_state(config),
-        "cfg": config,
-    }
-
-
-def respond(
-    user_message: str,
-    chat_history: list[dict[str, str]],
-    session: dict,
-) -> tuple[str, list[dict[str, str]], dict]:
-    """Processa uma mensagem do usuário e retorna a resposta do BulaCheck."""
-    if not user_message.strip():
-        return "", chat_history, session
-
-    graph = session["graph"]
-    state = session["state"]
-
-    state["messages"].append(HumanMessage(content=user_message))
-
-    try:
-        import traceback as _tb
-
-        new_state = graph.invoke(state)
-    except Exception as e:
-        _tb.print_exc()
-        bot_response = f"Erro interno: {e}"
-
-        chat_history.append(
-            {
-                "role": "user",
-                "content": user_message,
-            }
-        )
-        chat_history.append(
-            {
-                "role": "assistant",
-                "content": bot_response,
-            }
-        )
-
-        return "", chat_history, session
-
-    ai_messages = [
-        message
-        for message in new_state["messages"]
-        if not isinstance(message, HumanMessage)
-    ]
-
-    if ai_messages:
-        bot_response = str(ai_messages[-1].content)
-    else:
-        bot_response = "Não consegui processar sua solicitação."
-
-    session["state"] = new_state
-
-    chat_history.append(
-        {
-            "role": "user",
-            "content": user_message,
-        }
-    )
-    chat_history.append(
-        {
-            "role": "assistant",
-            "content": bot_response,
-        }
-    )
-
-    return "", chat_history, session
-
-
-def reset_session(session: dict) -> tuple[list[dict[str, str]], dict]:
-    """Reinicia a conversa."""
-    cfg = session["cfg"]
-    new_session = _make_session(cfg)
-    return [], new_session
-
-
-################################################################### UI Gradio
-
+load_dotenv()
 WELCOME_MESSAGE = """
 # 💊 BulaCheck
 
@@ -121,7 +41,76 @@ As respostas são baseadas exclusivamente nas bulas cadastradas na base de dados
 """
 
 
+def _append_chat_message(
+    chat_history: list[dict[str, str]],
+    role: str,
+    content: str,
+) -> None:
+    chat_history.append(
+        {
+            "role": role,
+            "content": content,
+        }
+    )
+
+
 def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
+    """
+    Build the Gradio UI.
+
+    Important:
+    The compiled LangGraph is kept outside gr.State. gr.State stores only the
+    conversation state, because storing complex objects there can break Gradio /
+    LangGraph serialization.
+    """
+    graph = build_graph(cfg)
+
+    def respond(
+        user_message: str,
+        chat_history: list[dict[str, str]],
+        state: BulaCheckState,
+    ) -> tuple[str, list[dict[str, str]], BulaCheckState]:
+        """Processa uma mensagem do usuário e retorna a resposta do BulaCheck."""
+        if not user_message.strip():
+            return "", chat_history, state
+
+        state["messages"].append(HumanMessage(content=user_message))
+
+        try:
+            new_state = graph.invoke(state)  # type: ignore
+
+        except Exception as error:
+            traceback.print_exc()
+
+            bot_response = f"Erro interno: {error}"
+
+            _append_chat_message(chat_history, "user", user_message)
+            _append_chat_message(chat_history, "assistant", bot_response)
+
+            return "", chat_history, state
+
+        ai_messages = [
+            message
+            for message in new_state["messages"]
+            if not isinstance(message, HumanMessage)
+        ]
+
+        if ai_messages:
+            bot_response = str(ai_messages[-1].content)
+        else:
+            bot_response = "Não consegui processar sua solicitação."
+
+        _append_chat_message(chat_history, "user", user_message)
+        _append_chat_message(chat_history, "assistant", bot_response)
+
+        return "", chat_history, new_state
+
+    def reset_session(
+        state: BulaCheckState,
+    ) -> tuple[list[dict[str, str]], BulaCheckState]:
+        """Reinicia a conversa."""
+        return [], make_initial_state(cfg)
+
     with gr.Blocks(
         title="BulaCheck",
         theme=gr.themes.Soft(
@@ -137,8 +126,7 @@ def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
     ) as demo:
         gr.Markdown(WELCOME_MESSAGE)
 
-        # Estado da sessão (por usuário)
-        session_state = gr.State(value=_make_session(cfg))
+        session_state = gr.State(value=make_initial_state(cfg))
 
         chatbot = gr.Chatbot(
             label="BulaCheck",
@@ -163,7 +151,6 @@ def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
                 elem_classes=["text-sm"],
             )
 
-        # Configurações visíveis (somente leitura)
         with gr.Accordion("⚙️ Configuração atual", open=False):
             gr.Markdown(
                 f"""
@@ -176,17 +163,18 @@ def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
                 """
             )
 
-        # Eventos
         send_btn.click(
             respond,
             inputs=[msg_input, chatbot, session_state],
             outputs=[msg_input, chatbot, session_state],
         )
+
         msg_input.submit(
             respond,
             inputs=[msg_input, chatbot, session_state],
             outputs=[msg_input, chatbot, session_state],
         )
+
         clear_btn.click(
             reset_session,
             inputs=[session_state],
@@ -196,52 +184,58 @@ def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
     return demo
 
 
-# ---------------------------------------------------------------------------
-# Entrypoint
-# ---------------------------------------------------------------------------
 def main() -> None:
     parser = argparse.ArgumentParser(description="BulaCheck — chatbot local")
+
     parser.add_argument(
         "--provider",
         choices=["openai", "anthropic", "ollama"],
         default="openai",
-        help="Provedor LLM (default: openai)",
+        help="Provedor LLM.",
     )
     parser.add_argument(
         "--model",
         default=None,
-        help="Modelo LLM (default: gpt-4o-mini / claude-3-5-haiku / llama3.2)",
+        help="Modelo LLM.",
     )
     parser.add_argument(
-        "--db", default="bulas.db", help="Caminho para o banco BulaGratis"
+        "--db",
+        default="bulas.db",
+        help="Caminho para o banco BulaGratis.",
     )
     parser.add_argument(
-        "--anvisa-db", default="anvisa.db", help="Caminho para o banco ANVISA"
+        "--anvisa-db",
+        default="anvisa.db",
+        help="Caminho para o banco ANVISA.",
     )
     parser.add_argument(
-        "--port", type=int, default=7860, help="Porta do servidor Gradio"
+        "--port",
+        type=int,
+        default=7860,
+        help="Porta do servidor Gradio.",
     )
     parser.add_argument(
-        "--share", action="store_true", help="Gera link público Gradio"
+        "--share",
+        action="store_true",
+        help="Gera link público Gradio.",
     )
+
     args = parser.parse_args()
 
-    # Modelo padrão por provedor
     default_models = {
         "openai": "gpt-4o-mini",
         "anthropic": "claude-3-5-haiku-20241022",
         "ollama": "llama3.2",
     }
+
     model = args.model or default_models[args.provider]
 
     cfg: BulaCheckConfig = {
         **DEFAULT_CONFIG,
         "llm_provider": LLMProvider(args.provider),
         "llm_model": model,
-        "bulagratis_db_path": Path(args.db),
-        "anvisa_db_path": Path(args.anvisa_db),
-        "decs_api_key": os.getenv("DECS_API_KEY"),
-        "obm_token": os.getenv("OBM_TOKEN"),
+        "decs_api_key": os.environ.get("DECS_API_KEY"),
+        "obm_token": os.environ.get("OBM_TOKEN"),
     }
 
     print(f"\n🔬 BulaCheck iniciando com {args.provider}/{model}")
@@ -250,6 +244,7 @@ def main() -> None:
     print(f"   Acesse em        : http://localhost:{args.port}\n")
 
     ui = build_ui(cfg)
+
     ui.launch(
         server_port=args.port,
         share=args.share,
