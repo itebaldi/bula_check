@@ -29,7 +29,9 @@ def build_graph(cfg: BulaCheckConfig) -> StateGraph:
     --------
     ::
 
-        cfg = BulaCheckConfig(llm_provider="openai", llm_model="gpt-4o-mini")
+        from bula_check.agents.protocol import DEFAULT_CONFIG
+
+        cfg: BulaCheckConfig = {**DEFAULT_CONFIG, "llm_model": "gpt-4o-mini"}
         graph = build_graph(cfg)
         result = graph.invoke(initial_state)
     """

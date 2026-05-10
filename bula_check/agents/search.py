@@ -16,10 +16,10 @@ from nemo.vector_retrieval.tf_idf import gen_vector_space_model
 from toolz.functoolz import pipe
 
 from bula_check.agents.protocol import BulaCheckConfig
+from bula_check.agents.protocol import ChunksDict
 from bula_check.agents.protocol import MedicineCandidate
+from bula_check.agents.protocol import MedicinesDict
 from bula_check.agents.protocol import RetrievedChunk
-from bula_check.protocol import Chunks
-from bula_check.protocol import Medicines
 
 
 def find_medicine_candidates(
@@ -40,7 +40,7 @@ def find_medicine_candidates(
 
     # BulaGratis
     rows = search_medicines_lexical(
-        bulagratis_conn, name, active_ingredient, limit=cfg.top_k_medicines * 3
+        bulagratis_conn, name, active_ingredient, limit=cfg["top_k_medicines"] * 3
     )
 
     # fallback ANVISA, re-busca com princípio ativo
@@ -52,7 +52,7 @@ def find_medicine_candidates(
                 rows = search_medicines_lexical(
                     bulagratis_conn,
                     ai_from_anvisa,
-                    limit=cfg.top_k_medicines * 3,
+                    limit=cfg["top_k_medicines"] * 3,
                 )
                 if rows:
                     ai_norm = _normalize(ai_from_anvisa)
@@ -64,7 +64,7 @@ def find_medicine_candidates(
     candidates: list[MedicineCandidate] = []
     for row in rows:
         score = _score_medicine_match(row, name_norm, ai_norm)
-        medicine = Medicines(**row)
+        medicine = MedicinesDict(**row)
         candidates.append(
             MedicineCandidate(
                 medicine=medicine,
@@ -72,8 +72,8 @@ def find_medicine_candidates(
             )
         )
 
-    candidates.sort(key=lambda candidate: candidate.score, reverse=True)
-    return candidates[: cfg.top_k_medicines]
+    candidates.sort(key=lambda candidate: candidate["score"], reverse=True)
+    return candidates[: cfg["top_k_medicines"]]
 
 
 def find_similar_medicines(
@@ -115,12 +115,12 @@ def find_similar_medicines(
 
         candidates.append(
             MedicineCandidate(
-                medicine=Medicines(**row),
+                medicine=MedicinesDict(**row),
                 score=score,
             )
         )
 
-    candidates.sort(key=lambda candidate: candidate.score, reverse=True)
+    candidates.sort(key=lambda candidate: candidate["score"], reverse=True)
 
     return candidates[:limit]
 
@@ -239,7 +239,7 @@ def hybrid_chunk_search(
     if not chunks:
         return []
 
-    chunks_by_id = {chunk.id: chunk for chunk in chunks}
+    chunks_by_id = {chunk["id"]: chunk for chunk in chunks}
 
     retrieval_query_text = " ".join(keywords)
 
@@ -252,9 +252,9 @@ def hybrid_chunk_search(
 
     if query_embedding:
         for chunk in chunks:
-            semantic_scores[chunk.id] = _cosine(
+            semantic_scores[chunk["id"]] = _cosine(
                 query_embedding,
-                chunk.embedding,
+                chunk["embedding"],
             )
 
     final_scores: list[tuple[str, float]] = []
@@ -264,7 +264,8 @@ def hybrid_chunk_search(
         semantic_score = semantic_scores.get(chunk_id, 0.0)
 
         combined_score = (
-            cfg.lexical_weight * lexical_score + cfg.semantic_weight * semantic_score
+            cfg["lexical_weight"] * lexical_score
+            + cfg["semantic_weight"] * semantic_score
         )
 
         final_scores.append((chunk_id, combined_score))
@@ -276,7 +277,7 @@ def hybrid_chunk_search(
             chunk=chunks_by_id[chunk_id],
             score=score,
         )
-        for chunk_id, score in final_scores[: cfg.top_k_chunks]
+        for chunk_id, score in final_scores[: cfg["top_k_chunks"]]
     ]
 
 
@@ -284,7 +285,7 @@ def _fetch_chunks_for_medicine(
     conn: sqlite3.Connection,
     medicine_id: str,
     sections: list[str] | None = None,
-) -> list[Chunks]:
+) -> list[ChunksDict]:
     """Fetch chunks from a medicine, optionally filtering by section."""
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -307,17 +308,17 @@ def _fetch_chunks_for_medicine(
     cursor.execute(query, params)
     rows = [dict(row) for row in cursor.fetchall()]
 
-    chunks: list[Chunks] = []
+    chunks: list[ChunksDict] = []
 
     for row in rows:
         row["embedding"] = _parse_embedding(row["embedding"])
-        chunks.append(Chunks(**row))
+        chunks.append(ChunksDict(**row))
 
     return chunks
 
 
 def _score_chunks_tfidf(
-    chunks: list[Chunks],
+    chunks: list[ChunksDict],
     query_text: str,
 ) -> dict[str, float]:
     """
@@ -341,12 +342,12 @@ def _score_chunks_tfidf(
     documents = [
         Document(
             document_id=index,
-            text=chunk.text,
+            text=chunk["text"],
         )
         for index, chunk in enumerate(chunks)
     ]
 
-    index_to_chunk_id = {index: chunk.id for index, chunk in enumerate(chunks)}
+    index_to_chunk_id = {index: chunk["id"] for index, chunk in enumerate(chunks)}
 
     inverted_index = gen_inverted_index(documents)
 

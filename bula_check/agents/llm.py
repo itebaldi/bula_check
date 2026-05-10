@@ -8,9 +8,9 @@ def build_llm(config: BulaCheckConfig) -> BaseChatModel:
     """
     Instancia o modelo de linguagem conforme o provedor configurado.
     """
-    provider = config.llm_provider
-    model = config.llm_model
-    temperature = config.llm_temperature
+    provider = config["llm_provider"]
+    model = config["llm_model"]
+    temperature = config["llm_temperature"]
 
     if provider == LLMProvider.openai:
         from langchain_openai import ChatOpenAI

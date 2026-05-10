@@ -63,8 +63,8 @@ def node_parse_query(state: BulaCheckState) -> dict:
         parsed: ParsedQuery = parse_medicine_query.invoke(
             {
                 "user_message": str(user_text),
-                "llm_provider": config.llm_provider.value,
-                "llm_model": config.llm_model,
+                "llm_provider": config["llm_provider"].value,
+                "llm_model": config["llm_model"],
             }
         )
     except Exception as _:
@@ -110,8 +110,8 @@ def node_expand_decs(state: BulaCheckState) -> dict:
         expanded = expand_keywords_decs.invoke(
             {
                 "keywords": base_keywords,
-                "lang": config.decs_lang,
-                "decs_api_key": config.decs_api_key,
+                "language": config["decs_lang"],
+                "decs_api_key": config["decs_api_key"],
             }
         )
     except Exception:
@@ -131,7 +131,7 @@ def node_find_medicine(state: BulaCheckState) -> dict:
     if state.get("selected_medicine"):
         return {}
 
-    bg_conn = _open_db(config.bulagratis_db_path)
+    bg_conn = _open_db(config["bulagratis_db_path"])
 
     if bg_conn is None:
         return {
@@ -143,7 +143,7 @@ def node_find_medicine(state: BulaCheckState) -> dict:
         }
 
     anvisa_conn = (
-        _open_db(config.anvisa_db_path)
+        _open_db(config["anvisa_db_path"])
         if not state.get("search_attempted_anvisa")
         else None
     )
@@ -163,14 +163,14 @@ def node_find_medicine(state: BulaCheckState) -> dict:
 
     if not candidates:
         # tenta buscar similares para sugestão
-        bg_conn2 = _open_db(config.bulagratis_db_path)
+        bg_conn2 = _open_db(config["bulagratis_db_path"])
         similars = []
         if bg_conn2:
             try:
                 similars = find_similar_medicines(
                     bg_conn2,
                     parsed["medicine_name"],
-                    limit=config.similarity_candidates,
+                    limit=config["similarity_candidates"],
                 )
             finally:
                 bg_conn2.close()
@@ -217,14 +217,14 @@ def node_fetch_chunks(state: BulaCheckState) -> dict:
     except Exception:
         pass
 
-    bg_conn = _open_db(config.bulagratis_db_path)
+    bg_conn = _open_db(config["bulagratis_db_path"])
     if bg_conn is None:
         return {}
 
     try:
         chunks = hybrid_chunk_search(
             conn=bg_conn,
-            medicine_id=medicine.medicine.id,
+            medicine_id=medicine["medicine"]["id"],
             keywords=keywords,
             sections=parsed.get("sections"),
             query_embedding=query_embedding,
@@ -279,7 +279,7 @@ def node_verify_claim(state: BulaCheckState) -> dict:
 
     if not chunks:
         no_info_msg = (
-            f"Não encontrei informações suficientes na bula de **{medicine.medicine.name}** "
+            f"Não encontrei informações suficientes na bula de **{medicine['medicine']['name']}** "
             f"para verificar sua {'pergunta' if parsed['claim_type'] == 'question' else 'alegação'}. "
             "Consulte um profissional de saúde."
         )
@@ -296,18 +296,18 @@ def node_verify_claim(state: BulaCheckState) -> dict:
         }
 
     context_parts = []
-    for chunk in chunks[: config.top_k_chunks]:
-        label = pt_section_label(chunk.chunk.section)
-        context_parts.append(f"[{label}]\n{chunk.chunk.text}")
+    for chunk in chunks[: config["top_k_chunks"]]:
+        label = pt_section_label(chunk["chunk"]["section"])
+        context_parts.append(f"[{label}]\n{chunk['chunk']['text']}")
     context = "\n\n---\n\n".join(context_parts)
 
     system_prompt = _VERIFY_PROMPT_SYSTEM.format(
-        max_words=config.max_response_words,
-        medicine_name=medicine.medicine.name,
+        max_words=config["max_response_words"],
+        medicine_name=medicine["medicine"]["name"],
     )
 
     user_prompt = (
-        f"Medicamento: {medicine.medicine.name}\n"
+        f"Medicamento: {medicine['medicine']['name']}\n"
         f"{'Pergunta' if parsed['claim_type'] == 'question' else 'Alegação'}: {parsed['original_query']}\n\n"
         f"Trechos da bula:\n{context}"
     )
@@ -356,7 +356,7 @@ def node_suggest_similar(state: BulaCheckState) -> dict:
         )
         return {"messages": [AIMessage(content=msg)]}
 
-    names = ", ".join(f"**{m.medicine.name}**" for m in similars)
+    names = ", ".join(f"**{m['medicine']['name']}**" for m in similars)
     name = parsed["medicine_name"] if parsed else "esse medicamento"
     msg = (
         f"Não encontrei **{name}** diretamente. "

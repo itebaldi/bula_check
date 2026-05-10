@@ -4,7 +4,6 @@ from pathlib import Path
 
 from bula_check.db import search_by_filters
 from bula_check.db import search_in_db
-from bula_check.protocol import DEFAULT_DB_PATH
 
 # Metoprolol — 25 mg / 1 dia
 # Olmesartana — 40 mg / 1 dia

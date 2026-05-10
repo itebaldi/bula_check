@@ -1,7 +1,5 @@
-from pathlib import Path
 
 from bula_check.llm import precheck_llm
-from bula_check.llm import validate_llm
 
 
 def test_ollama__precheck():

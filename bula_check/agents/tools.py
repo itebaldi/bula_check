@@ -5,9 +5,10 @@ from langchain_core.messages import HumanMessage
 from langchain_core.messages import SystemMessage
 from langchain_core.tools import tool
 from openai import OpenAI
-from pydantic import BaseModel
+from typing_extensions import TypedDict
 
 from bula_check.agents.llm import build_llm
+from bula_check.agents.protocol import DEFAULT_CONFIG
 from bula_check.agents.protocol import BulaCheckConfig
 from bula_check.agents.protocol import LLMProvider
 from bula_check.agents.protocol import ParsedQuery
@@ -16,7 +17,7 @@ from bula_check.decs import DeCSC
 from bula_check.protocol import Section
 
 
-class ParseQueryInput(BaseModel):
+class ParseQueryInput(TypedDict):
     """
     Parameters
     ----------
@@ -67,7 +68,7 @@ Regras:
 _VALID_SECTIONS = {s.value for s in Section}
 
 
-@tool("parse_medicine_query", args_schema=ParseQueryInput)
+@tool("parse_medicine_query")
 def parse_medicine_query(
     user_message: str,
     llm_provider: LLMProvider = LLMProvider.openai,
@@ -78,10 +79,14 @@ def parse_medicine_query(
     seções relevantes da bula e palavras-chave expandidas.
     """
 
-    cfg = BulaCheckConfig(
-        llm_provider=llm_provider,
-        llm_model=llm_model,
+    provider = (
+        LLMProvider(llm_provider) if isinstance(llm_provider, str) else llm_provider
     )
+    cfg: BulaCheckConfig = {
+        **DEFAULT_CONFIG,
+        "llm_provider": provider,
+        "llm_model": llm_model,
+    }
     llm = build_llm(cfg)
 
     response = llm.invoke(
@@ -118,7 +123,7 @@ def parse_medicine_query(
     )
 
 
-class DeCSExpandInput(BaseModel):
+class DeCSExpandInput(TypedDict):
     """
     keywords : list[str]
         Lista de palavras-chave para expandir
@@ -133,7 +138,7 @@ class DeCSExpandInput(BaseModel):
     decs_api_key: str | None
 
 
-@tool("expand_keywords_decs", args_schema=DeCSExpandInput)
+@tool("expand_keywords_decs")
 def expand_keywords_decs(
     keywords: list[str],
     language: str = "portuguese",
@@ -172,7 +177,7 @@ def expand_keywords_decs(
     return expanded
 
 
-class EmbeddingInput(BaseModel):
+class EmbeddingInput(TypedDict):
     """
     Parameters
     ----------
@@ -183,7 +188,7 @@ class EmbeddingInput(BaseModel):
     text: str
 
 
-@tool("get_query_embedding", args_schema=EmbeddingInput)
+@tool("get_query_embedding")
 def get_query_embedding(text: str) -> list[float] | None:
     """
     Gera o embedding vetorial de um texto usando OpenAI text-embedding-3-small.

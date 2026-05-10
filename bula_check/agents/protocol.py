@@ -5,12 +5,10 @@ from typing import Literal
 
 from langchain_core.messages import BaseMessage
 from langgraph.graph.message import add_messages
-from pydantic import BaseModel
 from typing_extensions import TypedDict
 
 from bula_check.constants import LANGUAGES
-from bula_check.protocol import Chunks
-from bula_check.protocol import Medicines
+from bula_check.protocol import Section
 
 
 class LLMProvider(str, Enum):
@@ -19,39 +17,52 @@ class LLMProvider(str, Enum):
     ollama = "ollama"
 
 
-class BulaCheckConfig(BaseModel):
+class BulaCheckConfig(TypedDict):
     """Configuração principal do BulaCheck."""
 
     # Banco de dados
-    bulagratis_db_path: Path = Path("bulas_gratis.db")
-    anvisa_db_path: Path = Path("bulas_anvisa.db")
+    bulagratis_db_path: Path
+    anvisa_db_path: Path
 
     # LLM
-    llm_provider: LLMProvider = LLMProvider.openai
-    llm_model: str = "gpt-4o-mini"
-    llm_temperature: float = 0.0
+    llm_provider: LLMProvider
+    llm_model: str
+    llm_temperature: float
 
     # Retrieval
-    top_k_chunks: int = 8
-    top_k_medicines: int = 5
-    similarity_candidates: int = 3  # sugestões quando medicamento não é encontrado
-    lexical_weight: float = 0.4  # peso busca lexical no score híbrido
-    semantic_weight: float = 0.6  # peso busca semântica no score híbrido
+    top_k_chunks: int
+    top_k_medicines: int
+    similarity_candidates: int  # sugestões quando medicamento não é encontrado
+    lexical_weight: float  # peso busca lexical no score híbrido
+    semantic_weight: float  # peso busca semântica no score híbrido
 
     # Geração
-    max_response_words: int = 400
-
-    # TODO como imputar essas chaves dinamicamente?
+    max_response_words: int
 
     # DeCS
-    decs_api_key: str | None = None
-    decs_lang: LANGUAGES = "portuguese"
+    decs_api_key: str | None
+    decs_lang: LANGUAGES
 
     # OBM
-    obm_token: str | None = None
+    obm_token: str | None
 
-    class Config:
-        arbitrary_types_allowed = True
+
+DEFAULT_CONFIG: BulaCheckConfig = {
+    "bulagratis_db_path": Path("bulas_gratis.db"),
+    "anvisa_db_path": Path("bulas_anvisa.db"),
+    "llm_provider": LLMProvider.openai,
+    "llm_model": "gpt-4o-mini",
+    "llm_temperature": 0.0,
+    "top_k_chunks": 8,
+    "top_k_medicines": 5,
+    "similarity_candidates": 3,
+    "lexical_weight": 0.4,
+    "semantic_weight": 0.6,
+    "max_response_words": 400,
+    "decs_api_key": None,
+    "decs_lang": "portuguese",
+    "obm_token": None,
+}
 
 
 class ParsedQuery(TypedDict):
@@ -65,17 +76,43 @@ class ParsedQuery(TypedDict):
     original_query: str
 
 
-class MedicineCandidate(BaseModel):
+class ChunksDict(TypedDict):
+    id: str
+    medicine_id: str
+    medicine_name: str
+    section: Section
+    paragraph_idx: int
+    chunk_idx: int
+    text: str
+    embedding: list[float]
+
+
+class MedicinesDict(TypedDict):
+    id: str
+    name: str
+    processed_name: str
+    active_ingredient: list[str] | None
+    processed_active_ingredient: list[str] | None
+    source: Literal["anvisa", "bula_gratis"]
+    url: str
+    registration_number: int | None
+    therapeutic_classes: str | None
+    company_name: str
+    processed_company_name: str
+    cnpj: str | None
+
+
+class MedicineCandidate(TypedDict):
     """Medicamento candidato encontrado na busca."""
 
-    medicine: Medicines
+    medicine: MedicinesDict
     score: float
 
 
-class RetrievedChunk(BaseModel):
+class RetrievedChunk(TypedDict):
     """Medicamento candidato encontrado na busca."""
 
-    chunk: Chunks
+    chunk: ChunksDict
     score: float
 
 

@@ -19,6 +19,7 @@ from langchain_core.messages import HumanMessage
 
 from bula_check.agents.pipeline import build_graph
 from bula_check.agents.pipeline import make_initial_state
+from bula_check.agents.protocol import DEFAULT_CONFIG
 from bula_check.agents.protocol import BulaCheckConfig
 from bula_check.agents.protocol import LLMProvider
 
@@ -46,8 +47,11 @@ def respond(
     state["messages"].append(HumanMessage(content=user_message))
 
     try:
+        import traceback as _tb
+
         new_state = graph.invoke(state)
     except Exception as e:
+        _tb.print_exc()
         bot_response = f"Erro interno: {e}"
 
         chat_history.append(
@@ -163,12 +167,12 @@ def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
         with gr.Accordion("⚙️ Configuração atual", open=False):
             gr.Markdown(
                 f"""
-- **Provedor LLM:** `{cfg.llm_provider.value}`
-- **Modelo:** `{cfg.llm_model}`
-- **Banco BulaGratis:** `{cfg.bulagratis_db_path}`
-- **Banco ANVISA:** `{cfg.anvisa_db_path}`
-- **Top-K chunks:** `{cfg.top_k_chunks}`
-- **Peso lexical / semântico:** `{cfg.lexical_weight} / {cfg.semantic_weight}`
+- **Provedor LLM:** `{cfg["llm_provider"].value}`
+- **Modelo:** `{cfg["llm_model"]}`
+- **Banco BulaGratis:** `{cfg["bulagratis_db_path"]}`
+- **Banco ANVISA:** `{cfg["anvisa_db_path"]}`
+- **Top-K chunks:** `{cfg["top_k_chunks"]}`
+- **Peso lexical / semântico:** `{cfg["lexical_weight"]} / {cfg["semantic_weight"]}`
                 """
             )
 
@@ -230,18 +234,19 @@ def main() -> None:
     }
     model = args.model or default_models[args.provider]
 
-    cfg = BulaCheckConfig(
-        llm_provider=LLMProvider(args.provider),
-        llm_model=model,
-        bulagratis_db_path=Path(args.db),
-        anvisa_db_path=Path(args.anvisa_db),
-        decs_api_key=os.getenv("DECS_API_KEY"),
-        obm_token=os.getenv("OBM_TOKEN"),
-    )
+    cfg: BulaCheckConfig = {
+        **DEFAULT_CONFIG,
+        "llm_provider": LLMProvider(args.provider),
+        "llm_model": model,
+        "bulagratis_db_path": Path(args.db),
+        "anvisa_db_path": Path(args.anvisa_db),
+        "decs_api_key": os.getenv("DECS_API_KEY"),
+        "obm_token": os.getenv("OBM_TOKEN"),
+    }
 
     print(f"\n🔬 BulaCheck iniciando com {args.provider}/{model}")
-    print(f"   Banco BulaGratis : {cfg.bulagratis_db_path}")
-    print(f"   Banco ANVISA     : {cfg.anvisa_db_path}")
+    print(f"   Banco BulaGratis : {cfg['bulagratis_db_path']}")
+    print(f"   Banco ANVISA     : {cfg['anvisa_db_path']}")
     print(f"   Acesse em        : http://localhost:{args.port}\n")
 
     ui = build_ui(cfg)
