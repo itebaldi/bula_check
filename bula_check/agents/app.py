@@ -11,7 +11,6 @@ Uso:
 """
 
 import argparse
-import os
 import traceback
 
 import gradio as gr
