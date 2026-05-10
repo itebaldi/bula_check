@@ -1,24 +1,14 @@
-"""
-protocol.py
------------
-Protocolo central do projeto: modelos de dados, configuração do banco SQLite
-e utilitários de normalização de texto.
-
-Tabelas:
-  - medicines : uma linha por medicamento (Medicines)
-  - chunks    : fragmentos de texto com embeddings (Chunks)
-"""
-
-from __future__ import annotations
-
-import re
 import sqlite3
-import unicodedata
 from enum import Enum
 from pathlib import Path
 from typing import Literal
 
+from nemo.preprocessing.text import normalize_text_whitespace
+from nemo.preprocessing.text import remove_text_accents
+from nemo.preprocessing.text import remove_text_punctuation
+from nemo.preprocessing.text import uppercase_text
 from pydantic import BaseModel
+from toolz.functoolz import pipe
 
 # ---------------------------------------------------------------------------
 # Configuração global
@@ -40,6 +30,21 @@ class Section(str, Enum):
     missed_dose = "missed_dose"
     adverse_reactions = "adverse_reactions"
     overdose = "overdose"
+
+
+def pt_section_label(section: Section) -> str:
+    labels = {
+        "indications": "Indicações",
+        "how_it_works": "Como funciona",
+        "contraindications": "Contraindicações",
+        "warnings_and_precautions": "Advertências e Precauções",
+        "storage": "Armazenamento",
+        "dosage_and_administration": "Dosagem e Administração",
+        "missed_dose": "Dose Esquecida",
+        "adverse_reactions": "Reações Adversas",
+        "overdose": "Superdosagem",
+    }
+    return labels.get(section.value, section.value)
 
 
 # ---------------------------------------------------------------------------
@@ -165,38 +170,18 @@ class Chunks(BaseModel):
     embedding: list[float]
 
 
-# ---------------------------------------------------------------------------
-# Normalização de texto
-# ---------------------------------------------------------------------------
 def normalize_for_matching(text: str) -> str:
-    """Lowercase + remove acentos + remove pontuação + colapsa espaços."""
-    text = text.upper()
-    text = _remove_accents(text)
-    text = _remove_punctuation(text)
-    text = _normalize_whitespace(text)
-    return text.lower()
+    return normalize_processed_field(text).lower()
 
 
 def normalize_processed_field(text: str) -> str:
-    """Normalização para campos processed_*: uppercase sem acentos/pontuação."""
-    text = text.upper()
-    text = _remove_accents(text)
-    text = _remove_punctuation(text)
-    text = _normalize_whitespace(text)
-    return text
-
-
-def _remove_accents(text: str) -> str:
-    nfd = unicodedata.normalize("NFD", text)
-    return "".join(c for c in nfd if unicodedata.category(c) != "Mn")
-
-
-def _remove_punctuation(text: str) -> str:
-    return re.sub(r"[^\w\s]", " ", text)
-
-
-def _normalize_whitespace(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip()
+    return pipe(
+        text,
+        uppercase_text,
+        remove_text_accents,
+        remove_text_punctuation,
+        normalize_text_whitespace,
+    )
 
 
 # Versões normalizadas dos padrões de seção (lowercase, sem acentos)
@@ -206,9 +191,6 @@ SECTION_PATTERNS: dict[str, list[str]] = {
 }
 
 
-# ---------------------------------------------------------------------------
-# DDL do banco SQLite
-# ---------------------------------------------------------------------------
 _DDL_MEDICINES = """
 CREATE TABLE IF NOT EXISTS medicines (
     id                          TEXT PRIMARY KEY,
@@ -283,9 +265,6 @@ ON CONFLICT(id) DO UPDATE SET
 """
 
 
-# ---------------------------------------------------------------------------
-# API do banco
-# ---------------------------------------------------------------------------
 def init_db(path: Path = DEFAULT_DB_PATH) -> sqlite3.Connection:
     """Cria (ou abre) o banco e garante que as tabelas existam."""
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -300,7 +279,6 @@ def init_db(path: Path = DEFAULT_DB_PATH) -> sqlite3.Connection:
 
 def save_medicine(conn: sqlite3.Connection, medicine: Medicines) -> None:
     """Insere ou atualiza um medicamento (upsert por URL)."""
-    import json
 
     conn.execute(
         _UPSERT_MEDICINE,
