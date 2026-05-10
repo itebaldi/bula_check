@@ -108,19 +108,19 @@ DECS_API_KEY=...               # opcional: expansão de keywords via DeCS
 
 ```bash
 # OpenAI (padrão)
-python -m bulacheck.chatbot.app
+python -m bula_check.agents.app
 
 # Anthropic
-python -m bulacheck.chatbot.app --provider anthropic --model claude-3-5-haiku-20241022
+python -m bula_check.agents.app --provider anthropic --model claude-3-5-haiku-20241022
 
 # Ollama (local, sem API key)
-python -m bulacheck.chatbot.app --provider ollama --model llama3.2
+python -m bula_check.agents.app --provider ollama --model llama3.2
 
 # Com bancos customizados
-python -m bulacheck.chatbot.app --db /caminho/bulas.db --anvisa-db /caminho/anvisa.db
+python -m bula_check.agents.app --db /caminho/bulas.db --anvisa-db /caminho/anvisa.db
 
 # Com link público (ngrok interno do Gradio)
-python -m bulacheck.chatbot.app --share
+python -m bula_check.agents.app --share
 ```
 
 Acesse em: **http://localhost:7860**
