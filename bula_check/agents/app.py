@@ -5,9 +5,9 @@ Interface de chatbot local com Gradio
 Mantém estado de conversa entre turnos
 
 Uso:
-    python -m bulacheck.chatbot.app
-    python -m bulacheck.chatbot.app --provider anthropic --model claude-3-5-haiku-20241022
-    python -m bulacheck.chatbot.app --provider ollama --model llama3.2
+    python -m bula_check.agents.app
+    python -m bula_check.agents.app --provider anthropic --model claude-3-5-haiku-20241022
+    python -m bula_check.agents.app --provider ollama --model llama3.2
 """
 
 import argparse
@@ -33,9 +33,9 @@ def _make_session(config: BulaCheckConfig) -> dict:
 
 def respond(
     user_message: str,
-    chat_history: list[tuple[str, str]],
+    chat_history: list[dict[str, str]],
     session: dict,
-) -> tuple[str, list[tuple[str, str]], dict]:
+) -> tuple[str, list[dict[str, str]], dict]:
     """Processa uma mensagem do usuário e retorna a resposta do BulaCheck."""
     if not user_message.strip():
         return "", chat_history, session
@@ -49,24 +49,52 @@ def respond(
         new_state = graph.invoke(state)
     except Exception as e:
         bot_response = f"Erro interno: {e}"
-        chat_history.append((user_message, bot_response))
+
+        chat_history.append(
+            {
+                "role": "user",
+                "content": user_message,
+            }
+        )
+        chat_history.append(
+            {
+                "role": "assistant",
+                "content": bot_response,
+            }
+        )
+
         return "", chat_history, session
 
     ai_messages = [
-        m for m in new_state["messages"] if not isinstance(m, HumanMessage)
+        message
+        for message in new_state["messages"]
+        if not isinstance(message, HumanMessage)
     ]
+
     if ai_messages:
-        bot_response = ai_messages[-1].content
+        bot_response = str(ai_messages[-1].content)
     else:
         bot_response = "Não consegui processar sua solicitação."
 
     session["state"] = new_state
-    chat_history.append((user_message, bot_response))
+
+    chat_history.append(
+        {
+            "role": "user",
+            "content": user_message,
+        }
+    )
+    chat_history.append(
+        {
+            "role": "assistant",
+            "content": bot_response,
+        }
+    )
 
     return "", chat_history, session
 
 
-def reset_session(session: dict) -> tuple[list, dict]:
+def reset_session(session: dict) -> tuple[list[dict[str, str]], dict]:
     """Reinicia a conversa."""
     cfg = session["cfg"]
     new_session = _make_session(cfg)
@@ -111,7 +139,6 @@ def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
         chatbot = gr.Chatbot(
             label="BulaCheck",
             height=500,
-            bubble_full_width=False,  # type: ignore
             avatar_images=(None, "💊"),
             render_markdown=True,
         )
