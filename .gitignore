@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 bulas_gratis.db
+bulas_gratis_sliding.db
 
 # C extensions
 *.so
