@@ -21,7 +21,7 @@ Uso:
     python -m bula_check.sliding_window_crawler \\
         --source bulas_gratis.db \\
         --dest   bulas_gratis_sliding.db \\
-        --chunk-size 300 \\
+        --chunk-size 250 \\
         --overlap    100 \\
         --test-medicine "Dipirona"  # opcional: testa apenas 1 remédio
 
@@ -474,8 +474,10 @@ if __name__ == "__main__":
     python -m bula_check.sliding_window_crawler \
     --source bulas_gratis.db \
     --dest   bulas_gratis_sliding.db \
-    --chunk-size 300 \
+    --chunk-size 250 \
     --overlap    100 \
     --test-medicine "Dipirona"
     --no-embed
+
+    python -m bula_check.sliding_window_crawler --source bulas_gratis.db --dest bulas_gratis_sliding.db --chunk-size 250 --overlap 100
     """
