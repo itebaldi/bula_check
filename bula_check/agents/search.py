@@ -310,13 +310,94 @@ def hybrid_chunk_search(
 
     final_scores.sort(key=lambda item: item[1], reverse=True)
 
-    return [
+    top_retrieved = [
         RetrievedChunk(
             chunk=chunks_by_id[chunk_id],
             score=score,
         )
         for chunk_id, score in final_scores[: cfg["top_k_chunks"]]
     ]
+
+    return_mode = cfg.get("return_chunks", "only_desired")
+    if return_mode == "with_prev_and_next":
+        return _expand_with_neighbours(top_retrieved, chunks)
+
+    return top_retrieved
+
+
+def _expand_with_neighbours(
+    retrieved: list[RetrievedChunk],
+    all_chunks: list[ChunksDict],
+) -> list[RetrievedChunk]:
+    """
+    Para cada chunk recuperado, inclui o chunk anterior e o próximo dentro
+    da mesma seção (mesmo medicine_id + section).
+
+    A ordenação final respeita a posição original na seção
+    (paragraph_idx, chunk_idx) para que o LLM receba o texto em ordem
+    natural de leitura.
+
+    Chunks vizinhos são adicionados com score=0.0 para indicar que foram
+    incluídos por contexto, não por relevância direta.
+    """
+    if not retrieved:
+        return retrieved
+
+    # Índice posicional por (medicine_id, section, paragraph_idx, chunk_idx)
+    # para localizar prev/next rapidamente.
+    # Usamos a lista ordenada de todos os chunks agrupada por seção.
+    from collections import defaultdict
+
+    # Agrupa por (medicine_id, section)
+    section_key = lambda c: (c["medicine_id"], str(c["section"]))  # noqa: E731
+
+    section_lists: dict[tuple, list[ChunksDict]] = defaultdict(list)
+    for chunk in all_chunks:
+        section_lists[section_key(chunk)].append(chunk)
+
+    # Garante ordenação dentro de cada seção
+    for key in section_lists:
+        section_lists[key].sort(key=lambda c: (c["paragraph_idx"], c["chunk_idx"]))
+
+    # Mapeia chunk_id → posição dentro da lista da sua seção
+    position_in_section: dict[str, tuple[tuple, int]] = {}
+    for key, lst in section_lists.items():
+        for pos, chunk in enumerate(lst):
+            position_in_section[chunk["id"]] = (key, pos)
+
+    # IDs já presentes no resultado (evita duplicatas)
+    seen_ids: set[str] = {r["chunk"]["id"] for r in retrieved}
+
+    # Coleta os vizinhos
+    neighbour_chunks: list[ChunksDict] = []
+    for retrieved_chunk in retrieved:
+        cid = retrieved_chunk["chunk"]["id"]
+        if cid not in position_in_section:
+            continue
+        sec_key, pos = position_in_section[cid]
+        lst = section_lists[sec_key]
+
+        for neighbour_pos in (pos - 1, pos + 1):
+            if 0 <= neighbour_pos < len(lst):
+                neighbour = lst[neighbour_pos]
+                if neighbour["id"] not in seen_ids:
+                    seen_ids.add(neighbour["id"])
+                    neighbour_chunks.append(neighbour)
+
+    # Junta retrieved + vizinhos e ordena por (section, paragraph_idx, chunk_idx)
+    all_retrieved: list[RetrievedChunk] = list(retrieved) + [
+        RetrievedChunk(chunk=nc, score=0.0) for nc in neighbour_chunks
+    ]
+
+    all_retrieved.sort(
+        key=lambda r: (
+            str(r["chunk"]["section"]),
+            r["chunk"]["paragraph_idx"],
+            r["chunk"]["chunk_idx"],
+        )
+    )
+
+    return all_retrieved
 
 
 def _fetch_chunks_for_medicine(

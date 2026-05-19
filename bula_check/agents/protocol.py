@@ -36,6 +36,18 @@ class BulaCheckConfig(TypedDict):
     lexical_weight: float | None  # peso busca lexical no score híbrido
     semantic_weight: float | None  # peso busca semântica no score híbrido
 
+    # Contexto dos chunks devolvidos ao LLM
+    return_chunks: Literal["only_desired", "with_prev_and_next"]
+    """
+    Controla quantos chunks são enviados ao LLM após a busca híbrida:
+
+    - ``"only_desired"``      — apenas os chunks recuperados pelo ranking.
+    - ``"with_prev_and_next"`` — inclui também o chunk imediatamente anterior
+                                 e o imediatamente posterior (dentro da mesma
+                                 seção do mesmo medicamento), enriquecendo o
+                                 contexto sem aumentar o número de buscas.
+    """
+
     # Geração
     max_response_words: int
 
@@ -54,6 +66,7 @@ DEFAULT_CONFIG: BulaCheckConfig = {
     "similarity_candidates": 3,
     "lexical_weight": 0.4,
     "semantic_weight": 0.6,
+    "return_chunks": "only_desired",
     "max_response_words": 200,
     "decs_lang": "portuguese",
 }
