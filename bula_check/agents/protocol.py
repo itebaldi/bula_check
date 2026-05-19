@@ -33,8 +33,8 @@ class BulaCheckConfig(TypedDict):
     top_k_chunks: int
     top_k_medicines: int
     similarity_candidates: int  # sugestões quando medicamento não é encontrado
-    lexical_weight: float  # peso busca lexical no score híbrido
-    semantic_weight: float  # peso busca semântica no score híbrido
+    lexical_weight: float | None  # peso busca lexical no score híbrido
+    semantic_weight: float | None  # peso busca semântica no score híbrido
 
     # Geração
     max_response_words: int
@@ -54,7 +54,7 @@ DEFAULT_CONFIG: BulaCheckConfig = {
     "similarity_candidates": 3,
     "lexical_weight": 0.4,
     "semantic_weight": 0.6,
-    "max_response_words": 400,
+    "max_response_words": 200,
     "decs_lang": "portuguese",
 }
 

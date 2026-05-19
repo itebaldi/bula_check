@@ -291,14 +291,20 @@ def hybrid_chunk_search(
 
     final_scores: list[tuple[str, float]] = []
 
+    lexical_weight = cfg.get("lexical_weight")
+    semantic_weight = cfg.get("semantic_weight")
+
     for chunk_id in chunks_by_id:
         lexical_score = lexical_scores.get(chunk_id, 0.0)
         semantic_score = semantic_scores.get(chunk_id, 0.0)
 
-        combined_score = (
-            cfg["lexical_weight"] * lexical_score
-            + cfg["semantic_weight"] * semantic_score
-        )
+        combined_score = 0.0
+
+        if lexical_weight is not None:
+            combined_score += lexical_weight * lexical_score
+
+        if semantic_weight is not None:
+            combined_score += semantic_weight * semantic_score
 
         final_scores.append((chunk_id, combined_score))
 
