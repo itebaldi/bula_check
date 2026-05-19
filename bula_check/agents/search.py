@@ -36,8 +36,8 @@ def find_medicine_candidates(
     2. Se vazio e anvisa_conn disponível: busca ANVISA → extrai princípio ativo → re-busca BulaGratis
     3. Rankeamento por score lexical
     """
-    name_norm = _normalize(name)
-    ai_norm = _normalize(active_ingredient) if active_ingredient else None
+    name_norm = normalize_text(name)
+    ai_norm = normalize_text(active_ingredient) if active_ingredient else None
 
     # BulaGratis
     rows = search_medicines_lexical(
@@ -56,7 +56,7 @@ def find_medicine_candidates(
                     limit=cfg["top_k_medicines"] * 3,
                 )
                 if rows:
-                    ai_norm = _normalize(ai_from_anvisa)
+                    ai_norm = normalize_text(ai_from_anvisa)
                     break
 
     if not rows:
@@ -87,7 +87,7 @@ def find_similar_medicines(
 
     Usado como sugestão quando o medicamento não é encontrado exatamente.
     """
-    name_norm = _normalize(name)
+    name_norm = normalize_text(name)
 
     if not name_norm:
         return []
@@ -154,7 +154,7 @@ def search_medicines_lexical(
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    name_norm = _normalize(name)
+    name_norm = normalize_text(name)
     name_tokens = name_norm.split()
 
     where_parts: list[str] = []
@@ -165,7 +165,7 @@ def search_medicines_lexical(
         params.append(f"%{token}%")
 
     if active_ingredient:
-        ai_norm = _normalize(active_ingredient)
+        ai_norm = normalize_text(active_ingredient)
         ai_tokens = ai_norm.split()
 
         for token in ai_tokens:
@@ -244,7 +244,7 @@ def _score_medicine_match(
     return min(1.0, score)
 
 
-def _normalize(text: str) -> str:
+def normalize_text(text: str) -> str:
     return pipe(
         text,
         uppercase_text,

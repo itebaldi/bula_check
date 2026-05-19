@@ -1,0 +1,15 @@
+[
+    {
+        "id": "q001",
+        "query": "Tylenol pode causar náusea?",
+        "expected_medicine": "paracetamol",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "id_do_chunk_relevante_1",
+            "id_do_chunk_relevante_2"
+        ]
+    }
+]
