@@ -479,5 +479,5 @@ if __name__ == "__main__":
     --test-medicine "Dipirona"
     --no-embed
 
-    python -m bula_check.sliding_window_crawler --source bulas_gratis.db --dest bulas_gratis_sliding.db --chunk-size 250 --overlap 100
+    python -m bula_check.sliding_window_crawler --source bulas_gratis.db --dest bulas_gratis_sliding.db --chunk-size 300 --overlap 75
     """
