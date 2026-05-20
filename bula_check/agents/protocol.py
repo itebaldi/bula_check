@@ -27,7 +27,7 @@ class BulaCheckConfig(TypedDict):
     # LLM
     llm_provider: LLMProvider
     llm_model: str
-    llm_temperature: float
+    llm_temperature: float | None
 
     # Retrieval
     top_k_chunks: int
@@ -60,8 +60,8 @@ DEFAULT_CONFIG: BulaCheckConfig = {
     "anvisa_db_path": Path("bulas_anvisa.db"),
     "llm_provider": LLMProvider.openai,
     "llm_model": "gpt-4o-mini",
-    "llm_temperature": 0.0,
-    "top_k_chunks": 8,
+    "llm_temperature": None,
+    "top_k_chunks": 20,
     "top_k_medicines": 5,
     "similarity_candidates": 3,
     "lexical_weight": 0.4,

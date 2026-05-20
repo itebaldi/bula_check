@@ -23,6 +23,12 @@ def test_evaluate_results():
         **DEFAULT_CONFIG,
         "llm_provider": LLMProvider.openai,
         "llm_model": "gpt-4o-mini",
+        "return_chunks": "only_desired",  # "with_prev_and_next"
+        "bulagratis_db_path": Path(
+            "bulas_gratis.db"
+        ),  # Path("bulas_gratis_sliding.db")
+        # "lexical_weight": None,
+        # "semantic_weight": None,
     }
 
     graph = build_graph(cfg)

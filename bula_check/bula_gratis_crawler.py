@@ -5,8 +5,8 @@ Coleta bulas do bula.gratis, parseia as 9 seções, gera Medicines + Chunks
 (com embeddings via OpenAI) e salva no SQLite / JSON.
 
 Funções públicas:
-  get_by_name(name, save_jsons, save_sqlite)  — busca um medicamento pelo nome
-  crawl(letters, save_jsons, save_sqlite)     — varre todas as letras
+  get_by_name(name, save_jsons, save_sqlite, save_pdf_json)  — busca um medicamento pelo nome
+  crawl(letters, save_jsons, save_sqlite)                    — varre todas as letras
 
 Uso rápido:
     python bula_gratis_crawler.py
@@ -453,8 +453,11 @@ def _embed_chunks(chunks: list[Chunks]) -> list[Chunks]:
 def _scrape_bula(
     session: requests.Session,
     link: dict,
-) -> tuple[Medicines, list[Chunks]] | None:
-    """Baixa e parseia uma bula. Retorna (Medicines, chunks) ou None se falhar."""
+) -> tuple[Medicines, list[Chunks], dict[str, str | None]] | None:
+    """Baixa e parseia uma bula.
+
+    Retorna (Medicines, chunks, sections) ou None se falhar.
+    """
     patient_url = _build_patient_url(link["url"])
 
     try:
@@ -498,7 +501,7 @@ def _scrape_bula(
 
     chunks = _build_chunks_for_medicine(medicine_id, drug_name, sections)
 
-    return medicine, chunks
+    return medicine, chunks, sections
 
 
 # ---------------------------------------------------------------------------
@@ -508,9 +511,11 @@ def get_by_name(
     name: str,
     save_jsons: bool = False,
     save_sqlite: bool = False,
+    save_pdf_json: bool = False,
     embed: bool = False,
     db_path: Path = DEFAULT_DB_PATH,
     json_output_dir: Path = Path("outputs/bula_gratis/json"),
+    pdf_json_output_dir: Path = Path("outputs/bula_gratis/pdf_json"),
 ) -> list[tuple[Medicines, list[Chunks]]]:
     """
     Busca bulas pelo nome do medicamento no BulaGratis.
@@ -523,12 +528,17 @@ def get_by_name(
         Salva JSON de debug com medicines e chunks resultantes.
     save_sqlite : bool
         Upsert no banco SQLite (tabelas medicines e chunks).
+    save_pdf_json : bool
+        Se True, salva um JSON legível (substituto do PDF) com as seções da bula
+        no formato {chave_da_secao: texto}.
     embed : bool
         Se True, gera embeddings via OpenAI para os chunks.
     db_path : Path
         Caminho do banco SQLite.
     json_output_dir : Path
         Diretório para JSON de debug.
+    pdf_json_output_dir : Path
+        Diretório onde os JSONs legíveis das bulas serão salvos.
 
     Returns
     -------
@@ -539,6 +549,7 @@ def get_by_name(
     log.info("Encontrados %d links para %r", len(links), name)
 
     results: list[tuple[Medicines, list[Chunks]]] = []
+    sections_list: list[dict[str, str | None]] = []
 
     for link in links:
         log.info("  Scraping: %s", link["url"])
@@ -546,12 +557,13 @@ def get_by_name(
         if result is None:
             continue
 
-        medicine, chunks = result
+        medicine, chunks, sections = result
 
         if embed:
             chunks = _embed_chunks(chunks)
 
         results.append((medicine, chunks))
+        sections_list.append(sections)
         time.sleep(SLEEP_BETWEEN_BULAS)
 
     _persist(
@@ -561,6 +573,9 @@ def get_by_name(
         db_path,
         json_output_dir,
         prefix=f"name_{name}",
+        sections_list=sections_list,
+        save_pdf_json=save_pdf_json,
+        pdf_json_output_dir=pdf_json_output_dir,
     )
     return results
 
@@ -600,6 +615,7 @@ def crawl(
     """
     session = _make_session()
     all_results: list[tuple[Medicines, list[Chunks]]] = []
+    all_sections: list[dict[str, str | None]] = []
     seen_urls: set[str] = set()
 
     conn: sqlite3.Connection | None = None
@@ -628,12 +644,13 @@ def crawl(
                 if result is None:
                     continue
 
-                medicine, chunks = result
+                medicine, chunks, sections = result
 
                 if embed:
                     chunks = _embed_chunks(chunks)
 
                 all_results.append((medicine, chunks))
+                all_sections.append(sections)
 
                 if conn is not None:
                     save_medicine(conn, medicine)
@@ -654,7 +671,15 @@ def crawl(
             log.info("SQLite: %d medicamentos | %d chunks em %s", n_m, n_c, db_path)
             conn.close()
 
-    _persist(all_results, save_jsons, False, db_path, json_output_dir, prefix="all")
+    _persist(
+        all_results,
+        save_jsons,
+        False,
+        db_path,
+        json_output_dir,
+        prefix="all",
+        sections_list=all_sections,
+    )
     log.info(
         "Crawler BulaGratis concluído — %d medicamentos | %d chunks",
         len(all_results),
@@ -673,6 +698,9 @@ def _persist(
     db_path: Path,
     json_output_dir: Path,
     prefix: str,
+    sections_list: list[dict[str, str | None]] | None = None,
+    save_pdf_json: bool = False,
+    pdf_json_output_dir: Path = Path("outputs/bula_gratis/pdf_json"),
 ) -> None:
     if save_jsons and results:
         json_output_dir.mkdir(parents=True, exist_ok=True)
@@ -689,6 +717,30 @@ def _persist(
             json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
         )
         log.info("JSON salvo: %s (%d itens)", out, len(results))
+
+    if save_pdf_json and results:
+        pdf_json_output_dir.mkdir(parents=True, exist_ok=True)
+        safe_prefix = re.sub(r"\W+", "_", prefix).strip("_").lower()
+        out = pdf_json_output_dir / f"bula_gratis_{safe_prefix}.json"
+        sections_iter = sections_list or [{} for _ in results]
+        payload_readable = [
+            {
+                "name": m.name,
+                "active_ingredient": m.active_ingredient,
+                "company_name": m.company_name,
+                "cnpj": m.cnpj,
+                "registration_number": m.registration_number,
+                "therapeutic_classes": m.therapeutic_classes,
+                "url": m.url,
+                "sections": {k: v for k, v in (sections or {}).items() if v},
+            }
+            for (m, _chunks), sections in zip(results, sections_iter)
+        ]
+        out.write_text(
+            json.dumps(payload_readable, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        log.info("PDF-JSON salvo: %s (%d itens)", out, len(results))
 
     if save_sqlite and results:
         conn = init_db(db_path)
