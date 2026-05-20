@@ -1,5 +1,6 @@
 import json
 import math
+import re
 import sqlite3
 from difflib import SequenceMatcher
 from typing import Any
@@ -46,7 +47,9 @@ def find_medicine_candidates(
 
     # fallback ANVISA, re-busca com princípio ativo
     if not rows and anvisa_conn is not None:
-        anvisa_rows = search_medicines_lexical(anvisa_conn, name, limit=5)
+        anvisa_rows = search_medicines_lexical(
+            anvisa_conn, name, limit=cfg["top_k_medicines"] * 3
+        )
         for anvisa_row in anvisa_rows:
             ai_from_anvisa = anvisa_row.get("active_ingredient")
             if ai_from_anvisa:
@@ -144,6 +147,10 @@ def find_similar_medicines(
     return candidates[:limit]
 
 
+def _split_tex(text: str):
+    return [t for t in re.split(r"\s*[,+;/]\s*", text) if t]
+
+
 def search_medicines_lexical(
     conn: sqlite3.Connection,
     name: str,
@@ -155,7 +162,7 @@ def search_medicines_lexical(
     cursor = conn.cursor()
 
     name_norm = normalize_text(name)
-    name_tokens = name_norm.split()
+    name_tokens = _split_tex(name_norm)
 
     where_parts: list[str] = []
     params: list[Any] = []
@@ -166,7 +173,7 @@ def search_medicines_lexical(
 
     if active_ingredient:
         ai_norm = normalize_text(active_ingredient)
-        ai_tokens = ai_norm.split()
+        ai_tokens = _split_tex(ai_norm)
 
         for token in ai_tokens:
             where_parts.append(
@@ -249,7 +256,7 @@ def normalize_text(text: str) -> str:
         text,
         uppercase_text,
         remove_text_accents,
-        remove_text_punctuation,
+        # remove_text_punctuation,
         normalize_text_whitespace,
     )
 

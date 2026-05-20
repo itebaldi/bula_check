@@ -25,6 +25,6 @@ def build_llm(config: BulaCheckConfig) -> BaseChatModel:
     if provider == LLMProvider.ollama:
         from langchain_ollama import ChatOllama
 
-        return ChatOllama(model=model, temperature=temperature)
+        return ChatOllama(model=model, temperature=temperature)  # type: ignore
 
     raise ValueError(f"Provedor LLM desconhecido: {provider}")
