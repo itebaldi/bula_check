@@ -94,7 +94,17 @@ def evaluate_results(
             gabarito_chunks = _fetch_chunks_by_ids(
                 bulagratis_conn, list(item.expected_chunk_ids)
             )
-            retrieved_unwrapped = [rc["chunk"] for rc in retrieved_chunks]
+            # Filtra chunks-vizinhos injetados pelo modo "with_prev_and_next"
+            # (score=0.0 por convenção em search._expand_with_neighbours) e
+            # recupera a ordem por score. Sem isso, o modo de retorno polui as
+            # métricas de retrieval — que devem medir só o ranker, não a
+            # estratégia de contexto. O efeito do contexto aparece em
+            # verdict_accuracy.
+            core_retrieved = sorted(
+                (rc for rc in retrieved_chunks if rc["score"] > 0),
+                key=lambda rc: -rc["score"],
+            )
+            retrieved_unwrapped = [rc["chunk"] for rc in core_retrieved]
             retrieval_rows.append(
                 _semantic_ir_metrics(
                     retrieved=retrieved_unwrapped,
