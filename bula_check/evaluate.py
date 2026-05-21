@@ -132,11 +132,11 @@ def _semantic_ir_metrics(
     threshold: float,
 ) -> dict[str, float]:
     """
-    Recall/Precision/MRR/Hit@1 com equivalência semântica (cosine >= threshold).
+    Recall/Precision/MRR/Hit@1 com equivalência semântica + section gate.
 
-    Recall e precision são computados *independentemente* sobre a matriz
-    cosine: para recall, varre gabarito e marca cobertos; para precision,
-    varre retrieved e marca hits.
+    Hit = mesma seção AND cosine >= threshold. O section gate elimina falsos
+    positivos comuns onde duas passagens da mesma bula compartilham vocabulário
+    de domínio (cos alto) mas tratam de coisas diferentes (warnings vs overdose).
     """
     if not retrieved or not gabarito:
         return {
@@ -148,14 +148,12 @@ def _semantic_ir_metrics(
         }
 
     gabarito_covered = sum(
-        any(_cosine(g["embedding"], r["embedding"]) >= threshold for r in retrieved)
-        for g in gabarito
+        any(_is_match(g, r, threshold) for r in retrieved) for g in gabarito
     )
     recall = gabarito_covered / len(gabarito)
 
     retrieved_is_hit = [
-        any(_cosine(r["embedding"], g["embedding"]) >= threshold for g in gabarito)
-        for r in retrieved
+        any(_is_match(r, g, threshold) for g in gabarito) for r in retrieved
     ]
     precision = sum(retrieved_is_hit) / len(retrieved)
 
@@ -172,6 +170,13 @@ def _semantic_ir_metrics(
         "semantic_mrr": mrr,
         "semantic_hit_at_1": hit_at_1,
     }
+
+
+def _is_match(a: ChunksDict, b: ChunksDict, threshold: float) -> bool:
+    """Chunks casam se estão na mesma seção E cos(embedding) >= threshold."""
+    if a["section"] != b["section"]:
+        return False
+    return _cosine(a["embedding"], b["embedding"]) >= threshold
 
 
 def _harmonic_mean(a: float, b: float) -> float:
