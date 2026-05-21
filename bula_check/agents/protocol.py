@@ -15,6 +15,8 @@ class LLMProvider(str, Enum):
     openai = "openai"
     anthropic = "anthropic"
     ollama = "ollama"
+    groq = "groq"
+    google = "google"
 
 
 class BulaCheckConfig(TypedDict):
