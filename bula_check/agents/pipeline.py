@@ -46,12 +46,19 @@ def build_graph(config: BulaCheckConfig) -> StateGraph:
     builder.add_node("suggest_similar", node_suggest_similar)
 
     builder.add_edge(START, "parse_query")
-    builder.add_edge("parse_query", "expand_decs")
     builder.add_edge("expand_decs", "find_medicine")
     builder.add_edge("fetch_chunks", "verify_claim")
     builder.add_edge("verify_claim", END)
 
     # condicionais
+    builder.add_conditional_edges(
+        "parse_query",
+        _route_after_parse_query,
+        {
+            "expand_decs": "expand_decs",
+            "verify_claim": "verify_claim",
+        },
+    )
     builder.add_conditional_edges(
         "find_medicine",
         _route_after_find_medicine,
@@ -70,6 +77,13 @@ def build_graph(config: BulaCheckConfig) -> StateGraph:
     )
 
     return builder.compile()  # type: ignore
+
+
+def _route_after_parse_query(state: BulaCheckState) -> str:
+    """Pula retrieval em modo closed-book (ablation)."""
+    if state["config"].get("with_rag", True):
+        return "expand_decs"
+    return "verify_claim"
 
 
 def _route_after_find_medicine(state: BulaCheckState) -> str:

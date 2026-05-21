@@ -261,6 +261,31 @@ REGRAS:
 """
 
 
+_VERIFY_PROMPT_SYSTEM_CLOSED_BOOK = """
+Você é um farmacêutico clínico experiente com conhecimento amplo sobre medicamentos,
+princípios ativos, indicações, contraindicações, reações adversas e interações.
+Você NÃO tem acesso à bula específica deste medicamento — responda baseado no seu
+conhecimento farmacológico geral.
+
+REGRAS:
+1. Use seu conhecimento médico/farmacológico geral sobre o medicamento {medicine_name}
+2. Posicione-se com confiança quando o conhecimento for sólido sobre a classe terapêutica
+3. Classifique o resultado como: CONFIRMADA, REFUTADA ou INCONCLUSIVA
+4. INCONCLUSIVA apenas quando realmente não houver informação confiável — não use
+   por excesso de cautela. Se você sabe o suficiente para ter uma opinião informada,
+   classifique como CONFIRMADA ou REFUTADA
+5. Responda em português, de forma clara e acessível ao paciente
+6. Máximo de {max_words} palavras na resposta final
+7. Indique sempre que se trata de orientação geral, não substitui consulta médica
+8. Formato da resposta:
+
+**Veredicto:** [CONFIRMADA / REFUTADA / INCONCLUSIVA]
+
+**Análise:**
+[Sua análise com base em conhecimento farmacológico geral sobre {medicine_name}]
+"""
+
+
 def node_verify_claim(state: BulaCheckState) -> dict:
     """Verifica a alegação/pergunta com base nos chunks recuperados."""
     config: BulaCheckConfig = state["config"]
@@ -268,12 +293,22 @@ def node_verify_claim(state: BulaCheckState) -> dict:
     medicine: MedicineCandidate | None = state.get("selected_medicine")
     chunks: list[RetrievedChunk] = state.get("retrieved_chunks", [])
 
-    if not parsed or not medicine:
+    if not parsed:
         return {}
 
-    if not chunks:
+    is_closed_book = not config.get("with_rag", True)
+    medicine_name = (
+        medicine["medicine"]["name"] if medicine else parsed["medicine_name"]
+    )
+
+    # Guard original só vale em modo RAG
+    if not is_closed_book and not medicine:
+        return {}
+
+    # Mensagem "não encontrei" só em modo RAG com retrieval vazio
+    if not is_closed_book and not chunks:
         no_info_msg = (
-            f"Não encontrei informações suficientes na bula de **{medicine['medicine']['name']}** "
+            f"Não encontrei informações suficientes na bula de **{medicine_name}** "
             f"para verificar sua {'pergunta' if parsed['claim_type'] == 'question' else 'alegação'}. "
             "Consulte um profissional de saúde."
         )
@@ -289,22 +324,33 @@ def node_verify_claim(state: BulaCheckState) -> dict:
             "messages": [AIMessage(content=no_info_msg)],
         }
 
-    context_parts = []
-    for chunk in chunks[: config["top_k_chunks"]]:
-        label = pt_section_label(chunk["chunk"]["section"])
-        context_parts.append(f"[{label}]\n{chunk['chunk']['text']}")
-    context = "\n\n---\n\n".join(context_parts)
-
-    system_prompt = _VERIFY_PROMPT_SYSTEM.format(
+    system_template = (
+        _VERIFY_PROMPT_SYSTEM_CLOSED_BOOK if is_closed_book else _VERIFY_PROMPT_SYSTEM
+    )
+    system_prompt = system_template.format(
         max_words=config["max_response_words"],
-        medicine_name=medicine["medicine"]["name"],
+        medicine_name=medicine_name,
     )
 
-    user_prompt = (
-        f"Medicamento: {medicine['medicine']['name']}\n"
-        f"{'Pergunta' if parsed['claim_type'] == 'question' else 'Alegação'}: {parsed['original_query']}\n\n"
-        f"Trechos da bula:\n{context}"
-    )
+    claim_label = "Pergunta" if parsed["claim_type"] == "question" else "Alegação"
+
+    if is_closed_book:
+        user_prompt = (
+            f"Medicamento: {medicine_name}\n"
+            f"{claim_label}: {parsed['original_query']}"
+        )
+    else:
+        context_parts = []
+        for chunk in chunks[: config["top_k_chunks"]]:
+            label = pt_section_label(chunk["chunk"]["section"])
+            context_parts.append(f"[{label}]\n{chunk['chunk']['text']}")
+        context = "\n\n---\n\n".join(context_parts)
+
+        user_prompt = (
+            f"Medicamento: {medicine_name}\n"
+            f"{claim_label}: {parsed['original_query']}\n\n"
+            f"Trechos da bula:\n{context}"
+        )
 
     llm = build_llm(config)
 

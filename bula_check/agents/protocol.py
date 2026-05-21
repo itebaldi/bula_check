@@ -54,6 +54,14 @@ class BulaCheckConfig(TypedDict):
     # DeCS
     decs_lang: LANGUAGES
 
+    # Ablation
+    with_rag: bool
+    """
+    Quando False, pula retrieval (expand_decs, find_medicine, fetch_chunks) e
+    responde direto via LLM. Usado para ablation study — medir contribuição
+    do retrieval vs conhecimento paramétrico do LLM.
+    """
+
 
 DEFAULT_CONFIG: BulaCheckConfig = {
     "bulagratis_db_path": Path("bulas_gratis.db"),
@@ -69,6 +77,7 @@ DEFAULT_CONFIG: BulaCheckConfig = {
     "return_chunks": "only_desired",
     "max_response_words": 200,
     "decs_lang": "portuguese",
+    "with_rag": True,
 }
 
 

@@ -66,23 +66,49 @@ def evaluate_results(
             selected_medicine = final_state.get("selected_medicine")
             retrieved_chunks = final_state.get("retrieved_chunks", [])
             verification_result = final_state.get("verification_result")
+            parsed_query = final_state.get("parsed_query")
 
+            # Fallback chain: retrieval (RAG) → parse (baseline). Mede
+            # identificação de medicamento ponta-a-ponta, independente do modo.
+            # active_ingredient cobre o caso brand → genérico (ex: Tylenol em
+            # parse vs paracetamol esperado, ou Acetaminofeno no DB vs
+            # paracetamol esperado).
             predicted_medicine = ""
+            predicted_active_ingredient = ""
             if selected_medicine:
                 predicted_medicine = selected_medicine["medicine"]["name"]
+                ai_list = (
+                    selected_medicine["medicine"].get("active_ingredient") or []
+                )
+                predicted_active_ingredient = " ".join(ai_list)
+            elif parsed_query:
+                predicted_medicine = parsed_query.get("medicine_name", "")
+                predicted_active_ingredient = (
+                    parsed_query.get("active_ingredient") or ""
+                )
 
             predicted_verdict = ""
             if verification_result:
                 predicted_verdict = verification_result["verdict"]
 
-            predicted_sections = [
-                chunk["chunk"]["section"] for chunk in retrieved_chunks
-            ]
+            # Para sections, no baseline cai no fallback do parse_query (que
+            # mede entendimento da query, NÃO acerto do retrieval — semântica
+            # ligeiramente diferente do RAG mode).
+            if retrieved_chunks:
+                predicted_sections = [
+                    chunk["chunk"]["section"] for chunk in retrieved_chunks
+                ]
+            elif parsed_query:
+                predicted_sections = parsed_query.get("sections", [])
+            else:
+                predicted_sections = []
 
             answer_rows.append(
                 {
                     "medicine_correct": normalize_text(item.expected_medicine)
-                    in normalize_text(predicted_medicine),
+                    in normalize_text(predicted_medicine)
+                    or normalize_text(item.expected_medicine)
+                    in normalize_text(predicted_active_ingredient),
                     "section_correct": _has_expected_sections(
                         retrieved_sections=predicted_sections,
                         expected_sections=item.expected_sections,
