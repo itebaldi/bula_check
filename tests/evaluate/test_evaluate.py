@@ -26,11 +26,20 @@ DATASET_PATH = Path("inputs/evaluation/dataset.json")
 # fmt: off
 @pytest.mark.parametrize(
     "idx, with_rag, lexical_weight, semantic_weight, sliding_db, return_chunks, llm_provider, llm_model",
-    [(0, True, True, True, False, "only_desired", LLMProvider.groq, "llama-3.3-70b-versatile")],
+    [
+        ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        ("0.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
+    #     ("1.1", True, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+    #     ("2.1", True, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
+    #     ("3.1", True, True, True, False, "only_desired", LLMProvider.groq, "llama-3.3-70b-versatile"),
+    ],
 )
 # fmt: on
 def test_evaluate_results(
-    idx: int,
+    idx: str,
     with_rag: bool,
     lexical_weight: bool,
     semantic_weight: bool,

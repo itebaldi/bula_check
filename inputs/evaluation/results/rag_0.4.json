@@ -1,0 +1,21 @@
+{
+  "medicine_accuracy": 0.85,
+  "section_accuracy": 1.0,
+  "verdict_accuracy": 0.6,
+  "semantic_recall": 0.7,
+  "semantic_precision": 0.40750000000000003,
+  "semantic_r_precision": 0.45,
+  "semantic_ap": 0.575,
+  "semantic_f1": 0.47833333333333333,
+  "semantic_mrr": 0.575,
+  "semantic_hit_at_1": 0.45,
+  "config": {
+    "llm_provider": "LLMProvider.openai",
+    "llm_model": "gpt-4o-mini",
+    "return_chunks": "only_desired",
+    "bulagratis_db": "bulas_gratis.db",
+    "with_rag": true,
+    "lexical_weight": 0.4,
+    "semantic_weight": null
+  }
+}

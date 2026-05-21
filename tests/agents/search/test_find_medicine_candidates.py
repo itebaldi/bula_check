@@ -6,13 +6,14 @@ from pathlib import Path
 
 from bula_check.agents.nodes import _open_db
 from bula_check.agents.protocol import DEFAULT_CONFIG
+from bula_check.agents.protocol import BulaCheckConfig
 from bula_check.agents.search import find_medicine_candidates
 from bula_check.protocol import Chunks
 from bula_check.protocol import Medicines
 
 WRITE_PDF = True
 
-
+# Kaloba
 # Metoprolol — 25 mg / 1 dia
 # Olmesartana — 40 mg / 1 dia
 # Plenance — 10 mg / dia
@@ -22,15 +23,26 @@ WRITE_PDF = True
 
 
 def test_find_medicine_candidates():
-    config = DEFAULT_CONFIG
-    bulagratis_conn = _open_db(config["bulagratis_db_path"])
+    sliding_db = True
+
+    config: BulaCheckConfig = {
+        **DEFAULT_CONFIG,
+        "bulagratis_db_path": Path(
+            "bulas_gratis_sliding.db" if sliding_db else "bulas_gratis.db"
+        ),
+    }
+
+    db_path = config["bulagratis_db_path"]
+    folder = "outputs/bula_gratis_sliding/" if sliding_db else "outputs/bula_gratis/"
+
+    bulagratis_conn = _open_db(db_path)
     anvisa_conn = _open_db(config["anvisa_db_path"])
 
     try:
         candidates = find_medicine_candidates(
             bulagratis_conn=bulagratis_conn,
             anvisa_conn=anvisa_conn,
-            name="Kaloba",
+            name="paracetamol_cloridrato_de_pseudoefedrina",
             active_ingredient=None,  # "paracetamol",
             cfg=config,
         )
@@ -44,7 +56,9 @@ def test_find_medicine_candidates():
                 candidate["medicine"]["id"],
                 save_jsons=True,
                 save_pdf_json=True,
-                db_path=config["bulagratis_db_path"],
+                db_path=db_path,
+                json_output_dir=Path(f"{folder}json"),
+                pdf_json_output_dir=Path(f"{folder}pdf_json"),
             )
 
 
