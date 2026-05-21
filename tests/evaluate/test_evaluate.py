@@ -27,14 +27,29 @@ DATASET_PATH = Path("inputs/evaluation/dataset.json")
 @pytest.mark.parametrize(
     "idx, with_rag, lexical_weight, semantic_weight, sliding_db, return_chunks, llm_provider, llm_model",
     [
-        ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        ("0.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
-    #     ("1.1", True, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
-    #     ("2.1", True, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-    #     ("3.1", True, True, True, False, "only_desired", LLMProvider.groq, "llama-3.3-70b-versatile"),
+        # ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        # ("0.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        # ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        # ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        # ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
+        ####
+        ("1.1", True, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        ("1.2", False, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        ("1.3", True, False, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        ("1.4", True, True, False, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.google,  "gemini-2.5-flash"),
+        ####
+        ("2.1", True, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
+        ("2.2", False, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
+        ("2.3", True, False, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
+        ("2.4", True, True, False, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
+        ("2.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "llama3.1:8b"),
+        ###
+        ("3.1", True, True, True, False, "only_desired", LLMProvider.groq, "llama-3.3-70b-versatile"),
+        ("3.2", False, True, True, False, "only_desired", LLMProvider.groq, "llama-3.3-70b-versatile"),
+        ("3.3", True, False, True, False, "only_desired", LLMProvider.groq, "llama-3.3-70b-versatile"),
+        ("3.4", True, True, False, False, "only_desired", LLMProvider.groq, "llama-3.3-70b-versatile"),
+        ("3.5", True, True, True, False, "with_prev_and_next", LLMProvider.groq, "llama-3.3-70b-versatile"),
     ],
 )
 # fmt: on
