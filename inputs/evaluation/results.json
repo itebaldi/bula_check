@@ -1,10 +1,12 @@
 {
   "medicine_accuracy": 1.0,
   "section_accuracy": 0.9666666666666667,
-  "verdict_accuracy": 0.7333333333333333,
-  "semantic_recall": 0.0,
-  "semantic_precision": 0.0,
-  "semantic_f1": 0.0,
-  "semantic_mrr": 0.0,
-  "semantic_hit_at_1": 0.0
+  "verdict_accuracy": 0.8333333333333334,
+  "semantic_recall": 0.9166666666666666,
+  "semantic_precision": 0.2972222222222222,
+  "semantic_r_precision": 0.6666666666666666,
+  "semantic_ap": 0.7777777777777779,
+  "semantic_f1": 0.4411111111111113,
+  "semantic_mrr": 0.7916666666666666,
+  "semantic_hit_at_1": 0.6666666666666666
 }

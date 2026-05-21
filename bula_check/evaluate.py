@@ -142,16 +142,23 @@ def _semantic_ir_metrics(
     threshold: float,
 ) -> dict[str, float]:
     """
-    Recall/Precision/MRR/Hit@1 com equivalência semântica + section gate.
+    Recall/Precision/MRR/Hit@1/R-Precision/AP com equivalência semântica + section gate.
 
     Hit = mesma seção AND cosine >= threshold. O section gate elimina falsos
     positivos comuns onde duas passagens da mesma bula compartilham vocabulário
     de domínio (cos alto) mas tratam de coisas diferentes (warnings vs overdose).
+
+    R-Precision e AP são mode-agnostic com respeito a top_k: olham só os
+    top-|gabarito| chunks (R-Precision) ou penalizam hits tardios sem fixar k
+    (AP). Resolve o viés da precision@k quando top_k > |gabarito|. AP agregado
+    via mean-over-queries vira MAP (padrão TREC).
     """
     if not retrieved or not gabarito:
         return {
             "semantic_recall": 0.0,
             "semantic_precision": 0.0,
+            "semantic_r_precision": 0.0,
+            "semantic_ap": 0.0,
             "semantic_f1": 0.0,
             "semantic_mrr": 0.0,
             "semantic_hit_at_1": 0.0,
@@ -167,6 +174,17 @@ def _semantic_ir_metrics(
     ]
     precision = sum(retrieved_is_hit) / len(retrieved)
 
+    r = len(gabarito)
+    top_r_hits = sum(retrieved_is_hit[:r])
+    r_precision = top_r_hits / r
+
+    hits, ap_sum = 0, 0.0
+    for i, is_hit in enumerate(retrieved_is_hit, start=1):
+        if is_hit:
+            hits += 1
+            ap_sum += hits / i
+    ap = ap_sum / r
+
     first_hit_rank = next(
         (i + 1 for i, hit in enumerate(retrieved_is_hit) if hit), None
     )
@@ -176,6 +194,8 @@ def _semantic_ir_metrics(
     return {
         "semantic_recall": recall,
         "semantic_precision": precision,
+        "semantic_r_precision": r_precision,
+        "semantic_ap": ap,
         "semantic_f1": _harmonic_mean(precision, recall),
         "semantic_mrr": mrr,
         "semantic_hit_at_1": hit_at_1,
