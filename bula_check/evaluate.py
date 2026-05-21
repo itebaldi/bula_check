@@ -143,7 +143,7 @@ def evaluate_results(
 
     total = len(answer_rows)
 
-    summary: dict[str, float] = {
+    summary: dict[str, Any] = {
         "medicine_accuracy": sum(row["medicine_correct"] for row in answer_rows)
         / total,
         "section_accuracy": sum(row["section_correct"] for row in answer_rows)
@@ -155,6 +155,16 @@ def evaluate_results(
     if retrieval_rows:
         for key in retrieval_rows[0]:
             summary[key] = sum(row[key] for row in retrieval_rows) / total
+
+    summary["config"] = {
+        "llm_provider": str(config["llm_provider"]),
+        "llm_model": config["llm_model"],
+        "return_chunks": config["return_chunks"],
+        "bulagratis_db": str(config["bulagratis_db_path"]),
+        "with_rag": config["with_rag"],
+        "lexical_weight": config["lexical_weight"],
+        "semantic_weight": config["semantic_weight"],
+    }
 
     if results_path:
         _to_json(summary, results_path)
