@@ -1,17 +1,10 @@
 {
-  "queries_evaluated": 1,
-  "mean_precision": {
-    "10": 0.0,
-    "20": 0.0
-  },
-  "mean_recall": {
-    "10": 0.0
-  },
-  "mean_avg_precision": 0.0,
-  "mean_coverage": 0.0,
-  "min_coverage": 0.0,
-  "max_coverage": 0.0,
-  "full_coverage_count": 0,
   "medicine_accuracy": 1.0,
-  "verdict_accuracy": 0.0
+  "section_accuracy": 0.9666666666666667,
+  "verdict_accuracy": 0.7333333333333333,
+  "semantic_recall": 0.0,
+  "semantic_precision": 0.0,
+  "semantic_f1": 0.0,
+  "semantic_mrr": 0.0,
+  "semantic_hit_at_1": 0.0
 }

@@ -7,7 +7,7 @@ from bula_check.agents.pipeline import build_graph
 from bula_check.agents.protocol import DEFAULT_CONFIG
 from bula_check.agents.protocol import BulaCheckConfig
 from bula_check.agents.protocol import LLMProvider
-from bula_check.evaluate import ExpectecResult
+from bula_check.evaluate import ExpectedResult
 from bula_check.evaluate import evaluate_results
 
 load_dotenv()
@@ -30,9 +30,10 @@ def test_evaluate_results():
         # "lexical_weight": None,
         # "semantic_weight": None,
     }
+    # chuck hierarquico
 
     graph = build_graph(cfg)
 
-    items = [ExpectecResult(**i) for i in dataset]
+    items = [ExpectedResult(**i) for i in dataset]
 
     evaluated = evaluate_results(cfg, graph, items, RESULTS_PATH)

@@ -1,21 +1,22 @@
 import json
+import sqlite3
+from pathlib import Path
 from typing import Any
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph
-from nemo.vector_retrieval.metrics import Path
-from nemo.vector_retrieval.metrics import Relevance
-from nemo.vector_retrieval.metrics import compute_metrics
-from nemo.vector_retrieval.query import RankedDocument
-from nemo.vector_retrieval.search import SearchResults
 from pydantic import BaseModel
 
+from bula_check.agents.nodes import _open_db
 from bula_check.agents.pipeline import make_initial_state
 from bula_check.agents.protocol import BulaCheckConfig
+from bula_check.agents.protocol import ChunksDict
+from bula_check.agents.search import _cosine
+from bula_check.agents.search import _parse_embedding
 from bula_check.agents.search import normalize_text
 
 
-class ExpectecResult(BaseModel):
+class ExpectedResult(BaseModel):
     id: str
     query: str
     expected_medicine: str
@@ -30,129 +31,153 @@ class ExpectecResult(BaseModel):
 def evaluate_results(
     config: BulaCheckConfig,
     graph: StateGraph,
-    items: list[ExpectecResult],
+    items: list[ExpectedResult],
     results_path: Path | None,
+    semantic_threshold: float = 0.80,
 ):
-    all_chunk_ids: set[str] = set()
-    per_query_results: dict[str, list[tuple[str, float]]] = {}
-    per_query_relevance: dict[str, set[str]] = {}
+    """
+    Avalia o pipeline ponta-a-ponta.
 
+    Métricas reportadas:
+      - medicine_accuracy: medicamento previsto bate com o esperado (match normalizado)
+      - section_accuracy: alguma seção esperada foi recuperada
+      - verdict_accuracy: verdict do LLM bate com o esperado
+
+      - semantic_recall: fração de chunks-gabarito cobertos por algum retrieved
+        (cos >= threshold). Equivalente a Recall@k tradicional, mas robusto a IDs
+        diferentes entre bulas equivalentes.
+      - semantic_precision: fração de chunks retrieved que casam com algum gabarito.
+      - semantic_f1: média harmônica de precision e recall.
+      - semantic_mrr: 1/posição do primeiro retrieved que casa com algum gabarito.
+      - semantic_hit_at_1: o top-1 retrieved casa com algum gabarito?
+    """
     answer_rows: list[dict[str, Any]] = []
+    retrieval_rows: list[dict[str, float]] = []
 
-    for item in items:
-        state = make_initial_state(config)
-        state["messages"].append(HumanMessage(content=item.query))
+    bulagratis_conn = _open_db(config["bulagratis_db_path"])
 
-        final_state = graph.invoke(state)  # type: ignore
+    try:
+        for item in items:
+            state = make_initial_state(config)
+            state["messages"].append(HumanMessage(content=item.query))
 
-        selected_medicine = final_state.get("selected_medicine")
-        retrieved_chunks = final_state.get("retrieved_chunks", [])
-        verification_result = final_state.get("verification_result")
+            final_state = graph.invoke(state)  # type: ignore
 
-        query_id = item.id
+            selected_medicine = final_state.get("selected_medicine")
+            retrieved_chunks = final_state.get("retrieved_chunks", [])
+            verification_result = final_state.get("verification_result")
 
-        expected_chunk_ids = set(item.get("expected_chunk_ids", []))
-        retrieved_chunk_pairs: list[tuple[str, float]] = []
+            predicted_medicine = ""
+            if selected_medicine:
+                predicted_medicine = selected_medicine["medicine"]["name"]
 
-        for chunk in retrieved_chunks:
-            chunk_id = chunk["chunk"]["id"]
-            score = float(chunk["score"])  # ??
+            predicted_verdict = ""
+            if verification_result:
+                predicted_verdict = verification_result["verdict"]
 
-            all_chunk_ids.add(chunk_id)
-            retrieved_chunk_pairs.append((chunk_id, score))
-
-        all_chunk_ids.update(expected_chunk_ids)
-
-        per_query_results[query_id] = retrieved_chunk_pairs
-        per_query_relevance[query_id] = expected_chunk_ids
-
-        predicted_medicine = ""
-        if selected_medicine:
-            predicted_medicine = selected_medicine["medicine"]["name"]
-
-        predicted_verdict = ""
-        if verification_result:
-            predicted_verdict = verification_result["verdict"]
-
-        predicted_sections = [
-            chunk["chunk"]["section"] for chunk in retrieved_chunks
-        ]
-
-        medicine_correct = normalize_text(item.expected_medicine) in normalize_text(
-            predicted_medicine
-        )
-
-        section_correct = _has_expected_sections(
-            retrieved_sections=predicted_sections,
-            expected_sections=item.expected_sections,
-        )
-
-        verdict_correct = item.expected_verdict == predicted_verdict
-
-        answer_rows.append(
-            {
-                "medicine_correct": medicine_correct,
-                "verdict_correct": verdict_correct,
-                "section_correct": section_correct,
-            }
-        )
-
-    chunk_id_to_int = {
-        chunk_id: index
-        for index, chunk_id in enumerate(sorted(all_chunk_ids), start=1)
-    }
-
-    relevance = Relevance(
-        query_per_documents={
-            query_id: {
-                chunk_id_to_int[chunk_id]
-                for chunk_id in expected_chunk_ids
-                if chunk_id in chunk_id_to_int
-            }
-            for query_id, expected_chunk_ids in per_query_relevance.items()
-        }
-    )
-
-    search_results = SearchResults(
-        root={
-            query_id: [
-                RankedDocument(
-                    document_id=chunk_id_to_int[chunk_id],
-                    score=score,
-                    rank=idx,
-                )
-                for idx, (chunk_id, score) in enumerate(retrieved_chunk_pairs)
-                if chunk_id in chunk_id_to_int
+            predicted_sections = [
+                chunk["chunk"]["section"] for chunk in retrieved_chunks
             ]
-            for query_id, retrieved_chunk_pairs in per_query_results.items()
-        }
-    )
 
-    retrieval_metrics = compute_metrics(
-        relevance=relevance,
-        search_results=search_results,
-    )
+            answer_rows.append(
+                {
+                    "medicine_correct": normalize_text(item.expected_medicine)
+                    in normalize_text(predicted_medicine),
+                    "section_correct": _has_expected_sections(
+                        retrieved_sections=predicted_sections,
+                        expected_sections=item.expected_sections,
+                    ),
+                    "verdict_correct": item.expected_verdict == predicted_verdict,
+                }
+            )
 
-    retrieval_summary = retrieval_metrics.summary()
+            gabarito_chunks = _fetch_chunks_by_ids(
+                bulagratis_conn, list(item.expected_chunk_ids)
+            )
+            retrieved_unwrapped = [rc["chunk"] for rc in retrieved_chunks]
+            retrieval_rows.append(
+                _semantic_ir_metrics(
+                    retrieved=retrieved_unwrapped,
+                    gabarito=gabarito_chunks,
+                    threshold=semantic_threshold,
+                )
+            )
+    finally:
+        bulagratis_conn.close()
 
     total = len(answer_rows)
 
-    summary = {
+    summary: dict[str, float] = {
         "medicine_accuracy": sum(row["medicine_correct"] for row in answer_rows)
+        / total,
+        "section_accuracy": sum(row["section_correct"] for row in answer_rows)
         / total,
         "verdict_accuracy": sum(row["verdict_correct"] for row in answer_rows)
         / total,
-        # "retrieval_metrics": retrieval_metrics.model_dump(),
-        # "results": answer_rows,
     }
 
-    final_dict = dict(retrieval_summary)
-    final_dict.update(summary)
+    if retrieval_rows:
+        for key in retrieval_rows[0]:
+            summary[key] = sum(row[key] for row in retrieval_rows) / total
 
     if results_path:
-        _to_json(final_dict, results_path)
+        _to_json(summary, results_path)
 
-    return final_dict
+    return summary
+
+
+def _semantic_ir_metrics(
+    retrieved: list[ChunksDict],
+    gabarito: list[ChunksDict],
+    threshold: float,
+) -> dict[str, float]:
+    """
+    Recall/Precision/MRR/Hit@1 com equivalência semântica (cosine >= threshold).
+
+    Recall e precision são computados *independentemente* sobre a matriz
+    cosine: para recall, varre gabarito e marca cobertos; para precision,
+    varre retrieved e marca hits.
+    """
+    if not retrieved or not gabarito:
+        return {
+            "semantic_recall": 0.0,
+            "semantic_precision": 0.0,
+            "semantic_f1": 0.0,
+            "semantic_mrr": 0.0,
+            "semantic_hit_at_1": 0.0,
+        }
+
+    gabarito_covered = sum(
+        any(_cosine(g["embedding"], r["embedding"]) >= threshold for r in retrieved)
+        for g in gabarito
+    )
+    recall = gabarito_covered / len(gabarito)
+
+    retrieved_is_hit = [
+        any(_cosine(r["embedding"], g["embedding"]) >= threshold for g in gabarito)
+        for r in retrieved
+    ]
+    precision = sum(retrieved_is_hit) / len(retrieved)
+
+    first_hit_rank = next(
+        (i + 1 for i, hit in enumerate(retrieved_is_hit) if hit), None
+    )
+    mrr = 1.0 / first_hit_rank if first_hit_rank else 0.0
+    hit_at_1 = 1.0 if retrieved_is_hit and retrieved_is_hit[0] else 0.0
+
+    return {
+        "semantic_recall": recall,
+        "semantic_precision": precision,
+        "semantic_f1": _harmonic_mean(precision, recall),
+        "semantic_mrr": mrr,
+        "semantic_hit_at_1": hit_at_1,
+    }
+
+
+def _harmonic_mean(a: float, b: float) -> float:
+    if a + b == 0:
+        return 0.0
+    return 2 * a * b / (a + b)
 
 
 def _has_expected_sections(
@@ -184,3 +209,32 @@ def _to_json(
     path.write_text(json_content, encoding="utf-8")
 
     return path
+
+
+def _fetch_chunks_by_ids(
+    conn: sqlite3.Connection,
+    ids: list[str],
+) -> list[ChunksDict]:
+    """Busca chunks (text + embedding) por uma lista de IDs."""
+    if not ids:
+        return []
+
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    placeholders = ",".join("?" for _ in ids)
+    cursor.execute(
+        f"""
+        SELECT id, medicine_id, medicine_name, section,
+               paragraph_idx, chunk_idx, text, embedding
+        FROM chunks
+        WHERE id IN ({placeholders})
+        """,
+        ids,
+    )
+
+    chunks: list[ChunksDict] = []
+    for row in cursor.fetchall():
+        data = dict(row)
+        data["embedding"] = _parse_embedding(data["embedding"])
+        chunks.append(ChunksDict(**data))
+    return chunks
