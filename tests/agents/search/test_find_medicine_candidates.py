@@ -13,6 +13,14 @@ from bula_check.protocol import Medicines
 WRITE_PDF = True
 
 
+# Metoprolol — 25 mg / 1 dia
+# Olmesartana — 40 mg / 1 dia
+# Plenance — 10 mg / dia
+# Duomo HP — 1 comp / noite
+# Naldecon
+# Buscofem
+
+
 def test_find_medicine_candidates():
     config = DEFAULT_CONFIG
     bulagratis_conn = _open_db(config["bulagratis_db_path"])
@@ -22,7 +30,7 @@ def test_find_medicine_candidates():
         candidates = find_medicine_candidates(
             bulagratis_conn=bulagratis_conn,
             anvisa_conn=anvisa_conn,
-            name="Tylenol",
+            name="Kaloba",
             active_ingredient=None,  # "paracetamol",
             cfg=config,
         )

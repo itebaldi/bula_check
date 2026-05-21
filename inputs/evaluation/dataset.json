@@ -1,370 +1,244 @@
 [
     {
         "id": "q001",
-        "query": "Tylenol pode causar náusea?",
-        "expected_medicine": "paracetamol",
+        "query": "buscofem serve pra colica menstrual?",
+        "expected_medicine": "ibuprofeno",
         "expected_sections": [
-            "overdose"
+            "indications"
         ],
         "expected_verdict": "confirmed",
         "expected_chunk_ids": [
-            "4c40f569-2e52-43a9-86df-c9e60228b281"
+            "202eadd0-7d64-489c-b687-d82bc606c2f7"
         ]
     },
     {
         "id": "q002",
-        "query": "Paracetamol é indicado para reduzir febre?",
-        "expected_medicine": "paracetamol",
+        "query": "posso tomar Buscofem com cerveja?",
+        "expected_medicine": "ibuprofeno",
         "expected_sections": [
-            "indications"
+            "contraindications"
         ],
-        "expected_verdict": "confirmed",
+        "expected_verdict": "refuted",
         "expected_chunk_ids": [
-            "c59a91b2-5adb-41c4-9c65-248e90066b1a"
+            "89dbbbe9-d8de-4854-a3c9-694a6533cd3c"
         ]
     },
     {
         "id": "q003",
-        "query": "Paracetamol pode ser usado para dor de cabeça?",
-        "expected_medicine": "paracetamol",
+        "query": "buscofem é de boa pra bebê pequeno, tipo menor de 6 meses",
+        "expected_medicine": "ibuprofeno",
         "expected_sections": [
-            "indications"
+            "contraindications"
         ],
-        "expected_verdict": "confirmed",
+        "expected_verdict": "refuted",
         "expected_chunk_ids": [
-            "c59a91b2-5adb-41c4-9c65-248e90066b1a"
+            "89dbbbe9-d8de-4854-a3c9-694a6533cd3c"
         ]
     },
     {
         "id": "q004",
-        "query": "Tylenol é indicado para dor de dente?",
-        "expected_medicine": "paracetamol",
+        "query": "se eu tiver úlcera no estômago melhor não tomar ibuprofeno",
+        "expected_medicine": "ibuprofeno",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "89dbbbe9-d8de-4854-a3c9-694a6533cd3c"
+        ]
+    },
+    {
+        "id": "q005",
+        "query": "Duomo HP é pra quem tem prostata aumentada né?",
+        "expected_medicine": "mesilato de doxazosina",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "confirmed",
         "expected_chunk_ids": [
-            "c59a91b2-5adb-41c4-9c65-248e90066b1a"
-        ]
-    },
-    {
-        "id": "q005",
-        "query": "Paracetamol começa a fazer efeito em 15 a 30 minutos?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "how_it_works"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "8a1e03df-a9b1-4bcb-bf66-7db54622e7f8"
+            "e6f9fe43-db6c-4d54-a289-fff73c9d9a69"
         ]
     },
     {
         "id": "q006",
-        "query": "O efeito do paracetamol dura de 4 a 6 horas?",
-        "expected_medicine": "paracetamol",
+        "query": "posso tomar Duomo HP de manhã ou de noite, tanto faz",
+        "expected_medicine": "mesilato de doxazosina",
         "expected_sections": [
-            "how_it_works"
+            "dosage_and_administration"
         ],
         "expected_verdict": "confirmed",
         "expected_chunk_ids": [
-            "8a1e03df-a9b1-4bcb-bf66-7db54622e7f8"
+            "820d794a-8ce9-4c6c-a4d1-899bc198e3b7"
         ]
     },
     {
         "id": "q007",
-        "query": "Crianças menores de 12 anos podem tomar paracetamol 750 mg comprimido?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "contraindications"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "00178b79-4761-443f-9a77-b856d524b756"
-        ]
-    },
-    {
-        "id": "q008",
-        "query": "Quem tem alergia a paracetamol não deve usar Tylenol?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "contraindications"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "00178b79-4761-443f-9a77-b856d524b756"
-        ]
-    },
-    {
-        "id": "q009",
-        "query": "Paracetamol pode causar problemas graves em caso de superdose?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "warnings_and_precautions",
-            "overdose"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c",
-            "4c40f569-2e52-43a9-86df-c9e60228b281"
-        ]
-    },
-    {
-        "id": "q010",
-        "query": "Tomar mais paracetamol do que a dose recomendada aumenta o alívio da dor sem riscos?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "warnings_and_precautions",
-            "overdose"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c",
-            "4c40f569-2e52-43a9-86df-c9e60228b281"
-        ]
-    },
-    {
-        "id": "q011",
-        "query": "Paracetamol pode causar danos ao fígado em dose excessiva?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "overdose"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "4c40f569-2e52-43a9-86df-c9e60228b281"
-        ]
-    },
-    {
-        "id": "q012",
-        "query": "Tylenol pode causar urticária, coceira e vermelhidão no corpo?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "adverse_reactions"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "df5c20ee-f51f-4634-914d-4c11a234f34c"
-        ]
-    },
-    {
-        "id": "q013",
-        "query": "Paracetamol pode causar reações alérgicas?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "adverse_reactions",
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "df5c20ee-f51f-4634-914d-4c11a234f34c",
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q014",
-        "query": "Paracetamol pode causar reações graves na pele?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q015",
-        "query": "Se aparecerem bolhas ou erupções na pele usando paracetamol, devo interromper o uso e procurar ajuda médica?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q016",
-        "query": "Paracetamol 750 mg pode ser tomado em dose máxima diária de 4000 mg?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "dosage_and_administration"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "348631f7-d9b9-4cdd-9eee-2fc0f2f114ea"
-        ]
-    },
-    {
-        "id": "q017",
-        "query": "Paracetamol 750 mg pode ser tomado em intervalos menores que 4 horas?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "dosage_and_administration"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "348631f7-d9b9-4cdd-9eee-2fc0f2f114ea"
-        ]
-    },
-    {
-        "id": "q018",
-        "query": "Posso tomar dois comprimidos de paracetamol 750 mg de uma vez?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "dosage_and_administration"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "348631f7-d9b9-4cdd-9eee-2fc0f2f114ea"
-        ]
-    },
-    {
-        "id": "q019",
-        "query": "Paracetamol deve ser tomado obrigatoriamente junto com alimentos?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "dosage_and_administration",
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "348631f7-d9b9-4cdd-9eee-2fc0f2f114ea",
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q020",
-        "query": "Paracetamol pode ser administrado independentemente das refeições?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "dosage_and_administration"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "348631f7-d9b9-4cdd-9eee-2fc0f2f114ea"
-        ]
-    },
-    {
-        "id": "q021",
-        "query": "Paracetamol pode ser usado por grávidas sem orientação médica?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q022",
-        "query": "Quem consome doses abusivas de álcool deve consultar médico antes de tomar paracetamol?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q023",
-        "query": "Paracetamol é contraindicado para idosos?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q024",
-        "query": "Paracetamol 750 mg pode ser partido, aberto ou mastigado?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "dosage_and_administration"
-        ],
-        "expected_verdict": "refuted",
-        "expected_chunk_ids": [
-            "348631f7-d9b9-4cdd-9eee-2fc0f2f114ea"
-        ]
-    },
-    {
-        "id": "q025",
-        "query": "Se eu esquecer uma dose de paracetamol, devo tomar dose dobrada para compensar?",
-        "expected_medicine": "paracetamol",
+        "query": "se eu esquecer Duomo HP posso tomar duas juntas pra compensar",
+        "expected_medicine": "mesilato de doxazosina",
         "expected_sections": [
             "missed_dose"
         ],
         "expected_verdict": "refuted",
         "expected_chunk_ids": [
-            "adf1a89e-d0af-47c5-96c9-e4ba75d88748"
+            "b29d939b-2aca-491d-afe2-555cb9eaf52c"
         ]
     },
     {
-        "id": "q026",
-        "query": "Paracetamol deve ser armazenado entre 15°C e 30°C?",
-        "expected_medicine": "paracetamol",
+        "id": "q008",
+        "query": "tylenol sinus ajuda no nariz entupido também ou é só pra febre?",
+        "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
         "expected_sections": [
-            "storage"
+            "how_it_works"
         ],
         "expected_verdict": "confirmed",
         "expected_chunk_ids": [
-            "31d9360b-f5d9-4fab-bdcf-18cb721c1001"
+            "1103a381-6048-4eb1-91dc-648e1c971f2a"
         ]
     },
     {
-        "id": "q027",
-        "query": "Paracetamol contém glúten?",
-        "expected_medicine": "paracetamol",
+        "id": "q009",
+        "query": "criança de 10 anos pode tomar tylenol sinus?",
+        "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
         "expected_sections": [
-            "warnings_and_precautions"
-        ],
-        "expected_verdict": "confirmed",
-        "expected_chunk_ids": [
-            "2757b106-dd94-4037-ab54-4bffbfb32a5c"
-        ]
-    },
-    {
-        "id": "q028",
-        "query": "Paracetamol é indicado para tratar infecção bacteriana?",
-        "expected_medicine": "paracetamol",
-        "expected_sections": [
-            "indications"
+            "contraindications"
         ],
         "expected_verdict": "refuted",
         "expected_chunk_ids": [
-            "c59a91b2-5adb-41c4-9c65-248e90066b1a"
+            "3f07a28a-12c7-4920-a937-8715be931a2a"
         ]
     },
     {
-        "id": "q029",
-        "query": "Paracetamol causa sonolência?",
-        "expected_medicine": "paracetamol",
+        "id": "q010",
+        "query": "tylenol sinus pode dar nervosismo e boca seca",
+        "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "d4e65074-f16a-4d97-88dc-4d91490bfe0c"
+        ]
+    },
+    {
+        "id": "q011",
+        "query": "Plenance é indicado para adultos com colesterol alto?",
+        "expected_medicine": "Plenance",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "a633a2bb-b808-4109-a446-7cf2d9d6e500"
+        ]
+    },
+    {
+        "id": "q012",
+        "query": "Plenance pode ser usado por mulheres grávidas?",
+        "expected_medicine": "Plenance",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "e559eaca-404b-4649-b2c8-43d122660932"
+        ]
+    },
+    {
+        "id": "q013",
+        "query": "Plenance pode ser partido, aberto ou mastigado?",
+        "expected_medicine": "Plenance",
+        "expected_sections": [
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "d2a5ef59-c5a1-4354-b33d-119acd3dff04"
+        ]
+    },
+    {
+        "id": "q014",
+        "query": "olmesartana é remédio pra pressão alta?",
+        "expected_medicine": "olmesartana medoxomila",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "dd951893-9c61-48b4-b298-0949caf88787"
+        ]
+    },
+    {
+        "id": "q015",
+        "query": "gravidas podem tomar olmesartana",
+        "expected_medicine": "olmesartana medoxomila",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "49a264a4-3e15-4b44-b60e-5c5b1deb590f"
+        ]
+    },
+    {
+        "id": "q016",
+        "query": "olmesartana faz cair cabelo?",
+        "expected_medicine": "olmesartana medoxomila",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
         "expected_chunk_ids": [
-            "df5c20ee-f51f-4634-914d-4c11a234f34c"
+            "62f213a3-daca-48bf-92ce-ee0b80c58ce6"
         ]
     },
     {
-        "id": "q030",
-        "query": "Tylenol pode ser usado para dor nas costas?",
-        "expected_medicine": "paracetamol",
+        "id": "q017",
+        "query": "Pacientes com asma precisam ter cuidado ao usar metoprolol?",
+        "expected_medicine": "succinato de metoprolol",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "59c0cd90-b0c6-4e24-995d-ea0c11981b5f"
+        ]
+    },
+    {
+        "id": "q018",
+        "query": "Metoprolol pode causar queda de cabelo?",
+        "expected_medicine": "succinato de metoprolol",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "23cb1a16-440c-4e1b-86e1-2df34bdc355a"
+        ]
+    },
+    {
+        "id": "q019",
+        "query": "Kaloba é indicado para sintomas de resfriado, como tosse, coriza e dor de garganta?",
+        "expected_medicine": "KALOBA",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "confirmed",
         "expected_chunk_ids": [
-            "c59a91b2-5adb-41c4-9c65-248e90066b1a"
+            "2f8aac1a-f9c8-445c-a95d-e02a0d2fa534"
+        ]
+    },
+    {
+        "id": "q020",
+        "query": "Kaloba em comprimido pode ser usado por uma criança de 8 anos?",
+        "expected_medicine": "KALOBA",
+        "expected_sections": [
+            "contraindications",
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "8f7e686b-8cd1-4785-92cd-6d9078fcb51d",
+            "3d56074d-25eb-4e22-baa8-850bab58a3bc"
         ]
     }
 ]

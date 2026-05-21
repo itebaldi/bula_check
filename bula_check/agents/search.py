@@ -7,7 +7,6 @@ from typing import Any
 
 from nemo.preprocessing.text import normalize_text_whitespace
 from nemo.preprocessing.text import remove_text_accents
-from nemo.preprocessing.text import remove_text_punctuation
 from nemo.preprocessing.text import uppercase_text
 from nemo.vector_retrieval.indexing import Document
 from nemo.vector_retrieval.indexing import gen_inverted_index
@@ -35,32 +34,63 @@ def find_medicine_candidates(
     Estratégia de busca de medicamentos:
     1. Busca no BulaGratis pelo nome
     2. Se vazio e anvisa_conn disponível: busca ANVISA → extrai princípio ativo → re-busca BulaGratis
-    3. Rankeamento por score lexical
+    3. Filtra resultados que não atingem o threshold de match (no_good_match)
+    4. Rankeamento por score lexical
     """
     name_norm = normalize_text(name)
+    name_tokens = _split_tex(name_norm)
     ai_norm = normalize_text(active_ingredient) if active_ingredient else None
+    ai_tokens = _split_tex(ai_norm) if ai_norm else []
 
     # BulaGratis
     rows = search_medicines_lexical(
         bulagratis_conn, name, active_ingredient, limit=cfg["top_k_medicines"] * 3
     )
+    rows = _filter_low_match(rows, n_tokens=len(name_tokens) + len(ai_tokens))
 
-    # fallback ANVISA, re-busca com princípio ativo
+    # fallback ANVISA, re-busca com princípio ativo. Itera por TODOS os AIs
+    # únicos retornados pelo ANVISA para o nome buscado e acumula matches.
+    # Cada brand pode aparecer no ANVISA em variantes (ex: TYLENOL puro
+    # AI=PARACETAMOL, TYLENOL SINUS AI=PARACETAMOL+PSEUDOEFEDRINA), e
+    # medicamentos relevantes de cada variante são candidatos válidos. O
+    # _filter_low_match já protege contra ruído em AIs multi-token (exige
+    # majoritário) e single-token AIs passam tudo que matchou o ingrediente.
     if not rows and anvisa_conn is not None:
         anvisa_rows = search_medicines_lexical(
             anvisa_conn, name, limit=cfg["top_k_medicines"] * 3
         )
+        collected: dict[str, dict[str, Any]] = {}
+        ais_used: list[str] = []
+
         for anvisa_row in anvisa_rows:
             ai_from_anvisa = anvisa_row.get("active_ingredient")
-            if ai_from_anvisa:
-                rows = search_medicines_lexical(
-                    bulagratis_conn,
-                    ai_from_anvisa,
-                    limit=cfg["top_k_medicines"] * 3,
-                )
-                if rows:
-                    ai_norm = normalize_text(ai_from_anvisa)
-                    break
+            if not ai_from_anvisa:
+                continue
+            ai_normalized = normalize_text(ai_from_anvisa)
+            if ai_normalized in ais_used:
+                continue  # AI já processado nessa iteração
+
+            ai_anvisa_tokens = _split_tex(ai_normalized)
+            candidate_rows = search_medicines_lexical(
+                bulagratis_conn,
+                ai_from_anvisa,
+                limit=cfg["top_k_medicines"] * 3,
+            )
+            candidate_rows = _filter_equivalent_fallback(
+                candidate_rows, n_ai_tokens=len(ai_anvisa_tokens)
+            )
+
+            if candidate_rows:
+                ais_used.append(ai_normalized)
+                for r in candidate_rows:
+                    if r["id"] not in collected:
+                        collected[r["id"]] = r
+
+        if collected:
+            rows = list(collected.values())
+            # ai_norm = concat dos AIs que contribuíram, para o scoring
+            # creditar match em qualquer dos tokens cobertos.
+            ai_norm = ", ".join(ais_used)
 
     if not rows:
         return []
@@ -68,7 +98,9 @@ def find_medicine_candidates(
     candidates: list[MedicineCandidate] = []
     for row in rows:
         score = _score_medicine_match(row, name_norm, ai_norm)
-        medicine = MedicinesDict(**row)
+        # match_count é metadado da query, não pertence ao MedicinesDict
+        row_clean = {k: v for k, v in row.items() if k != "match_count"}
+        medicine = MedicinesDict(**row_clean)
         candidates.append(
             MedicineCandidate(
                 medicine=medicine,
@@ -78,6 +110,65 @@ def find_medicine_candidates(
 
     candidates.sort(key=lambda candidate: candidate["score"], reverse=True)
     return candidates[: cfg["top_k_medicines"]]
+
+
+def _filter_low_match(
+    rows: list[dict[str, Any]], n_tokens: int
+) -> list[dict[str, Any]]:
+    """
+    Descarta rows com match_count abaixo de (n_tokens // 2 + 1) — i.e.
+    estritamente mais que a metade dos tokens.
+
+    Threshold por n_tokens:
+      - 1 token: sem filtro (todo match conta)
+      - 2 tokens: exige 2 (ambos)
+      - 3 tokens: exige 2 (majoritário)
+      - 4 tokens: exige 3 (majoritário)
+      - n tokens: exige n//2 + 1
+
+    Quando há múltiplos tokens (ex: 'paracetamol, fenilefrina, carbinoxamina'),
+    medicamentos que só matcham 1 token tendem a ser ruído — só o token comum
+    (paracetamol) ressoando. Exigir majoritário evita esse falso positivo sem
+    ser estritamente AND (que falharia em variações de grafia).
+    """
+    if n_tokens <= 1:
+        return rows
+    min_required = n_tokens // 2 + 1
+    return [r for r in rows if r.get("match_count", 0) >= min_required]
+
+
+def _filter_equivalent_fallback(
+    rows: list[dict[str, Any]], n_ai_tokens: int
+) -> list[dict[str, Any]]:
+    """
+    Filtro estrito para uso no fallback ANVISA.
+
+    Além do threshold majoritário sobre match_count, exige *cardinalidade
+    igual*: o medicamento em bula_gratis deve ter exatamente n_ai_tokens
+    ingredientes (contados via _split_tex sobre o `name` original — que
+    preserva separadores '+', ',', ';' que o processed_name perde).
+
+    Garante equivalência funcional, não só substring:
+      - AI=PARACETAMOL (1 ingrediente) → só medicamentos mono-paracetamol
+        passam ('PARACETAMOL'), nunca 'paracetamol + cafeína' nem
+        'cloridrato de tramadol + paracetamol'.
+      - AI=PARACETAMOL+PSEUDOEFEDRINA (2 ingredientes) → só medicamentos
+        di-ingrediente passam, e o threshold majoritário garante que sejam
+        OS ingredientes certos (não 'paracetamol + cafeína' que tem mc=1).
+    """
+    if not rows:
+        return rows
+
+    threshold = n_ai_tokens // 2 + 1 if n_ai_tokens > 1 else 1
+    out = []
+    for r in rows:
+        if r.get("match_count", 0) < threshold:
+            continue
+        n_ingredients = len(_split_tex(normalize_text(r["name"])))
+        if n_ingredients != n_ai_tokens:
+            continue
+        out.append(r)
+    return out
 
 
 def find_similar_medicines(
@@ -157,7 +248,15 @@ def search_medicines_lexical(
     active_ingredient: str | None = None,
     limit: int = 20,
 ) -> list[dict[str, Any]]:
-    """Busca lexical na tabela medicines por nome e/ou princípio ativo."""
+    """
+    Busca lexical na tabela medicines por nome e/ou princípio ativo.
+
+    Estratégia: OR no WHERE (preserva recall) + ranking por match_count
+    (medicamentos que matcham mais tokens vêm primeiro). Sem isso, queries
+    como "Paracetamol, Cloridrato de Fenilefrina, Maleato de Carbinoxamina"
+    são dominadas pelo token mais comum (paracetamol) e o medicamento exato
+    fica abaixo do LIMIT.
+    """
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -165,35 +264,51 @@ def search_medicines_lexical(
     name_tokens = _split_tex(name_norm)
 
     where_parts: list[str] = []
-    params: list[Any] = []
+    where_params: list[Any] = []
+    score_parts: list[str] = []
+    score_params: list[Any] = []
 
     for token in name_tokens:
+        pattern = f"%{token}%"
         where_parts.append("processed_name LIKE ?")
-        params.append(f"%{token}%")
+        where_params.append(pattern)
+        score_parts.append("(CASE WHEN processed_name LIKE ? THEN 1 ELSE 0 END)")
+        score_params.append(pattern)
 
     if active_ingredient:
         ai_norm = normalize_text(active_ingredient)
         ai_tokens = _split_tex(ai_norm)
 
         for token in ai_tokens:
+            pattern = f"%{token}%"
             where_parts.append(
                 "(processed_active_ingredient LIKE ? OR processed_name LIKE ?)"
             )
-            params.extend([f"%{token}%", f"%{token}%"])
+            where_params.extend([pattern, pattern])
+            score_parts.append(
+                "(CASE WHEN processed_active_ingredient LIKE ? "
+                "      OR processed_name LIKE ? THEN 1 ELSE 0 END)"
+            )
+            score_params.extend([pattern, pattern])
 
     if not where_parts:
         return []
 
+    score_expr = " + ".join(score_parts)
+    where_clause = " OR ".join(where_parts)
+
     query = f"""
         SELECT id, name, processed_name, active_ingredient,
                processed_active_ingredient, source, url, registration_number,
-               therapeutic_classes, company_name
+               therapeutic_classes, company_name,
+               ({score_expr}) AS match_count
         FROM medicines
-        WHERE {" OR ".join(where_parts)}
+        WHERE {where_clause}
+        ORDER BY match_count DESC
         LIMIT ?
     """
 
-    params.append(limit)
+    params = score_params + where_params + [limit]
     cursor.execute(query, params)
 
     return [dict(row) for row in cursor.fetchall()]
