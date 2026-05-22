@@ -33,11 +33,11 @@ DATASET_PATH = Path("inputs/evaluation/dataset.json")
         # ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
         ####
-        ("1.1", True, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
-        ("1.2", False, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
-        ("1.3", True, False, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
-        ("1.4", True, True, False, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
-        ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.google,  "gemini-2.5-flash"),
+        # ("1.1", True, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        # ("1.2", False, True, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        # ("1.3", True, False, True, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        # ("1.4", True, True, False, False, "only_desired", LLMProvider.google,  "gemini-2.5-flash"),
+        # ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.google,  "gemini-2.5-flash"),
         ####
         ("2.1", True, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
         ("2.2", False, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
