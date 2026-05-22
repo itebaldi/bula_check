@@ -1,0 +1,244 @@
+[
+    {
+        "id": "q001",
+        "query": "buscofem serve pra colica menstrual?",
+        "expected_medicine": "ibuprofeno",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "7f3025ed-70a4-4e43-b91f-7fe48ac023ec"
+        ]
+    },
+    {
+        "id": "q002",
+        "query": "posso tomar Buscofem com cerveja?",
+        "expected_medicine": "ibuprofeno",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "ada82a18-bcae-4506-b52b-784b6553fd65"
+        ]
+    },
+    {
+        "id": "q003",
+        "query": "buscofem é de boa pra bebê pequeno, tipo menor de 6 meses",
+        "expected_medicine": "ibuprofeno",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "ada82a18-bcae-4506-b52b-784b6553fd65"
+        ]
+    },
+    {
+        "id": "q004",
+        "query": "se eu tiver úlcera no estômago melhor não tomar ibuprofeno",
+        "expected_medicine": "ibuprofeno",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "ada82a18-bcae-4506-b52b-784b6553fd65"
+        ]
+    },
+    {
+        "id": "q005",
+        "query": "Duomo HP é pra quem tem prostata aumentada?",
+        "expected_medicine": "mesilato de doxazosina",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "9a8926ad-059e-42de-a60b-183b1862a9f2"
+        ]
+    },
+    {
+        "id": "q006",
+        "query": "posso tomar Duomo HP de manhã ou de noite, tanto faz",
+        "expected_medicine": "mesilato de doxazosina",
+        "expected_sections": [
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "69412c54-93d3-4974-a901-1c8ac2bb74aa"
+        ]
+    },
+    {
+        "id": "q007",
+        "query": "se eu esquecer Duomo HP posso tomar duas juntas pra compensar",
+        "expected_medicine": "mesilato de doxazosina",
+        "expected_sections": [
+            "missed_dose"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "d73b4e45-5ccc-40cc-a460-3a2d21d4552b"
+        ]
+    },
+    {
+        "id": "q008",
+        "query": "tylenol sinus ajuda no nariz entupido também ou é só pra febre?",
+        "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "be75b2c1-e7f4-4e4e-8e77-adbd020043e1"
+        ]
+    },
+    {
+        "id": "q009",
+        "query": "criança de 10 anos pode tomar tylenol sinus?",
+        "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "0460d4ca-e191-46a6-9a24-b880aa780710"
+        ]
+    },
+    {
+        "id": "q010",
+        "query": "tylenol sinus pode dar nervosismo e boca seca",
+        "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "45c9a725-2004-40b9-8b69-d43f33b60c1c"
+        ]
+    },
+    {
+        "id": "q011",
+        "query": "Plenance é indicado para adultos com colesterol alto?",
+        "expected_medicine": "Plenance",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "ff288faa-d96f-4726-8757-84aeda5bd2fa"
+        ]
+    },
+    {
+        "id": "q012",
+        "query": "Plenance pode ser usado por mulheres grávidas?",
+        "expected_medicine": "Plenance",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "67c82c17-9f4b-4392-8a41-01aa2da344ef"
+        ]
+    },
+    {
+        "id": "q013",
+        "query": "Plenance pode ser partido, aberto ou mastigado?",
+        "expected_medicine": "Plenance",
+        "expected_sections": [
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "aae8edc4-15e7-4bc3-a5ba-92fbe522b3e6"
+        ]
+    },
+    {
+        "id": "q014",
+        "query": "olmesartana é remédio pra pressão alta?",
+        "expected_medicine": "olmesartana medoxomila",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "f5001582-1575-4b62-b92d-7cb9e5b9d166"
+        ]
+    },
+    {
+        "id": "q015",
+        "query": "gravidas podem tomar olmesartana",
+        "expected_medicine": "olmesartana medoxomila",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "deffe93b-7eba-4bd3-92ea-50cf9a29179d"
+        ]
+    },
+    {
+        "id": "q016",
+        "query": "olmesartana faz cair cabelo?",
+        "expected_medicine": "olmesartana medoxomila",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "inconclusive",
+        "expected_chunk_ids": [
+            "fce147c9-aaea-4171-94ab-7b1bcafa2d2e"
+        ]
+    },
+    {
+        "id": "q017",
+        "query": "Pacientes com asma precisam ter cuidado ao usar metoprolol?",
+        "expected_medicine": "succinato de metoprolol",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "ce9ec7f0-120e-471d-8545-f8b4576fb743"
+        ]
+    },
+    {
+        "id": "q018",
+        "query": "Metoprolol pode causar queda de cabelo?",
+        "expected_medicine": "succinato de metoprolol",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "d7cb0017-1e77-4bef-b6e6-a4a3126e8972"
+        ]
+    },
+    {
+        "id": "q019",
+        "query": "Kaloba é indicado para sintomas de resfriado, como tosse, coriza e dor de garganta?",
+        "expected_medicine": "KALOBA",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "expected_chunk_ids": [
+            "cd2273de-5c2b-48bd-81d3-94c1260445a5"
+        ]
+    },
+    {
+        "id": "q020",
+        "query": "Kaloba em comprimido pode ser usado por uma criança de 8 anos?",
+        "expected_medicine": "KALOBA",
+        "expected_sections": [
+            "contraindications",
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "refuted",
+        "expected_chunk_ids": [
+            "f4ae657d-62e8-4970-8226-e497142a0b1b",
+            "b9eeb9e8-41b0-479a-b403-4d760344a744"
+        ]
+    }
+]

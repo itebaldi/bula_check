@@ -15,7 +15,7 @@ from bula_check.evaluate import evaluate_results
 load_dotenv()
 
 DATASET_PATH = Path("inputs/evaluation/dataset.json")
-
+DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
 
 # LLMProvider.openai, "gpt-4o-mini"
 # LLMProvider.google,  "gemini-2.5-flash"
@@ -63,7 +63,11 @@ def test_evaluate_results(
     llm_provider: LLMProvider,
     llm_model: str,
 ):
-    dataset = json.loads(DATASET_PATH.read_text(encoding="utf-8"))
+    dataset = json.loads(
+        DATASET_SLIDING_PATH.read_text(encoding="utf-8")
+        if sliding_db
+        else DATASET_PATH.read_text(encoding="utf-8")
+    )
 
     cfg: BulaCheckConfig = {
         **DEFAULT_CONFIG,
