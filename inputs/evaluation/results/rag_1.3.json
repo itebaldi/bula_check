@@ -1,0 +1,21 @@
+{
+  "medicine_accuracy": 0.8,
+  "section_accuracy": 1.0,
+  "verdict_accuracy": 0.75,
+  "semantic_recall": 0.8,
+  "semantic_precision": 0.4708333333333334,
+  "semantic_r_precision": 0.4,
+  "semantic_ap": 0.6166666666666666,
+  "semantic_f1": 0.56,
+  "semantic_mrr": 0.5833333333333333,
+  "semantic_hit_at_1": 0.4,
+  "config": {
+    "llm_provider": "LLMProvider.ollama",
+    "llm_model": "qwen3:8b",
+    "return_chunks": "only_desired",
+    "bulagratis_db": "bulas_gratis.db",
+    "with_rag": true,
+    "lexical_weight": null,
+    "semantic_weight": 0.6
+  }
+}

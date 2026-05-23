@@ -1,7 +1,7 @@
 {
-  "medicine_accuracy": 0.15,
-  "section_accuracy": 0.75,
-  "verdict_accuracy": 0.75,
+  "medicine_accuracy": 0.35,
+  "section_accuracy": 1.0,
+  "verdict_accuracy": 0.55,
   "semantic_recall": 0.0,
   "semantic_precision": 0.0,
   "semantic_r_precision": 0.0,
@@ -10,8 +10,8 @@
   "semantic_mrr": 0.0,
   "semantic_hit_at_1": 0.0,
   "config": {
-    "llm_provider": "LLMProvider.ollama",
-    "llm_model": "gemma3:4b",
+    "llm_provider": "LLMProvider.openai",
+    "llm_model": "gpt-5-mini",
     "return_chunks": "only_desired",
     "bulagratis_db": "bulas_gratis.db",
     "with_rag": false,
