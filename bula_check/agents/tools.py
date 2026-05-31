@@ -152,20 +152,29 @@ def expand_keywords_decs(
     client = DeCSC(api_key=api_key)
     expanded = list(keywords)
 
+    def _append_term(term: str) -> None:
+        if term and term.lower() not in [e.lower() for e in expanded]:
+            expanded.append(term)
+
     for kw in keywords:
         try:
             result = client.search_by_words(kw, lang=language)
-            records = (
-                result.get("record_list", {}).get("records", {}).get("record", [])
-            )
-            # TODO checar essa logica
-            if isinstance(records, dict):
-                records = [records]
-            for record in records[:2]:
-                for desc in record.get("descriptor_list", []):
-                    term = desc.get("descriptor", "")
-                    if term and term.lower() not in [e.lower() for e in expanded]:
-                        expanded.append(term)
+            # A resposta vem como {"objects": [{"decsws_response": {...}}, ...]},
+            # cada objeto com seu próprio record_list.record (dict ou lista).
+            for obj in result.get("objects", []):
+                record_list = obj.get("decsws_response", {}).get("record_list", {})
+                records = record_list.get("record", [])
+                if isinstance(records, dict):
+                    records = [records]
+                for record in records:
+                    # Descritores: só os em português, os demais idiomas só
+                    # adicionam ruído à busca lexical em PT.
+                    for desc in record.get("descriptor_list", []):
+                        if desc.get("attr", {}).get("lang", "").startswith("pt"):
+                            _append_term(desc.get("descriptor", ""))
+                    # Sinônimos (já em português).
+                    for syn in record.get("synonym_list", []):
+                        _append_term(syn.get("synonym", ""))
         except Exception:
             continue
 

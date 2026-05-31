@@ -28,7 +28,7 @@ def test_pipeline():
     graph = build_graph(config)
 
     state = make_initial_state(config)
-    query = "gravidas podem tomar olmesartana"
+    query = "tylenol pode causar enjoo?"
     state["messages"].append(HumanMessage(content=query))
 
     final_state = graph.invoke(state)  # type: ignore
