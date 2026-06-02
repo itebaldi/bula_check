@@ -84,22 +84,30 @@ def find_medicine_candidates(
                 ais_used.append(ai_normalized)
                 for r in candidate_rows:
                     if r["id"] not in collected:
+                        # tagueia o candidato com o AI (do ANVISA) que o
+                        # recuperou; vira alvo de score quando o usuário não
+                        # informou princípio ativo. NÃO concatenamos os AIs num
+                        # único alvo: isso faria o Jaccard premiar combos (mais
+                        # tokens) acima do mono-fármaco pedido.
+                        r["_anvisa_ai"] = ai_normalized
                         collected[r["id"]] = r
 
         if collected:
             rows = list(collected.values())
-            # ai_norm = concat dos AIs que contribuíram, para o scoring
-            # creditar match em qualquer dos tokens cobertos.
-            ai_norm = ", ".join(ais_used)
 
     if not rows:
         return []
 
     candidates: list[MedicineCandidate] = []
     for row in rows:
-        score = _score_medicine_match(row, name_norm, ai_norm)
-        # match_count é metadado da query, não pertence ao MedicinesDict
-        row_clean = {k: v for k, v in row.items() if k != "match_count"}
+        # alvo do score: AI informado pelo usuário (sinal de intenção puro vs
+        # combo) tem precedência; senão o AI do ANVISA que recuperou a row.
+        ai_target = ai_norm if ai_norm else row.get("_anvisa_ai")
+        score = _score_medicine_match(row, name_norm, ai_target)
+        # match_count/_anvisa_ai são metadados da query, não pertencem ao MedicinesDict
+        row_clean = {
+            k: v for k, v in row.items() if k not in ("match_count", "_anvisa_ai")
+        }
         medicine = MedicinesDict(**row_clean)
         candidates.append(
             MedicineCandidate(
@@ -108,7 +116,15 @@ def find_medicine_candidates(
             )
         )
 
-    candidates.sort(key=lambda candidate: candidate["score"], reverse=True)
+    # score desc; empate -> menos ingredientes primeiro (mono-fármaco canônico
+    # vence combo quando não há AI do usuário para desempatar).
+    candidates.sort(
+        key=lambda candidate: (
+            candidate["score"],
+            -len(_match_tokens(candidate["medicine"].get("processed_name") or "")),
+        ),
+        reverse=True,
+    )
     return candidates[: cfg["top_k_medicines"]]
 
 
@@ -314,56 +330,54 @@ def search_medicines_lexical(
     return [dict(row) for row in cursor.fetchall()]
 
 
+def _match_tokens(text: str | None) -> set[str]:
+    """
+    Tokens normalizados para comparação de similaridade: sem pontuação,
+    maiúsculos, com no mínimo 2 caracteres.
+    """
+    cleaned = re.sub(r"[^\w\s]", " ", text or "")
+    return {t for t in cleaned.upper().split() if len(t) >= 2}
+
+
+def _token_f1(query_tokens: set[str], cand_tokens: set[str]) -> float:
+    """
+    F1 entre dois conjuntos de tokens. A precisão penaliza tokens a mais no
+    candidato (ingredientes de um combo ou nome de fabricante) e o recall
+    penaliza tokens faltando — então igualdade exata pontua 1.0 e o combo perde
+    para o mono-fármaco quando o alvo é um único princípio ativo.
+    """
+    if not query_tokens or not cand_tokens:
+        return 0.0
+    intersection = query_tokens & cand_tokens
+    if not intersection:
+        return 0.0
+    precision = len(intersection) / len(cand_tokens)
+    recall = len(intersection) / len(query_tokens)
+    return 2 * precision * recall / (precision + recall)
+
+
 def _score_medicine_match(
     row: dict,
     name_norm: str,
-    ai_norm: str | None,
+    ai_target: str | None,
 ) -> float:
     """
-    Heurística de score para ranqueamento lexical de medicamentos.
-    Retorna valor em [0, 1].
+    Score de similaridade do medicamento em [0, 1].
+
+    O único sinal disponível é o nome processado: a coluna
+    ``processed_active_ingredient`` do BulaGratis é vazia, então o princípio
+    ativo vive dentro do próprio nome. Pontua por F1 de tokens contra (a) a
+    marca buscada e (b) o princípio ativo alvo, ficando com o melhor dos dois —
+    o candidato só precisa casar bem com um dos identificadores.
     """
-    name_tokens = set(name_norm.split())
-    row_name = row.get("processed_name") or ""
-    row_tokens = set(row_name.split())
+    cand_tokens = _match_tokens(row.get("processed_name"))
+    if not cand_tokens:
+        return 0.0
 
-    score = 0.0
+    brand_score = _token_f1(_match_tokens(name_norm), cand_tokens)
+    ai_score = _token_f1(_match_tokens(ai_target), cand_tokens) if ai_target else 0.0
 
-    if name_tokens and row_tokens:
-        intersection = name_tokens & row_tokens
-        union = name_tokens | row_tokens
-
-        jaccard = len(intersection) / len(union) if union else 0.0
-
-        exact_name_bonus = 0.3 if row_name == name_norm else 0.0
-        contains_name_bonus = 0.2 if name_norm in row_name else 0.0
-
-        name_parts = name_norm.split()
-        first_token = name_parts[0] if name_parts else ""
-        prefix_bonus = (
-            0.1 if first_token and row_name.startswith(first_token) else 0.0
-        )
-
-        score += jaccard + exact_name_bonus + contains_name_bonus + prefix_bonus
-
-    if ai_norm:
-        row_ai = row.get("processed_active_ingredient") or ""
-        row_ai_search_text = f"{row_ai} {row_name}".strip()
-
-        ai_tokens = set(ai_norm.split())
-        row_ai_tokens = set(row_ai_search_text.split())
-
-        if ai_tokens and row_ai_tokens:
-            ai_intersection = ai_tokens & row_ai_tokens
-            ai_union = ai_tokens | row_ai_tokens
-            ai_jaccard = len(ai_intersection) / len(ai_union) if ai_union else 0.0
-
-            score += 0.35 * ai_jaccard
-
-        if ai_norm in row_ai_search_text:
-            score += 0.25
-
-    return min(1.0, score)
+    return max(brand_score, ai_score)
 
 
 def normalize_text(text: str) -> str:
