@@ -205,11 +205,25 @@ def evaluate_results(
         # seria matematicamente sem sentido). MAP/MRR/hit@1 NÃO têm versão micro
         # — dependem do rank intra-query, que a matriz de contagens descarta.
         vp_t, fp_t, fn_t = chunk_totals["vp"], chunk_totals["fp"], chunk_totals["fn"]
+        vn_t = chunk_totals["vn"]
         precision_micro = vp_t / (vp_t + fp_t) if (vp_t + fp_t) else 0.0
         recall_micro = vp_t / (vp_t + fn_t) if (vp_t + fn_t) else 0.0
         summary["semantic_precision_micro"] = precision_micro
         summary["semantic_recall_micro"] = recall_micro
         summary["semantic_f1_micro"] = _harmonic_mean(precision_micro, recall_micro)
+
+        # Total de documentos (decisões chunk×query) analisados = soma das 4
+        # células da matriz micro = Σ N_q (pool pontuado por questão, somado).
+        chunk_total_docs = vp_t + fp_t + fn_t + vn_t
+        summary["chunk_total_docs"] = chunk_total_docs
+        # Acurácia de retrieval (chunk-level, micro) = (VP+VN)/total. CAVEAT: é
+        # dominada pelo VN (tende a ≈1, pouco informativa) e NÃO é comparável
+        # entre configs — o VN colapsa para 0 quando não há medicamento
+        # selecionado (baseline). É só o fechamento da matriz; para qualidade de
+        # busca use recall/precision/MRR.
+        summary["chunk_accuracy"] = (
+            (vp_t + vn_t) / chunk_total_docs if chunk_total_docs else 0.0
+        )
 
     # Matriz de confusão DO SISTEMA: sobre o veredito final. Cada questão é 1
     # amostra → contagem direta sobre o dataset (sem ambiguidade micro/macro).
