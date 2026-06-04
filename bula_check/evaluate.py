@@ -12,6 +12,7 @@ from bula_check.agents.pipeline import make_initial_state
 from bula_check.agents.protocol import BulaCheckConfig
 from bula_check.agents.protocol import ChunksDict
 from bula_check.agents.search import _cosine
+from bula_check.agents.search import _fetch_chunks_for_medicine
 from bula_check.agents.search import _parse_embedding
 from bula_check.agents.search import normalize_text
 
@@ -114,6 +115,8 @@ def evaluate_results(
                         expected_sections=item.expected_sections,
                     ),
                     "verdict_correct": item.expected_verdict == predicted_verdict,
+                    "expected_verdict": item.expected_verdict,
+                    "predicted_verdict": predicted_verdict,
                 }
             )
 
@@ -131,11 +134,26 @@ def evaluate_results(
                 key=lambda rc: -rc["score"],
             )
             retrieved_unwrapped = [rc["chunk"] for rc in core_retrieved]
+
+            # universo de candidatos (N) para o VN da matriz de confusão de
+            # chunks: chunks do medicamento nas seções consultadas — exatamente
+            # o pool que o ranker pontuou em hybrid_chunk_search.
+            n_candidates = 0
+            if selected_medicine:
+                n_candidates = len(
+                    _fetch_chunks_for_medicine(
+                        bulagratis_conn,
+                        selected_medicine["medicine"]["id"],
+                        parsed_query.get("sections") if parsed_query else None,
+                    )
+                )
+
             retrieval_rows.append(
                 _semantic_ir_metrics(
                     retrieved=retrieved_unwrapped,
                     gabarito=gabarito_chunks,
                     threshold=semantic_threshold,
+                    n_candidates=n_candidates,
                 )
             )
     finally:
@@ -152,9 +170,54 @@ def evaluate_results(
         / total,
     }
 
+    # Métricas de IR são médias por questão; vp/fp/vn/fn são contagens somadas
+    # (pooled/micro) entre as questões para formar a matriz de confusão de chunks.
+    confusion_keys = {"vp", "fp", "vn", "fn"}
+    chunk_totals = {"vp": 0, "fp": 0, "vn": 0, "fn": 0}
     if retrieval_rows:
         for key in retrieval_rows[0]:
-            summary[key] = sum(row[key] for row in retrieval_rows) / total
+            column_sum = sum(row[key] for row in retrieval_rows)
+            if key in confusion_keys:
+                chunk_totals[key] = int(column_sum)
+            else:
+                summary[key] = column_sum / total
+
+        # Matriz de confusão de chunks — MICRO: soma das contagens de TODAS as
+        # questões (cada decisão-por-chunk pesa igual). Linhas = real
+        # (relevante/não); colunas = previsto (recuperado/não).
+        summary["chunk_confusion_matrix_micro"] = {
+            "relevante": {
+                "recuperado": chunk_totals["vp"],  # VP
+                "nao_recuperado": chunk_totals["fn"],  # FN
+            },
+            "nao_relevante": {
+                "recuperado": chunk_totals["fp"],  # FP
+                "nao_recuperado": chunk_totals["vn"],  # VN
+            },
+        }
+
+        # Precision/recall/F1 MICRO, derivados da matriz micro (pooled), para a
+        # matriz micro ser internamente reconciliável: quem recalcular P da
+        # matriz acha exatamente este número. As métricas semantic_* SEM sufixo
+        # são MACRO (média por questão, padrão TREC) e ponderam cada query 1/N;
+        # as _micro ponderam por tamanho do conjunto relevante/recuperado. F1
+        # micro = média harmônica de P e R POOLED (não a média dos f1_q, que
+        # seria matematicamente sem sentido). MAP/MRR/hit@1 NÃO têm versão micro
+        # — dependem do rank intra-query, que a matriz de contagens descarta.
+        vp_t, fp_t, fn_t = chunk_totals["vp"], chunk_totals["fp"], chunk_totals["fn"]
+        precision_micro = vp_t / (vp_t + fp_t) if (vp_t + fp_t) else 0.0
+        recall_micro = vp_t / (vp_t + fn_t) if (vp_t + fn_t) else 0.0
+        summary["semantic_precision_micro"] = precision_micro
+        summary["semantic_recall_micro"] = recall_micro
+        summary["semantic_f1_micro"] = _harmonic_mean(precision_micro, recall_micro)
+
+    # Matriz de confusão DO SISTEMA: sobre o veredito final. Cada questão é 1
+    # amostra → contagem direta sobre o dataset (sem ambiguidade micro/macro).
+    # 3x3 (descritiva, com inconclusive) + 2x2 (binária V/F, foco do artigo).
+    verdict_pairs = [
+        (row["expected_verdict"], row["predicted_verdict"]) for row in answer_rows
+    ]
+    summary["verdict_confusion_matrix"] = _verdict_confusion_matrix(verdict_pairs)
 
     summary["config"] = {
         "llm_provider": str(config["llm_provider"]),
@@ -172,13 +235,48 @@ def evaluate_results(
     return summary
 
 
+_VERDICT_LABELS = ("confirmed", "refuted", "inconclusive")
+
+
+def _norm_verdict(verdict: str) -> str:
+    """
+    Mapeia o veredito para o espaço canônico (confirmed/refuted/inconclusive).
+    Um veredito ausente ("" — o pipeline não chegou ao verify_claim, ex:
+    medicamento não encontrado) é tratado como `inconclusive`, evitando uma
+    classe "none" fora do espaço de rótulos.
+    """
+    return verdict if verdict in _VERDICT_LABELS else "inconclusive"
+
+
+def _verdict_confusion_matrix(
+    pairs: list[tuple[str, str]],
+) -> dict[str, dict[str, int]]:
+    """
+    Matriz 3x3 do veredito do sistema (confirmed/refuted/inconclusive). Linhas =
+    esperado, colunas = previsto; cada célula é a contagem de questões.
+
+    Uma questão é exatamente uma amostra, então é a matriz direta sobre o dataset
+    — sem ambiguidade micro/macro. Útil como tabela descritiva; note que, no
+    dataset atual, `inconclusive` tem poucos exemplos.
+    """
+    matrix = {
+        expected: {predicted: 0 for predicted in _VERDICT_LABELS}
+        for expected in _VERDICT_LABELS
+    }
+    for expected, predicted in pairs:
+        matrix[_norm_verdict(expected)][_norm_verdict(predicted)] += 1
+    return matrix
+
+
 def _semantic_ir_metrics(
     retrieved: list[ChunksDict],
     gabarito: list[ChunksDict],
     threshold: float,
+    n_candidates: int,
 ) -> dict[str, float]:
     """
-    Recall/Precision/MRR/Hit@1/R-Precision/AP com equivalência semântica + section gate.
+    Recall/Precision/MRR/Hit@1/R-Precision/AP + contagens da matriz de confusão
+    de chunks (vp/fp/vn/fn), com equivalência semântica + section gate.
 
     Hit = mesma seção AND cosine >= threshold. O section gate elimina falsos
     positivos comuns onde duas passagens da mesma bula compartilham vocabulário
@@ -188,8 +286,24 @@ def _semantic_ir_metrics(
     top-|gabarito| chunks (R-Precision) ou penalizam hits tardios sem fixar k
     (AP). Resolve o viés da precision@k quando top_k > |gabarito|. AP agregado
     via mean-over-queries vira MAP (padrão TREC).
+
+    Matriz de confusão (contagem de chunks, sobre o pool pontuado pelo ranker):
+      - vp: recuperados que são relevantes (hits)
+      - fp: recuperados que não são relevantes (= n_retrieved - vp)
+      - fn: relevantes do gabarito não cobertos (= n_gabarito - gabarito_covered)
+      - vn: candidatos restantes (= n_candidates - vp - fp - fn, clamped >= 0)
+    `n_candidates` é o universo = chunks do medicamento nas seções consultadas.
+    Estas contagens são somadas (pooled) entre questões para formar a matriz
+    binária do summary.
     """
+    n_retrieved = len(retrieved)
+    n_gabarito = len(gabarito)
+
     if not retrieved or not gabarito:
+        # vp=0; com um lado vazio, fp=n_retrieved (nenhum relevante existe) ou
+        # fn=n_gabarito (nada foi recuperado) — o lado vazio zera sozinho.
+        fp = n_retrieved
+        fn = n_gabarito
         return {
             "semantic_recall": 0.0,
             "semantic_precision": 0.0,
@@ -198,6 +312,10 @@ def _semantic_ir_metrics(
             "semantic_f1": 0.0,
             "semantic_mrr": 0.0,
             "semantic_hit_at_1": 0.0,
+            "vp": 0,
+            "fp": fp,
+            "vn": max(0, n_candidates - fp - fn),
+            "fn": fn,
         }
 
     gabarito_covered = sum(
@@ -227,6 +345,11 @@ def _semantic_ir_metrics(
     mrr = 1.0 / first_hit_rank if first_hit_rank else 0.0
     hit_at_1 = 1.0 if retrieved_is_hit and retrieved_is_hit[0] else 0.0
 
+    vp = sum(retrieved_is_hit)
+    fp = n_retrieved - vp
+    fn = n_gabarito - gabarito_covered
+    vn = max(0, n_candidates - vp - fp - fn)
+
     return {
         "semantic_recall": recall,
         "semantic_precision": precision,
@@ -235,6 +358,10 @@ def _semantic_ir_metrics(
         "semantic_f1": _harmonic_mean(precision, recall),
         "semantic_mrr": mrr,
         "semantic_hit_at_1": hit_at_1,
+        "vp": vp,
+        "fp": fp,
+        "vn": vn,
+        "fn": fn,
     }
 
 
