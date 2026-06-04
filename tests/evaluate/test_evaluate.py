@@ -37,7 +37,7 @@ DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
         # ("1.2", False, True, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
         # ("1.3", True, False, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
         # ("1.4", True, True, False, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"),
+        # ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"), # 1
         ####
         # ("2.1", True, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
         # ("2.2", False, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
@@ -59,7 +59,7 @@ DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
         ####
         # ("5.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
         # ("5.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("5.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
+        ("5.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"), # 2
         # ("5.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
         # ("5.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-5-mini"),
         ####
@@ -70,34 +70,34 @@ DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
         # ("s0.5", True, True, True, True, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
         #### 
         # ("s1.1", True, True, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        ("s1.2", False, True, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        ("s1.3", True, False, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        ("s1.4", True, True, False, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        ("s1.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"),
+        # ("s1.2", False, True, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
+        # ("s1.3", True, False, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
+        # ("s1.4", True, True, False, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
+        # ("s1.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"),
         # ####
         # ("s2.1", True, True, True, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
         # ("s2.2", False, True, True, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        ("s2.3", True, False, True, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        ("s2.4", True, True, False, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        ("s2.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "llama3.1:8b"),
+        # ("s2.3", True, False, True, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
+        # ("s2.4", True, True, False, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
+        # ("s2.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "llama3.1:8b"),
         # ###  
         # ("s3.1", True, True, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        ("s3.2", False, True, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        ("s3.3", True, False, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        ("s3.4", True, True, False, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        ("s3.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "gemma3:4b"),
-        # ####
+        # ("s3.2", False, True, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
+        # ("s3.3", True, False, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
+        # ("s3.4", True, True, False, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
+        # ("s3.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "gemma3:4b"),
+        # # ####
         # ("s4.1", True, True, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        ("s4.2", False, True, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        ("s4.3", True, False, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        ("s4.4", True, True, False, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        ("s4.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "llama3.2:3b"),
+        # ("s4.2", False, True, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
+        # ("s4.3", True, False, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
+        # ("s4.4", True, True, False, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
+        # ("s4.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "llama3.2:3b"),
         ####
         # ("s5.1", True, True, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        ("s5.2", False, True, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        ("s5.3", True, False, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        ("s5.4", True, True, False, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        ("s5.5", True, True, True, True, "with_prev_and_next", LLMProvider.openai, "gpt-5-mini"),
+        # ("s5.2", False, True, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
+        # ("s5.3", True, False, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
+        # ("s5.4", True, True, False, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
+        # ("s5.5", True, True, True, True, "with_prev_and_next", LLMProvider.openai, "gpt-5-mini"),
     ],
 )
 # fmt: on
