@@ -1,7 +1,7 @@
 {
   "medicine_accuracy": 0.7,
-  "section_accuracy": 0.85,
-  "verdict_accuracy": 0.6,
+  "section_accuracy": 0.95,
+  "verdict_accuracy": 0.65,
   "semantic_recall": 0.225,
   "semantic_precision": 0.225,
   "semantic_r_precision": 0.225,
@@ -9,6 +9,38 @@
   "semantic_f1": 0.21666666666666665,
   "semantic_mrr": 0.25,
   "semantic_hit_at_1": 0.25,
+  "chunk_confusion_matrix_micro": {
+    "relevante": {
+      "recuperado": 5,
+      "nao_recuperado": 16
+    },
+    "nao_relevante": {
+      "recuperado": 4,
+      "nao_recuperado": 9
+    }
+  },
+  "semantic_precision_micro": 0.5555555555555556,
+  "semantic_recall_micro": 0.23809523809523808,
+  "semantic_f1_micro": 0.33333333333333326,
+  "chunk_total_docs": 34,
+  "chunk_accuracy": 0.4117647058823529,
+  "verdict_confusion_matrix": {
+    "confirmed": {
+      "confirmed": 7,
+      "refuted": 2,
+      "inconclusive": 2
+    },
+    "refuted": {
+      "confirmed": 0,
+      "refuted": 6,
+      "inconclusive": 2
+    },
+    "inconclusive": {
+      "confirmed": 0,
+      "refuted": 1,
+      "inconclusive": 0
+    }
+  },
   "config": {
     "llm_provider": "LLMProvider.ollama",
     "llm_model": "llama3.1:8b",

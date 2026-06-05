@@ -1,7 +1,7 @@
 {
-  "medicine_accuracy": 0.45,
+  "medicine_accuracy": 0.4,
   "section_accuracy": 1.0,
-  "verdict_accuracy": 0.7,
+  "verdict_accuracy": 0.75,
   "semantic_recall": 0.0,
   "semantic_precision": 0.0,
   "semantic_r_precision": 0.0,
@@ -9,6 +9,38 @@
   "semantic_f1": 0.0,
   "semantic_mrr": 0.0,
   "semantic_hit_at_1": 0.0,
+  "chunk_confusion_matrix_micro": {
+    "relevante": {
+      "recuperado": 0,
+      "nao_recuperado": 21
+    },
+    "nao_relevante": {
+      "recuperado": 0,
+      "nao_recuperado": 0
+    }
+  },
+  "semantic_precision_micro": 0.0,
+  "semantic_recall_micro": 0.0,
+  "semantic_f1_micro": 0.0,
+  "chunk_total_docs": 21,
+  "chunk_accuracy": 0.0,
+  "verdict_confusion_matrix": {
+    "confirmed": {
+      "confirmed": 11,
+      "refuted": 0,
+      "inconclusive": 0
+    },
+    "refuted": {
+      "confirmed": 1,
+      "refuted": 4,
+      "inconclusive": 3
+    },
+    "inconclusive": {
+      "confirmed": 0,
+      "refuted": 1,
+      "inconclusive": 0
+    }
+  },
   "config": {
     "llm_provider": "LLMProvider.openai",
     "llm_model": "gpt-4o-mini",

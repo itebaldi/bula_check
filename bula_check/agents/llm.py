@@ -46,6 +46,7 @@ def build_llm(config: BulaCheckConfig) -> BaseChatModel:
     if provider == LLMProvider.ollama:
         from langchain_ollama import ChatOllama
         # sudo snap install ollama
+        # ollama serve
         # ollama run qwen3:8b # baixar e rodar o modelo
         # ollama pull qwen3:8b # baixar sem abrir o chat
         # ollama rm qwen3:8b # remove o modelo

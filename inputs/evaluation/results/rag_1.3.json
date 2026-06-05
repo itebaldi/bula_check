@@ -1,14 +1,46 @@
 {
-  "medicine_accuracy": 0.8,
+  "medicine_accuracy": 0.85,
   "section_accuracy": 1.0,
-  "verdict_accuracy": 0.75,
-  "semantic_recall": 0.8,
-  "semantic_precision": 0.4708333333333334,
-  "semantic_r_precision": 0.4,
-  "semantic_ap": 0.6166666666666666,
-  "semantic_f1": 0.56,
-  "semantic_mrr": 0.5833333333333333,
-  "semantic_hit_at_1": 0.4,
+  "verdict_accuracy": 0.85,
+  "semantic_recall": 0.85,
+  "semantic_precision": 0.5791666666666665,
+  "semantic_r_precision": 0.5,
+  "semantic_ap": 0.6916666666666667,
+  "semantic_f1": 0.6516666666666666,
+  "semantic_mrr": 0.6583333333333333,
+  "semantic_hit_at_1": 0.5,
+  "chunk_confusion_matrix_micro": {
+    "relevante": {
+      "recuperado": 19,
+      "nao_recuperado": 3
+    },
+    "nao_relevante": {
+      "recuperado": 16,
+      "nao_recuperado": 0
+    }
+  },
+  "semantic_precision_micro": 0.5428571428571428,
+  "semantic_recall_micro": 0.8636363636363636,
+  "semantic_f1_micro": 0.6666666666666666,
+  "chunk_total_docs": 38,
+  "chunk_accuracy": 0.5,
+  "verdict_confusion_matrix": {
+    "confirmed": {
+      "confirmed": 9,
+      "refuted": 0,
+      "inconclusive": 2
+    },
+    "refuted": {
+      "confirmed": 0,
+      "refuted": 7,
+      "inconclusive": 1
+    },
+    "inconclusive": {
+      "confirmed": 0,
+      "refuted": 0,
+      "inconclusive": 1
+    }
+  },
   "config": {
     "llm_provider": "LLMProvider.ollama",
     "llm_model": "qwen3:8b",
