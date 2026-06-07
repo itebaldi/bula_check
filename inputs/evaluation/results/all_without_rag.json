@@ -1,8 +1,8 @@
 [
     {
-        "medicine_accuracy": 0.35,
+        "medicine_accuracy": 0.3,
         "section_accuracy": 1.0,
-        "verdict_accuracy": 0.7,
+        "verdict_accuracy": 0.8,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -10,6 +10,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 10,
+                "refuted": 1,
+                "inconclusive": 0
+            },
+            "refuted": {
+                "confirmed": 1,
+                "refuted": 6,
+                "inconclusive": 1
+            },
+            "inconclusive": {
+                "confirmed": 0,
+                "refuted": 1,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.openai",
             "llm_model": "gpt-4o-mini",
@@ -22,8 +54,8 @@
     },
     {
         "medicine_accuracy": 0.3,
-        "section_accuracy": 1.0,
-        "verdict_accuracy": 0.8,
+        "section_accuracy": 0.95,
+        "verdict_accuracy": 0.7,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -31,6 +63,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 9,
+                "refuted": 1,
+                "inconclusive": 1
+            },
+            "refuted": {
+                "confirmed": 2,
+                "refuted": 5,
+                "inconclusive": 1
+            },
+            "inconclusive": {
+                "confirmed": 0,
+                "refuted": 1,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "qwen3:8b",
@@ -42,7 +106,7 @@
         }
     },
     {
-        "medicine_accuracy": 0.25,
+        "medicine_accuracy": 0.3,
         "section_accuracy": 0.9,
         "verdict_accuracy": 0.85,
         "semantic_recall": 0.0,
@@ -52,6 +116,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 10,
+                "refuted": 1,
+                "inconclusive": 0
+            },
+            "refuted": {
+                "confirmed": 1,
+                "refuted": 7,
+                "inconclusive": 0
+            },
+            "inconclusive": {
+                "confirmed": 0,
+                "refuted": 1,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "llama3.1:8b",
@@ -64,7 +160,7 @@
     },
     {
         "medicine_accuracy": 0.15,
-        "section_accuracy": 0.75,
+        "section_accuracy": 0.85,
         "verdict_accuracy": 0.75,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
@@ -73,6 +169,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 11,
+                "refuted": 0,
+                "inconclusive": 0
+            },
+            "refuted": {
+                "confirmed": 4,
+                "refuted": 4,
+                "inconclusive": 0
+            },
+            "inconclusive": {
+                "confirmed": 1,
+                "refuted": 0,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "gemma3:4b",
@@ -84,8 +212,8 @@
         }
     },
     {
-        "medicine_accuracy": 0.15,
-        "section_accuracy": 0.6,
+        "medicine_accuracy": 0.2,
+        "section_accuracy": 0.7,
         "verdict_accuracy": 0.55,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
@@ -94,6 +222,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 10,
+                "refuted": 1,
+                "inconclusive": 0
+            },
+            "refuted": {
+                "confirmed": 2,
+                "refuted": 1,
+                "inconclusive": 5
+            },
+            "inconclusive": {
+                "confirmed": 1,
+                "refuted": 0,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "llama3.2:3b",
@@ -105,9 +265,9 @@
         }
     },
     {
-        "medicine_accuracy": 0.35,
+        "medicine_accuracy": 0.45,
         "section_accuracy": 1.0,
-        "verdict_accuracy": 0.55,
+        "verdict_accuracy": 0.6,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -115,6 +275,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 8,
+                "refuted": 0,
+                "inconclusive": 3
+            },
+            "refuted": {
+                "confirmed": 0,
+                "refuted": 4,
+                "inconclusive": 4
+            },
+            "inconclusive": {
+                "confirmed": 0,
+                "refuted": 1,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.openai",
             "llm_model": "gpt-5-mini",
@@ -126,9 +318,9 @@
         }
     },
     {
-        "medicine_accuracy": 0.45,
+        "medicine_accuracy": 0.4,
         "section_accuracy": 1.0,
-        "verdict_accuracy": 0.7,
+        "verdict_accuracy": 0.75,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -136,6 +328,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 11,
+                "refuted": 0,
+                "inconclusive": 0
+            },
+            "refuted": {
+                "confirmed": 1,
+                "refuted": 4,
+                "inconclusive": 3
+            },
+            "inconclusive": {
+                "confirmed": 0,
+                "refuted": 1,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.openai",
             "llm_model": "gpt-4o-mini",
@@ -149,7 +373,7 @@
     {
         "medicine_accuracy": 0.3,
         "section_accuracy": 1.0,
-        "verdict_accuracy": 0.65,
+        "verdict_accuracy": 0.55,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -157,6 +381,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 9,
+                "refuted": 1,
+                "inconclusive": 1
+            },
+            "refuted": {
+                "confirmed": 1,
+                "refuted": 2,
+                "inconclusive": 5
+            },
+            "inconclusive": {
+                "confirmed": 1,
+                "refuted": 0,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "qwen3:8b",
@@ -169,8 +425,8 @@
     },
     {
         "medicine_accuracy": 0.3,
-        "section_accuracy": 0.75,
-        "verdict_accuracy": 0.85,
+        "section_accuracy": 0.85,
+        "verdict_accuracy": 0.75,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -178,6 +434,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 8,
+                "refuted": 3,
+                "inconclusive": 0
+            },
+            "refuted": {
+                "confirmed": 1,
+                "refuted": 7,
+                "inconclusive": 0
+            },
+            "inconclusive": {
+                "confirmed": 0,
+                "refuted": 1,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "llama3.1:8b",
@@ -191,7 +479,7 @@
     {
         "medicine_accuracy": 0.15,
         "section_accuracy": 0.95,
-        "verdict_accuracy": 0.75,
+        "verdict_accuracy": 0.8,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -199,6 +487,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 11,
+                "refuted": 0,
+                "inconclusive": 0
+            },
+            "refuted": {
+                "confirmed": 3,
+                "refuted": 5,
+                "inconclusive": 0
+            },
+            "inconclusive": {
+                "confirmed": 1,
+                "refuted": 0,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "gemma3:4b",
@@ -210,9 +530,9 @@
         }
     },
     {
-        "medicine_accuracy": 0.2,
-        "section_accuracy": 0.8,
-        "verdict_accuracy": 0.7,
+        "medicine_accuracy": 0.25,
+        "section_accuracy": 0.7,
+        "verdict_accuracy": 0.45,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -220,6 +540,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 8,
+                "refuted": 1,
+                "inconclusive": 2
+            },
+            "refuted": {
+                "confirmed": 2,
+                "refuted": 1,
+                "inconclusive": 5
+            },
+            "inconclusive": {
+                "confirmed": 1,
+                "refuted": 0,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.ollama",
             "llm_model": "llama3.2:3b",
@@ -233,7 +585,7 @@
     {
         "medicine_accuracy": 0.3,
         "section_accuracy": 1.0,
-        "verdict_accuracy": 0.65,
+        "verdict_accuracy": 0.7,
         "semantic_recall": 0.0,
         "semantic_precision": 0.0,
         "semantic_r_precision": 0.0,
@@ -241,6 +593,38 @@
         "semantic_f1": 0.0,
         "semantic_mrr": 0.0,
         "semantic_hit_at_1": 0.0,
+        "chunk_confusion_matrix_micro": {
+            "relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 21
+            },
+            "nao_relevante": {
+                "recuperado": 0,
+                "nao_recuperado": 0
+            }
+        },
+        "semantic_precision_micro": 0.0,
+        "semantic_recall_micro": 0.0,
+        "semantic_f1_micro": 0.0,
+        "chunk_total_docs": 21,
+        "chunk_accuracy": 0.0,
+        "verdict_confusion_matrix": {
+            "confirmed": {
+                "confirmed": 8,
+                "refuted": 0,
+                "inconclusive": 3
+            },
+            "refuted": {
+                "confirmed": 0,
+                "refuted": 6,
+                "inconclusive": 2
+            },
+            "inconclusive": {
+                "confirmed": 0,
+                "refuted": 1,
+                "inconclusive": 0
+            }
+        },
         "config": {
             "llm_provider": "LLMProvider.openai",
             "llm_model": "gpt-5-mini",
