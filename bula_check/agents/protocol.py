@@ -15,6 +15,8 @@ class LLMProvider(str, Enum):
     openai = "openai"
     anthropic = "anthropic"
     ollama = "ollama"
+    groq = "groq"
+    google = "google"
 
 
 class BulaCheckConfig(TypedDict):
@@ -27,14 +29,26 @@ class BulaCheckConfig(TypedDict):
     # LLM
     llm_provider: LLMProvider
     llm_model: str
-    llm_temperature: float
+    llm_temperature: float | None
 
     # Retrieval
     top_k_chunks: int
     top_k_medicines: int
     similarity_candidates: int  # sugestões quando medicamento não é encontrado
-    lexical_weight: float  # peso busca lexical no score híbrido
-    semantic_weight: float  # peso busca semântica no score híbrido
+    lexical_weight: float | None  # peso busca lexical no score híbrido
+    semantic_weight: float | None  # peso busca semântica no score híbrido
+
+    # Contexto dos chunks devolvidos ao LLM
+    return_chunks: Literal["only_desired", "with_prev_and_next"]
+    """
+    Controla quantos chunks são enviados ao LLM após a busca híbrida:
+
+    - ``"only_desired"``      — apenas os chunks recuperados pelo ranking.
+    - ``"with_prev_and_next"`` — inclui também o chunk imediatamente anterior
+                                 e o imediatamente posterior (dentro da mesma
+                                 seção do mesmo medicamento), enriquecendo o
+                                 contexto sem aumentar o número de buscas.
+    """
 
     # Geração
     max_response_words: int
@@ -42,20 +56,30 @@ class BulaCheckConfig(TypedDict):
     # DeCS
     decs_lang: LANGUAGES
 
+    # Ablation
+    with_rag: bool
+    """
+    Quando False, pula retrieval (expand_decs, find_medicine, fetch_chunks) e
+    responde direto via LLM. Usado para ablation study — medir contribuição
+    do retrieval vs conhecimento paramétrico do LLM.
+    """
+
 
 DEFAULT_CONFIG: BulaCheckConfig = {
     "bulagratis_db_path": Path("bulas_gratis.db"),
     "anvisa_db_path": Path("bulas_anvisa.db"),
     "llm_provider": LLMProvider.openai,
     "llm_model": "gpt-4o-mini",
-    "llm_temperature": 0.0,
-    "top_k_chunks": 8,
+    "llm_temperature": None,
+    "top_k_chunks": 20,
     "top_k_medicines": 5,
     "similarity_candidates": 3,
     "lexical_weight": 0.4,
     "semantic_weight": 0.6,
-    "max_response_words": 400,
+    "return_chunks": "only_desired",
+    "max_response_words": 200,
     "decs_lang": "portuguese",
+    "with_rag": True,
 }
 
 

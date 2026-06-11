@@ -1,0 +1,53 @@
+{
+  "medicine_accuracy": 0.85,
+  "section_accuracy": 1.0,
+  "verdict_accuracy": 0.85,
+  "semantic_recall": 0.85,
+  "semantic_precision": 0.5541666666666666,
+  "semantic_r_precision": 0.6,
+  "semantic_ap": 0.7416666666666666,
+  "semantic_f1": 0.635,
+  "semantic_mrr": 0.7083333333333333,
+  "semantic_hit_at_1": 0.6,
+  "chunk_confusion_matrix_micro": {
+    "relevante": {
+      "recuperado": 19,
+      "nao_recuperado": 3
+    },
+    "nao_relevante": {
+      "recuperado": 17,
+      "nao_recuperado": 0
+    }
+  },
+  "semantic_precision_micro": 0.5277777777777778,
+  "semantic_recall_micro": 0.8636363636363636,
+  "semantic_f1_micro": 0.6551724137931034,
+  "chunk_total_docs": 39,
+  "chunk_accuracy": 0.48717948717948717,
+  "verdict_confusion_matrix": {
+    "confirmed": {
+      "confirmed": 9,
+      "refuted": 0,
+      "inconclusive": 2
+    },
+    "refuted": {
+      "confirmed": 0,
+      "refuted": 7,
+      "inconclusive": 1
+    },
+    "inconclusive": {
+      "confirmed": 0,
+      "refuted": 0,
+      "inconclusive": 1
+    }
+  },
+  "config": {
+    "llm_provider": "LLMProvider.ollama",
+    "llm_model": "qwen3:8b",
+    "return_chunks": "with_prev_and_next",
+    "bulagratis_db": "bulas_gratis.db",
+    "with_rag": true,
+    "lexical_weight": 0.4,
+    "semantic_weight": 0.6
+  }
+}

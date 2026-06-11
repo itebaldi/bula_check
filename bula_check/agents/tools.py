@@ -1,5 +1,6 @@
 import json
 import os
+import unicodedata
 
 from langchain_core.messages import HumanMessage
 from langchain_core.messages import SystemMessage
@@ -152,20 +153,52 @@ def expand_keywords_decs(
     client = DeCSC(api_key=api_key)
     expanded = list(keywords)
 
+    def _norm(term: str) -> str:
+        # lowercase + sem acento, para comparar/deduplicar de forma robusta.
+        stripped = unicodedata.normalize("NFKD", term).encode("ascii", "ignore")
+        return stripped.decode().lower().strip()
+
+    def _append_term(term: str) -> None:
+        if term and _norm(term) not in [_norm(e) for e in expanded]:
+            expanded.append(term)
+
+    def _pt_terms(record: dict) -> list[str]:
+        # descritores em PT + sinônimos (já em PT), para checar relevância.
+        descriptors = [
+            d.get("descriptor", "")
+            for d in record.get("descriptor_list", [])
+            if d.get("attr", {}).get("lang", "").startswith("pt")
+        ]
+        synonyms = [s.get("synonym", "") for s in record.get("synonym_list", [])]
+        return descriptors + synonyms
+
     for kw in keywords:
         try:
             result = client.search_by_words(kw, lang=language)
-            records = (
-                result.get("record_list", {}).get("records", {}).get("record", [])
-            )
-            # TODO checar essa logica
-            if isinstance(records, dict):
-                records = [records]
-            for record in records[:2]:
-                for desc in record.get("descriptor_list", []):
-                    term = desc.get("descriptor", "")
-                    if term and term.lower() not in [e.lower() for e in expanded]:
-                        expanded.append(term)
+            nkw = _norm(kw)
+            # A resposta vem como {"objects": [{"decsws_response": {...}}, ...]},
+            # cada objeto com seu próprio record_list.record (dict ou lista).
+            for obj in result.get("objects", []):
+                record_list = obj.get("decsws_response", {}).get("record_list", {})
+                records = record_list.get("record", [])
+                if isinstance(records, dict):
+                    records = [records]
+                for record in records:
+                    # search_by_words faz match em qualquer descritor que contenha
+                    # a palavra em algum sinônimo (mesmo dentro de termos compostos
+                    # como "Enjoo de Viagem"), trazendo conceitos não relacionados.
+                    # Só expandimos a partir do descritor onde a keyword bate como
+                    # termo INTEIRO — esse é o conceito realmente sobre ela.
+                    if nkw not in [_norm(t) for t in _pt_terms(record)]:
+                        continue
+                    # Descritores: só os em português, os demais idiomas só
+                    # adicionam ruído à busca lexical em PT.
+                    # for desc in record.get("descriptor_list", []):
+                    #     if desc.get("attr", {}).get("lang", "").startswith("pt"):
+                    #         _append_term(desc.get("descriptor", ""))
+                    # Sinônimos (já em português).
+                    for syn in record.get("synonym_list", []):
+                        _append_term(syn.get("synonym", ""))
         except Exception:
             continue
 

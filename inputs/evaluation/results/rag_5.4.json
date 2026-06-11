@@ -1,0 +1,53 @@
+{
+  "medicine_accuracy": 0.85,
+  "section_accuracy": 1.0,
+  "verdict_accuracy": 0.7,
+  "semantic_recall": 0.75,
+  "semantic_precision": 0.33,
+  "semantic_r_precision": 0.5,
+  "semantic_ap": 0.6333333333333333,
+  "semantic_f1": 0.43357142857142855,
+  "semantic_mrr": 0.6,
+  "semantic_hit_at_1": 0.5,
+  "chunk_confusion_matrix_micro": {
+    "relevante": {
+      "recuperado": 16,
+      "nao_recuperado": 6
+    },
+    "nao_relevante": {
+      "recuperado": 33,
+      "nao_recuperado": 3
+    }
+  },
+  "semantic_precision_micro": 0.32653061224489793,
+  "semantic_recall_micro": 0.7272727272727273,
+  "semantic_f1_micro": 0.45070422535211263,
+  "chunk_total_docs": 58,
+  "chunk_accuracy": 0.3275862068965517,
+  "verdict_confusion_matrix": {
+    "confirmed": {
+      "confirmed": 9,
+      "refuted": 0,
+      "inconclusive": 2
+    },
+    "refuted": {
+      "confirmed": 1,
+      "refuted": 5,
+      "inconclusive": 2
+    },
+    "inconclusive": {
+      "confirmed": 0,
+      "refuted": 1,
+      "inconclusive": 0
+    }
+  },
+  "config": {
+    "llm_provider": "LLMProvider.openai",
+    "llm_model": "gpt-5-mini",
+    "return_chunks": "only_desired",
+    "bulagratis_db": "bulas_gratis.db",
+    "with_rag": true,
+    "lexical_weight": 0.4,
+    "semantic_weight": null
+  }
+}
