@@ -128,7 +128,7 @@ def build_ui(cfg: BulaCheckConfig) -> gr.Blocks:
 
         chatbot = gr.Chatbot(
             label="BulaCheck",
-            height=500,
+            height=600,
             avatar_images=(None, "💊"),
             render_markdown=True,
         )
