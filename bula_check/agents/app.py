@@ -198,12 +198,12 @@ def main() -> None:
     )
     parser.add_argument(
         "--db",
-        default="bulas.db",
+        default="bulas_gratis.db",
         help="Caminho para o banco BulaGratis.",
     )
     parser.add_argument(
         "--anvisa-db",
-        default="anvisa.db",
+        default="bulas_anvisa.db",
         help="Caminho para o banco ANVISA.",
     )
     parser.add_argument(

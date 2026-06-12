@@ -27,15 +27,15 @@ DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
 @pytest.mark.parametrize(
     "idx, with_rag, lexical_weight, semantic_weight, sliding_db, return_chunks, llm_provider, llm_model",
     [
-        ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        # ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
         #### 
         # ("1.1", True, True, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
         # ("1.2", False, True, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("1.3", True, False, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"), # new 1
+        ("1.3", True, False, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"), # new 1
         # ("1.4", True, True, False, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
         # ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"), # 1
         ####
@@ -136,5 +136,5 @@ def test_evaluate_results(
 
     rag = "rag" if with_rag else "withoutRag"
     name = f"{rag}_{idx}"
-    results_path = Path(f"inputs/evaluation/results/{name}.json")
+    results_path = Path(f"outputs/evaluation/results/{name}.json")
     evaluate_results(cfg, graph, items, results_path)
