@@ -24,6 +24,16 @@ class ExpectedResult(BaseModel):
     expected_sections: list[str]
     expected_verdict: str
     expected_chunk_ids: list[str]
+    # Campos autorais (humano), ignorados pelas métricas. Servem para a
+    # validação por farmacêutico via review.build_review_csv:
+    #   medicine_brand — marca como aparece na query (ex: "Buscofem"), distinta
+    #     do genérico expected_medicine ("ibuprofeno").
+    #   justification  — por que este veredito, ancorado no chunk-gabarito.
+    #   validation     — parecer do farmacêutico (status/validated_by/comments),
+    #     preenchido após a revisão.
+    medicine_brand: str | None = None
+    justification: str | None = None
+    validation: dict[str, Any] | None = None
 
     def get(self, key: str, default: Any = None) -> Any:
         return getattr(self, key, default)
