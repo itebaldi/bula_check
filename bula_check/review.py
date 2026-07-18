@@ -44,12 +44,11 @@ DATA_COLUMNS = [
     "justification",
     "evidence",
     "bula_url",
-    "registration_number",
 ]
 
-# Colunas em branco para o farmacêutico preencher na revisão.
+# Colunas em branco para o farmacêutico preencher na revisão. `status`
+# (aprovado/reprovado) NÃO fica aqui: é derivado dos *_ok no ingest.
 VALIDATION_COLUMNS = [
-    "status",
     "verdict_ok",
     "medicine_ok",
     "evidence_ok",
@@ -58,6 +57,28 @@ VALIDATION_COLUMNS = [
 ]
 
 REVIEW_COLUMNS = DATA_COLUMNS + VALIDATION_COLUMNS
+
+# Rótulos em português exibidos no CSV (o farmacêutico revisa em PT). O código
+# usa as chaves internas; a tradução acontece só na borda (build escreve com os
+# rótulos PT, ingest lê e remapeia de volta para as chaves internas).
+COLUMN_LABELS_PT = {
+    "id": "id",
+    "query": "Pergunta",
+    "medicine_brand": "Marca",
+    "expected_medicine": "Medicamento (esperado)",
+    "medicine_name_db": "Medicamento (no banco)",
+    "expected_sections_pt": "Seções esperadas",
+    "expected_verdict": "Veredito esperado",
+    "justification": "Justificativa",
+    "evidence": "Evidência (texto da bula)",
+    "bula_url": "Link da bula",
+    "verdict_ok": "Veredito correto? (sim/não)",
+    "medicine_ok": "Medicamento correto? (sim/não)",
+    "evidence_ok": "Evidência correta? (sim/não)",
+    "validated_by": "Validado por",
+    "comments": "Comentários",
+}
+LABEL_TO_KEY = {label: key for key, label in COLUMN_LABELS_PT.items()}
 
 
 def _fetch_chunk_rows(
@@ -92,10 +113,10 @@ def _fetch_medicine_row(
     conn: sqlite3.Connection,
     medicine_id: str,
 ) -> dict:
-    """Busca url e número de registro de um medicamento por id."""
+    """Busca a url da bula de um medicamento por id."""
     conn.row_factory = sqlite3.Row
     cursor = conn.execute(
-        "SELECT url, registration_number FROM medicines WHERE id = ?",
+        "SELECT url FROM medicines WHERE id = ?",
         (medicine_id,),
     )
     row = cursor.fetchone()
@@ -159,7 +180,6 @@ def build_review_rows(
             "justification": item.get("justification") or "",
             "evidence": _format_evidence(ordered),
             "bula_url": medicine_row.get("url", ""),
-            "registration_number": medicine_row.get("registration_number") or "",
         }
         for col in VALIDATION_COLUMNS:
             row[col] = ""
@@ -193,11 +213,13 @@ def build_review_csv(
 
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    # utf-8-sig: BOM para o Excel abrir os acentos corretamente.
+    # utf-8-sig: BOM para o Excel abrir os acentos corretamente. Cabeçalho em
+    # português; corpo na ordem de REVIEW_COLUMNS (chaves internas).
     with out_path.open("w", encoding="utf-8-sig", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=REVIEW_COLUMNS)
-        writer.writeheader()
-        writer.writerows(rows)
+        writer = csv.writer(fh)
+        writer.writerow([COLUMN_LABELS_PT[k] for k in REVIEW_COLUMNS])
+        for row in rows:
+            writer.writerow([row.get(k, "") for k in REVIEW_COLUMNS])
 
     print(f"[review] {len(rows)} linha(s) escrita(s) em {out_path}")
     return out_path
@@ -229,9 +251,6 @@ _POSITIVE_TOKENS = {
     "aprovado",
     "approved",
 }
-_REJECTED_STATUS = {"reprovado", "rejected", "reject", "nao", "não"}
-
-
 def _norm(value: str | None) -> str:
     return (value or "").strip().lower()
 
@@ -253,11 +272,11 @@ def ingest_review_csv(
 ) -> dict:
     """Importa o CSV revisado pelo farmacêutico de volta para o dataset.
 
-    Grava o bloco `validation` (as colunas de VALIDATION_COLUMNS) em cada questão
-    correspondente do dataset e reporta as divergências — questões cujo
-    verdict_ok/medicine_ok/evidence_ok foi marcado como incorreto, ou cujo status
-    é de reprovação. Só grava o bloco nas questões em que o farmacêutico
-    preencheu algo; o casamento é por `id`.
+    Grava o bloco `validation` em cada questão correspondente do dataset e
+    reporta as divergências — questões cujo verdict_ok/medicine_ok/evidence_ok
+    foi marcado como incorreto. O `status` (aprovado/reprovado) é DERIVADO desses
+    campos, não preenchido à mão. Só grava o bloco nas questões em que o
+    farmacêutico preencheu algo; o casamento é por `id`.
 
     Parameters
     ----------
@@ -275,7 +294,11 @@ def ingest_review_csv(
         (ids presentes no CSV mas ausentes do dataset).
     """
     with Path(csv_path).open(encoding="utf-8-sig", newline="") as fh:
-        review_rows = {row["id"]: row for row in csv.DictReader(fh)}
+        review_rows = {}
+        for raw in csv.DictReader(fh):
+            # Remapeia os rótulos PT do cabeçalho para as chaves internas.
+            row = {LABEL_TO_KEY.get(k, k): v for k, v in raw.items()}
+            review_rows[row["id"]] = row
 
     dataset = json.loads(Path(dataset_path).read_text(encoding="utf-8"))
     dataset_ids = {item.get("id") for item in dataset}
@@ -292,20 +315,22 @@ def ingest_review_csv(
         if not any(block.values()):  # farmacêutico não preencheu nada
             continue
 
-        item["validation"] = block
-        validated += 1
-
         problems = [
             field
             for field in ("verdict_ok", "medicine_ok", "evidence_ok")
             if _flag_state(block[field]) is False
         ]
-        rejected = _norm(block["status"]) in _REJECTED_STATUS
-        if problems or rejected:
+        # status é DERIVADO dos *_ok (não preenchido à mão): reprovado se algum
+        # aspecto foi marcado como incorreto, senão aprovado.
+        block["status"] = "reprovado" if problems else "aprovado"
+
+        item["validation"] = block
+        validated += 1
+
+        if problems:
             flagged.append(
                 {
                     "id": item.get("id"),
-                    "status": block["status"],
                     "problems": problems,
                     "comments": block["comments"],
                 }
@@ -334,9 +359,8 @@ def ingest_review_csv(
         print(f"[ingest] {len(flagged)} divergência(s) marcada(s):")
         for entry in flagged:
             fields = ", ".join(entry["problems"]) or "—"
-            status = f" | status={entry['status']}" if entry["status"] else ""
             note = f" | {entry['comments']}" if entry["comments"] else ""
-            print(f"  - {entry['id']}: {fields}{status}{note}")
+            print(f"  - {entry['id']}: {fields}{note}")
     else:
         print("[ingest] Nenhuma divergência marcada.")
 
