@@ -29,13 +29,13 @@ DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
     [
         # ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        ("0.3.2", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
         #### 
         # ("1.1", True, True, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
         # ("1.2", False, True, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        ("1.3", True, False, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"), # new 1
+        # ("1.3", True, False, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"), # new 1
         # ("1.4", True, True, False, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
         # ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"), # 1
         ####

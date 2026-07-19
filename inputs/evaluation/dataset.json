@@ -1,7 +1,7 @@
 [
     {
         "id": "q001",
-        "query": "buscofem serve pra colica menstrual?",
+        "query": "buscofem serve pra cólica menstrual?",
         "medicine_brand": "Buscofem",
         "expected_medicine": "ibuprofeno",
         "expected_sections": [
@@ -16,7 +16,7 @@
     },
     {
         "id": "q002",
-        "query": "posso tomar Buscofem com cerveja?",
+        "query": "tomei um Buscofem, posso beber uma cerveja hoje?",
         "medicine_brand": "Buscofem",
         "expected_medicine": "ibuprofeno",
         "expected_sections": [
@@ -31,7 +31,7 @@
     },
     {
         "id": "q003",
-        "query": "buscofem é de boa pra bebê pequeno, tipo menor de 6 meses",
+        "query": "posso dar buscofem pra um bebê de menos de 6 meses?",
         "medicine_brand": "Buscofem",
         "expected_medicine": "ibuprofeno",
         "expected_sections": [
@@ -46,7 +46,7 @@
     },
     {
         "id": "q004",
-        "query": "se eu tiver úlcera no estômago melhor não tomar ibuprofeno",
+        "query": "Tenho úlcera no estômago faz um tempo e queria saber se é verdade que não posso tomar ibuprofeno por causa disso",
         "medicine_brand": null,
         "expected_medicine": "ibuprofeno",
         "expected_sections": [
@@ -61,7 +61,7 @@
     },
     {
         "id": "q005",
-        "query": "Duomo HP é pra quem tem prostata aumentada né?",
+        "query": "Meu médico disse que estou com a próstata aumentada e me receitou Duomo HP, ele serve mesmo pra tratar isso?",
         "medicine_brand": "Duomo HP",
         "expected_medicine": "mesilato de doxazosina",
         "expected_sections": [
@@ -76,7 +76,7 @@
     },
     {
         "id": "q006",
-        "query": "posso tomar Duomo HP de manhã ou de noite, tanto faz",
+        "query": "Duomo HP pode ser de manhã ou de noite, tanto faz?",
         "medicine_brand": "Duomo HP",
         "expected_medicine": "mesilato de doxazosina",
         "expected_sections": [
@@ -91,7 +91,7 @@
     },
     {
         "id": "q007",
-        "query": "se eu esquecer Duomo HP posso tomar duas juntas pra compensar",
+        "query": "Esqueci de tomar o Duomo HP ontem, posso tomar dois hoje pra compensar a dose que perdi?",
         "medicine_brand": "Duomo HP",
         "expected_medicine": "mesilato de doxazosina",
         "expected_sections": [
@@ -106,7 +106,7 @@
     },
     {
         "id": "q008",
-        "query": "tylenol sinus ajuda no nariz entupido também ou é só pra febre?",
+        "query": "o tylenol sinus desentope o nariz ou só serve pra baixar febre?",
         "medicine_brand": "Tylenol Sinus",
         "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
         "expected_sections": [
@@ -121,7 +121,7 @@
     },
     {
         "id": "q009",
-        "query": "criança de 10 anos pode tomar tylenol sinus?",
+        "query": "meu filho tem 10 anos e tá gripado, ele pode tomar tylenol sinus?",
         "medicine_brand": "Tylenol Sinus",
         "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
         "expected_sections": [
@@ -136,7 +136,7 @@
     },
     {
         "id": "q010",
-        "query": "tylenol sinus pode dar nervosismo e boca seca",
+        "query": "tylenol sinus dá agitação e boca seca?",
         "medicine_brand": "Tylenol Sinus",
         "expected_medicine": "paracetamol + cloridrato de pseudoefedrina",
         "expected_sections": [
@@ -151,7 +151,7 @@
     },
     {
         "id": "q011",
-        "query": "Plenance é indicado para adultos com colesterol alto?",
+        "query": "Plenance serve pra adulto com colesterol alto?",
         "medicine_brand": "Plenance",
         "expected_medicine": "Plenance",
         "expected_sections": [
@@ -166,7 +166,7 @@
     },
     {
         "id": "q012",
-        "query": "Plenance pode ser usado por mulheres grávidas?",
+        "query": "Descobri que tô grávida essa semana, posso continuar tomando Plenance?",
         "medicine_brand": "Plenance",
         "expected_medicine": "Plenance",
         "expected_sections": [
@@ -181,7 +181,7 @@
     },
     {
         "id": "q013",
-        "query": "Plenance pode ser partido, aberto ou mastigado?",
+        "query": "Dá pra partir ou mastigar o comprimido de Plenance?",
         "medicine_brand": "Plenance",
         "expected_medicine": "Plenance",
         "expected_sections": [
@@ -196,7 +196,7 @@
     },
     {
         "id": "q014",
-        "query": "olmesartana é remédio pra pressão alta?",
+        "query": "olmesartana serve pra pressão alta?",
         "medicine_brand": null,
         "expected_medicine": "olmesartana medoxomila",
         "expected_sections": [
@@ -211,7 +211,7 @@
     },
     {
         "id": "q015",
-        "query": "gravidas podem tomar olmesartana",
+        "query": "tô grávida de uns 3 meses, posso tomar olmesartana pra controlar a pressão?",
         "medicine_brand": null,
         "expected_medicine": "olmesartana medoxomila",
         "expected_sections": [
@@ -226,14 +226,14 @@
     },
     {
         "id": "q016",
-        "query": "olmesartana faz cair cabelo?",
+        "query": "tomo olmesartana e apareceu uma tosse seca, isso é do remédio?",
         "medicine_brand": null,
         "expected_medicine": "olmesartana medoxomila",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "Inconclusivo: a bula da olmesartana não menciona queda de cabelo entre as reações adversas, então não é possível confirmar nem refutar a partir da bula.",
+        "justification": "Inconclusivo: a bula da olmesartana não menciona tosse seca entre as reações adversas, então não é possível confirmar nem refutar a partir da bula.",
         "expected_chunk_ids": [
             "62f213a3-daca-48bf-92ce-ee0b80c58ce6"
         ],
@@ -241,7 +241,7 @@
     },
     {
         "id": "q017",
-        "query": "Pacientes com asma precisam ter cuidado ao usar metoprolol?",
+        "query": "Sou asmático e me passaram succinato de metoprolol, tem algum cuidado especial nesse caso?",
         "medicine_brand": null,
         "expected_medicine": "succinato de metoprolol",
         "expected_sections": [
@@ -256,7 +256,7 @@
     },
     {
         "id": "q018",
-        "query": "Metoprolol pode causar queda de cabelo?",
+        "query": "O metoprolol pode fazer o cabelo cair?",
         "medicine_brand": null,
         "expected_medicine": "succinato de metoprolol",
         "expected_sections": [
@@ -271,7 +271,7 @@
     },
     {
         "id": "q019",
-        "query": "Kaloba é indicado para sintomas de resfriado, como tosse, coriza e dor de garganta?",
+        "query": "Tô resfriado com tosse, coriza e dor de garganta, dá pra tomar Kaloba pra esses sintomas?",
         "medicine_brand": "Kaloba",
         "expected_medicine": "KALOBA",
         "expected_sections": [
@@ -286,7 +286,7 @@
     },
     {
         "id": "q020",
-        "query": "Kaloba em comprimido pode ser usado por uma criança de 8 anos?",
+        "query": "Posso dar o comprimido de Kaloba pro meu filho de 8 anos?",
         "medicine_brand": "Kaloba",
         "expected_medicine": "KALOBA",
         "expected_sections": [
@@ -303,7 +303,7 @@
     },
     {
         "id": "q021",
-        "query": "Gostaria de saber se o Mensyva precisa ser protegido da luz e da umidade quando guardado em casa.",
+        "query": "Comprei o Mensyva agora e queria saber se preciso guardar longe da luz e da umidade.",
         "medicine_brand": "MENSYVA",
         "expected_medicine": "MENSYVA",
         "expected_sections": [
@@ -333,7 +333,7 @@
     },
     {
         "id": "q023",
-        "query": "É verdade que eu não posso tomar o Mensyva junto com comida, só em jejum?",
+        "query": "Uma amiga me disse que o Mensyva só pode ser tomado em jejum, sem comer nada junto. É verdade?",
         "medicine_brand": "MENSYVA",
         "expected_medicine": "MENSYVA",
         "expected_sections": [
@@ -348,7 +348,7 @@
     },
     {
         "id": "q024",
-        "query": "existe um antidoto especifico pra quetiapina se a pessoa tomar dose demais?",
+        "query": "Se a pessoa tomar Mensyva demais, existe algum antídoto específico pra quetiapina?",
         "medicine_brand": "MENSYVA",
         "expected_medicine": "MENSYVA",
         "expected_sections": [
@@ -363,14 +363,14 @@
     },
     {
         "id": "q025",
-        "query": "o mensyva faiz o cabelo crescer? serve pra tratar calvicie?",
+        "query": "o mensyva pode dar zumbido no ouvido?",
         "medicine_brand": "MENSYVA",
         "expected_medicine": "MENSYVA",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito do Mensyva sobre crescimento capilar ou calvície; a seção de reações adversas não aborda o assunto.",
+        "justification": "A bula não menciona zumbido no ouvido entre as reações adversas do Mensyva; a seção de reações adversas não aborda esse sintoma.",
         "expected_chunk_ids": [
             "f3e68737-8adc-4859-b6ce-cc7fbfdc928a"
         ],
@@ -378,7 +378,7 @@
     },
     {
         "id": "q026",
-        "query": "Gostaria de saber se o Mensyva pode ser utilizado para tratar dor de dente.",
+        "query": "dá pra tomar mensyva pra dor de dente?",
         "medicine_brand": "MENSYVA",
         "expected_medicine": "MENSYVA",
         "expected_sections": [
@@ -393,14 +393,14 @@
     },
     {
         "id": "q027",
-        "query": "esse anticoncepcional serve mesmo pra não engravidar?",
-        "medicine_brand": null,
+        "query": "tomando o Microvlar certinho, eu não engravido mesmo?",
+        "medicine_brand": "Microvlar",
         "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "confirmed",
-        "justification": "A bula afirma que o medicamento 'é indicado na prevenção da gravidez', apoiando a alegação (m01c07).",
+        "justification": "A bula afirma que o medicamento 'é indicado na prevenção da gravidez', apoiando a alegação.",
         "expected_chunk_ids": [
             "8a18e045-8f95-47c9-9b64-8ca3f255ba3b"
         ],
@@ -408,14 +408,14 @@
     },
     {
         "id": "q028",
-        "query": "Em caso de ingestão de uma dose excessiva deste medicamento, é possível que ocorram náuseas e vômitos?",
-        "medicine_brand": null,
+        "query": "tomei vários comprimidos de Microvlar de uma vez sem querer; isso pode dar enjoo e vômito?",
+        "medicine_brand": "Microvlar",
         "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
         "expected_sections": [
             "overdose"
         ],
         "expected_verdict": "confirmed",
-        "justification": "A seção de superdose diz que 'os sintomas da superdose com contraceptivos orais ... podem incluir náusea, vômito', confirmando a alegação (m01c10).",
+        "justification": "A seção de superdose diz que 'os sintomas da superdose com contraceptivos orais... podem incluir náusea, vômito', confirmando a alegação.",
         "expected_chunk_ids": [
             "b2c02b24-24c3-4632-96f7-10e182fb9a3e"
         ],
@@ -423,14 +423,14 @@
     },
     {
         "id": "q029",
-        "query": "homen também pode tomar esse anticoncepcional?",
-        "medicine_brand": null,
+        "query": "homem também pode tomar Ciclo 21?",
+        "medicine_brand": "Ciclo 21",
         "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
         "expected_sections": [
             "contraindications"
         ],
         "expected_verdict": "refuted",
-        "justification": "A bula afirma que 'Este medicamento é contraindicado para uso por homens', contradizendo a alegação (m01c03).",
+        "justification": "A bula afirma que 'Este medicamento é contraindicado para uso por homens', contradizendo a alegação.",
         "expected_chunk_ids": [
             "8ee47e91-8a6c-43cb-ae55-a76206a2237a"
         ],
@@ -438,14 +438,14 @@
     },
     {
         "id": "q030",
-        "query": "esse anticoncepcional protege contra o HIV e as DSTs, não é?",
-        "medicine_brand": null,
+        "query": "tomando Microvlar eu já fico protegida de HIV e outras DSTs também?",
+        "medicine_brand": "Microvlar",
         "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
         "expected_sections": [
             "warnings_and_precautions"
         ],
         "expected_verdict": "refuted",
-        "justification": "A bula afirma que 'Este produto não protege contra infecção por HIV (AIDS) ou outras doenças sexualmente transmissíveis', contradizendo a alegação (m01c13).",
+        "justification": "A bula afirma que 'Este produto não protege contra infecção por HIV (AIDS) ou outras doenças sexualmente transmissíveis', contradizendo a alegação.",
         "expected_chunk_ids": [
             "ef517f3e-9da7-46aa-85b4-8fbbdca43fdd"
         ],
@@ -453,14 +453,14 @@
     },
     {
         "id": "q031",
-        "query": "é verdade que esse anticoncepcional faz o cabelo crescer e cura a calvície?",
-        "medicine_brand": null,
+        "query": "ouvi falar que o Ciclo 21 dá dor nas articulações, é verdade?",
+        "medicine_brand": "Ciclo 21",
         "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona em nenhum trecho qualquer efeito sobre crescimento capilar ou calvície, incluindo a lista de reações adversas (m01c00).",
+        "justification": "A bula não menciona em nenhum trecho qualquer efeito relacionado a dores nas articulações, incluindo a lista de reações adversas.",
         "expected_chunk_ids": [
             "745e41fa-3b81-4d5e-a172-91a932166281"
         ],
@@ -468,14 +468,14 @@
     },
     {
         "id": "q032",
-        "query": "Como este medicamento atua no organismo para promover o emagrecimento?",
-        "medicine_brand": null,
+        "query": "o Microvlar ajuda a emagrecer? queria entender como ele age no organismo pra isso",
+        "medicine_brand": "Microvlar",
         "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
         "expected_sections": [
             "how_it_works"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula descreve apenas a ação contraceptiva por supressão das gonadotrofinas e não menciona emagrecimento em nenhum trecho (m01c06).",
+        "justification": "A bula descreve apenas a ação contraceptiva por supressão das gonadotrofinas e não menciona emagrecimento em nenhum trecho.",
         "expected_chunk_ids": [
             "f83d8309-b9ea-4e28-bc6c-d32fa34b13ac"
         ],
@@ -483,7 +483,7 @@
     },
     {
         "id": "q033",
-        "query": "amome serve pra rinite alergica? vivo com o nariz entupido e espirrando",
+        "query": "o amome serve pra rinite alérgica? vivo com o nariz entupido e espirrando o dia todo",
         "medicine_brand": "AMOME",
         "expected_medicine": "AMOME",
         "expected_sections": [
@@ -498,7 +498,7 @@
     },
     {
         "id": "q034",
-        "query": "Gostaria de saber se o AMOME deve ser conservado em temperatura ambiente.",
+        "query": "dá pra guardar o amome em temperatura ambiente mesmo?",
         "medicine_brand": "AMOME",
         "expected_medicine": "AMOME",
         "expected_sections": [
@@ -528,7 +528,7 @@
     },
     {
         "id": "q036",
-        "query": "esqueci de usar ontem, ouvi dizer que hoje é so usar o dobro pra compensar, ta certo isso?",
+        "query": "esqueci de usar o Amome ontem; ouvi dizer que hoje é só usar o dobro pra compensar, tá certo?",
         "medicine_brand": "AMOME",
         "expected_medicine": "AMOME",
         "expected_sections": [
@@ -543,14 +543,14 @@
     },
     {
         "id": "q037",
-        "query": "o amome ajuda a emagreçer? queria perder uns quilinhos",
+        "query": "o amome pode causar insônia? faz uns dias que não consigo dormir direito",
         "medicine_brand": "AMOME",
         "expected_medicine": "AMOME",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito de emagrecimento ou perda de peso; a seção de reações adversas cita apenas efeitos como dor de cabeça, ardor ou irritação nasal e visão turva.",
+        "justification": "A bula não menciona insônia como reação adversa; a seção de reações adversas cita apenas efeitos como dor de cabeça, sangramento nasal, ardor ou irritação nasal e visão turva.",
         "expected_chunk_ids": [
             "d71d47e4-eb60-48a2-accb-267bf9ddeda4"
         ],
@@ -558,7 +558,7 @@
     },
     {
         "id": "q038",
-        "query": "O AMOME não serve também pra tratar pressão alta?",
+        "query": "o amome também serve pra tratar pressão alta?",
         "medicine_brand": "AMOME",
         "expected_medicine": "AMOME",
         "expected_sections": [
@@ -573,7 +573,7 @@
     },
     {
         "id": "q039",
-        "query": "amytril serve pra criança que faz xixi na cama de noite?",
+        "query": "Meu filho faz xixi na cama de noite, o Amytril serve pra isso?",
         "medicine_brand": "AMYTRIL",
         "expected_medicine": "AMYTRIL",
         "expected_sections": [
@@ -588,7 +588,7 @@
     },
     {
         "id": "q040",
-        "query": "É correto afirmar que o Amytril deve ser conservado em temperatura ambiente?",
+        "query": "Posso guardar o Amytril em temperatura ambiente mesmo?",
         "medicine_brand": "AMYTRIL",
         "expected_medicine": "AMYTRIL",
         "expected_sections": [
@@ -603,7 +603,7 @@
     },
     {
         "id": "q041",
-        "query": "não tem problema nenhum dirigir logo depois de tomar Amytril, né?",
+        "query": "Posso dirigir normal logo depois de tomar o Amytril?",
         "medicine_brand": "AMYTRIL",
         "expected_medicine": "AMYTRIL",
         "expected_sections": [
@@ -618,7 +618,7 @@
     },
     {
         "id": "q042",
-        "query": "se eu esqueci de tomar uma dose, posso tomar duas junstas na próxima pra compensar?",
+        "query": "Esqueci de tomar uma dose do Amytril ontem, posso tomar duas juntas na próxima pra compensar?",
         "medicine_brand": "AMYTRIL",
         "expected_medicine": "AMYTRIL",
         "expected_sections": [
@@ -633,14 +633,14 @@
     },
     {
         "id": "q043",
-        "query": "o amytril ajuda a parar a queda de cabelo e faz nascer cabelo novo?",
+        "query": "O Amytril serve pra controlar a pressão alta?",
         "medicine_brand": "AMYTRIL",
         "expected_medicine": "AMYTRIL",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer uso do Amytril para queda de cabelo ou calvície; as indicações citam apenas depressão e enurese noturna.",
+        "justification": "A bula não menciona qualquer uso do Amytril para pressão alta (hipertensão); as indicações citam apenas depressão e enurese noturna.",
         "expected_chunk_ids": [
             "38e8f0bb-83ac-46ca-b704-fd70b3910ea2"
         ],
@@ -648,7 +648,7 @@
     },
     {
         "id": "q044",
-        "query": "O Amytril possui indicação para o controle da glicemia em pacientes diabéticos?",
+        "query": "O Amytril tem indicação pra ajudar a controlar a glicemia em quem tem diabetes?",
         "medicine_brand": "AMYTRIL",
         "expected_medicine": "AMYTRIL",
         "expected_sections": [
@@ -663,7 +663,7 @@
     },
     {
         "id": "q045",
-        "query": "dá pra deixar o mektovi guardado na temperatura ambiente de casa mesmo?",
+        "query": "dá pra guardar o mektovi na temperatura ambiente de casa mesmo?",
         "medicine_brand": "MEKTOVI",
         "expected_medicine": "MEKTOVI",
         "expected_sections": [
@@ -678,7 +678,7 @@
     },
     {
         "id": "q046",
-        "query": "O Mektovi é indicado para o tratamento do melanoma, um tipo de câncer de pele?",
+        "query": "o mektovi é indicado pra tratar melanoma, aquele tipo de câncer de pele?",
         "medicine_brand": "MEKTOVI",
         "expected_medicine": "MEKTOVI",
         "expected_sections": [
@@ -693,7 +693,7 @@
     },
     {
         "id": "q047",
-        "query": "se eu esquecer uma dose, não tem problema tomar o dobro depois pra compensar, tem?",
+        "query": "esqueci uma dose do Mektovi; posso tomar o dobro depois pra compensar?",
         "medicine_brand": "MEKTOVI",
         "expected_medicine": "MEKTOVI",
         "expected_sections": [
@@ -708,7 +708,7 @@
     },
     {
         "id": "q048",
-        "query": "posso tomar mektovi mesmo tendo alergía ao binimetnibe?",
+        "query": "posso tomar mektovi mesmo sendo alérgico ao binimetinibe?",
         "medicine_brand": "MEKTOVI",
         "expected_medicine": "MEKTOVI",
         "expected_sections": [
@@ -723,14 +723,14 @@
     },
     {
         "id": "q049",
-        "query": "e aí, o mektovi serve pra emagrecer tbm?",
+        "query": "o mektovi serve pra baixar o colesterol?",
         "medicine_brand": "MEKTOVI",
         "expected_medicine": "MEKTOVI",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer uso do Mektovi® para emagrecimento; ele é indicado apenas para o tratamento do melanoma.",
+        "justification": "A bula não menciona qualquer uso do Mektovi® para baixar o colesterol; ele é indicado apenas para o tratamento do melanoma.",
         "expected_chunk_ids": [
             "9e3df5d7-9952-4b8d-aa85-83a294ad6a9e"
         ],
@@ -738,14 +738,14 @@
     },
     {
         "id": "q050",
-        "query": "O Mektovi auxilia no tratamento da insônia, melhorando a qualidade do sono?",
+        "query": "comecei a tomar mektovi essa semana e ando sem dormir, ele pode dar insônia?",
         "medicine_brand": "MEKTOVI",
         "expected_medicine": "MEKTOVI",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito do Mektovi® sobre o sono ou o tratamento da insônia.",
+        "justification": "A bula não menciona insônia entre as reações adversas do Mektovi®.",
         "expected_chunk_ids": [
             "2e1f2356-43d1-4520-8420-b6198fae2031"
         ],
@@ -768,7 +768,7 @@
     },
     {
         "id": "q052",
-        "query": "O Tynna é indicado para o tratamento dos sintomas da urticária crônica?",
+        "query": "descobri que tenho urticária crônica, o tynna serve pra tratar os sintomas disso?",
         "medicine_brand": "TYNNA",
         "expected_medicine": "TYNNA",
         "expected_sections": [
@@ -783,7 +783,7 @@
     },
     {
         "id": "q053",
-        "query": "meu filho tem 8 anos, ele pode tomar tyna?",
+        "query": "meu filho de 8 anos pode tomar tynna?",
         "medicine_brand": "TYNNA",
         "expected_medicine": "TYNNA",
         "expected_sections": [
@@ -813,14 +813,14 @@
     },
     {
         "id": "q055",
-        "query": "esse tynna faz o cabelo nascer? tô ficando careca kkk",
+        "query": "o tynna trata a asma?",
         "medicine_brand": "TYNNA",
         "expected_medicine": "TYNNA",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito sobre crescimento capilar ou tratamento de calvície, limitando-se aos sintomas de rinoconjuntivite alérgica e urticária.",
+        "justification": "A bula não menciona qualquer uso do medicamento para o tratamento da asma, limitando-se aos sintomas de rinoconjuntivite alérgica e urticária crônica.",
         "expected_chunk_ids": [
             "cfb25a91-c48d-4bf5-8292-1e8207c28f26"
         ],
@@ -843,7 +843,7 @@
     },
     {
         "id": "q057",
-        "query": "Posso guardar a pomada de mupirocina em temperatura ambiente ali no armário de casa?",
+        "query": "Pode guardar a pomada de mupirocina em temperatura ambiente, no armário mesmo?",
         "medicine_brand": null,
         "expected_medicine": "MUPIROCINA",
         "expected_sections": [
@@ -858,7 +858,7 @@
     },
     {
         "id": "q058",
-        "query": "É normal sentir uma ardência na pele no local onde apliquei a mupirocina?",
+        "query": "Comecei a usar mupirocina numa ferida faz uns dois dias e ela arde toda vez que passo, isso é reação normal do remédio?",
         "medicine_brand": null,
         "expected_medicine": "MUPIROCINA",
         "expected_sections": [
@@ -873,7 +873,7 @@
     },
     {
         "id": "q059",
-        "query": "Posso passar a mupirocina dentro do naris pra tratar uma feridinha que apareceu lá?",
+        "query": "Dá pra passar mupirocina dentro do nariz pra curar uma feridinha que apareceu lá dentro?",
         "medicine_brand": null,
         "expected_medicine": "MUPIROCINA",
         "expected_sections": [
@@ -888,7 +888,7 @@
     },
     {
         "id": "q060",
-        "query": "Não tem problema nenhum usar essa pomada todo dia por mais de 30 dias seguidos, né?",
+        "query": "Estou tratando uma foliculite e queria saber se posso continuar passando a mupirocina todo dia por mais de 30 dias.",
         "medicine_brand": null,
         "expected_medicine": "MUPIROCINA",
         "expected_sections": [
@@ -903,14 +903,14 @@
     },
     {
         "id": "q061",
-        "query": "Essa pomada de mupirocina é boa pra clarear manchas de sol e deixar a pele mais lisinha?",
+        "query": "A mupirocina serve pra tratar micose?",
         "medicine_brand": null,
         "expected_medicine": "MUPIROCINA",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula indica o medicamento apenas para infecções de pele e não menciona clareamento de manchas ou finalidades estéticas.",
+        "justification": "A bula indica o medicamento apenas para infecções de pele bacterianas (como impetigo, foliculite e furunculose) e não menciona tratamento de micose na seção Indicações.",
         "expected_chunk_ids": [
             "b82eda85-7929-4312-99af-86311f81ad54"
         ],
@@ -918,7 +918,7 @@
     },
     {
         "id": "q062",
-        "query": "A mupirocina ajuda a fazer o cabelo voltar a crescer em quem tem calvície?",
+        "query": "É verdade que a mupirocina ajuda o cabelo a crescer em quem tem calvície?",
         "medicine_brand": null,
         "expected_medicine": "MUPIROCINA",
         "expected_sections": [
@@ -933,7 +933,7 @@
     },
     {
         "id": "q063",
-        "query": "É correto afirmar que este medicamento pode ser conservado em temperatura ambiente, entre 15 e 30°C?",
+        "query": "Dá pra guardar a candesartana em temperatura ambiente, tipo entre 15 e 30 graus?",
         "medicine_brand": null,
         "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
         "expected_sections": [
@@ -948,7 +948,7 @@
     },
     {
         "id": "q064",
-        "query": "gente, é verdade q é so tomar 1 comprimido uma vez por dia?",
+        "query": "É verdade que a candesartana é só um comprimido por dia?",
         "medicine_brand": null,
         "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
         "expected_sections": [
@@ -963,7 +963,7 @@
     },
     {
         "id": "q065",
-        "query": "Tô grávida, será que posso tomar esse remédio de boa?",
+        "query": "Descobri que tô grávida e tomo candesartana com hidroclorotiazida pra pressão, posso continuar tomando normalmente?",
         "medicine_brand": null,
         "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
         "expected_sections": [
@@ -978,7 +978,7 @@
     },
     {
         "id": "q066",
-        "query": "Se eu esquecer uma dose, não preciso esperar o horário habitual e posso tomar a dose esquecida assim que lembrar, certo?",
+        "query": "Se eu esquecer uma dose da candesartana, posso tomar assim que lembrar em vez de esperar o próximo horário?",
         "medicine_brand": null,
         "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
         "expected_sections": [
@@ -993,14 +993,14 @@
     },
     {
         "id": "q067",
-        "query": "esse remédio ajuda a nascer cabelo novo e combater a calvície?",
+        "query": "A candesartana também ajuda a baixar o colesterol?",
         "medicine_brand": null,
         "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito sobre crescimento capilar ou calvície; a seção de indicações trata apenas do tratamento da hipertensão.",
+        "justification": "A bula não menciona qualquer efeito sobre o colesterol; a seção de indicações trata apenas do tratamento da hipertensão.",
         "expected_chunk_ids": [
             "06ccb7fb-72a8-4963-9e63-eaa807bea4b6"
         ],
@@ -1008,7 +1008,7 @@
     },
     {
         "id": "q068",
-        "query": "Este medicamento pode ser utilizado como calmante para ajudar a dormir melhor?",
+        "query": "Posso tomar a candesartana como calmante pra ajudar a dormir melhor?",
         "medicine_brand": null,
         "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
         "expected_sections": [
@@ -1023,7 +1023,7 @@
     },
     {
         "id": "q069",
-        "query": "esse trombofob gel pode guardar em temperatura ambiente mesmo, ou tem que por na geladeira?",
+        "query": "o trombofob gel pode ficar guardado em temperatura ambiente ou precisa deixar na geladeira?",
         "medicine_brand": "TROMBOFOB GEL",
         "expected_medicine": "TROMBOFOB GEL",
         "expected_sections": [
@@ -1038,7 +1038,7 @@
     },
     {
         "id": "q070",
-        "query": "é verdade que o trombofob gel ajuda a melhorar a circulaçao do sangue e desinchar?",
+        "query": "comecei a usar o trombofob gel na perna faz uns dias, é verdade que ele melhora a circulação do sangue e ajuda a desinchar?",
         "medicine_brand": "TROMBOFOB GEL",
         "expected_medicine": "TROMBOFOB GEL",
         "expected_sections": [
@@ -1053,7 +1053,7 @@
     },
     {
         "id": "q071",
-        "query": "Gostaria de saber se o TROMBOFOB GEL é indicado para o tratamento de hemorroidas.",
+        "query": "o trombofob gel serve pra tratar hemorroida?",
         "medicine_brand": "TROMBOFOB GEL",
         "expected_medicine": "TROMBOFOB GEL",
         "expected_sections": [
@@ -1068,7 +1068,7 @@
     },
     {
         "id": "q072",
-        "query": "Quem tem tendência a hemorragia não tem problema nenhum em usar o TROMBOFOB GEL, certo?",
+        "query": "tenho tendência a hemorragia, posso usar o trombofob gel numa boa?",
         "medicine_brand": "TROMBOFOB GEL",
         "expected_medicine": "TROMBOFOB GEL",
         "expected_sections": [
@@ -1083,7 +1083,7 @@
     },
     {
         "id": "q073",
-        "query": "mano, dá pra usar o trombofob gel pra secar espinha e acne no rosto?",
+        "query": "dá pra passar trombofob gel pra secar espinha no rosto?",
         "medicine_brand": "TROMBOFOB GEL",
         "expected_medicine": "TROMBOFOB GEL",
         "expected_sections": [
@@ -1098,14 +1098,14 @@
     },
     {
         "id": "q074",
-        "query": "o trombofob gel pode causar queda de cabelo em quem usa por muito tempo?",
+        "query": "usar trombofob gel por muito tempo pode deixar manchas na pele?",
         "medicine_brand": "TROMBOFOB GEL",
         "expected_medicine": "TROMBOFOB GEL",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona queda de cabelo entre as reações, citando apenas reações alérgicas de pele como prurido e vesículas.",
+        "justification": "A bula não menciona manchas na pele entre as reações adversas, citando apenas reações alérgicas de pele como prurido e vesículas (bolhas).",
         "expected_chunk_ids": [
             "36e3a840-b171-4568-847a-39494a473ee1"
         ],
@@ -1113,7 +1113,7 @@
     },
     {
         "id": "q075",
-        "query": "vasogard é bom pra quem tem problema de circulação na perna né?",
+        "query": "pra que serve o vasogard? ouvi falar que é pra circulação da perna",
         "medicine_brand": "VASOGARD",
         "expected_medicine": "VASOGARD",
         "expected_sections": [
@@ -1128,7 +1128,7 @@
     },
     {
         "id": "q076",
-        "query": "posso guarda o vasogard em temperatura ambiente aqui de casa mesmo?",
+        "query": "dá pra guardar o vasogard em temperatura ambiente aqui em casa mesmo?",
         "medicine_brand": "VASOGARD",
         "expected_medicine": "VASOGARD",
         "expected_sections": [
@@ -1143,7 +1143,7 @@
     },
     {
         "id": "q077",
-        "query": "Pacientes com insuficiência cardíaca podem utilizar Vasogard sem restrições?",
+        "query": "quem tem insuficiência cardíaca pode tomar vasogard sem problema?",
         "medicine_brand": "VASOGARD",
         "expected_medicine": "VASOGARD",
         "expected_sections": [
@@ -1158,7 +1158,7 @@
     },
     {
         "id": "q078",
-        "query": "Se eu esquecer uma dose, não tem problema tomar as duas juntas na próxima vez, tem?",
+        "query": "esqueci de tomar o vasogard ontem, posso tomar as duas doses juntas hoje pra compensar?",
         "medicine_brand": "VASOGARD",
         "expected_medicine": "VASOGARD",
         "expected_sections": [
@@ -1173,14 +1173,14 @@
     },
     {
         "id": "q079",
-        "query": "esse vasogard emagrece? to querendo perder uns quilos",
+        "query": "o vasogard serve pra tratar varizes na perna?",
         "medicine_brand": "VASOGARD",
         "expected_medicine": "VASOGARD",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona emagrecimento ou perda de peso; as indications tratam apenas de doença vascular periférica e prevenção de AVC.",
+        "justification": "A bula não menciona tratamento de varizes; as indications tratam apenas de doença vascular periférica (claudicação intermitente) e prevenção de AVC.",
         "expected_chunk_ids": [
             "cf910ee3-c989-4151-8ad4-02eb07238e22"
         ],
@@ -1188,14 +1188,14 @@
     },
     {
         "id": "q080",
-        "query": "o vasogard faz o cabelo crescer? tenho medo de fica careca",
+        "query": "o vasogard pode dar insônia? ando dormindo bem mal ultimamente",
         "medicine_brand": "VASOGARD",
         "expected_medicine": "VASOGARD",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona nada sobre crescimento capilar ou calvície, inclusive na lista de reações adversas.",
+        "justification": "A bula não menciona insônia ou distúrbios do sono na lista de reações adversas.",
         "expected_chunk_ids": [
             "f6ace09f-ad29-4ba1-8657-7e4e1db803cd"
         ],
@@ -1203,7 +1203,7 @@
     },
     {
         "id": "q081",
-        "query": "e aí, esse clopido-gran eu posso deixar guardado no armário em temperatura ambiente mesmo?",
+        "query": "Posso deixar o clopido-gran guardado em temperatura ambiente mesmo?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
@@ -1218,7 +1218,7 @@
     },
     {
         "id": "q082",
-        "query": "Gostaria de saber se o CLOPIDO-GRAN atua reduzindo a formação de coágulos no sangue.",
+        "query": "Me falaram que o clopido-gran serve pra evitar a formação de coágulo no sangue, é isso mesmo que ele faz?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
@@ -1233,7 +1233,7 @@
     },
     {
         "id": "q083",
-        "query": "tenho uma ulcera no estomago, posso tomar o clopido-gran numa boa?",
+        "query": "Tenho úlcera no estômago, posso tomar clopido-gran numa boa?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
@@ -1248,7 +1248,7 @@
     },
     {
         "id": "q084",
-        "query": "É verdade que o CLOPIDO-GRAN não pode ser tomado junto com a comida, só em jejum?",
+        "query": "Ouvi dizer que o CLOPIDO-GRAN só pode ser tomado em jejum, longe da comida. É verdade?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
@@ -1263,14 +1263,14 @@
     },
     {
         "id": "q085",
-        "query": "mano, esse clopido-gran ajuda a nascer cabelo pra quem tá ficando careca?",
+        "query": "O clopido-gran serve pra baixar o colesterol alto?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona nada sobre crescimento de cabelo ou calvície; as indicações tratam apenas de Síndrome Coronária Aguda e Fibrilação Atrial.",
+        "justification": "A bula não menciona nada sobre colesterol; as indicações tratam apenas de Síndrome Coronária Aguda e Fibrilação Atrial.",
         "expected_chunk_ids": [
             "58358fcb-c5b9-49e1-a082-3c538cef425a"
         ],
@@ -1278,14 +1278,14 @@
     },
     {
         "id": "q086",
-        "query": "O CLOPIDO-GRAN pode ser utilizado para auxiliar no emagrecimento ou na perda de peso?",
+        "query": "O CLOPIDO-GRAN pode causar sonolência?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não faz qualquer menção a emagrecimento ou perda de peso, inclusive entre as reações adversas listadas.",
+        "justification": "A bula não faz qualquer menção a sonolência, inclusive entre as reações adversas listadas.",
         "expected_chunk_ids": [
             "485411fc-b995-4f93-b3fe-ff190eacfdd8"
         ],
@@ -1293,7 +1293,7 @@
     },
     {
         "id": "q087",
-        "query": "Tenho que guardar o NIBISNU na geladeira mesmo?",
+        "query": "O NIBISNU precisa mesmo ficar guardado na geladeira?",
         "medicine_brand": "NIBISNU",
         "expected_medicine": "NIBISNU",
         "expected_sections": [
@@ -1308,7 +1308,7 @@
     },
     {
         "id": "q088",
-        "query": "O NIBISNU é indicado para o tratamento de tumores cerebrais, como o glioblastoma?",
+        "query": "Queria confirmar se o NIBISNU é indicado no tratamento de tumores cerebrais como o glioblastoma.",
         "medicine_brand": "NIBISNU",
         "expected_medicine": "NIBISNU",
         "expected_sections": [
@@ -1323,7 +1323,7 @@
     },
     {
         "id": "q089",
-        "query": "Mesmo tendo problema nos rins eu posso usar o NIBISNU sem preocupação, né?",
+        "query": "Descobri que tenho um problema nos rins, ainda dá pra usar o NIBISNU tranquilo?",
         "medicine_brand": "NIBISNU",
         "expected_medicine": "NIBISNU",
         "expected_sections": [
@@ -1338,7 +1338,7 @@
     },
     {
         "id": "q090",
-        "query": "Existe um antídoto garantido caso alguém tome uma dose exagerada de NIBISNU?",
+        "query": "Se a pessoa tomar dose demais de NIBISNU, tem um antídoto certo pra resolver?",
         "medicine_brand": "NIBISNU",
         "expected_medicine": "NIBISNU",
         "expected_sections": [
@@ -1353,14 +1353,14 @@
     },
     {
         "id": "q091",
-        "query": "O NIBISNU serve pra emagreçer?",
+        "query": "O NIBISNU serve pra enxaqueca?",
         "medicine_brand": "NIBISNU",
         "expected_medicine": "NIBISNU",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona emagrecimento nem uso para perda de peso, listando apenas indicações oncológicas.",
+        "justification": "A bula não menciona tratamento de enxaqueca, listando apenas indicações oncológicas.",
         "expected_chunk_ids": [
             "aab72358-8fb1-4eac-86fa-cfdff2179fd2"
         ],
@@ -1368,7 +1368,7 @@
     },
     {
         "id": "q092",
-        "query": "O NIBISNU não causa dependência química?",
+        "query": "O NIBISNU vicia? Tenho medo de criar dependência tomando ele.",
         "medicine_brand": "NIBISNU",
         "expected_medicine": "NIBISNU",
         "expected_sections": [
@@ -1383,7 +1383,7 @@
     },
     {
         "id": "q093",
-        "query": "dá pra guardar o nourim em temperatura ambiente aqui em casa mesmo?",
+        "query": "posso guardar o nourin em temperatura ambiente aqui em casa mesmo?",
         "medicine_brand": "NOURIN",
         "expected_medicine": "NOURIN",
         "expected_sections": [
@@ -1398,7 +1398,7 @@
     },
     {
         "id": "q094",
-        "query": "É verdade que o Nourin leva de 30 a 60 minutos para começar a fazer efeito?",
+        "query": "comecei a tomar nourin essa semana e queria saber se é normal ele demorar de 30 a 60 minutos pra começar a fazer efeito",
         "medicine_brand": "NOURIN",
         "expected_medicine": "NOURIN",
         "expected_sections": [
@@ -1413,7 +1413,7 @@
     },
     {
         "id": "q095",
-        "query": "minha irmã tá grávida e com urgência pra urinar, ela pode tomar nourin numa boa, né?",
+        "query": "tô grávida e com urgência pra urinar, posso tomar nourin tranquilo?",
         "medicine_brand": "NOURIN",
         "expected_medicine": "NOURIN",
         "expected_sections": [
@@ -1428,7 +1428,7 @@
     },
     {
         "id": "q096",
-        "query": "não tem problema nenhum em mastigar o comprimido de nourin antes de engolir, tem?",
+        "query": "dá pra mastigar o comprimido do nourin?",
         "medicine_brand": "NOURIN",
         "expected_medicine": "NOURIN",
         "expected_sections": [
@@ -1443,14 +1443,14 @@
     },
     {
         "id": "q097",
-        "query": "o nourin ajuda a fazer o cabelo crescer ou serve pra tratar calvície?",
+        "query": "o nourin serve pra dor de cabeça ou só pra problema urinário mesmo?",
         "medicine_brand": "NOURIN",
         "expected_medicine": "NOURIN",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito sobre crescimento capilar ou calvície; as indicações se limitam a problemas urinários.",
+        "justification": "A bula não menciona uso para dor de cabeça ou enxaqueca; as indicações se limitam a problemas urinários.",
         "expected_chunk_ids": [
             "c60ef173-be08-49bd-b838-7882849bf842"
         ],
@@ -1458,7 +1458,7 @@
     },
     {
         "id": "q098",
-        "query": "queria saber se o nourin engorda, tenho medo de ganhar peso tomando ele",
+        "query": "o nourin engorda? tenho medo de ganhar peso tomando ele",
         "medicine_brand": "NOURIN",
         "expected_medicine": "NOURIN",
         "expected_sections": [
@@ -1473,7 +1473,7 @@
     },
     {
         "id": "q099",
-        "query": "pode deixar o annita guardado num lugar normal, temperatura ambiente mesmo?",
+        "query": "dá pra guardar o annita em temperatura ambiente mesmo ou tem que deixar na geladeira?",
         "medicine_brand": "ANNITA",
         "expected_medicine": "ANNITA",
         "expected_sections": [
@@ -1488,7 +1488,7 @@
     },
     {
         "id": "q100",
-        "query": "O medicamento ANNITA é indicado para o tratamento de giardíase?",
+        "query": "o annita serve pra tratar giardíase?",
         "medicine_brand": "ANNITA",
         "expected_medicine": "ANNITA",
         "expected_sections": [
@@ -1503,7 +1503,7 @@
     },
     {
         "id": "q101",
-        "query": "meu filho tem 6 meses, ele pode tomar anita?",
+        "query": "meu filho tem só 6 meses, ele já pode tomar annita?",
         "medicine_brand": "ANNITA",
         "expected_medicine": "ANNITA",
         "expected_sections": [
@@ -1518,7 +1518,7 @@
     },
     {
         "id": "q102",
-        "query": "não é pra tomar o Annita junto com comida, né? tem que ser em jejum?",
+        "query": "o annita tem que tomar em jejum?",
         "medicine_brand": "ANNITA",
         "expected_medicine": "ANNITA",
         "expected_sections": [
@@ -1533,14 +1533,14 @@
     },
     {
         "id": "q103",
-        "query": "e aí, o annita faz o cabelo crescer? tô ficando careca kkk",
+        "query": "comecei a tomar annita essa semana e queria saber se ele dá sono, ando muito sonolento",
         "medicine_brand": "ANNITA",
         "expected_medicine": "ANNITA",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona nada sobre crescimento capilar ou tratamento de calvície em nenhuma seção.",
+        "justification": "A bula não menciona sonolência ou sono como reação adversa em nenhuma seção.",
         "expected_chunk_ids": [
             "7d4bff83-9962-4115-9ac3-ce4b7267addc"
         ],
@@ -1548,7 +1548,7 @@
     },
     {
         "id": "q104",
-        "query": "posso deixar o montelucaste guardado em temperatura ambiente mesmo, sem precisar botar na geladeira?",
+        "query": "o montelucaste pode ficar guardado em temperatura ambiente ou precisa botar na geladeira?",
         "medicine_brand": null,
         "expected_medicine": "montelucaste de sodio",
         "expected_sections": [
@@ -1563,7 +1563,7 @@
     },
     {
         "id": "q105",
-        "query": "Gostaria de saber se o montelucaste de sódio também é indicado para o tratamento da rinite alérgica.",
+        "query": "o montelucaste também serve pra rinite alérgica?",
         "medicine_brand": null,
         "expected_medicine": "montelucaste de sodio",
         "expected_sections": [
@@ -1593,7 +1593,7 @@
     },
     {
         "id": "q107",
-        "query": "esqueçi de tomar o comprimido ontem, agora tomo dois juntos pra conpensar a dose?",
+        "query": "esqueci de tomar o montelucaste ontem; tomo dois comprimidos hoje pra compensar?",
         "medicine_brand": null,
         "expected_medicine": "montelucaste de sodio",
         "expected_sections": [
@@ -1608,7 +1608,7 @@
     },
     {
         "id": "q108",
-        "query": "esse tal de montelucaste ajuda a emagrecer? queria perder uns quilinhos",
+        "query": "será que o montelucaste ajuda a emagrecer? queria perder uns quilinhos",
         "medicine_brand": null,
         "expected_medicine": "montelucaste de sodio",
         "expected_sections": [
@@ -1623,7 +1623,7 @@
     },
     {
         "id": "q109",
-        "query": "O montelucaste de sódio possui indicação para o tratamento de hipertensão arterial (pressão alta)?",
+        "query": "o montelucaste tem indicação pra tratar hipertensão (pressão alta)?",
         "medicine_brand": null,
         "expected_medicine": "montelucaste de sodio",
         "expected_sections": [
@@ -1638,7 +1638,7 @@
     },
     {
         "id": "q110",
-        "query": "É verdade que devo conservar o Tabrecta em temperatura ambiente e protegê-lo da umidade?",
+        "query": "posso guardar o tabrecta em temperatura ambiente e longe da umidade?",
         "medicine_brand": "TABRECTA",
         "expected_medicine": "TABRECTA",
         "expected_sections": [
@@ -1653,7 +1653,7 @@
     },
     {
         "id": "q111",
-        "query": "o tabrecta é usado pra tratar cancer de pulmão mesmo?",
+        "query": "o tabrecta é indicado pra câncer de pulmão de não pequenas células?",
         "medicine_brand": "TABRECTA",
         "expected_medicine": "TABRECTA",
         "expected_sections": [
@@ -1668,7 +1668,7 @@
     },
     {
         "id": "q112",
-        "query": "não tem problema mastigar o comprimido de tabrecta pra engolir mais facil, tem?",
+        "query": "tenho dificuldade pra engolir, posso mastigar o comprimido do tabrecta?",
         "medicine_brand": "TABRECTA",
         "expected_medicine": "TABRECTA",
         "expected_sections": [
@@ -1683,7 +1683,7 @@
     },
     {
         "id": "q113",
-        "query": "esqeci de tomar uma dose, posso tomar duas junto na próxma pra compensar?",
+        "query": "esqueci uma dose do tabrecta, tomo duas juntas na próxima pra compensar?",
         "medicine_brand": "TABRECTA",
         "expected_medicine": "TABRECTA",
         "expected_sections": [
@@ -1698,14 +1698,14 @@
     },
     {
         "id": "q114",
-        "query": "o tabrecta faz o cabelo crescer? serve pra quem tá ficando careca?",
+        "query": "comecei a tomar o tabrecta e tô sem conseguir dormir, ele pode causar insônia?",
         "medicine_brand": "TABRECTA",
         "expected_medicine": "TABRECTA",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona crescimento capilar nem calvície em nenhum trecho, incluindo a lista de reações adversas.",
+        "justification": "A bula não menciona insônia nem dificuldade para dormir em nenhum trecho, incluindo a lista de reações adversas.",
         "expected_chunk_ids": [
             "0001151a-52ba-4549-95c5-890298b073e0"
         ],
@@ -1713,7 +1713,7 @@
     },
     {
         "id": "q115",
-        "query": "O Tabrecta pode ser utilizado no tratamento de hipertensão arterial (pressão alta)?",
+        "query": "o tabrecta serve pra baixar a pressão alta?",
         "medicine_brand": "TABRECTA",
         "expected_medicine": "TABRECTA",
         "expected_sections": [
@@ -1728,7 +1728,7 @@
     },
     {
         "id": "q116",
-        "query": "esse clonidin começa a agir rápido? tipo uns 15 minuto depois de aplicar?",
+        "query": "o clonidin começa a fazer efeito rápido, uns 15 minutos depois de aplicar?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1743,7 +1743,7 @@
     },
     {
         "id": "q117",
-        "query": "Em caso de superdosagem, é correto afirmar que não existe um antídoto específico para a clonidina?",
+        "query": "Li que numa superdose de clonidina não existe antídoto específico, isso procede?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1758,7 +1758,7 @@
     },
     {
         "id": "q118",
-        "query": "esse é aquele remédio que eu tomo sozinho em casa por conta própria, né?",
+        "query": "esse clonidin é daqueles remédios que eu mesmo tomo em casa por conta própria, né?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1773,7 +1773,7 @@
     },
     {
         "id": "q119",
-        "query": "quem tem alergia à clonidina pode usar esse remédio sem problema nenhum, não é?",
+        "query": "sou alérgico à clonidina, mesmo assim posso usar esse remédio numa boa?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1788,7 +1788,7 @@
     },
     {
         "id": "q120",
-        "query": "esse clonidin serve pra emagrecer também, tipo ajuda a perder peso?",
+        "query": "o clonidin serve pra emagrecer também, ajuda a perder peso?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1803,7 +1803,7 @@
     },
     {
         "id": "q121",
-        "query": "da pra usar o CLONIDIN pra clarear os dentes?",
+        "query": "dá pra usar o CLONIDIN pra clarear os dentes?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1818,7 +1818,7 @@
     },
     {
         "id": "q122",
-        "query": "se eu tomar isoniazida a mais que o normal, posso ter aluciação e ficar com a vista embaçada?",
+        "query": "Tomei isoniazida a mais do que devia. Isso pode dar alucinação e deixar a vista embaçada?",
         "medicine_brand": "FARMANGUINHOS - ISONIAZIDA",
         "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
         "expected_sections": [
@@ -1833,7 +1833,7 @@
     },
     {
         "id": "q123",
-        "query": "A isoniazida não pode ser utilizada por pacientes que apresentam doença no fígado, correto?",
+        "query": "Quem tem problema no fígado não pode tomar isoniazida, né?",
         "medicine_brand": "FARMANGUINHOS - ISONIAZIDA",
         "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
         "expected_sections": [
@@ -1848,7 +1848,7 @@
     },
     {
         "id": "q124",
-        "query": "Se eu perder o horário de um comprimido, rola tomar dois depois pra compensar o que esqueci?",
+        "query": "Esqueci de tomar a isoniazida no horário certo, posso tomar dois comprimidos depois pra compensar?",
         "medicine_brand": "FARMANGUINHOS - ISONIAZIDA",
         "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
         "expected_sections": [
@@ -1863,7 +1863,7 @@
     },
     {
         "id": "q125",
-        "query": "preciso guardar a isoniazida dentro da geladeira, né?",
+        "query": "A isoniazida precisa ficar guardada na geladeira?",
         "medicine_brand": "FARMANGUINHOS - ISONIAZIDA",
         "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
         "expected_sections": [
@@ -1878,14 +1878,14 @@
     },
     {
         "id": "q126",
-        "query": "esse remedio de isoniazida serve pra emagrecer e queimar gordura?",
+        "query": "Comecei a tomar isoniazida essa semana e fiquei na dúvida: ela também serve pra ajudar a controlar a pressão alta?",
         "medicine_brand": "FARMANGUINHOS - ISONIAZIDA",
         "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula indica o medicamento apenas para tratamento da infecção latente e tuberculose, não mencionando qualquer uso para emagrecimento.",
+        "justification": "A bula indica o medicamento apenas para tratamento da infecção latente e tuberculose, não mencionando qualquer uso para pressão alta (hipertensão).",
         "expected_chunk_ids": [
             "3288ebfc-7a75-4eb0-930e-1e9d7f9e15e2"
         ],
@@ -1893,14 +1893,14 @@
     },
     {
         "id": "q127",
-        "query": "A isoniazida é indicada para o tratamento de calvície e crescimento capilar?",
+        "query": "Esse remédio isoniazida também é usado pra tratar depressão?",
         "medicine_brand": "FARMANGUINHOS - ISONIAZIDA",
         "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona calvície nem crescimento de cabelo entre as indicações do medicamento.",
+        "justification": "A bula não menciona nenhum uso do medicamento para tratamento de depressão ou ansiedade.",
         "expected_chunk_ids": [
             "d109f118-6c2c-4024-b37e-0083398c07cb"
         ],
@@ -1908,7 +1908,7 @@
     },
     {
         "id": "q128",
-        "query": "esse medato é bom pra criança com TDAH né?",
+        "query": "Medato serve pra criança com TDAH?",
         "medicine_brand": "MEDATO",
         "expected_medicine": "MEDATO",
         "expected_sections": [
@@ -1923,7 +1923,7 @@
     },
     {
         "id": "q129",
-        "query": "posso guarda o medato em temperatua ambiente?",
+        "query": "Dá pra guardar o Medato em temperatura ambiente?",
         "medicine_brand": "MEDATO",
         "expected_medicine": "MEDATO",
         "expected_sections": [
@@ -1938,7 +1938,7 @@
     },
     {
         "id": "q130",
-        "query": "É verdade que pacientes com hipertensão não possuem qualquer restrição para o uso de Medato?",
+        "query": "É verdade que quem tem hipertensão pode tomar Medato sem nenhuma restrição?",
         "medicine_brand": "MEDATO",
         "expected_medicine": "MEDATO",
         "expected_sections": [
@@ -1953,7 +1953,7 @@
     },
     {
         "id": "q131",
-        "query": "esqueci de tomar o remédio, aí posso tomar duas doses juntas pra repor, né?",
+        "query": "Esqueci de tomar o Medato ontem, posso tomar duas doses juntas hoje pra compensar?",
         "medicine_brand": "MEDATO",
         "expected_medicine": "MEDATO",
         "expected_sections": [
@@ -1968,14 +1968,14 @@
     },
     {
         "id": "q132",
-        "query": "vi um pessoal falando que o Medato faz o cabelo crescer e cura calvície, é isso mesmo?",
+        "query": "O Medato também serve pra tratar depressão?",
         "medicine_brand": "MEDATO",
         "expected_medicine": "MEDATO",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula indica o Medato apenas para o tratamento do TDAH e não menciona qualquer efeito sobre crescimento capilar ou calvície.",
+        "justification": "A bula indica o Medato apenas para o tratamento do TDAH e não menciona qualquer uso no tratamento da depressão.",
         "expected_chunk_ids": [
             "c57c29f8-1458-4be0-a847-8c60289ffe58"
         ],
@@ -1983,14 +1983,14 @@
     },
     {
         "id": "q133",
-        "query": "Tomar Medato pode fazer minhas unhas crescerem mais rápido?",
+        "query": "Tomar Medato pode causar dor nas articulações?",
         "medicine_brand": "MEDATO",
         "expected_medicine": "MEDATO",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "Entre as reações adversas descritas na bula não há qualquer menção a efeito sobre o crescimento das unhas.",
+        "justification": "Entre as reações adversas descritas na bula não há qualquer menção a dor nas articulações.",
         "expected_chunk_ids": [
             "f0aec004-c40e-4bb2-9547-6b1ad4f24848"
         ],
@@ -1998,7 +1998,7 @@
     },
     {
         "id": "q134",
-        "query": "Gostaria de saber se o Isoforine deve ser mantido protegido da luz durante o seu armazenamento.",
+        "query": "o isoforine precisa ficar guardado protegido da luz?",
         "medicine_brand": "ISOFORINE",
         "expected_medicine": "ISOFORINE",
         "expected_sections": [
@@ -2013,7 +2013,7 @@
     },
     {
         "id": "q135",
-        "query": "esse tal de isoforine é usado pra fazer anestesia geral né?",
+        "query": "o isoforine é usado pra fazer anestesia geral, né?",
         "medicine_brand": "ISOFORINE",
         "expected_medicine": "ISOFORINE",
         "expected_sections": [
@@ -2028,7 +2028,7 @@
     },
     {
         "id": "q136",
-        "query": "Não tem problema nenhum mulher grávida usar Isoforine por conta própria, né?",
+        "query": "Ouvi dizer que mulher grávida pode usar o Isoforine por conta própria, sem orientação médica. Isso procede mesmo?",
         "medicine_brand": "ISOFORINE",
         "expected_medicine": "ISOFORINE",
         "expected_sections": [
@@ -2043,7 +2043,7 @@
     },
     {
         "id": "q137",
-        "query": "É verdade que o isofrine não da nem enjoo nem vomito depois?",
+        "query": "É verdade que o isoforine não dá enjoo nem vômito depois da cirurgia?",
         "medicine_brand": "ISOFORINE",
         "expected_medicine": "ISOFORINE",
         "expected_sections": [
@@ -2058,14 +2058,14 @@
     },
     {
         "id": "q138",
-        "query": "o isoforine ajuda a emagrecer?",
+        "query": "o isoforine serve pra tratar enxaqueca?",
         "medicine_brand": "ISOFORINE",
         "expected_medicine": "ISOFORINE",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito de emagrecimento, indicando o produto apenas para indução e manutenção da anestesia geral e sedação.",
+        "justification": "A bula não menciona qualquer uso para enxaqueca (dor de cabeça), indicando o produto apenas para indução e manutenção da anestesia geral e sedação.",
         "expected_chunk_ids": [
             "1cb64d87-ab58-4fb9-856c-7b92bed4ab5f"
         ],
@@ -2073,14 +2073,14 @@
     },
     {
         "id": "q139",
-        "query": "esse remedio pode causar queda de cabello?",
+        "query": "fiquei preocupada, o isoforine pode causar perda de memória?",
         "medicine_brand": "ISOFORINE",
         "expected_medicine": "ISOFORINE",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona queda de cabelo entre as reações adversas nem em nenhum outro trecho.",
+        "justification": "A bula não menciona perda de memória entre as reações adversas nem em nenhum outro trecho.",
         "expected_chunk_ids": [
             "b4af46e3-4332-4218-b429-740aa762b430"
         ],
@@ -2088,7 +2088,7 @@
     },
     {
         "id": "q140",
-        "query": "esse furosantisa serve pra baixar a pressão mesmo?",
+        "query": "minha mãe tem pressão alta, esse furosantisa ajuda a baixar a pressão dela?",
         "medicine_brand": "FUROSANTISA",
         "expected_medicine": "FUROSANTISA",
         "expected_sections": [
@@ -2103,7 +2103,7 @@
     },
     {
         "id": "q141",
-        "query": "É necessário proteger o FUROSANTISA da luz durante o armazenamento?",
+        "query": "preciso guardar o furosantisa longe da luz?",
         "medicine_brand": "FUROSANTISA",
         "expected_medicine": "FUROSANTISA",
         "expected_sections": [
@@ -2118,7 +2118,7 @@
     },
     {
         "id": "q142",
-        "query": "Quem tem o potássio muito baixo no sangue não tem problema nenhum em tomar FUROSANTISA, né?",
+        "query": "quem tá com o potássio baixo no sangue pode tomar furosantisa numa boa, né?",
         "medicine_brand": "FUROSANTISA",
         "expected_medicine": "FUROSANTISA",
         "expected_sections": [
@@ -2133,7 +2133,7 @@
     },
     {
         "id": "q143",
-        "query": "Caso alguém tome uma dose exagerada de FUROSANTISA, existe um antídoto específico para reverter o efeito?",
+        "query": "tomei furosantisa demais sem querer, tem algum antídoto específico pra reverter isso?",
         "medicine_brand": "FUROSANTISA",
         "expected_medicine": "FUROSANTISA",
         "expected_sections": [
@@ -2148,14 +2148,14 @@
     },
     {
         "id": "q144",
-        "query": "o furosantisa faz o cabeo crescer? tô com medo de ficar careca",
+        "query": "o furosantisa faz o cabelo cair? tô com medo de ficar careca",
         "medicine_brand": "FUROSANTISA",
         "expected_medicine": "FUROSANTISA",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona crescimento de cabelo nem calvície em nenhum trecho, incluindo a seção de reações adversas.",
+        "justification": "A bula não menciona queda de cabelo nem calvície em nenhum trecho, incluindo a seção de reações adversas.",
         "expected_chunk_ids": [
             "ecc640c1-be61-4e6a-a6c5-47be022b7a0e"
         ],
@@ -2163,7 +2163,7 @@
     },
     {
         "id": "q145",
-        "query": "da pra usar o furosantisa pra tratar depressão e ansiedade?",
+        "query": "dá pra usar o furosantisa pra tratar depressão e ansiedade?",
         "medicine_brand": "FUROSANTISA",
         "expected_medicine": "FUROSANTISA",
         "expected_sections": [
@@ -2178,7 +2178,7 @@
     },
     {
         "id": "q146",
-        "query": "É correto afirmar que o MIOSAN ODT deve ser armazenado protegido da luz e da umidade?",
+        "query": "comprei o miosan odt e queria saber se preciso guardar protegido da luz e da umidade ou pode deixar em qualquer canto?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
@@ -2193,7 +2193,7 @@
     },
     {
         "id": "q147",
-        "query": "esse miosan da uma moleza, bate um sono forte mesmo?",
+        "query": "esse miosan odt dá uma moleza e bate sono forte mesmo?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
@@ -2208,7 +2208,7 @@
     },
     {
         "id": "q148",
-        "query": "se eu esqueci de tomar uma dose posso toamr duas juntas depois pra compensar?",
+        "query": "se eu esqueci uma dose do miosan odt posso tomar duas juntas depois pra compensar?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
@@ -2223,7 +2223,7 @@
     },
     {
         "id": "q149",
-        "query": "quem tem glaucoma não tem problema nenhum em tomar miosan odt, certo?",
+        "query": "tenho glaucoma, então dá pra tomar miosan odt numa boa?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
@@ -2238,14 +2238,14 @@
     },
     {
         "id": "q150",
-        "query": "gente, o miosan odt ajuda a emagrecer e perder uns quilinhos?",
+        "query": "o miosan odt serve pra cólica menstrual?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona uso para emagrecimento; as indicações se limitam a espasmos musculares agudos e fibromialgia.",
+        "justification": "A bula não menciona uso para cólica menstrual; as indicações se limitam a espasmos musculares agudos e fibromialgia.",
         "expected_chunk_ids": [
             "628d5363-d131-421a-a165-ab3dddf13ed6"
         ],
@@ -2253,7 +2253,7 @@
     },
     {
         "id": "q151",
-        "query": "o miosan odt faz o cabelo crescer ou combate a calvicie?",
+        "query": "andei lendo que relaxante muscular ajuda no cabelo, o miosan odt faz o cabelo crescer ou combate a calvície?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
@@ -2268,7 +2268,7 @@
     },
     {
         "id": "q152",
-        "query": "Adorlan é bom pra aliviar dor?",
+        "query": "O Adorlan serve pra aliviar dor?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -2283,7 +2283,7 @@
     },
     {
         "id": "q153",
-        "query": "Posso guardar o Adorlan em temperatura ambeinte?",
+        "query": "Dá pra guardar o Adorlan em temperatura ambiente mesmo?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -2298,7 +2298,7 @@
     },
     {
         "id": "q154",
-        "query": "Se eu esquecer uma dose do Adorlan, não tem problema tomar dois comprimidos juntos depois pra compensar, né?",
+        "query": "Esqueci de tomar o Adorlan ontem à noite, posso tomar dois comprimidos juntos agora pra compensar?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -2313,7 +2313,7 @@
     },
     {
         "id": "q155",
-        "query": "Pacientes com alergia ao tramadol podem utilizar Adorlan sem restrições?",
+        "query": "Quem tem alergia ao tramadol pode tomar Adorlan sem restrição?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -2328,7 +2328,7 @@
     },
     {
         "id": "q156",
-        "query": "Mano, o Adorlan ajuda a emagrecer?",
+        "query": "O Adorlan também ajuda a emagrecer?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -2343,7 +2343,7 @@
     },
     {
         "id": "q157",
-        "query": "O Adorlan faz o cabelo crescer, serve pra tratar calviece?",
+        "query": "O Adorlan serve pra tratar calvície e fazer o cabelo crescer?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -2358,7 +2358,7 @@
     },
     {
         "id": "q158",
-        "query": "posso guardar o mirtax em temperatura ambiete ou tem que por na geladeira?",
+        "query": "posso guardar o mirtax em temperatura ambiente ou precisa deixar na geladeira?",
         "medicine_brand": "MIRTAX",
         "expected_medicine": "MIRTAX",
         "expected_sections": [
@@ -2373,7 +2373,7 @@
     },
     {
         "id": "q159",
-        "query": "esse tal de mirtax dá muito sono mesmo, né?",
+        "query": "comecei a tomar mirtax faz uns dias e tô com muito sono, isso é normal desse remédio?",
         "medicine_brand": "MIRTAX",
         "expected_medicine": "MIRTAX",
         "expected_sections": [
@@ -2388,7 +2388,7 @@
     },
     {
         "id": "q160",
-        "query": "É correto afirmar que a dose máxima diária de Mirtax é de 100 mg?",
+        "query": "é verdade que dá pra tomar até 100 mg de mirtax por dia?",
         "medicine_brand": "MIRTAX",
         "expected_medicine": "MIRTAX",
         "expected_sections": [
@@ -2403,7 +2403,7 @@
     },
     {
         "id": "q161",
-        "query": "quem tem glaucoma não tem problema nenhum em tomar Mirtax, certo?",
+        "query": "tenho glaucoma, posso tomar mirtax sem problema?",
         "medicine_brand": "MIRTAX",
         "expected_medicine": "MIRTAX",
         "expected_sections": [
@@ -2418,14 +2418,14 @@
     },
     {
         "id": "q162",
-        "query": "o mirtax serve pra emagrecer?",
+        "query": "o mirtax serve pra ansiedade?",
         "medicine_brand": "MIRTAX",
         "expected_medicine": "MIRTAX",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula indica o medicamento apenas para espasmos musculares associados a condições musculoesqueléticas e à fibromialgia, e não menciona emagrecimento ou perda de peso.",
+        "justification": "A bula indica o medicamento apenas para espasmos musculares associados a condições musculoesqueléticas e à fibromialgia, e não menciona o tratamento de ansiedade.",
         "expected_chunk_ids": [
             "2d5fa9ec-0d63-40bb-86b2-ede549378622"
         ],
@@ -2433,14 +2433,14 @@
     },
     {
         "id": "q163",
-        "query": "o mirtax faz o cabelo crescer ou cura calvicie?",
+        "query": "tomar mirtax pode dar zumbido no ouvido?",
         "medicine_brand": "MIRTAX",
         "expected_medicine": "MIRTAX",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer efeito sobre crescimento capilar ou tratamento de calvície.",
+        "justification": "A bula não menciona zumbido no ouvido entre as reações adversas.",
         "expected_chunk_ids": [
             "9886e921-28dd-4044-bb6b-af9ab5442f25"
         ],
@@ -2448,7 +2448,7 @@
     },
     {
         "id": "q164",
-        "query": "esse aceclofenaco corta dor de dente mesmo?",
+        "query": "o aceclofenaco corta dor de dente mesmo?",
         "medicine_brand": null,
         "expected_medicine": "ACECLOFENACO",
         "expected_sections": [
@@ -2463,7 +2463,7 @@
     },
     {
         "id": "q165",
-        "query": "É correto conservar o aceclofenaco em temperatura ambiente?",
+        "query": "dá pra guardar o aceclofenaco em temperatura ambiente?",
         "medicine_brand": null,
         "expected_medicine": "ACECLOFENACO",
         "expected_sections": [
@@ -2478,7 +2478,7 @@
     },
     {
         "id": "q166",
-        "query": "posso tomar aceclofenaco mesmo tendo uma ulcera ativa no estômgo?",
+        "query": "tenho uma úlcera ativa no estômago, mesmo assim posso tomar aceclofenaco?",
         "medicine_brand": null,
         "expected_medicine": "ACECLOFENACO",
         "expected_sections": [
@@ -2493,7 +2493,7 @@
     },
     {
         "id": "q167",
-        "query": "Se eu esquecer uma dose, não tem problema tomar o dobro na próxima pra compensar, né?",
+        "query": "se eu esquecer uma dose do aceclofenaco, não tem problema tomar o dobro na próxima, né?",
         "medicine_brand": null,
         "expected_medicine": "ACECLOFENACO",
         "expected_sections": [
@@ -2508,14 +2508,14 @@
     },
     {
         "id": "q168",
-        "query": "esse remédio aí ajuda quem tá ficando careca a nascer cabelo de novo?",
+        "query": "esse aceclofenaco serve pra tratar ansiedade?",
         "medicine_brand": null,
         "expected_medicine": "ACECLOFENACO",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona qualquer uso do aceclofenaco para calvície ou crescimento capilar; as indicações citam apenas processos dolorosos e inflamatórios.",
+        "justification": "A bula não menciona qualquer uso do aceclofenaco para ansiedade; as indicações citam apenas processos dolorosos e inflamatórios.",
         "expected_chunk_ids": [
             "8e134230-1b3e-4a96-b708-c1c9cf891718"
         ],
@@ -2523,7 +2523,7 @@
     },
     {
         "id": "q169",
-        "query": "O uso de aceclofenaco pode causar impotência sexual ou redução da libido?",
+        "query": "o aceclofenaco pode causar impotência sexual ou queda na libido?",
         "medicine_brand": null,
         "expected_medicine": "ACECLOFENACO",
         "expected_sections": [
@@ -2545,7 +2545,7 @@
             "indications"
         ],
         "expected_verdict": "confirmed",
-        "justification": "A bula indica que o Frenotosse é 'um expectorante destinado ao tratamento da tosse em gripes e resfriados' (m25c04).",
+        "justification": "A bula indica que o Frenotosse é 'um expectorante destinado ao tratamento da tosse em gripes e resfriados'.",
         "expected_chunk_ids": [
             "547ea5a2-eea9-465d-9077-4cddc9ed19e4"
         ],
@@ -2553,14 +2553,14 @@
     },
     {
         "id": "q171",
-        "query": "É correto afirmar que o Frenotosse xarope deve ser conservado em temperatura ambiente, protegido da luz e da umidade?",
+        "query": "comprei um frenotosse xarope e queria saber se dá pra guardar ele em temperatura ambiente mesmo, longe da luz e da umidade",
         "medicine_brand": "FRENOTOSSE",
         "expected_medicine": "FRENOTOSSE",
         "expected_sections": [
             "storage"
         ],
         "expected_verdict": "confirmed",
-        "justification": "A bula afirma que 'Frenotosse® xarope deve ser conservado em temperatura ambiente (entre 15 e 30ºC), protegido da luz e umidade' (m25c07).",
+        "justification": "A bula afirma que 'Frenotosse® xarope deve ser conservado em temperatura ambiente (entre 15 e 30ºC), protegido da luz e umidade'.",
         "expected_chunk_ids": [
             "a41dc174-5c77-44f8-af41-54002cbcb8a7"
         ],
@@ -2568,14 +2568,14 @@
     },
     {
         "id": "q172",
-        "query": "não tem problema nenhum dar frenotosse pro meu bebê de 1 ano, né?",
+        "query": "não tem problema dar frenotosse pro meu bebê de 1 ano, né?",
         "medicine_brand": "FRENOTOSSE",
         "expected_medicine": "FRENOTOSSE",
         "expected_sections": [
             "contraindications"
         ],
         "expected_verdict": "refuted",
-        "justification": "A bula afirma que 'Este medicamento é contraindicado para menores de 2 anos de idade', portanto não deve ser dado a um bebê de 1 ano (m25c01).",
+        "justification": "A bula afirma que 'Este medicamento é contraindicado para menores de 2 anos de idade', portanto não deve ser dado a um bebê de 1 ano.",
         "expected_chunk_ids": [
             "3ae7ad6f-fcfd-4ae1-904e-7ac963ecb131"
         ],
@@ -2583,14 +2583,14 @@
     },
     {
         "id": "q173",
-        "query": "o frenotose resseca o catarro pra fazer parar a toce?",
+        "query": "o frenotosse resseca o catarro pra fazer a tosse parar?",
         "medicine_brand": "FRENOTOSSE",
         "expected_medicine": "FRENOTOSSE",
         "expected_sections": [
             "how_it_works"
         ],
         "expected_verdict": "refuted",
-        "justification": "A bula diz que a guaifenesina 'fluidifica o catarro, tornando-o menos viscoso e mais solto', ou seja, solta o catarro em vez de ressecá-lo (m25c03).",
+        "justification": "A bula diz que a guaifenesina 'fluidifica o catarro, tornando-o menos viscoso e mais solto', ou seja, solta o catarro em vez de ressecá-lo.",
         "expected_chunk_ids": [
             "ea53fe0b-7782-4ce5-ba3f-0c60ba796692"
         ],
@@ -2598,14 +2598,14 @@
     },
     {
         "id": "q174",
-        "query": "gente, esse xarope de tosse faz o cabelo cair?",
+        "query": "o frenotosse pode causar palpitações?",
         "medicine_brand": "FRENOTOSSE",
         "expected_medicine": "FRENOTOSSE",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona queda de cabelo entre as reações adversas nem em qualquer outra seção fornecida.",
+        "justification": "A bula não menciona palpitações entre as reações adversas nem em qualquer outra seção fornecida.",
         "expected_chunk_ids": [
             "799d67fb-d6f3-4708-a471-14ef45d60199"
         ],
@@ -2613,14 +2613,14 @@
     },
     {
         "id": "q175",
-        "query": "O Frenotosse ajuda no emagrecimento ou na perda de peso?",
+        "query": "dá pra tomar frenotosse pra sinusite?",
         "medicine_brand": "FRENOTOSSE",
         "expected_medicine": "FRENOTOSSE",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona emagrecimento nem perda de peso; o medicamento é apenas um expectorante indicado para tosse.",
+        "justification": "A bula não menciona sinusite entre as indicações; o medicamento é apenas um expectorante indicado para tosse em gripes e resfriados.",
         "expected_chunk_ids": [
             "547ea5a2-eea9-465d-9077-4cddc9ed19e4"
         ],
@@ -2628,7 +2628,7 @@
     },
     {
         "id": "q176",
-        "query": "É correto afirmar que este medicamento deve ser conservado em temperatura ambiente?",
+        "query": "Posso guardar o Transpulmin em temperatura ambiente?",
         "medicine_brand": "TRANSPULMIN XAROPE INFANTIL",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -2643,7 +2643,7 @@
     },
     {
         "id": "q177",
-        "query": "esse xarope desgruda o catarro mesmo né?",
+        "query": "o Transpulmin ajuda a soltar o catarro mesmo né?",
         "medicine_brand": "TRANSPULMIN XAROPE INFANTIL",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -2658,7 +2658,7 @@
     },
     {
         "id": "q178",
-        "query": "Esse xarope não tem problema nenhum dar pra bebê recém-nascido, né?",
+        "query": "Dá pra dar Transpulmin pra um bebê recém-nascido sem problema?",
         "medicine_brand": "TRANSPULMIN XAROPE INFANTIL",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -2673,7 +2673,7 @@
     },
     {
         "id": "q179",
-        "query": "Pra criança de 6 a 12 anos posso dar esse xarope só uma vez por dia?",
+        "query": "Meu filho tem 9 anos, posso dar o Transpulmin só uma vez por dia?",
         "medicine_brand": "TRANSPULMIN XAROPE INFANTIL",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -2688,7 +2688,7 @@
     },
     {
         "id": "q180",
-        "query": "Esse xarope ajuda a baixar a pressão alta?",
+        "query": "O Transpulmin serve pra baixar a pressão alta?",
         "medicine_brand": "TRANSPULMIN XAROPE INFANTIL",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -2703,14 +2703,14 @@
     },
     {
         "id": "q181",
-        "query": "Dá pra usar esse xarope pra clarear manchas na pele?",
+        "query": "Comecei a dar Transpulmin pro meu filho e ele tá com o coração acelerado, isso é reação do remédio?",
         "medicine_brand": "TRANSPULMIN XAROPE INFANTIL",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona clareamento de manchas na pele; nas reações adversas cita apenas erupções cutâneas e urticária como efeitos indesejáveis.",
+        "justification": "A bula não menciona taquicardia ou aceleração dos batimentos cardíacos entre as reações adversas; cita apenas efeitos gastrintestinais, renais, dermatológicos (erupções cutâneas e urticária) e neurológicos (dor de cabeça, sonolência e vertigem).",
         "expected_chunk_ids": [
             "33a64f50-dc50-45c8-a56c-491d85c16ada"
         ],
@@ -2733,7 +2733,7 @@
     },
     {
         "id": "q183",
-        "query": "É recomendável conservar a tibolona protegida da luz e da umidade?",
+        "query": "preciso guardar a tibolona protegida da luz e da umidade?",
         "medicine_brand": null,
         "expected_medicine": "tibolona",
         "expected_sections": [
@@ -2748,7 +2748,7 @@
     },
     {
         "id": "q184",
-        "query": "quem já teve câncer de mama pode tomar tibolona normalmente, né?",
+        "query": "tive câncer de mama uns anos atrás, posso tomar tibolona numa boa?",
         "medicine_brand": null,
         "expected_medicine": "tibolona",
         "expected_sections": [
@@ -2763,7 +2763,7 @@
     },
     {
         "id": "q185",
-        "query": "se eu esquec de tomar, posso tomar dois comprimido juntos pra compensar?",
+        "query": "esqueci de tomar a tibolona ontem, posso tomar dois comprimidos juntos hoje pra compensar?",
         "medicine_brand": null,
         "expected_medicine": "tibolona",
         "expected_sections": [
@@ -2778,14 +2778,14 @@
     },
     {
         "id": "q186",
-        "query": "A tibolona é eficaz no tratamento da calvície e no crescimento de novos fios de cabelo?",
+        "query": "a tibolona ajuda a baixar o colesterol alto?",
         "medicine_brand": null,
         "expected_medicine": "tibolona",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona calvície nem crescimento capilar; as indicações se limitam aos sintomas da menopausa e à prevenção da osteoporose.",
+        "justification": "A bula não menciona controle de colesterol nas indicações; as indicações se limitam aos sintomas da menopausa e à prevenção da osteoporose.",
         "expected_chunk_ids": [
             "b66d520d-6746-49ec-a674-b032721a3412"
         ],
@@ -2793,7 +2793,7 @@
     },
     {
         "id": "q187",
-        "query": "tomar tibolona faz mal pros meus dentes?",
+        "query": "tomar tibolona pode estragar meus dentes?",
         "medicine_brand": null,
         "expected_medicine": "tibolona",
         "expected_sections": [
@@ -2808,7 +2808,7 @@
     },
     {
         "id": "q188",
-        "query": "biovarixon é bom pra hemorroida?",
+        "query": "o biovarixon é bom pra hemorroida?",
         "medicine_brand": "BIOVARIXON",
         "expected_medicine": "BIOVARIXON",
         "expected_sections": [
@@ -2823,7 +2823,7 @@
     },
     {
         "id": "q189",
-        "query": "É correto afirmar que, no tratamento da doença venosa crônica, a dose usual é de 2 comprimidos de Biovarixon 500mg ao dia?",
+        "query": "Me falaram que na doença venosa crônica a dose do biovarixon 500mg é de 2 comprimidos por dia, isso tá certo mesmo?",
         "medicine_brand": "BIOVARIXON",
         "expected_medicine": "BIOVARIXON",
         "expected_sections": [
@@ -2838,7 +2838,7 @@
     },
     {
         "id": "q190",
-        "query": "o biovarixon pode ser dado pra criança normalmente, não tem problema nenhum?",
+        "query": "posso dar biovarixon pro meu filho de 6 anos sem problema nenhum?",
         "medicine_brand": "BIOVARIXON",
         "expected_medicine": "BIOVARIXON",
         "expected_sections": [
@@ -2853,7 +2853,7 @@
     },
     {
         "id": "q191",
-        "query": "preciso guadar o biovarixon dentro da geladeira?",
+        "query": "o biovarixon precisa ficar guardado na geladeira?",
         "medicine_brand": "BIOVARIXON",
         "expected_medicine": "BIOVARIXON",
         "expected_sections": [
@@ -2868,14 +2868,14 @@
     },
     {
         "id": "q192",
-        "query": "o biovarixon serve pra emagrecer? queima gordura mesmo?",
+        "query": "o biovarixon serve pra baixar a pressão alta?",
         "medicine_brand": "BIOVARIXON",
         "expected_medicine": "BIOVARIXON",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona emagrecimento nem perda de peso entre as indicações do Biovarixon.",
+        "justification": "A bula não menciona hipertensão nem redução da pressão arterial entre as indicações do Biovarixon.",
         "expected_chunk_ids": [
             "fd549c22-b648-4f43-96bf-fc9e90645b71"
         ],
@@ -2883,14 +2883,14 @@
     },
     {
         "id": "q193",
-        "query": "O Biovarixon pode causar queda de cabelo como efeito colateral?",
+        "query": "o biovarixon pode dar tontura?",
         "medicine_brand": "BIOVARIXON",
         "expected_medicine": "BIOVARIXON",
         "expected_sections": [
             "adverse_reactions"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula não menciona queda de cabelo na lista de reações adversas do Biovarixon.",
+        "justification": "A bula não menciona tontura na lista de reações adversas do Biovarixon.",
         "expected_chunk_ids": [
             "f7cd9eaa-a5a5-46b5-8a10-9ab79b841bfb"
         ],
@@ -2898,7 +2898,7 @@
     },
     {
         "id": "q194",
-        "query": "É verdade que a azitromicina di-hidratada deve ser conservada em temperatura ambiente?",
+        "query": "dá pra guardar a azitromicina em temperatura ambiente ou tem que colocar na geladeira?",
         "medicine_brand": null,
         "expected_medicine": "azitromicina di-hidratada",
         "expected_sections": [
@@ -2913,7 +2913,7 @@
     },
     {
         "id": "q195",
-        "query": "posso tomar a azitromicina de barriga cheia ou tem que ser em jejum?",
+        "query": "comecei a tomar azitromicina essa semana e fiquei na dúvida: posso tomar depois de comer ou tem que ser em jejum?",
         "medicine_brand": null,
         "expected_medicine": "azitromicina di-hidratada",
         "expected_sections": [
@@ -2928,7 +2928,7 @@
     },
     {
         "id": "q196",
-        "query": "esqueci uma dose ontem, então posso tomar duas juntas hoje pra compensar, né?",
+        "query": "esqueci a dose de ontem, posso tomar duas de azitromicina juntas hoje pra compensar?",
         "medicine_brand": null,
         "expected_medicine": "azitromicina di-hidratada",
         "expected_sections": [
@@ -2943,7 +2943,7 @@
     },
     {
         "id": "q197",
-        "query": "a azitromicna é um antiinflamatorio?",
+        "query": "a azitromicina é um anti-inflamatório?",
         "medicine_brand": null,
         "expected_medicine": "azitromicina di-hidratada",
         "expected_sections": [
@@ -2958,14 +2958,14 @@
     },
     {
         "id": "q198",
-        "query": "esse remédio serve pra emagrecer?",
+        "query": "a azitromicina serve pra tratar gripe?",
         "medicine_brand": null,
         "expected_medicine": "azitromicina di-hidratada",
         "expected_sections": [
             "indications"
         ],
         "expected_verdict": "inconclusive",
-        "justification": "A bula, na seção de indicações, lista apenas o tratamento de infecções bacterianas e não menciona qualquer uso para emagrecimento.",
+        "justification": "A bula, na seção de indicações, lista apenas o tratamento de infecções causadas por bactérias sensíveis à azitromicina e não menciona qualquer uso para gripe ou resfriado.",
         "expected_chunk_ids": [
             "5fe24aa6-2789-4ebf-91c8-1ae963ef7de2"
         ],
@@ -2973,7 +2973,7 @@
     },
     {
         "id": "q199",
-        "query": "a azitromicina di-hidratada pode causar dependencia química?",
+        "query": "tomar azitromicina por muito tempo pode viciar?",
         "medicine_brand": null,
         "expected_medicine": "azitromicina di-hidratada",
         "expected_sections": [
@@ -2984,6 +2984,1469 @@
         "expected_chunk_ids": [
             "9857805e-43a7-4baf-95cf-1aaacf9012d8"
         ],
+        "validation": null
+    },
+    {
+        "id": "q200",
+        "query": "O CLOPIDO-GRAN não é contraindicado pra quem tem úlcera no estômago, né?",
+        "medicine_brand": "CLOPIDO-GRAN",
+        "expected_medicine": "CLOPIDO-GRAN",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m10c02, na seção de contraindicações, diz textualmente: 'Também não deve ser utilizado caso você apresente úlcera péptica (lesão no estômago)'. Ou seja, o remédio É contraindicado para quem tem úlcera no estômago, o que refuta a alegação (formulada com negação) de que ele NÃO seria contraindicado nesse caso.",
+        "expected_chunk_ids": [
+            "ed334105-da27-4da7-87e2-3eb9a5e322df"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q201",
+        "query": "Se eu esquecer uma dose do CLOPIDO-GRAN, não posso tomar duas de uma vez pra compensar, certo?",
+        "medicine_brand": "CLOPIDO-GRAN",
+        "expected_medicine": "CLOPIDO-GRAN",
+        "expected_sections": [
+            "missed_dose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m10c07, na seção de dose esquecida, afirma: 'Nunca devem ser administradas duas doses ao mesmo tempo.' Portanto a alegação, mesmo estando escrita em forma de negação ('não posso tomar duas de uma vez'), está CORRETA e é confirmada pelo texto — a negação aqui não inverte o veredito.",
+        "expected_chunk_ids": [
+            "98e39a14-ca1f-4f7f-8bb4-76ae0a97c97b"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q202",
+        "query": "Como o CLOPIDO-GRAN tem um antídoto pra reverter a superdose, dá pra ficar tranquilo se eu acabar tomando demais?",
+        "medicine_brand": "CLOPIDO-GRAN",
+        "expected_medicine": "CLOPIDO-GRAN",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta pressupõe algo falso: que existe um antídoto. O chunk m10c08, na seção de superdose, diz o contrário: 'Não foi encontrado nenhum antídoto (substância que inativa) para a atividade farmacológica do CLOPIDOGRAN®.' Logo, a premissa de que há antídoto é refutada pelo texto.",
+        "expected_chunk_ids": [
+            "11ae446a-1afa-4b9e-a0bf-15ea5ebf1c77"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": null
+    },
+    {
+        "id": "q203",
+        "query": "O medicamento feito à base de cloridrato de oxibutinina pode ser tomado por um adulto até quatro vezes ao dia?",
+        "medicine_brand": null,
+        "expected_medicine": "NOURIN",
+        "expected_sections": [
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m12c02 (dosage_and_administration) diz que a dose máxima para adulto é de 1 comprimido de 5 mg, 4 vezes ao dia (a cada 6 horas), o que sustenta que o remédio pode ser tomado até quatro vezes ao dia. O medicamento é o Nourin, cujo princípio ativo é o cloridrato de oxibutinina citado no texto dos chunks.",
+        "expected_chunk_ids": [
+            "f5a3a6d4-ea1f-4dc3-bbcd-a7e7faf7236b"
+        ],
+        "stress_category": "marca",
+        "validation": null
+    },
+    {
+        "id": "q204",
+        "query": "O Nourim pode ser dado para uma criança com menos de 5 anos de idade?",
+        "medicine_brand": null,
+        "expected_medicine": "NOURIN",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m12c01 (contraindications) afirma expressamente que 'Este medicamento é contraindicado para menores de 5 anos', refutando o uso em criança abaixo dessa idade. 'Nourim' é uma grafia com erro de digitação de Nourin.",
+        "expected_chunk_ids": [
+            "6303c92c-a6cd-44d9-9baa-cffe50b72934"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q205",
+        "query": "É verdade que o Norin deixa a boca seca com muita frequência?",
+        "medicine_brand": null,
+        "expected_medicine": "NOURIN",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m12c00 (adverse_reactions) lista 'boca seca' entre as reações muito comuns, que ocorrem em 10% dos pacientes, confirmando que a boca seca é frequente. 'Norin' é uma grafia com erro de digitação de Nourin.",
+        "expected_chunk_ids": [
+            "b34c9352-7b04-49cf-886c-3dca4b0b822e"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q206",
+        "query": "O Amome não é contraindicado pra bebê de 1 ano de idade, né? Pode pingar no narizinho dele numa boa?",
+        "medicine_brand": "Amome",
+        "expected_medicine": "AMOME",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta afirma, por negacao, que o Amome NAO seria contraindicado para um bebe de 1 ano. O chunk m02c01 (contraindications) diz: 'Este medicamento e contraindicado para menores de 2 anos.' Um bebe de 1 ano tem menos de 2 anos, logo o Amome E contraindicado para ele. Como a alegacao embutida na pergunta contraria o texto, o veredito e refutado.",
+        "expected_chunk_ids": [
+            "70592a43-8bc8-4a0f-ba4e-e8d483032ed8"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q207",
+        "query": "Nao ta errado dizer que o Amome nao deve ser usado por mulher gravida sem antes falar com o medico, certo?",
+        "medicine_brand": "Amome",
+        "expected_medicine": "AMOME",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "A pergunta usa dupla negacao ('nao esta errado dizer que ... nao deve ser usado'), que se resolve na afirmacao de que gravida nao deve usar o Amome sem orientacao medica. O chunk m02c09 (warnings_and_precautions) confirma diretamente: 'Este medicamento nao deve ser utilizado por mulheres gravidas sem orientacao medica ou do cirurgiao-dentista.' Portanto o veredito e confirmado.",
+        "expected_chunk_ids": [
+            "1dbc1b98-815d-40fc-9618-7c8339d81f7b"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q208",
+        "query": "Ja que o Amome tem acao sistemica que se espalha pelo corpo todo, qual orgao ele mais afeta por dentro?",
+        "medicine_brand": "Amome",
+        "expected_medicine": "AMOME",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta parte de uma premissa falsa: a de que o Amome teria acao sistemica que se espalha pelo corpo. O chunk m02c04 (how_it_works) afirma exatamente o contrario: o furoato de mometasona monoidratado e 'um glicocorticoide topico com acao anti-inflamatoria local e sem acao sistemica'. Como a premissa contraria o texto, a alegacao e refutada.",
+        "expected_chunk_ids": [
+            "5acc1480-ce51-48d4-ba03-335e923eb366"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": null
+    },
+    {
+        "id": "q209",
+        "query": "É verdade que a carmustina do NIBISNU consegue atravessar aquela barreira que protege o cérebro pra atacar o tumor que está lá dentro?",
+        "medicine_brand": "NIBISNU",
+        "expected_medicine": "NIBISNU",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A bula não menciona o assunto. A seção how_it_works (m11c05) apenas diz que o NIBISNU pertence ao grupo dos agentes de alquilação e que interfere no crescimento das células cancerosas, sem qualquer menção à passagem pela barreira hematoencefálica ou à sua capacidade de alcançar o cérebro. As demais seções que citam o cérebro (indicações, m11c06 e m11c07) apenas listam tumores cerebrais como doenças tratadas, sem falar em atravessar a barreira. É um fato conhecido da carmustina (altamente lipossolúvel, atravessa a barreira, por isso usada em tumores cerebrais) que não aparece em nenhuma seção dos chunks.",
+        "expected_chunk_ids": [
+            "df4bbfb7-3918-41b9-9386-582ef7e5cbd2"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q210",
+        "query": "esse gel de heparina sódica ajuda com dor nas pernas por causa de variz?",
+        "medicine_brand": null,
+        "expected_medicine": "TROMBOFOB GEL",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m08c04 (indications) diz: 'TROMBOFOB® GEL (heparina sódica) é indicado para o tratamento de: ... dores nas pernas relacionadas a varizes'. O remédio é o próprio TROMBOFOB GEL, cujo princípio ativo é heparina sódica, então a alegação é confirmada pelo texto.",
+        "expected_chunk_ids": [
+            "b8b5a772-7a60-487b-84a9-9efa60e7d2d1"
+        ],
+        "stress_category": "marca",
+        "validation": null
+    },
+    {
+        "id": "q211",
+        "query": "dá pra passar Tronbofob gel em cima de hemorroida pra tratar?",
+        "medicine_brand": null,
+        "expected_medicine": "TROMBOFOB GEL",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m08c08 (warnings_and_precautions) afirma claramente: 'Este produto não deve ser usado no tratamento de hemorroidas.' O nome foi escrito com erro de digitação (Tronbofob no lugar de Trombofob), mas trata-se do mesmo medicamento, então a alegação é refutada pelo texto.",
+        "expected_chunk_ids": [
+            "17877dd3-a198-4e54-85ca-8181a16b94a6"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q212",
+        "query": "quem tem tendência a sangramento não pode usar Trombofobe gel, é isso mesmo?",
+        "medicine_brand": null,
+        "expected_medicine": "TROMBOFOB GEL",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m08c01 (contraindications) diz: 'TROMBOFOB® GEL é contraindicado em pacientes com tendência a hemorragias, hipersensibilidade à substância ativa ou aos componentes da fórmula e em casos de intolerância aos anticoagulantes.' O nome foi grafado com erro de digitação (Trombofobe no lugar de Trombofob), mas é o mesmo remédio, então a alegação é confirmada pelo texto.",
+        "expected_chunk_ids": [
+            "6c6a50e5-d735-4cc0-bb82-0690a2dd4067"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q213",
+        "query": "O Vasogard embrulha o estômago e dá aquele enjoo de querer vomitar?",
+        "medicine_brand": "VASOGARD",
+        "expected_medicine": "VASOGARD",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "A gíria \"embrulha o estômago\" e \"enjoo de querer vomitar\" correspondem a náusea. O chunk m09c00 (adverse_reactions) lista entre as reações muito comuns: \"dispepsia (indigestão), flatulência (gases) e náusea\", além de \"diarreia e fezes amolecidas; dor abdominal\". O texto sustenta o veredito confirmado.",
+        "expected_chunk_ids": [
+            "f6ace09f-ad29-4ba1-8657-7e4e1db803cd"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q214",
+        "query": "Se a pessoa tomar um monte de comprimido de Vasogard de uma vez só, o coração fica disparado, batendo bem acelerado?",
+        "medicine_brand": "VASOGARD",
+        "expected_medicine": "VASOGARD",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "A pergunta é sobre tomar dose em excesso (\"um monte de uma vez só\"), o que aponta para a seção de superdosagem. O chunk m09c07 (overdose) afirma: \"Os sintomas de superdosagem são: dor de cabeça, diarreia, hipotensão, taquicardia e, possivelmente, arritmia\". A gíria \"coração disparado/batendo acelerado\" equivale a taquicardia, sustentando o veredito confirmado.",
+        "expected_chunk_ids": [
+            "0d699050-49e8-4be5-86c0-d258f23532e3"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q215",
+        "query": "Os comprimidos do Vasogard são branquinhos e redondos?",
+        "medicine_brand": "VASOGARD",
+        "expected_medicine": "VASOGARD",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O fraseado sobre a aparência do comprimido (cor e formato) não sugere a seção de armazenamento, mas é justamente onde a informação aparece. O chunk m09c08 (storage) descreve: \"Os comprimidos de Vasogard 50 mg são circulares, de cor branca, biconvexos... Os comprimidos de Vasogard 100 mg são circulares, de cor branca, biconvexos\". \"Branquinhos e redondos\" = cor branca e circulares, sustentando o veredito confirmado.",
+        "expected_chunk_ids": [
+            "c7850392-1227-464b-8d66-f60f2dcdc177"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q216",
+        "query": "O montelucaste não é contraindicado pra quem tem alergia a algum componente dele, né?",
+        "medicine_brand": null,
+        "expected_medicine": "montelucaste de sodio",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta usa negação ('não é contraindicado') pedindo confirmação de que ELE NÃO seria contraindicado para alérgicos. A bula (m14c02, contraindications) diz o oposto: 'Este medicamento é contraindicado em caso de alergia a qualquer um de seus componentes.' Ou seja, ELE É contraindicado nesse caso, então a alegação de que não é contraindicado é refutada.",
+        "expected_chunk_ids": [
+            "882e4ad6-9703-4bd9-9964-e87a2dbf61ec"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q217",
+        "query": "Ouvi falar que o montelucaste não pode substituir de uma hora pra outra os corticoides que a pessoa inala, isso está certo?",
+        "medicine_brand": null,
+        "expected_medicine": "montelucaste de sodio",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "A bula (m14c00, adverse_reactions) afirma: 'O montelucaste de sódio não deve substituir abruptamente os corticosteroides inalatórios ou orais.' A alegação de que ele não pode substituir de repente ('de uma hora pra outra') os corticoides inalados coincide exatamente com o texto, logo é confirmada. É um teste de negação em que o veredito correto é 'confirmed' apesar do 'não' na frase.",
+        "expected_chunk_ids": [
+            "686fb357-a7b6-49da-8c25-078817c53f26"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q218",
+        "query": "Já que o montelucaste corta a crise aguda de asma na hora, dá pra tomar ele no meio de um ataque forte?",
+        "medicine_brand": null,
+        "expected_medicine": "montelucaste de sodio",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta traz uma premissa falsa: pressupõe que o montelucaste corta/trata a crise aguda de asma. A bula (m14c09, warnings_and_precautions) afirma: 'O montelucaste de sódio não é indicado para o tratamento de crises agudas de asma.' Como a premissa é falsa segundo o texto, a alegação é refutada.",
+        "expected_chunk_ids": [
+            "8c419d99-4d9c-4543-a7d2-80c3a1e82d2b"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": null
+    },
+    {
+        "id": "q219",
+        "query": "o remédio que tem binimetinibe na fórmula é usado pra tratar melanoma, que é aquele câncer de pele?",
+        "medicine_brand": null,
+        "expected_medicine": "MEKTOVI",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m04c05 (indications) diz: 'O Mektovi® é um medicamento anticancerígeno que contém a substância ativa binimetinibe... para tratar um tipo de câncer de pele chamado melanoma'. Logo, o remédio com binimetinibe é o Mektovi e ele é indicado para melanoma, confirmando a alegação. O desafio de identificação está em citar apenas o princípio ativo binimetinibe, já que o nome Mektovi já é uma marca.",
+        "expected_chunk_ids": [
+            "9e3df5d7-9952-4b8d-aa85-83a294ad6a9e"
+        ],
+        "stress_category": "marca",
+        "validation": null
+    },
+    {
+        "id": "q220",
+        "query": "dá pra guardar o Mectovi dentro da geladeira?",
+        "medicine_brand": null,
+        "expected_medicine": "MEKTOVI",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m04c08 (storage) afirma que 'Mektovi® deve ser mantido em temperatura ambiente (15°C a 30°C)' e na embalagem original para proteger da umidade. A geladeira mantém temperatura bem abaixo de 15°C, contrariando a orientação, então a alegação é refutada. O nome do remédio aparece com erro de digitação ('Mectovi', com 'c' no lugar do 'k').",
+        "expected_chunk_ids": [
+            "67b03a82-24e3-4a15-a41a-0c75a5ec6881"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q221",
+        "query": "se eu esquecer de tomar o Mektovy, posso tomar a dose em dobro na próxima vez pra compensar?",
+        "medicine_brand": null,
+        "expected_medicine": "MEKTOVI",
+        "expected_sections": [
+            "missed_dose"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m04c06 (missed_dose) afirma explicitamente: 'Não tome uma dose dobrada para compensar uma dose esquecida.' Portanto, tomar dose em dobro para compensar é refutado. O nome do remédio aparece com erro de digitação ('Mektovy', com 'y' no final no lugar do 'i').",
+        "expected_chunk_ids": [
+            "7863e287-be6c-4511-a216-a51d33d51cd2"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q222",
+        "query": "Se eu tomar comprimido demais desse anticoncepcional de uma vez só, ele embrulha o estômago e me deixa grogue?",
+        "medicine_brand": null,
+        "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m01c10 (section overdose) descreve os sintomas de superdose: 'náusea, vômito, sensibilidade nas mamas, tontura, dor abdominal, sonolência/fadiga'. A gíria 'embrulha o estômago' corresponde a náusea/vômito/dor abdominal e 'deixa grogue' corresponde a sonolência/fadiga/tontura, sustentando o veredito confirmed. Nenhum outro chunk trata de sintomas de superdose, então o alvo é inequívoco. O desafio de recuperação é mapear a linguagem leiga aos termos técnicos e localizar a seção overdose.",
+        "expected_chunk_ids": [
+            "b2c02b24-24c3-4632-96f7-10e182fb9a3e"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q223",
+        "query": "É verdade que esse anticoncepcional tem açúcar na composição?",
+        "medicine_brand": null,
+        "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "A alegação é sustentada pelo chunk m01c03 (section contraindications), cujo texto afirma: 'Atenção: Este medicamento contém Açúcar, portanto deve ser utilizado com cautela em portadores de Diabetes.' O fraseado sugere uma seção de composição/apresentação, mas o único dado sobre açúcar está em contraindications, o que caracteriza a seção enganosa. Veredito confirmed.",
+        "expected_chunk_ids": [
+            "8ee47e91-8a6c-43cb-ae55-a76206a2237a"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q224",
+        "query": "Se eu tomar esse anticoncepcional direitinho, ele me protege de pegar AIDS?",
+        "medicine_brand": null,
+        "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m01c13 (section warnings_and_precautions) afirma textualmente: 'Este produto não protege contra infecção por HIV (AIDS) ou outras doenças sexualmente transmissíveis.' Isso refuta a alegação de que o medicamento protege contra AIDS. O fraseado sobre proteção/eficácia sugere a seção indications (m01c07 fala apenas em prevenção da gravidez, sem citar AIDS), mas a resposta está em warnings_and_precautions, caracterizando a seção enganosa. Veredito refuted.",
+        "expected_chunk_ids": [
+            "ef517f3e-9da7-46aa-85b4-8fbbdca43fdd"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q225",
+        "query": "Esse remédio embrulha o estômago e dá vontade de vomitar?",
+        "medicine_brand": "Annita",
+        "expected_medicine": "ANNITA",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m13c00 (adverse_reactions) lista, entre as reações comuns, 'náusea (enjoo), vômito e dor de cabeça' e 'dor abdominal do tipo cólica'. 'Embrulha o estômago' é gíria para náusea/enjoo e 'vontade de vomitar' equivale a vômito, ambos citados no texto como reações que ocorrem entre 1% e 10% dos pacientes. Portanto, confirmado.",
+        "expected_chunk_ids": [
+            "7d4bff83-9962-4115-9ac3-ce4b7267addc"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q226",
+        "query": "A mistura pronta desse remédio só dura um dia depois de preparada?",
+        "medicine_brand": "Annita",
+        "expected_medicine": "ANNITA",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m13c07 (storage) diz: 'Após preparo, manter a suspensão oral guardada na embalagem original firmemente fechada por até sete dias.' A alegação de que dura apenas um dia é refutada pelo texto, que afirma até sete dias. Além disso, a informação está na seção de conservação, e não em 'modo de usar' (dosage_and_administration, onde só se fala em preparar a suspensão), o que caracteriza seção enganosa.",
+        "expected_chunk_ids": [
+            "3386afc5-9f77-4094-aa6a-fb0ffdbffc10"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q227",
+        "query": "Esse remédio demora pra bater depois que a pessoa toma?",
+        "medicine_brand": "Annita",
+        "expected_medicine": "ANNITA",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m13c03 (how_it_works) afirma: 'O tempo médio de ação do medicamento está estimado entre duas a quatro horas após a sua administração.' 'Demora pra bater' é gíria para demorar a fazer efeito; como o texto indica de duas a quatro horas até a ação, o assunto está presente (não é inconclusivo) e confirma-se que leva algumas horas para começar a agir.",
+        "expected_chunk_ids": [
+            "5894d97d-db7c-4f9b-97cb-befeeeade757"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q228",
+        "query": "O Amytril funciona porque segura a serotonina e a noradrenalina no cérebro, deixando esses mensageiros disponíveis por mais tempo? É esse o mecanismo dele?",
+        "medicine_brand": "Amytril",
+        "expected_medicine": "AMYTRIL",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "O único trecho que descreve como o Amytril age (how_it_works, m03c05) diz apenas que ele contem cloridrato de amitriptilina, um antidepressivo com propriedades ansioliticas e sedativas, e para que serve (depressao e enurese noturna). Nao explica o mecanismo de recaptacao de serotonina e noradrenalina, e nenhum outro trecho da bula toca nesse assunto. Como a bula nao menciona o mecanismo, nao da para confirmar nem refutar pelo texto: inconclusive.",
+        "expected_chunk_ids": [
+            "9f3ce205-5f8e-4b47-9c4f-00339f012e3e"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q229",
+        "query": "Tomar Amytril costuma dar aquela boca seca chata? Esse efeito esta descrito no remedio?",
+        "medicine_brand": "Amytril",
+        "expected_medicine": "AMYTRIL",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "As secoes de reacoes adversas (adverse_reactions, m03c00 e m03c01) apenas definem as faixas de frequencia das reacoes e falam sobre nao interromper o tratamento de forma repentina e os sintomas de retirada (enjoo, dor de cabeca, fadiga, irritabilidade, inquietacao, disturbios do sono). A lista das reacoes mais comuns aparece cortada no fim do trecho m03c00, e em nenhum momento visivel se cita boca seca; nenhum outro trecho da bula cita esse efeito. Como o assunto esta ausente de todos os chunks, o veredito e inconclusive.",
+        "expected_chunk_ids": [
+            "f14c7603-7a03-4ca9-bad5-170d9da4cb0f",
+            "d875b1bc-2220-471c-88e2-25c4650b3208"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q230",
+        "query": "Pode tomar bebida alcoolica junto com o Amytril ou o alcool aumenta a sonolencia e faz mal com esse remedio?",
+        "medicine_brand": "Amytril",
+        "expected_medicine": "AMYTRIL",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A secao de advertencias e precaucoes (warnings_and_precautions, m03c10) trata de evitar dirigir e operar maquinas e de interacoes com outros antidepressivos, com a guanetidina e do risco de ileo paralitico em combinacao com outros medicamentos, mas nao cita alcool nem bebida alcoolica. Nenhum outro trecho da bula menciona alcool. Como a bula nao menciona o assunto, nao da para confirmar nem refutar pelo texto: inconclusive.",
+        "expected_chunk_ids": [
+            "303ed786-a656-4d5a-ad77-4ac09fd6b9f5"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q231",
+        "query": "Esse remédio dá aquele sono, deixa a pessoa apagando no meio do dia?",
+        "medicine_brand": null,
+        "expected_medicine": "TYNNA",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m05c00 (adverse_reactions) lista, entre as reações comuns (até 1 em 10 pacientes), 'dor de cabeça e sonolência'. A gíria 'aquele sono / apagando' corresponde exatamente a sonolência, que o texto registra como reação comum, então a alegação se confirma. Observação: o chunk de how_it_works fala em 'sem efeitos sedativos', o que serve de distrator, mas o texto real das reações adversas confirma a sonolência.",
+        "expected_chunk_ids": [
+            "ffdeeab7-3b9a-4b33-8abd-1d835a49428f"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q232",
+        "query": "Se a pessoa se empolgar e tomar comprimido demais, dá enjoo e dor de cabeça?",
+        "medicine_brand": null,
+        "expected_medicine": "TYNNA",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m05c07 (overdose) trata do uso de quantidade maior do que a indicada e afirma que 'As reações adversas mais frequentemente relatadas foram tontura, cefaleia e náusea.'. Ou seja, tomar demais provoca enjoo (náusea) e dor de cabeça (cefaleia), o que confirma a alegação. A expressão leiga 'se empolgar e tomar demais' aponta para a seção de superdose.",
+        "expected_chunk_ids": [
+            "5fa61e9c-c638-4234-a77f-9c9b7a6d6b5d"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q233",
+        "query": "É verdade que a Tynna é totalmente proibida pra mulher grávida?",
+        "medicine_brand": "TYNNA",
+        "expected_medicine": "TYNNA",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m05c10 (warnings_and_precautions) diz que o medicamento 'não deve ser utilizado por mulheres grávidas sem orientação médica' e que 'A bilastina não deve ser administrado a gestantes e lactantes, a não ser quando absolutamente necessário'. Logo, não é proibição absoluta ('totalmente proibida de jeito nenhum'): o uso é possível sob orientação médica quando absolutamente necessário, o que refuta a alegação. A seção é enganosa porque o fraseado sobre gravidez sugere contraindicação, mas a resposta está em advertências e precauções (o chunk de contraindicações, m05c02, cita apenas hipersensibilidade e menores de 12 anos).",
+        "expected_chunk_ids": [
+            "a2d3505e-1b37-463b-ad7e-2d105b372a9a"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q234",
+        "query": "A mupirocina não é contraindicada pra quem já teve alergia a ela, né?",
+        "medicine_brand": "MUPIROCINA",
+        "expected_medicine": "MUPIROCINA",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A alegação, em forma de negação, afirma que a mupirocina NÃO é contraindicada para quem já teve alergia a ela. O chunk m06c01 (contraindications) diz exatamente o contrário: 'Não use este medicamento caso você já tenha tido uma reação alérgica à substância ativa (mupirocina), a qualquer componente deste medicamento ou a outras pomadas que contenham esses mesmos componentes.' Ou seja, ela É contraindicada nesse caso, então a alegação de que 'não é contraindicada' é refutada pelo texto. Verificado no arquivo: handle existe e a seção é contraindications.",
+        "expected_chunk_ids": [
+            "964c9c92-b359-4f93-b88c-22190e0c24bd"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q235",
+        "query": "Essa pomada de mupirocina não pode ser usada dentro do nariz, tá certo?",
+        "medicine_brand": "MUPIROCINA",
+        "expected_medicine": "MUPIROCINA",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "A alegação está em forma de negação ('não pode ser usada dentro do nariz') e o desafio é não inverter a lógica: apesar do 'não pode', a bula concorda. O chunk m06c08 (warnings_and_precautions) diz: 'Este medicamento não é indicado para uso nos olhos, no interior do nariz e nem em áreas da pele onde foram inseridos tubos...'. Como a bula afirma que não é indicado no interior do nariz, a alegação de que não pode ser usada ali é confirmada pelo texto. Verificado no arquivo: handle existe e a seção é warnings_and_precautions.",
+        "expected_chunk_ids": [
+            "174ae002-f36f-4e84-8793-0ad7fd9922e8"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q236",
+        "query": "Já que a mupirocina precisa ser guardada na geladeira, dá pra deixar ela lá o tempo todo sem estragar?",
+        "medicine_brand": "MUPIROCINA",
+        "expected_medicine": "MUPIROCINA",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta é capciosa porque pressupõe algo falso: que a mupirocina 'precisa ser guardada na geladeira'. O chunk m06c07 (storage) afirma o oposto: 'Você deve manter este medicamento em temperatura ambiente (entre 15 ºC e 30 °C). Proteger da luz e umidade.' A geladeira fica abaixo dessa faixa (15 a 30 °C), então a premissa é falsa e a alegação de que precisa/deve ficar na geladeira é refutada pelo texto. Verificado no arquivo: handle existe e a seção é storage.",
+        "expected_chunk_ids": [
+            "d3c5ede5-805a-44fa-bc37-6731e009da5b"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": null
+    },
+    {
+        "id": "q237",
+        "query": "A candesartana cilexetila é daquele tipo de remédio que só começa a agir depois que o corpo transforma ela na forma ativa?",
+        "medicine_brand": null,
+        "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A seção how_it_works (m07c03) descreve apenas que a candesartana cilexetila 'relaxa e alarga os vasos sanguíneos para reduzir a pressão arterial' e que faz parte da classe dos bloqueadores dos receptores de angiotensina II. Em nenhum momento a bula menciona que a candesartana cilexetila é um pró-fármaco, ou seja, que precisa ser convertida no corpo para a forma ativa (candesartana). O assunto não aparece em nenhuma das seções dos chunks, então a bula não menciona esse tema e o veredito é inconclusive.",
+        "expected_chunk_ids": [
+            "0afd08c6-1c6c-4016-8f12-f31fccc4e177"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q238",
+        "query": "Usar a hidroclorotiazida deixa a pele mais sensível ao sol, com mais risco de queimar?",
+        "medicine_brand": null,
+        "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A fotossensibilidade (aumento da sensibilidade da pele ao sol) é um efeito conhecido da classe dos diuréticos tiazídicos, derivados das sulfonamidas. Porém, a seção warnings_and_precautions (m07c08) lista apenas cautelas sobre doping, cirurgia, gravidez e intolerância à lactose, e nenhuma outra seção (incluindo adverse_reactions m07c00, que cita apenas rash cutâneo, urticária e prurido) menciona sensibilidade ao sol ou fotossensibilidade. Como o assunto está ausente de todas as seções, a bula não menciona o tema e o veredito é inconclusive.",
+        "expected_chunk_ids": [
+            "cad9daa2-9673-4bed-8d58-863657cd2fd2"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q239",
+        "query": "O comprimido de quetiapina precisa ser guardado na geladeira para não perder o efeito?",
+        "medicine_brand": null,
+        "expected_medicine": "MENSYVA",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O remédio é citado pelo princípio ativo (hemifumarato de quetiapina / quetiapina), que aparece no texto dos chunks (m00c02, m00c08, m00c10), e corresponde ao Mensyva. O chunk m00c09 (storage) diz: 'Conservar em temperatura ambiente (entre 15 e 30 ºC). Proteger da luz e umidade.' Não há qualquer menção a geladeira ou refrigeração; a conservação em temperatura ambiente refuta a alegação de que precisa ficar na geladeira.",
+        "expected_chunk_ids": [
+            "6152ae28-0071-426b-8294-ce833ac34899"
+        ],
+        "stress_category": "marca",
+        "validation": null
+    },
+    {
+        "id": "q240",
+        "query": "O Mensiva serve para tratar esquizofrenia em pessoa adulta?",
+        "medicine_brand": null,
+        "expected_medicine": "MENSYVA",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "'Mensiva' é erro de digitação realista de 'Mensyva' (troca de 'y' por 'i'). O chunk m00c06 (indications) diz: 'Em adultos, Mensyva é indicado para o tratamento da esquizofrenia', o que confirma diretamente a alegação.",
+        "expected_chunk_ids": [
+            "3b2be379-76e3-4774-bbb2-32261602aa4f"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q241",
+        "query": "Se eu esquecer de tomar o Menssyva, posso tomar duas doses juntas na próxima vez para compensar?",
+        "medicine_brand": null,
+        "expected_medicine": "MENSYVA",
+        "expected_sections": [
+            "missed_dose"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "'Menssyva' é erro de digitação realista de 'Mensyva' (duplicação do 's'). O chunk m00c07 (missed_dose) diz: 'Tome a próxima dose no horário habitual e não tome uma dose dobrada.', o que refuta a alegação de tomar duas doses juntas para compensar.",
+        "expected_chunk_ids": [
+            "34bac0e4-15f4-4dfc-9eaf-3717bdfc6e14"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q242",
+        "query": "O Bristaflam se toma um comprimido de 100 mg de 12 em 12 horas?",
+        "medicine_brand": "Bristaflam",
+        "expected_medicine": "ACECLOFENACO",
+        "expected_sections": [
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk de posologia (m24c03) afirma: 'A dose usual e de 1 (um) comprimido de 100 mg por via oral a cada 12 (doze) horas', o que confirma a alegacao. Bristaflam e uma marca comercial brasileira (Ache) cujo principio ativo e o aceclofenaco, nome que aparece nos chunks; a pergunta exercita o modo de identificacao por marca.",
+        "expected_chunk_ids": [
+            "5f94e1c9-8121-469c-a92a-778d37eab013"
+        ],
+        "stress_category": "marca",
+        "validation": null
+    },
+    {
+        "id": "q243",
+        "query": "Quem tem ulcera no estomago ativa pode tomar aceclofenato?",
+        "medicine_brand": null,
+        "expected_medicine": "ACECLOFENACO",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk de contraindicacoes (m24c02) diz: 'O aceclofenaco nao deve ser usado em pacientes com ulcera do estomago ou duodeno, em fase ativa', o que refuta a alegacao de que pode ser tomado por quem tem ulcera ativa. 'Aceclofenato' e um erro de digitacao realista de aceclofenaco (troca do c final por t).",
+        "expected_chunk_ids": [
+            "2c480987-a27c-464c-81f8-c0e25772e194"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q244",
+        "query": "Tenho que guardar o acelofenaco na geladeira?",
+        "medicine_brand": null,
+        "expected_medicine": "ACECLOFENACO",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk de conservacao (m24c08) afirma: 'Conservar em temperatura ambiente (temperatura entre 15 e 30oC). Proteger da luz e umidade', o que refuta a necessidade de guardar na geladeira (cuja temperatura, cerca de 2 a 8oC, fica abaixo da faixa recomendada). 'Acelofenaco' e um erro de digitacao realista de aceclofenaco (omissao de um c).",
+        "expected_chunk_ids": [
+            "7a87f72e-2614-4f32-bf58-3340b5b36115"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q245",
+        "query": "O Adorlan não é contraindicado pra quem tem alergia ao diclofenaco, né? Dá pra tomar numa boa?",
+        "medicine_brand": "ADORLAN",
+        "expected_medicine": "ADORLAN",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m22c02 (contraindications) afirma textualmente: 'Não tome Adorlan 25 ou Adorlan 50 se você: - tem hipersensibilidade (alergia) ao tramadol, diclofenaco...'. Ou seja, o medicamento É contraindicado para quem tem alergia ao diclofenaco. A alegação de que 'não é contraindicado' contraria diretamente o texto, portanto é refutada.",
+        "expected_chunk_ids": [
+            "f1fbd819-1503-43fb-87b9-c981e4321313"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q246",
+        "query": "Se a pessoa exagerar no Adorlan e intoxicar, fazer só hemodiálise não adianta pra tirar o tramadol do corpo, né?",
+        "medicine_brand": "ADORLAN",
+        "expected_medicine": "ADORLAN",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m22c09 (overdose) diz que 'O tramadol é minimamente eliminado do soro por hemodiálise ou hemofiltração' e que 'o tratamento de intoxicação aguda com Adorlan 25 ou Adorlan 50 com hemodiálise ou hemofiltração isoladamente não é adequado para desintoxicação'. A alegação (em forma de negação) de que só a hemodiálise não resolve para retirar o tramadol é sustentada pelo texto, portanto confirmada.",
+        "expected_chunk_ids": [
+            "8d7531b1-492a-4031-bcb9-3fb1fc3b7a2a"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q247",
+        "query": "Já que o Adorlan não causa dependência, dá pra usar por vários meses sem preocupação, certo?",
+        "medicine_brand": "ADORLAN",
+        "expected_medicine": "ADORLAN",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta parte da premissa falsa de que 'o Adorlan não causa dependência'. O chunk m22c00 (adverse_reactions) afirma explicitamente 'Dependência de drogas pode ocorrer' e descreve sintomas de síndrome de abstinência (agitação, ansiedade, insônia, tremor, sintomas gastrointestinais). Como a premissa contraria o texto, a alegação é refutada.",
+        "expected_chunk_ids": [
+            "cee5a8ba-7897-42c7-82ae-cb70bcaa3595"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": null
+    },
+    {
+        "id": "q248",
+        "query": "Se a pessoa exagerar na dose de Lasix injetável, dá pra reverter com um antídoto específico.",
+        "medicine_brand": "Lasix",
+        "expected_medicine": "FUROSANTISA",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O remédio é furosemida solução injetável (FUROSANTISA), e Lasix é a marca comercial mais conhecida de furosemida no Brasil, com a mesma apresentação injetável. O chunk m20c06 (overdose) afirma explicitamente 'Não se conhece antídoto específico para a', o que refuta a alegação de que existe antídoto específico para a superdose.",
+        "expected_chunk_ids": [
+            "e26b1fda-d3e5-4234-a33a-92ad9da5246a"
+        ],
+        "stress_category": "marca",
+        "validation": null
+    },
+    {
+        "id": "q249",
+        "query": "A furozemida aplicada na veia começa a fazer efeito com uns 15 minutos.",
+        "medicine_brand": null,
+        "expected_medicine": "FUROSANTISA",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "'furozemida' é erro de digitação de furosemida, o princípio ativo do FUROSANTISA que aparece no texto dos chunks (m20c02, m20c06, m20c07, m20c08). O chunk m20c03 (how_it_works) afirma 'O início de ação ocorre em 15 minutos após a administração intravenosa do produto', o que confirma a alegação.",
+        "expected_chunk_ids": [
+            "107d71e9-1c06-45c5-8d7a-fc5e83234243"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q250",
+        "query": "Se esquecer de aplicar uma dose de Furosantiza, pode juntar duas na dose seguinte pra compensar.",
+        "medicine_brand": null,
+        "expected_medicine": "FUROSANTISA",
+        "expected_sections": [
+            "missed_dose"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "'Furosantiza' é erro de digitação de FUROSANTISA. O chunk m20c05 (missed_dose) afirma 'Nunca devem ser administradas duas doses ao mesmo tempo', o que refuta a alegação de que se pode juntar duas doses para compensar a esquecida.",
+        "expected_chunk_ids": [
+            "983a42fc-ad13-4d58-a609-2ef1096acf7b"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q251",
+        "query": "Ouvi dizer que esse tipo de anestésico inalatório pode disparar uma crise de febre altíssima e perigosa no meio da cirurgia em quem tem predisposição, a tal hipertermia maligna. A bula da Isoforine avisa sobre esse risco?",
+        "medicine_brand": "Isoforine",
+        "expected_medicine": "ISOFORINE",
+        "expected_sections": [
+            "adverse_reactions",
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A hipertermia maligna e um risco classico dos anestesicos inalatorios halogenados como o isoflurano, mas nenhum chunk menciona esse assunto. A secao de advertencias e precaucoes (m19c08) fala apenas em administrar em centros apropriados e usar vaporizadores calibrados, e a secao de reacoes adversas (m19c00) cita depressao respiratoria, hipotensao, arritmias, calafrios, nausea, vomito e ileo adinamico, sem qualquer referencia a febre alta ou hipertermia maligna. Como a bula nao trata do tema, o veredito e inconclusive.",
+        "expected_chunk_ids": [
+            "ea646aaf-23ac-4f29-a476-e097c4a6593a",
+            "b4af46e3-4332-4218-b429-740aa762b430"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q252",
+        "query": "A Isoforine faz a pessoa apagar porque age no cerebro derrubando o sistema nervoso central. A bula explica que e assim que ele funciona no corpo?",
+        "medicine_brand": "Isoforine",
+        "expected_medicine": "ISOFORINE",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "O mecanismo de acao dos anestesicos gerais e a depressao do sistema nervoso central, mas a secao como funciona (m19c03) descreve apenas propriedades fisicas do produto: um liquido anestesico nao inflamavel, estavel, claro e incolor, transformado em vapor por um equipamento. Nao ha qualquer explicacao de como ele atua no cerebro ou no sistema nervoso para produzir a anestesia, e nenhum outro chunk aborda o mecanismo de acao. Como a bula nao menciona o assunto, o veredito e inconclusive.",
+        "expected_chunk_ids": [
+            "1ac46c21-e0c6-4fb7-a36f-94f969959fd5"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q253",
+        "query": "É verdade que na hora de respirar esse anestésico ele arde nas vias respiratórias e pode causar tosse ou fazer a pessoa prender a respiração? A bula da Isoforine cita isso?",
+        "medicine_brand": "Isoforine",
+        "expected_medicine": "ISOFORINE",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A irritação das vias aéreas com tosse, prender a respiração e laringoespasmo é um efeito conhecido dos anestésicos inalatórios pungentes como o isoflurano, mas a seção de reações adversas (m19c00) lista apenas depressão respiratória, hipotensão, arritmias, calafrios, náusea, vômito, íleo adinâmico e elevação temporária de glóbulos brancos, sem citar tosse ou irritação das vias respiratórias. Nenhum outro chunk trata disso, portanto a bula não menciona o assunto e o veredito é inconclusive.",
+        "expected_chunk_ids": [
+            "b4af46e3-4332-4218-b429-740aa762b430"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q254",
+        "query": "Pra quem tem problema no coração, o Medato não é contraindicado, né?",
+        "medicine_brand": "Medato",
+        "expected_medicine": "MEDATO",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A alegação (com negação) afirma que o Medato NÃO é contraindicado para quem tem problema no coração. A seção de contraindicações (m18c02) diz o oposto: 'Não tome Medato® (cloridrato de metilfenidato) se você ... tem problemas cardíacos, como: ataque cardíaco, batimento cardíaco irregular, dor no peito (angina), insuficiência cardíaca, doença cardíaca ou se nasceu com problema do coração'. Como o remédio É contraindicado nesse caso, a alegação de que 'não é contraindicado' é refutada.",
+        "expected_chunk_ids": [
+            "150c0f74-5f3d-4ca0-bd1e-eebf847735fe"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q255",
+        "query": "Não é verdade que não posso beber álcool tomando Medato, né?",
+        "medicine_brand": "Medato",
+        "expected_medicine": "MEDATO",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "Resolvendo a dupla negação ('não é verdade que não posso beber álcool'), a alegação afirma que É permitido beber álcool tomando Medato. A seção de advertências e precauções (m18c09) diz o contrário: 'Não ingira bebidas alcoólicas enquanto estiver tomando cloridrato de metilfenidato. O álcool pode piorar as reações adversas de cloridrato de metilfenidato'. Portanto, a alegação de que se pode beber álcool é refutada.",
+        "expected_chunk_ids": [
+            "cd814b15-0fe1-435f-9f86-e17e384c504e"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q256",
+        "query": "Já que dá pra guardar a metade do comprimido do Medato por uma semana, não tem problema partir vários de uma vez?",
+        "medicine_brand": "Medato",
+        "expected_medicine": "MEDATO",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta parte de uma premissa falsa: a de que dá para guardar a metade do comprimido por uma semana. A seção de armazenamento (m18c08) diz: 'Caso seja necessário partir o comprimido para ajuste de dose, as metades não poderão ser consumidas após 24 horas'. Como o prazo real é de apenas 24 horas, e não uma semana, a premissa é falsa e a alegação é refutada.",
+        "expected_chunk_ids": [
+            "33eee323-7cf1-4791-b648-2029c4a914bf"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": null
+    },
+    {
+        "id": "q257",
+        "query": "O Tabrecta pode prejudicar o bebê se a mulher engravidar durante o tratamento? A bula manda usar anticoncepcional para evitar a gravidez enquanto toma o remédio?",
+        "medicine_brand": "Tabrecta",
+        "expected_medicine": "TABRECTA",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "O chunk m15c11 (warnings_and_precautions) lista as advertências e precauções da bula (problemas pulmonares/respiratórios, hepáticos, pancreáticos e exposição ao sol), mas nenhuma seção dos chunks menciona gravidez, feto, risco reprodutivo, anticoncepção ou amamentação. Como o assunto simplesmente não aparece na bula fornecida, não é possível confirmar nem refutar a alegação a partir do texto: veredito inconclusive.",
+        "expected_chunk_ids": [
+            "69debb58-88e5-4edd-bade-ffe843bc3fcc"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q258",
+        "query": "Tomar suco de toranja (grapefruit) junto com o Tabrecta aumenta a quantidade do remédio no sangue? A bula avisa para cortar a toranja durante o tratamento?",
+        "medicine_brand": "Tabrecta",
+        "expected_medicine": "TABRECTA",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "O chunk m15c10 (warnings_and_precautions) trata do uso de outros medicamentos e das interações, orientando apenas informar o médico sobre remédios, vitaminas ou fitoterápicos em uso; nenhum chunk cita toranja, grapefruit ou qualquer suco/alimento que altere o nível do medicamento (a única menção a alimento é 'com ou sem alimentos' na posologia, m15c03). Como esse fato específico não aparece na bula fornecida, o texto não confirma nem refuta a alegação: veredito inconclusive.",
+        "expected_chunk_ids": [
+            "2eef8620-68f5-46cc-b49f-e0d3df491b14"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q259",
+        "query": "O Transpulmin xarope infantil não tem contraindicação nenhuma pra bebê de 1 ano, né?",
+        "medicine_brand": "Transpulmin xarope infantil",
+        "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m26c01 afirma explicitamente: \"Este medicamento é contraindicado para menores de 2 anos de idade.\" Um bebê de 1 ano tem menos de 2 anos, portanto o medicamento É contraindicado para ele. A alegação (em forma de negação) de que não haveria nenhuma contraindicação para um bebê de 1 ano é, assim, contradita pelo texto.",
+        "expected_chunk_ids": [
+            "0362aef3-c773-4e42-966c-be1cc7b57c70"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q260",
+        "query": "Não dá pra dizer que o Transpulmin xarope infantil é seguro pra quem tem porfiria, né?",
+        "medicine_brand": "Transpulmin xarope infantil",
+        "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m26c01 diz: \"A guaifenesina é considerada insegura para pacientes com porfiria, pois apresentou-se porfirogênica em animais.\" Como a guaifenesina é o princípio ativo e é considerada insegura para pacientes com porfiria, a afirmação (com dupla negação) de que não se pode dizer que o medicamento é seguro para quem tem porfiria é sustentada pelo texto.",
+        "expected_chunk_ids": [
+            "0362aef3-c773-4e42-966c-be1cc7b57c70"
+        ],
+        "stress_category": "negacao",
+        "validation": null
+    },
+    {
+        "id": "q261",
+        "query": "Já que o Transpulmin xarope infantil resseca o catarro pra deixar a tosse mais seca, ele age rápido mesmo?",
+        "medicine_brand": "Transpulmin xarope infantil",
+        "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta pressupõe (premissa falsa) que o medicamento resseca o catarro e deixa a tosse mais seca. O chunk m26c03 diz o contrário: \"A guaifenesina fluidifica o catarro, tornando-o menos viscoso e mais 'solto'. Dessa forma, o catarro é expelido de maneira mais fácil.\" Ou seja, ele fluidifica o catarro (não resseca), e é um expectorante para tosses produtivas. A premissa embutida na pergunta é falsa, refutando a alegação.",
+        "expected_chunk_ids": [
+            "567283b7-f49c-40d4-9328-ab0f8347d8f3"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": null
+    },
+    {
+        "id": "q262",
+        "query": "Se alguém exagerar na dose de clonidina, existe algum antídoto específico pra reverter esse excesso?",
+        "medicine_brand": null,
+        "expected_medicine": "CLONIDIN",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m16c08 (overdose) afirma textualmente 'Inexiste antidoto especifico para a superdose de clonidina', portanto a alegacao de que existe antidoto especifico e refutada. Categoria 'marca': como CLONIDIN ja e uma marca, usei o principio ativo 'clonidina' (que aparece varias vezes no texto) em vez do nome da marca para exercitar a identificacao. Stress fraco pois marca e principio ativo sao quase identicos, mas defensavel.",
+        "expected_chunk_ids": [
+            "5a4ec7b6-7c38-4fa5-9214-278df16fcdcc"
+        ],
+        "stress_category": "marca",
+        "validation": null
+    },
+    {
+        "id": "q263",
+        "query": "O efeito de tirar a dor da clonidna começa por volta de 15 minutos depois da aplicação?",
+        "medicine_brand": null,
+        "expected_medicine": "CLONIDIN",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m16c05 (how_it_works) diz 'O efeito analgesico inicia-se 15 minutos apos a aplicacao intratecal, epidural, intramuscular ou intravenosa', confirmando que a acao analgesica comeca por volta de 15 minutos. Categoria 'erro_digitacao': escrevi 'clonidna' (faltando o 'i') como erro de digitacao realista do nome clonidina.",
+        "expected_chunk_ids": [
+            "c7f9f613-d2dc-4721-b0f1-5d1758e0d181"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q264",
+        "query": "A clonadina precisa ficar guardada na geladeira pra não estragar?",
+        "medicine_brand": null,
+        "expected_medicine": "CLONIDIN",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m16c10 (storage) diz 'Conservar o produto em temperatura ambiente, entre 15 e 30C, protegido da luz', ou seja, deve ficar em temperatura ambiente e nao na geladeira, entao a alegacao e refutada. Categoria 'erro_digitacao': escrevi 'clonadina' (troca do 'i' por 'a') como erro de digitacao realista do nome clonidina.",
+        "expected_chunk_ids": [
+            "c2321179-7c39-4f0e-b8c0-01e7396909ae"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q265",
+        "query": "É verdade que se eu passar da conta e tomar isoniazida demais, ela me deixa grogue e me faz enxergar umas coisas que não estão lá?",
+        "medicine_brand": "Farmanguinhos isoniazida",
+        "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m17c09 (overdose) diz que a superdosagem da isoniazida produz sonolência (equivalente ao termo popular 'grogue') e alucinações visuais (cores brilhantes e desenhos estranhos), o que corresponde a 'enxergar coisas que não estão lá'. Portanto a alegação em gíria é confirmada pelo texto.",
+        "expected_chunk_ids": [
+            "a668da18-7605-4848-9fd4-9699f03999ca"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q266",
+        "query": "Tomando isoniazida, meus pés e minhas mãos podem ficar dormentes, tipo sem sentir nada na ponta?",
+        "medicine_brand": "Farmanguinhos isoniazida",
+        "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m17c00 (adverse_reactions) lista a neuropatia periférica como reação muito comum, descrevendo-a como 'perda da sensibilidade das extremidades como pés e mãos', o que equivale à descrição popular de 'ficar dormente, sem sentir nada na ponta'. A alegação é confirmada pelo texto.",
+        "expected_chunk_ids": [
+            "ca4819db-d805-4ebf-b8c8-713712e067ee"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q267",
+        "query": "Quem tem diabetes pode usar isoniazida?",
+        "medicine_brand": "Farmanguinhos isoniazida",
+        "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O fraseado sugere uma pergunta de contraindicação ou de segurança, mas a resposta está em indications: o chunk m17c07 lista 'Diabetes mellitus' entre os grupos de risco para os quais o tratamento com isoniazida (ILTB) é indicado. As contraindicações (m17c02) restringem-se a doença hepática e hipersensibilidade, não incluindo diabetes. Logo, pessoas com diabetes estão entre os indicados, e a alegação é confirmada pelo texto da seção de indicações.",
+        "expected_chunk_ids": [
+            "d109f118-6c2c-4024-b37e-0083398c07cb"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q268",
+        "query": "Esse antibiótico embrulha o estômago e dá aquela cólica, desconforto na barriga?",
+        "medicine_brand": null,
+        "expected_medicine": "azitromicina di-hidratada",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O trecho m29c00, da seção adverse_reactions, cita entre as reações relatadas \"desconforto abdominal (dor/cólica), flatulência\", o que sustenta a alegação de que o remédio pode causar cólica e desconforto/incômodo na barriga. O desafio da recuperação está na gíria \"embrulha o estômago\", bem distante do termo técnico \"desconforto abdominal\".",
+        "expected_chunk_ids": [
+            "c07d8f26-93dc-4f66-ac8c-a4e275b3fc1e"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q269",
+        "query": "É verdade que a azitromicina deixa a pessoa meio grogue, zonza?",
+        "medicine_brand": null,
+        "expected_medicine": "azitromicina di-hidratada",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O trecho m29c01, da seção adverse_reactions, lista \"tontura\" entre os efeitos colaterais possíveis, confirmando que o remédio pode deixar a pessoa tonta/grogue. As gírias \"grogue\" e \"zonza\" ficam distantes da palavra técnica \"tontura\" do texto, dificultando achar o trecho certo.",
+        "expected_chunk_ids": [
+            "95ddc864-1c66-4d9c-9c9b-43ddd958205e"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q270",
+        "query": "A azitromicina já pega no corpo rapidão, tipo faz efeito em uns 10 minutinhos?",
+        "medicine_brand": null,
+        "expected_medicine": "azitromicina di-hidratada",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O trecho m29c05, da seção how_it_works, afirma que \"Seu pico de ação é após 2 a 3 horas da administração por via oral\", o que refuta a alegação de que o efeito chegaria em uns 10 minutos. O fraseado sobre \"em quanto tempo faz efeito\" sugere ao leigo procurar na posologia (dosage_and_administration), mas a resposta esta em how_it_works, caracterizando secao enganosa.",
+        "expected_chunk_ids": [
+            "3b7c9ffd-888c-433a-85b5-8e7a562bdf78"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q271",
+        "query": "A carmustina do NIBISNU faz parte daquela família de quimioterápicos chamada nitrosoureias?",
+        "medicine_brand": "NIBISNU",
+        "expected_medicine": "NIBISNU",
+        "expected_sections": [
+            "how_it_works",
+            "indications"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A bula não menciona o assunto. A seção how_it_works (m11c05) classifica o NIBISNU apenas como pertencente ao grupo dos agentes de alquilação, e a indicação (m11c07) o chama de agente citotóxico/quimioterápico; em nenhum momento o texto usa o termo nitrosoureia. A carmustina de fato pertence à subclasse das nitrosoureias, mas esse fato não aparece em nenhuma seção dos chunks.",
+        "expected_chunk_ids": [
+            "df4bbfb7-3918-41b9-9386-582ef7e5cbd2",
+            "d9317466-d7b9-4151-bc92-612970834c2f"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q272",
+        "query": "O Bivarixon é indicado pra quem sofre com hemorroida?",
+        "medicine_brand": null,
+        "expected_medicine": "BIOVARIXON",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk de indicações (m28c04) diz que o medicamento é destinado ao 'Tratamento dos sintomas funcionais relacionados à insuficiência venosa do plexo hemorroidário', confirmando o uso para hemorroida. 'Bivarixon' é um erro de digitação de 'Biovarixon' (falta um 'o'), o que dificulta achar o remédio.",
+        "expected_chunk_ids": [
+            "fd549c22-b648-4f43-96bf-fc9e90645b71"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q273",
+        "query": "O Biovarixona pode ser dado para criança tomar?",
+        "medicine_brand": null,
+        "expected_medicine": "BIOVARIXON",
+        "expected_sections": [
+            "contraindications"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk de contraindicações (m28c01) afirma que 'Este medicamento é contraindicado para uso em crianças', portanto a alegação de que pode ser dado a criança é falsa. 'Biovarixona' é um erro de digitação de 'Biovarixon' (letra 'a' a mais no final), o que dificulta achar o remédio.",
+        "expected_chunk_ids": [
+            "1a440440-7758-49e3-a329-d05001c4ac61"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q274",
+        "query": "O Biovaricon costuma dar diarreia e enjoo em quem toma?",
+        "medicine_brand": null,
+        "expected_medicine": "BIOVARIXON",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk de reações adversas (m28c00) lista como reações comuns (entre 1% e 10% dos pacientes) 'Diarréia, dispepsia (indigestão), náusea e vômitos', confirmando diarreia e enjoo. 'Biovaricon' é um erro de digitação de 'Biovarixon' (troca do 'x' por 'c'), o que dificulta achar o remédio.",
+        "expected_chunk_ids": [
+            "f7cd9eaa-a5a5-46b5-8a10-9ab79b841bfb"
+        ],
+        "stress_category": "erro_digitacao",
+        "validation": null
+    },
+    {
+        "id": "q275",
+        "query": "O medicamento feito à base de cloridrato de oxibutinina pode ser tomado por um adulto até quatro vezes ao dia?",
+        "medicine_brand": null,
+        "expected_medicine": "NOURIN",
+        "expected_sections": [
+            "dosage_and_administration"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m12c02 (dosage_and_administration) diz que a dose máxima para adulto é de 1 comprimido de 5 mg, 4 vezes ao dia (a cada 6 horas), o que sustenta que o remédio pode ser tomado até quatro vezes ao dia. O medicamento é o Nourin, cujo princípio ativo é o cloridrato de oxibutinina citado no texto dos chunks; a pergunta identifica o remédio pelo princípio ativo, não pela marca.",
+        "expected_chunk_ids": [
+            "f5a3a6d4-ea1f-4dc3-bbcd-a7e7faf7236b"
+        ],
+        "stress_category": "principio_ativo",
+        "validation": null
+    },
+    {
+        "id": "q276",
+        "query": "O Frenotosse deixa a pessoa grogue, meio caindo de sono?",
+        "medicine_brand": "Frenotosse",
+        "expected_medicine": "FRENOTOSSE",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m25c00 (adverse_reactions) lista, entre as reacoes neurologicas muito raras, 'sonolencia'. Isso confirma que o remedio pode deixar a pessoa com sono/grogue. O desafio de recuperacao esta na giria: 'deixar grogue, caindo de sono' equivale ao termo tecnico 'sonolencia' que aparece no texto.",
+        "expected_chunk_ids": [
+            "799d67fb-d6f3-4708-a471-14ef45d60199"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q277",
+        "query": "Da pra tomar o Frenotosse junto com outros remedios sem dar problema?",
+        "medicine_brand": "Frenotosse",
+        "expected_medicine": "FRENOTOSSE",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "A pergunta soa como algo de contraindicacao/interacao, mas a resposta esta na secao warnings_and_precautions (m25c08), que afirma: 'Ate o momento nao foram descritas interacoes da guaifenesina com outros medicamentos'. Isso confirma que pode ser usado junto com outros remedios sem interacoes descritas. O desafio de recuperacao esta na secao enganosa: quem pergunta espera achar isso em contraindicacoes, mas o trecho certo esta em advertencias e precaucoes.",
+        "expected_chunk_ids": [
+            "d4d463a0-85d5-4ddc-89de-c5956cdacbff"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q278",
+        "query": "O Frenotosse deixa o catarro mais grudento e preso, dificultando botar pra fora?",
+        "medicine_brand": "Frenotosse",
+        "expected_medicine": "FRENOTOSSE",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m25c03 (how_it_works) diz que a guaifenesina 'fluidifica o catarro, tornando-o menos viscoso e mais solto' e que assim 'o catarro e expelido de maneira mais facil'. Isso refuta diretamente a alegacao de que o xarope deixaria o catarro mais grudento e mais dificil de expelir. O desafio de recuperacao esta na giria ('grudento', 'preso', 'botar pra fora') que precisa ser mapeada ao mecanismo de acao descrito no texto.",
+        "expected_chunk_ids": [
+            "ea53fe0b-7782-4ce5-ba3f-0c60ba796692"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q279",
+        "query": "A tibolona ajuda a aumentar a vontade e o desejo sexual da mulher na menopausa?",
+        "medicine_brand": null,
+        "expected_medicine": "tibolona",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A tibolona é conhecida por melhorar a libido/desejo sexual por causa da sua atividade androgenica, um diferencial dessa classe. Mas a bula nao menciona esse efeito em nenhuma secao. O chunk m27c05 (how_it_works) fala apenas que a falta de hormonios deixa a vagina mais fina e seca e a relacao sexual dolorida, sem dizer que o remedio melhora a libido. Como o assunto nao aparece no texto, o veredito e inconclusivo.",
+        "expected_chunk_ids": [
+            "04b44ba8-ff9f-44c2-92e8-b6cf2fd12165"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q280",
+        "query": "E verdade que a tibolona, dentro do corpo, se transforma em substancias que agem tanto como hormonio feminino quanto masculino?",
+        "medicine_brand": null,
+        "expected_medicine": "tibolona",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "E um fato real do mecanismo da tibolona: ela e metabolizada em substancias com acao estrogenica, progestogenica e androgenica (efeito de hormonio masculino). Porem a bula descreve a tibolona apenas como uma Terapia de Reposicao Hormonal que alivia sintomas da menopausa e previne osteoporose (chunk m27c04, how_it_works), sem explicar essa conversao em metabolitos. Como o texto nao trata do assunto, o veredito e inconclusivo.",
+        "expected_chunk_ids": [
+            "2785387d-086e-4326-99a8-eec2bc8898df"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q281",
+        "query": "A tibolona mexe nas taxas de colesterol bom (HDL) e de triglicerides no sangue?",
+        "medicine_brand": null,
+        "expected_medicine": "tibolona",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "E conhecido que a tibolona reduz o colesterol HDL e os triglicerides, um efeito da classe sobre as gorduras do sangue. Mas nenhum chunk da bula cita colesterol, HDL, triglicerides ou lipidios. Onde um leitor buscaria cuidados e monitoramento (warnings_and_precautions, chunk m27c11, que fala de historico medico e avaliacoes periodicas) nao ha nenhuma mencao a esse efeito. Como o assunto esta ausente, o veredito e inconclusivo.",
+        "expected_chunk_ids": [
+            "52b4a2df-8acf-4c0a-9fe2-fd4803e8992c"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q282",
+        "query": "o remédio que tem binimetinibe na fórmula é usado pra tratar melanoma, que é aquele câncer de pele?",
+        "medicine_brand": null,
+        "expected_medicine": "MEKTOVI",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m04c05 (indications) diz: 'O Mektovi® é um medicamento anticancerígeno que contém a substância ativa binimetinibe... para tratar um tipo de câncer de pele chamado melanoma'. Logo, o remédio com binimetinibe é o Mektovi e ele é indicado para melanoma, confirmando a alegação. O desafio de identificação está em citar apenas o princípio ativo binimetinibe, sem mencionar a marca Mektovi.",
+        "expected_chunk_ids": [
+            "9e3df5d7-9952-4b8d-aa85-83a294ad6a9e"
+        ],
+        "stress_category": "principio_ativo",
+        "validation": null
+    },
+    {
+        "id": "q283",
+        "query": "esse gel de heparina sódica ajuda com dor nas pernas por causa de variz?",
+        "medicine_brand": null,
+        "expected_medicine": "TROMBOFOB GEL",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m08c04 (indications) diz: 'TROMBOFOB® GEL (heparina sódica) é indicado para o tratamento de: ... dores nas pernas relacionadas a varizes'. A pergunta identifica o remédio pelo princípio ativo (heparina sódica), que corresponde ao próprio TROMBOFOB GEL, então a alegação é confirmada pelo texto.",
+        "expected_chunk_ids": [
+            "b8b5a772-7a60-487b-84a9-9efa60e7d2d1"
+        ],
+        "stress_category": "principio_ativo",
+        "validation": null
+    },
+    {
+        "id": "q284",
+        "query": "Esse tal de MIOSAN ODT deixa a pessoa grogue, mole e com a cabeça rodando?",
+        "medicine_brand": "MIOSAN ODT",
+        "expected_medicine": "MIOSAN ODT",
+        "expected_sections": [
+            "adverse_reactions"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m21c00 (adverse_reactions) lista, entre as reacoes MUITO COMUNS (ocorrem em mais de 10% dos pacientes), 'sonolencia, tontura e boca seca'. 'Grogue/mole' corresponde a sonolencia (e 'mole' tambem a astenia, perda/diminuicao de forca, listada entre as comuns) e 'cabeca rodando' a tontura. Assim, a alegacao de que o remedio deixa a pessoa grogue e tonta e sustentada diretamente pelo texto.",
+        "expected_chunk_ids": [
+            "27fe9ed7-b11f-470d-8d1f-fb8a7d4f0f9d"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q285",
+        "query": "Se a pessoa mandar ver e tomar comprimido demais desse remedio, da pra apagar de vez e entrar em coma?",
+        "medicine_brand": null,
+        "expected_medicine": "MIOSAN ODT",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "O chunk m21c07 (overdose) descreve as manifestacoes da superdose de ciclobenzaprina e cita expressamente 'coma' entre elas (alem de agitacao, tremor, alucinacoes e, raramente, parada cardiaca). 'Apagar de vez / entrar em coma' corresponde ao 'coma' listado no texto, confirmando a alegacao para o caso de superdose.",
+        "expected_chunk_ids": [
+            "6bdb89d5-e5e2-4717-9ab9-a08ea0495179"
+        ],
+        "stress_category": "giria",
+        "validation": null
+    },
+    {
+        "id": "q286",
+        "query": "Posso pegar o carro e sair dirigindo numa boa logo depois de tomar MIOSAN ODT?",
+        "medicine_brand": "MIOSAN ODT",
+        "expected_medicine": "MIOSAN ODT",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O chunk m21c10 (warnings_and_precautions) afirma: 'Atividades que exijam atencao, como a operacao de maquinas ou veiculos, devem ser evitadas, pois podem ocorrer sintomas como sonolencia e tontura durante o tratamento com MIOSAN ODT'. Dirigir carro e operacao de veiculo, logo a ideia de dirigir 'numa boa' e refutada - deve ser evitado. O trecho fica na secao de advertencias e nao em 'como usar' (dosage_and_administration), que seria a secao sugerida pelo fraseado, caracterizando a secao enganosa. Nenhum outro chunk (inclusive m21c03, de posologia) trata de dirigir, entao o handle e unico.",
+        "expected_chunk_ids": [
+            "bfb91ac7-67df-4f7f-9de7-7d6b2ff90fd4"
+        ],
+        "stress_category": "secao_enganosa",
+        "validation": null
+    },
+    {
+        "id": "q287",
+        "query": "Alem de relaxar o musculo, o Mirtax tambem desinflama? Ele e anti-inflamatorio?",
+        "medicine_brand": "Mirtax",
+        "expected_medicine": "MIRTAX",
+        "expected_sections": [
+            "how_it_works"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "O chunk m23c04 (how_it_works) descreve a ciclobenzaprina apenas como relaxante muscular que suprime o espasmo do musculo esqueletico, sem interferir na funcao muscular, e nenhuma secao dos chunks menciona acao anti-inflamatoria. A ciclobenzaprina nao tem acao anti-inflamatoria (fato conhecido da classe dos relaxantes musculares de acao central), mas como a bula nao trata do assunto em nenhum trecho, nao da para confirmar nem refutar.",
+        "expected_chunk_ids": [
+            "988f6428-49e5-4b34-9dbc-fb7f5f381f25"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q288",
+        "query": "Quem tem problema no figado pode tomar Mirtax numa boa, ou precisa de cuidado porque esse remedio e processado pelo figado?",
+        "medicine_brand": "Mirtax",
+        "expected_medicine": "MIRTAX",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "As secoes de advertencias e precaucoes (m23c09 e m23c10) e a de contraindicacoes (m23c02) nao mencionam o metabolismo hepatico da ciclobenzaprina nem cuidado especial para quem tem problema no figado. A ciclobenzaprina e extensamente metabolizada pelo figado, com aumento das concentracoes plasmaticas em pacientes com disfuncao hepatica (fato conhecido do farmaco), mas isso nao aparece em nenhum chunk, logo a bula nao confirma nem refuta a afirmacao.",
+        "expected_chunk_ids": [
+            "8bf849d7-200f-4959-844f-cce5694f4b43"
+        ],
+        "stress_category": "fidelidade",
+        "validation": null
+    },
+    {
+        "id": "q289",
+        "query": "O comprimido de quetiapina precisa ser guardado na geladeira para não perder o efeito?",
+        "medicine_brand": null,
+        "expected_medicine": "MENSYVA",
+        "expected_sections": [
+            "storage"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "O remédio é citado pelo princípio ativo (hemifumarato de quetiapina / quetiapina), que aparece no texto dos chunks (m00c02, m00c08, m00c10), e corresponde ao Mensyva. O chunk m00c09 (storage) diz: 'Conservar em temperatura ambiente (entre 15 e 30 ºC). Proteger da luz e umidade.' Não há qualquer menção a geladeira ou refrigeração; a conservação em temperatura ambiente refuta a alegação de que precisa ficar na geladeira.",
+        "expected_chunk_ids": [
+            "6152ae28-0071-426b-8294-ce833ac34899"
+        ],
+        "stress_category": "principio_ativo",
+        "validation": null
+    },
+    {
+        "id": "q290",
+        "query": "Usar a hidroclorotiazida deixa a pele mais sensível ao sol, com mais risco de queimar?",
+        "medicine_brand": null,
+        "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
+        "expected_sections": [
+            "adverse_reactions",
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A fotossensibilidade (aumento da sensibilidade da pele ao sol) é um efeito conhecido dos diuréticos tiazídicos, derivados das sulfonamidas, e costuma aparecer em bula como reação de pele. Porém, a seção adverse_reactions (m07c00) lista apenas rash cutâneo, urticária e prurido como reações de pele, sem citar sensibilidade ao sol ou fotossensibilidade, e a seção warnings_and_precautions (m07c08) traz apenas cautelas sobre doping, cirurgia, gravidez e intolerância à lactose. Como o assunto está ausente de todas as seções, a bula não menciona o tema e o veredito é inconclusive.",
+        "expected_chunk_ids": [
+            "092b7a04-8d8b-4156-a70f-5ba651997fa9",
+            "cad9daa2-9673-4bed-8d58-863657cd2fd2"
+        ],
+        "stress_category": "fidelidade",
         "validation": null
     }
 ]

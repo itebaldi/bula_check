@@ -44,6 +44,7 @@ DATA_COLUMNS = [
     "justification",
     "evidence",
     "bula_url",
+    "stress_category",
 ]
 
 # Colunas em branco para o farmacêutico preencher na revisão. `status`
@@ -72,6 +73,7 @@ COLUMN_LABELS_PT = {
     "justification": "Justificativa",
     "evidence": "Evidência (texto da bula)",
     "bula_url": "Link da bula",
+    "stress_category": "Tipo de desafio",
     "verdict_ok": "Veredito correto? (sim/não)",
     "medicine_ok": "Medicamento correto? (sim/não)",
     "evidence_ok": "Evidência correta? (sim/não)",
@@ -180,6 +182,7 @@ def build_review_rows(
             "justification": item.get("justification") or "",
             "evidence": _format_evidence(ordered),
             "bula_url": medicine_row.get("url", ""),
+            "stress_category": item.get("stress_category") or "",
         }
         for col in VALIDATION_COLUMNS:
             row[col] = ""

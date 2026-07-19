@@ -34,6 +34,10 @@ class ExpectedResult(BaseModel):
     medicine_brand: str | None = None
     justification: str | None = None
     validation: dict[str, Any] | None = None
+    # Marca a questão como caso-desafio (stress test) e o modo de falha alvo
+    # (ex: "marca", "erro_digitacao", "giria", "negacao", "fidelidade"). None
+    # nas questões representativas normais.
+    stress_category: str | None = None
 
     def get(self, key: str, default: Any = None) -> Any:
         return getattr(self, key, default)
