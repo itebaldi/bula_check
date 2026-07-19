@@ -12,7 +12,8 @@
         "expected_chunk_ids": [
             "202eadd0-7d64-489c-b687-d82bc606c2f7"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q002",
@@ -27,7 +28,8 @@
         "expected_chunk_ids": [
             "89dbbbe9-d8de-4854-a3c9-694a6533cd3c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q003",
@@ -42,7 +44,8 @@
         "expected_chunk_ids": [
             "89dbbbe9-d8de-4854-a3c9-694a6533cd3c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q004",
@@ -57,7 +60,8 @@
         "expected_chunk_ids": [
             "89dbbbe9-d8de-4854-a3c9-694a6533cd3c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "negacao"
     },
     {
         "id": "q005",
@@ -72,7 +76,8 @@
         "expected_chunk_ids": [
             "e6f9fe43-db6c-4d54-a289-fff73c9d9a69"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q006",
@@ -87,7 +92,8 @@
         "expected_chunk_ids": [
             "820d794a-8ce9-4c6c-a4d1-899bc198e3b7"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q007",
@@ -102,7 +108,8 @@
         "expected_chunk_ids": [
             "b29d939b-2aca-491d-afe2-555cb9eaf52c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q008",
@@ -117,7 +124,8 @@
         "expected_chunk_ids": [
             "1103a381-6048-4eb1-91dc-648e1c971f2a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q009",
@@ -132,7 +140,8 @@
         "expected_chunk_ids": [
             "3f07a28a-12c7-4920-a937-8715be931a2a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q010",
@@ -147,7 +156,8 @@
         "expected_chunk_ids": [
             "d4e65074-f16a-4d97-88dc-4d91490bfe0c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q011",
@@ -162,7 +172,8 @@
         "expected_chunk_ids": [
             "a633a2bb-b808-4109-a446-7cf2d9d6e500"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q012",
@@ -177,7 +188,8 @@
         "expected_chunk_ids": [
             "e559eaca-404b-4649-b2c8-43d122660932"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q013",
@@ -192,7 +204,8 @@
         "expected_chunk_ids": [
             "d2a5ef59-c5a1-4354-b33d-119acd3dff04"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q014",
@@ -207,7 +220,8 @@
         "expected_chunk_ids": [
             "dd951893-9c61-48b4-b298-0949caf88787"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q015",
@@ -222,7 +236,8 @@
         "expected_chunk_ids": [
             "49a264a4-3e15-4b44-b60e-5c5b1deb590f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q016",
@@ -237,7 +252,8 @@
         "expected_chunk_ids": [
             "62f213a3-daca-48bf-92ce-ee0b80c58ce6"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q017",
@@ -252,7 +268,8 @@
         "expected_chunk_ids": [
             "59c0cd90-b0c6-4e24-995d-ea0c11981b5f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q018",
@@ -267,7 +284,8 @@
         "expected_chunk_ids": [
             "23cb1a16-440c-4e1b-86e1-2df34bdc355a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q019",
@@ -282,7 +300,8 @@
         "expected_chunk_ids": [
             "2f8aac1a-f9c8-445c-a95d-e02a0d2fa534"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q020",
@@ -299,7 +318,8 @@
             "8f7e686b-8cd1-4785-92cd-6d9078fcb51d",
             "3d56074d-25eb-4e22-baa8-850bab58a3bc"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q021",
@@ -314,7 +334,8 @@
         "expected_chunk_ids": [
             "6152ae28-0071-426b-8294-ce833ac34899"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q022",
@@ -329,7 +350,8 @@
         "expected_chunk_ids": [
             "2714af18-0592-49cd-91c0-9316e0448d2c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q023",
@@ -344,7 +366,8 @@
         "expected_chunk_ids": [
             "b96c6fbe-8528-47fe-8783-9177158b8af3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q024",
@@ -359,7 +382,8 @@
         "expected_chunk_ids": [
             "d1a89020-c59d-48fa-9df1-910df9ac7c37"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q025",
@@ -374,7 +398,8 @@
         "expected_chunk_ids": [
             "f3e68737-8adc-4859-b6ce-cc7fbfdc928a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q026",
@@ -389,7 +414,8 @@
         "expected_chunk_ids": [
             "3b2be379-76e3-4774-bbb2-32261602aa4f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q027",
@@ -404,7 +430,8 @@
         "expected_chunk_ids": [
             "8a18e045-8f95-47c9-9b64-8ca3f255ba3b"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q028",
@@ -419,7 +446,8 @@
         "expected_chunk_ids": [
             "b2c02b24-24c3-4632-96f7-10e182fb9a3e"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q029",
@@ -434,7 +462,8 @@
         "expected_chunk_ids": [
             "8ee47e91-8a6c-43cb-ae55-a76206a2237a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q030",
@@ -449,7 +478,8 @@
         "expected_chunk_ids": [
             "ef517f3e-9da7-46aa-85b4-8fbbdca43fdd"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "marca"
     },
     {
         "id": "q031",
@@ -464,7 +494,8 @@
         "expected_chunk_ids": [
             "745e41fa-3b81-4d5e-a172-91a932166281"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q032",
@@ -479,7 +510,8 @@
         "expected_chunk_ids": [
             "f83d8309-b9ea-4e28-bc6c-d32fa34b13ac"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q033",
@@ -494,7 +526,8 @@
         "expected_chunk_ids": [
             "60107231-8d5d-48f0-99d2-4c8f1bfce93b"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q034",
@@ -509,11 +542,12 @@
         "expected_chunk_ids": [
             "7f9a60e1-2e04-4ae1-8ad3-5ef950415ffd"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q035",
-        "query": "meu filho tem só 1 aninho, posso usar o amome nele numa boa?",
+        "query": "meu filho tem só 1 aninho, posso usar o amome nele?",
         "medicine_brand": "AMOME",
         "expected_medicine": "AMOME",
         "expected_sections": [
@@ -524,7 +558,8 @@
         "expected_chunk_ids": [
             "70592a43-8bc8-4a0f-ba4e-e8d483032ed8"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q036",
@@ -539,7 +574,8 @@
         "expected_chunk_ids": [
             "91394878-ea4b-4c11-a425-7cb39cdf5416"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q037",
@@ -554,7 +590,8 @@
         "expected_chunk_ids": [
             "d71d47e4-eb60-48a2-accb-267bf9ddeda4"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q038",
@@ -569,7 +606,8 @@
         "expected_chunk_ids": [
             "60107231-8d5d-48f0-99d2-4c8f1bfce93b"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q039",
@@ -584,7 +622,8 @@
         "expected_chunk_ids": [
             "38e8f0bb-83ac-46ca-b704-fd70b3910ea2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q040",
@@ -599,7 +638,8 @@
         "expected_chunk_ids": [
             "7c53c114-7a38-4821-b98f-c7e7a0c780d3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q041",
@@ -614,7 +654,8 @@
         "expected_chunk_ids": [
             "303ed786-a656-4d5a-ad77-4ac09fd6b9f5"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q042",
@@ -629,7 +670,8 @@
         "expected_chunk_ids": [
             "7506d31e-d1bc-4cfb-b6f2-948f47a6e3bf"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q043",
@@ -644,7 +686,8 @@
         "expected_chunk_ids": [
             "38e8f0bb-83ac-46ca-b704-fd70b3910ea2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q044",
@@ -659,7 +702,8 @@
         "expected_chunk_ids": [
             "9f3ce205-5f8e-4b47-9c4f-00339f012e3e"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q045",
@@ -674,7 +718,8 @@
         "expected_chunk_ids": [
             "67b03a82-24e3-4a15-a41a-0c75a5ec6881"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q046",
@@ -689,7 +734,8 @@
         "expected_chunk_ids": [
             "9e3df5d7-9952-4b8d-aa85-83a294ad6a9e"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q047",
@@ -704,7 +750,8 @@
         "expected_chunk_ids": [
             "7863e287-be6c-4511-a216-a51d33d51cd2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q048",
@@ -719,7 +766,8 @@
         "expected_chunk_ids": [
             "7aa1806d-6302-4856-b642-7f65f35771ae"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q049",
@@ -734,7 +782,8 @@
         "expected_chunk_ids": [
             "9e3df5d7-9952-4b8d-aa85-83a294ad6a9e"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q050",
@@ -749,7 +798,8 @@
         "expected_chunk_ids": [
             "2e1f2356-43d1-4520-8420-b6198fae2031"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q051",
@@ -764,7 +814,8 @@
         "expected_chunk_ids": [
             "a69ebdf5-9534-4ee7-babe-edbaba4cbcb4"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q052",
@@ -779,7 +830,8 @@
         "expected_chunk_ids": [
             "cfb25a91-c48d-4bf5-8292-1e8207c28f26"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q053",
@@ -794,7 +846,8 @@
         "expected_chunk_ids": [
             "7dbebe83-6118-4c5e-9d23-613518861315"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q054",
@@ -809,7 +862,8 @@
         "expected_chunk_ids": [
             "cc86a51d-aaea-432a-8156-d4f002fa6f93"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "negacao"
     },
     {
         "id": "q055",
@@ -824,7 +878,8 @@
         "expected_chunk_ids": [
             "cfb25a91-c48d-4bf5-8292-1e8207c28f26"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q056",
@@ -839,7 +894,8 @@
         "expected_chunk_ids": [
             "cc86a51d-aaea-432a-8156-d4f002fa6f93"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q057",
@@ -854,7 +910,8 @@
         "expected_chunk_ids": [
             "d3c5ede5-805a-44fa-bc37-6731e009da5b"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q058",
@@ -869,7 +926,8 @@
         "expected_chunk_ids": [
             "41e40f5c-05d9-4b74-a702-a7027320a733"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q059",
@@ -884,7 +942,8 @@
         "expected_chunk_ids": [
             "174ae002-f36f-4e84-8793-0ad7fd9922e8"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q060",
@@ -899,7 +958,8 @@
         "expected_chunk_ids": [
             "a58a32fe-4ef3-4304-84fa-4b6b58920cf6"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q061",
@@ -914,7 +974,8 @@
         "expected_chunk_ids": [
             "b82eda85-7929-4312-99af-86311f81ad54"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q062",
@@ -929,7 +990,8 @@
         "expected_chunk_ids": [
             "85d6b353-4b8e-4068-b398-51d07c0845f6"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q063",
@@ -944,7 +1006,8 @@
         "expected_chunk_ids": [
             "04e848a4-8b49-4f14-b116-2f5c4b377804"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q064",
@@ -959,7 +1022,8 @@
         "expected_chunk_ids": [
             "4e6b3591-bffd-460e-80e9-cf03c6915e12"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q065",
@@ -974,7 +1038,8 @@
         "expected_chunk_ids": [
             "39fd6255-c726-4753-9412-583298e21a25"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q066",
@@ -989,7 +1054,8 @@
         "expected_chunk_ids": [
             "c4c58e2d-dff3-499a-bec5-a4000e53babc"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q067",
@@ -1004,7 +1070,8 @@
         "expected_chunk_ids": [
             "06ccb7fb-72a8-4963-9e63-eaa807bea4b6"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q068",
@@ -1019,7 +1086,8 @@
         "expected_chunk_ids": [
             "0afd08c6-1c6c-4016-8f12-f31fccc4e177"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q069",
@@ -1034,7 +1102,8 @@
         "expected_chunk_ids": [
             "fb232672-81d1-4642-b9e5-3f1339b7ebce"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q070",
@@ -1049,7 +1118,8 @@
         "expected_chunk_ids": [
             "3e17859d-a545-4c6b-bd18-26052d8ab05c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q071",
@@ -1064,11 +1134,12 @@
         "expected_chunk_ids": [
             "17877dd3-a198-4e54-85ca-8181a16b94a6"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "secao_enganosa"
     },
     {
         "id": "q072",
-        "query": "tenho tendência a hemorragia, posso usar o trombofob gel numa boa?",
+        "query": "tenho tendência a hemorragia, posso usar o trombofob gel?",
         "medicine_brand": "TROMBOFOB GEL",
         "expected_medicine": "TROMBOFOB GEL",
         "expected_sections": [
@@ -1079,7 +1150,8 @@
         "expected_chunk_ids": [
             "6c6a50e5-d735-4cc0-bb82-0690a2dd4067"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q073",
@@ -1094,7 +1166,8 @@
         "expected_chunk_ids": [
             "b8b5a772-7a60-487b-84a9-9efa60e7d2d1"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q074",
@@ -1109,7 +1182,8 @@
         "expected_chunk_ids": [
             "36e3a840-b171-4568-847a-39494a473ee1"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q075",
@@ -1124,7 +1198,8 @@
         "expected_chunk_ids": [
             "18fc3cdb-32ae-49d4-8423-1b323ee3ed68"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q076",
@@ -1139,7 +1214,8 @@
         "expected_chunk_ids": [
             "c7850392-1227-464b-8d66-f60f2dcdc177"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q077",
@@ -1154,7 +1230,8 @@
         "expected_chunk_ids": [
             "81af8d56-1a20-40d8-a843-af9eff733f8b"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q078",
@@ -1169,7 +1246,8 @@
         "expected_chunk_ids": [
             "f7743403-629d-4a3f-bd18-012a75a0f969"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q079",
@@ -1184,7 +1262,8 @@
         "expected_chunk_ids": [
             "cf910ee3-c989-4151-8ad4-02eb07238e22"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q080",
@@ -1199,7 +1278,8 @@
         "expected_chunk_ids": [
             "f6ace09f-ad29-4ba1-8657-7e4e1db803cd"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q081",
@@ -1214,7 +1294,8 @@
         "expected_chunk_ids": [
             "3e7151ae-f777-4d4d-99e2-c61638be9677"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q082",
@@ -1229,11 +1310,12 @@
         "expected_chunk_ids": [
             "86b36648-1b32-4a05-b434-052e8a4448b4"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q083",
-        "query": "Tenho úlcera no estômago, posso tomar clopido-gran numa boa?",
+        "query": "Tenho úlcera no estômago, posso tomar clopido-gran?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
@@ -1244,7 +1326,8 @@
         "expected_chunk_ids": [
             "ed334105-da27-4da7-87e2-3eb9a5e322df"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q084",
@@ -1259,7 +1342,8 @@
         "expected_chunk_ids": [
             "308f8034-7152-42c5-99a0-c54c0aaf5353"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q085",
@@ -1274,7 +1358,8 @@
         "expected_chunk_ids": [
             "58358fcb-c5b9-49e1-a082-3c538cef425a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q086",
@@ -1289,7 +1374,8 @@
         "expected_chunk_ids": [
             "485411fc-b995-4f93-b3fe-ff190eacfdd8"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q087",
@@ -1304,7 +1390,8 @@
         "expected_chunk_ids": [
             "bfa3ebd9-c5fa-45ed-ac6f-0df0ad6593dd"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q088",
@@ -1319,11 +1406,12 @@
         "expected_chunk_ids": [
             "d9317466-d7b9-4151-bc92-612970834c2f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q089",
-        "query": "Descobri que tenho um problema nos rins, ainda dá pra usar o NIBISNU tranquilo?",
+        "query": "Descobri que tenho um problema nos rins, ainda dá pra usar o NIBISNU?",
         "medicine_brand": "NIBISNU",
         "expected_medicine": "NIBISNU",
         "expected_sections": [
@@ -1334,7 +1422,8 @@
         "expected_chunk_ids": [
             "885ccef0-6d14-49ac-b04f-0487ae553a0d"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q090",
@@ -1349,7 +1438,8 @@
         "expected_chunk_ids": [
             "a68244d3-7b6e-4a5a-a005-4a51d9456b7d"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q091",
@@ -1364,7 +1454,8 @@
         "expected_chunk_ids": [
             "aab72358-8fb1-4eac-86fa-cfdff2179fd2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q092",
@@ -1379,7 +1470,8 @@
         "expected_chunk_ids": [
             "5853afc4-9263-4516-b100-467d3e6f8840"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q093",
@@ -1394,7 +1486,8 @@
         "expected_chunk_ids": [
             "8dcf5d21-8717-49c9-ad0a-6169abe4bd10"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q094",
@@ -1409,11 +1502,12 @@
         "expected_chunk_ids": [
             "4df40f61-68e9-44ed-be56-27e5cfeec950"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q095",
-        "query": "tô grávida e com urgência pra urinar, posso tomar nourin tranquilo?",
+        "query": "tô grávida e com urgência pra urinar, posso tomar nourin?",
         "medicine_brand": "NOURIN",
         "expected_medicine": "NOURIN",
         "expected_sections": [
@@ -1424,7 +1518,8 @@
         "expected_chunk_ids": [
             "6303c92c-a6cd-44d9-9baa-cffe50b72934"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q096",
@@ -1439,7 +1534,8 @@
         "expected_chunk_ids": [
             "f5a3a6d4-ea1f-4dc3-bbcd-a7e7faf7236b"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q097",
@@ -1454,7 +1550,8 @@
         "expected_chunk_ids": [
             "c60ef173-be08-49bd-b838-7882849bf842"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q098",
@@ -1469,7 +1566,8 @@
         "expected_chunk_ids": [
             "b34c9352-7b04-49cf-886c-3dca4b0b822e"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q099",
@@ -1484,7 +1582,8 @@
         "expected_chunk_ids": [
             "3386afc5-9f77-4094-aa6a-fb0ffdbffc10"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q100",
@@ -1499,7 +1598,8 @@
         "expected_chunk_ids": [
             "060e0357-82a2-48d5-99b4-b0a60e8f6611"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q101",
@@ -1514,7 +1614,8 @@
         "expected_chunk_ids": [
             "99fe6dea-cc4f-4329-b57c-1c67ae29a9c3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q102",
@@ -1529,7 +1630,8 @@
         "expected_chunk_ids": [
             "f726196e-bde8-4b80-ac08-60d95b2b026a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q103",
@@ -1544,7 +1646,8 @@
         "expected_chunk_ids": [
             "7d4bff83-9962-4115-9ac3-ce4b7267addc"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q104",
@@ -1559,7 +1662,8 @@
         "expected_chunk_ids": [
             "ece4ccb4-bfbd-431c-803f-11b6a3e173f0"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q105",
@@ -1574,11 +1678,12 @@
         "expected_chunk_ids": [
             "1a42470b-77fe-40f1-ba98-1ebc6c3eb175"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q106",
-        "query": "se eu tomo o montelucaste todo dia, não preciso mais andar com a bombinha de resgate, né?",
+        "query": "se eu tomo o montelucaste todo dia, não preciso mais andar com a bombinha de resgate?",
         "medicine_brand": null,
         "expected_medicine": "montelucaste de sodio",
         "expected_sections": [
@@ -1589,7 +1694,8 @@
         "expected_chunk_ids": [
             "8c419d99-4d9c-4543-a7d2-80c3a1e82d2b"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "negacao"
     },
     {
         "id": "q107",
@@ -1604,7 +1710,8 @@
         "expected_chunk_ids": [
             "b5cdb1b6-67ab-41ed-a92a-3bb6e46d1349"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q108",
@@ -1619,7 +1726,8 @@
         "expected_chunk_ids": [
             "686fb357-a7b6-49da-8c25-078817c53f26"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q109",
@@ -1634,7 +1742,8 @@
         "expected_chunk_ids": [
             "1a42470b-77fe-40f1-ba98-1ebc6c3eb175"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q110",
@@ -1649,7 +1758,8 @@
         "expected_chunk_ids": [
             "e4b5b279-7e06-4798-a6ed-eeeb4e7195e8"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q111",
@@ -1664,7 +1774,8 @@
         "expected_chunk_ids": [
             "c8bc7bec-d9c9-45de-bed1-8764b1d07fb0"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q112",
@@ -1679,7 +1790,8 @@
         "expected_chunk_ids": [
             "b3624e74-e8f1-4537-b68d-a2e7afe4fdce"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q113",
@@ -1694,7 +1806,8 @@
         "expected_chunk_ids": [
             "aa2fc0d3-b0d2-4192-9b38-e6cae78b1ce5"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q114",
@@ -1709,7 +1822,8 @@
         "expected_chunk_ids": [
             "0001151a-52ba-4549-95c5-890298b073e0"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q115",
@@ -1724,7 +1838,8 @@
         "expected_chunk_ids": [
             "527ec6f8-982b-4e5a-ae06-ffbcd2087e23"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q116",
@@ -1739,7 +1854,8 @@
         "expected_chunk_ids": [
             "c7f9f613-d2dc-4721-b0f1-5d1758e0d181"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q117",
@@ -1754,11 +1870,12 @@
         "expected_chunk_ids": [
             "5a4ec7b6-7c38-4fa5-9214-278df16fcdcc"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "principio_ativo"
     },
     {
         "id": "q118",
-        "query": "esse clonidin é daqueles remédios que eu mesmo tomo em casa por conta própria, né?",
+        "query": "esse clonidin é daqueles remédios que eu posso tomar em casa por conta própria?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1769,11 +1886,12 @@
         "expected_chunk_ids": [
             "964a0603-d56e-4c6b-9121-ab4b2e0a181f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q119",
-        "query": "sou alérgico à clonidina, mesmo assim posso usar esse remédio numa boa?",
+        "query": "sou alérgico à clonidina, mesmo assim posso usar esse remédio?",
         "medicine_brand": "CLONIDIN",
         "expected_medicine": "CLONIDIN",
         "expected_sections": [
@@ -1784,7 +1902,8 @@
         "expected_chunk_ids": [
             "a637950e-7f2c-4dd1-b6fc-e29ceca5abf0"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "principio_ativo"
     },
     {
         "id": "q120",
@@ -1799,7 +1918,8 @@
         "expected_chunk_ids": [
             "e9de8d64-7dff-4399-9e8b-494d8f3755d3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q121",
@@ -1814,7 +1934,8 @@
         "expected_chunk_ids": [
             "e9de8d64-7dff-4399-9e8b-494d8f3755d3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q122",
@@ -1829,11 +1950,12 @@
         "expected_chunk_ids": [
             "a668da18-7605-4848-9fd4-9699f03999ca"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q123",
-        "query": "Quem tem problema no fígado não pode tomar isoniazida, né?",
+        "query": "Quem tem problema no fígado não pode tomar isoniazida?",
         "medicine_brand": "FARMANGUINHOS - ISONIAZIDA",
         "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
         "expected_sections": [
@@ -1844,7 +1966,8 @@
         "expected_chunk_ids": [
             "35fa12c2-345a-4b97-8574-71e3128a37f6"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "negacao"
     },
     {
         "id": "q124",
@@ -1859,7 +1982,8 @@
         "expected_chunk_ids": [
             "cc043920-233a-4d4a-888e-d8f8fca96275"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q125",
@@ -1874,7 +1998,8 @@
         "expected_chunk_ids": [
             "11e10d75-0746-403c-a532-2cda2a318a74"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q126",
@@ -1889,7 +2014,8 @@
         "expected_chunk_ids": [
             "3288ebfc-7a75-4eb0-930e-1e9d7f9e15e2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q127",
@@ -1904,7 +2030,8 @@
         "expected_chunk_ids": [
             "d109f118-6c2c-4024-b37e-0083398c07cb"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q128",
@@ -1919,7 +2046,8 @@
         "expected_chunk_ids": [
             "c57c29f8-1458-4be0-a847-8c60289ffe58"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q129",
@@ -1934,7 +2062,8 @@
         "expected_chunk_ids": [
             "33eee323-7cf1-4791-b648-2029c4a914bf"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q130",
@@ -1949,7 +2078,8 @@
         "expected_chunk_ids": [
             "150c0f74-5f3d-4ca0-bd1e-eebf847735fe"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q131",
@@ -1964,7 +2094,8 @@
         "expected_chunk_ids": [
             "655adbf8-5c6c-4251-a8cb-778e015fd220"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q132",
@@ -1979,7 +2110,8 @@
         "expected_chunk_ids": [
             "c57c29f8-1458-4be0-a847-8c60289ffe58"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q133",
@@ -1994,7 +2126,8 @@
         "expected_chunk_ids": [
             "f0aec004-c40e-4bb2-9547-6b1ad4f24848"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q134",
@@ -2009,11 +2142,12 @@
         "expected_chunk_ids": [
             "1b8686b7-2dbb-49a6-a72c-64194fd0709a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q135",
-        "query": "o isoforine é usado pra fazer anestesia geral, né?",
+        "query": "o isoforine é usado pra fazer anestesia geral?",
         "medicine_brand": "ISOFORINE",
         "expected_medicine": "ISOFORINE",
         "expected_sections": [
@@ -2024,7 +2158,8 @@
         "expected_chunk_ids": [
             "1cb64d87-ab58-4fb9-856c-7b92bed4ab5f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q136",
@@ -2039,7 +2174,8 @@
         "expected_chunk_ids": [
             "182198e2-1ea8-487f-8e43-8cb884b59ba3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q137",
@@ -2054,7 +2190,8 @@
         "expected_chunk_ids": [
             "b4af46e3-4332-4218-b429-740aa762b430"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "negacao"
     },
     {
         "id": "q138",
@@ -2069,7 +2206,8 @@
         "expected_chunk_ids": [
             "1cb64d87-ab58-4fb9-856c-7b92bed4ab5f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q139",
@@ -2084,7 +2222,8 @@
         "expected_chunk_ids": [
             "b4af46e3-4332-4218-b429-740aa762b430"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q140",
@@ -2099,7 +2238,8 @@
         "expected_chunk_ids": [
             "107d71e9-1c06-45c5-8d7a-fc5e83234243"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q141",
@@ -2114,11 +2254,12 @@
         "expected_chunk_ids": [
             "247d0896-3a07-4090-9ba9-c1d0ad84b28d"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q142",
-        "query": "quem tá com o potássio baixo no sangue pode tomar furosantisa numa boa, né?",
+        "query": "quem tá com o potássio baixo no sangue pode tomar furosantisa?",
         "medicine_brand": "FUROSANTISA",
         "expected_medicine": "FUROSANTISA",
         "expected_sections": [
@@ -2129,7 +2270,8 @@
         "expected_chunk_ids": [
             "028d9094-6d2c-49df-bc72-1d872e9d9bef"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q143",
@@ -2144,7 +2286,8 @@
         "expected_chunk_ids": [
             "e26b1fda-d3e5-4234-a33a-92ad9da5246a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q144",
@@ -2159,7 +2302,8 @@
         "expected_chunk_ids": [
             "ecc640c1-be61-4e6a-a6c5-47be022b7a0e"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q145",
@@ -2174,7 +2318,8 @@
         "expected_chunk_ids": [
             "7027b0ee-c21d-4ed8-adb8-389357fca96f"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q146",
@@ -2189,7 +2334,8 @@
         "expected_chunk_ids": [
             "7bb26583-7063-450c-9dc7-7da31dfb65c9"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q147",
@@ -2204,7 +2350,8 @@
         "expected_chunk_ids": [
             "27fe9ed7-b11f-470d-8d1f-fb8a7d4f0f9d"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "giria"
     },
     {
         "id": "q148",
@@ -2219,11 +2366,12 @@
         "expected_chunk_ids": [
             "c1bad48c-5836-42f1-9d91-b6cb4c50cde2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q149",
-        "query": "tenho glaucoma, então dá pra tomar miosan odt numa boa?",
+        "query": "tenho glaucoma, então dá pra tomar miosan odt?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
@@ -2234,7 +2382,8 @@
         "expected_chunk_ids": [
             "f2936cd8-9d67-42b2-9a1f-410a45d03871"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q150",
@@ -2249,7 +2398,8 @@
         "expected_chunk_ids": [
             "628d5363-d131-421a-a165-ab3dddf13ed6"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q151",
@@ -2264,7 +2414,8 @@
         "expected_chunk_ids": [
             "eeee41b7-c6ed-432a-9ae6-d966784799a7"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q152",
@@ -2279,7 +2430,8 @@
         "expected_chunk_ids": [
             "50c7dc36-cbba-400b-aa25-4d644301ceed"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q153",
@@ -2294,7 +2446,8 @@
         "expected_chunk_ids": [
             "b4103601-2795-413a-80af-c53f07ca1123"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q154",
@@ -2309,7 +2462,8 @@
         "expected_chunk_ids": [
             "72639296-739f-4d0f-91f2-565b69d15a12"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q155",
@@ -2324,7 +2478,8 @@
         "expected_chunk_ids": [
             "f1fbd819-1503-43fb-87b9-c981e4321313"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q156",
@@ -2339,7 +2494,8 @@
         "expected_chunk_ids": [
             "f43e9829-6470-429f-85d1-6d090af9a6d1"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q157",
@@ -2354,7 +2510,8 @@
         "expected_chunk_ids": [
             "50c7dc36-cbba-400b-aa25-4d644301ceed"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q158",
@@ -2369,7 +2526,8 @@
         "expected_chunk_ids": [
             "09941da1-f470-420b-8f7d-d77331b68df1"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q159",
@@ -2384,7 +2542,8 @@
         "expected_chunk_ids": [
             "9886e921-28dd-4044-bb6b-af9ab5442f25"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q160",
@@ -2399,7 +2558,8 @@
         "expected_chunk_ids": [
             "1610912f-2d3f-4f11-9cd9-383850e61071"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q161",
@@ -2414,7 +2574,8 @@
         "expected_chunk_ids": [
             "cb4f58e9-a428-4900-a283-186b99c4a8eb"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q162",
@@ -2429,7 +2590,8 @@
         "expected_chunk_ids": [
             "2d5fa9ec-0d63-40bb-86b2-ede549378622"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q163",
@@ -2444,7 +2606,8 @@
         "expected_chunk_ids": [
             "9886e921-28dd-4044-bb6b-af9ab5442f25"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q164",
@@ -2459,7 +2622,8 @@
         "expected_chunk_ids": [
             "8e134230-1b3e-4a96-b708-c1c9cf891718"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q165",
@@ -2474,7 +2638,8 @@
         "expected_chunk_ids": [
             "7a87f72e-2614-4f32-bf58-3340b5b36115"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q166",
@@ -2489,11 +2654,12 @@
         "expected_chunk_ids": [
             "2c480987-a27c-464c-81f8-c0e25772e194"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q167",
-        "query": "se eu esquecer uma dose do aceclofenaco, não tem problema tomar o dobro na próxima, né?",
+        "query": "se eu esquecer uma dose do aceclofenaco, não tem problema tomar o dobro na próxima?",
         "medicine_brand": null,
         "expected_medicine": "ACECLOFENACO",
         "expected_sections": [
@@ -2504,7 +2670,8 @@
         "expected_chunk_ids": [
             "532441fd-f955-4b30-87d6-c66e8451bbe8"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "negacao"
     },
     {
         "id": "q168",
@@ -2519,7 +2686,8 @@
         "expected_chunk_ids": [
             "8e134230-1b3e-4a96-b708-c1c9cf891718"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q169",
@@ -2534,7 +2702,8 @@
         "expected_chunk_ids": [
             "953e8352-4fb9-48f3-ad0b-77f766f574ae"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q170",
@@ -2549,7 +2718,8 @@
         "expected_chunk_ids": [
             "547ea5a2-eea9-465d-9077-4cddc9ed19e4"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q171",
@@ -2564,11 +2734,12 @@
         "expected_chunk_ids": [
             "a41dc174-5c77-44f8-af41-54002cbcb8a7"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q172",
-        "query": "não tem problema dar frenotosse pro meu bebê de 1 ano, né?",
+        "query": "não tem problema dar frenotosse pro meu bebê de 1 ano?",
         "medicine_brand": "FRENOTOSSE",
         "expected_medicine": "FRENOTOSSE",
         "expected_sections": [
@@ -2579,7 +2750,8 @@
         "expected_chunk_ids": [
             "3ae7ad6f-fcfd-4ae1-904e-7ac963ecb131"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "negacao"
     },
     {
         "id": "q173",
@@ -2594,7 +2766,8 @@
         "expected_chunk_ids": [
             "ea53fe0b-7782-4ce5-ba3f-0c60ba796692"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q174",
@@ -2609,7 +2782,8 @@
         "expected_chunk_ids": [
             "799d67fb-d6f3-4708-a471-14ef45d60199"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q175",
@@ -2624,7 +2798,8 @@
         "expected_chunk_ids": [
             "547ea5a2-eea9-465d-9077-4cddc9ed19e4"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q176",
@@ -2639,11 +2814,12 @@
         "expected_chunk_ids": [
             "6b830366-84d1-4b08-bcfe-27053d843e61"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q177",
-        "query": "o Transpulmin ajuda a soltar o catarro mesmo né?",
+        "query": "o Transpulmin ajuda a soltar o catarro mesmo?",
         "medicine_brand": "TRANSPULMIN XAROPE INFANTIL",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -2654,7 +2830,8 @@
         "expected_chunk_ids": [
             "567283b7-f49c-40d4-9328-ab0f8347d8f3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q178",
@@ -2669,7 +2846,8 @@
         "expected_chunk_ids": [
             "0362aef3-c773-4e42-966c-be1cc7b57c70"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q179",
@@ -2684,7 +2862,8 @@
         "expected_chunk_ids": [
             "e0945af1-7ac2-46ba-9769-a04326f9c88c"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q180",
@@ -2699,7 +2878,8 @@
         "expected_chunk_ids": [
             "d8cc21ba-ad29-425f-82b5-5cdb0ad8fd51"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q181",
@@ -2714,7 +2894,8 @@
         "expected_chunk_ids": [
             "33a64f50-dc50-45c8-a56c-491d85c16ada"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q182",
@@ -2729,7 +2910,8 @@
         "expected_chunk_ids": [
             "2785387d-086e-4326-99a8-eec2bc8898df"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q183",
@@ -2744,11 +2926,12 @@
         "expected_chunk_ids": [
             "4b3841a8-3dc5-489b-a280-be20216db7af"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q184",
-        "query": "tive câncer de mama uns anos atrás, posso tomar tibolona numa boa?",
+        "query": "tive câncer de mama uns anos atrás, posso tomar tibolona?",
         "medicine_brand": null,
         "expected_medicine": "tibolona",
         "expected_sections": [
@@ -2759,7 +2942,8 @@
         "expected_chunk_ids": [
             "0aca235f-6242-44b7-8009-b2f6ec16dde2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q185",
@@ -2774,7 +2958,8 @@
         "expected_chunk_ids": [
             "6c331a24-facf-4d51-961f-b096497d4acb"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q186",
@@ -2789,7 +2974,8 @@
         "expected_chunk_ids": [
             "b66d520d-6746-49ec-a674-b032721a3412"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q187",
@@ -2804,7 +2990,8 @@
         "expected_chunk_ids": [
             "af13a8d5-98c1-4bfd-a1d9-88f3e5d3e24a"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q188",
@@ -2819,7 +3006,8 @@
         "expected_chunk_ids": [
             "fd549c22-b648-4f43-96bf-fc9e90645b71"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q189",
@@ -2834,7 +3022,8 @@
         "expected_chunk_ids": [
             "8ae0ed93-895f-41a0-8b9c-cf3fd5950f62"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q190",
@@ -2849,7 +3038,8 @@
         "expected_chunk_ids": [
             "1a440440-7758-49e3-a329-d05001c4ac61"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q191",
@@ -2864,7 +3054,8 @@
         "expected_chunk_ids": [
             "a57b2263-7508-4e9f-bb39-be75936b0e78"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q192",
@@ -2879,7 +3070,8 @@
         "expected_chunk_ids": [
             "fd549c22-b648-4f43-96bf-fc9e90645b71"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q193",
@@ -2894,7 +3086,8 @@
         "expected_chunk_ids": [
             "f7cd9eaa-a5a5-46b5-8a10-9ab79b841bfb"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q194",
@@ -2909,7 +3102,8 @@
         "expected_chunk_ids": [
             "56eca8ea-40ba-4bed-8f61-50c418b76fb7"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q195",
@@ -2924,7 +3118,8 @@
         "expected_chunk_ids": [
             "9cdcafad-db22-4fe3-a72d-77e145c85fa1"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q196",
@@ -2939,7 +3134,8 @@
         "expected_chunk_ids": [
             "711ae001-1f5d-4934-8751-18c2a5031ae3"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q197",
@@ -2954,7 +3150,8 @@
         "expected_chunk_ids": [
             "3b7c9ffd-888c-433a-85b5-8e7a562bdf78"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "representativa"
     },
     {
         "id": "q198",
@@ -2969,7 +3166,8 @@
         "expected_chunk_ids": [
             "5fe24aa6-2789-4ebf-91c8-1ae963ef7de2"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q199",
@@ -2984,11 +3182,12 @@
         "expected_chunk_ids": [
             "9857805e-43a7-4baf-95cf-1aaacf9012d8"
         ],
-        "validation": null
+        "validation": null,
+        "stress_category": "fidelidade"
     },
     {
         "id": "q200",
-        "query": "O CLOPIDO-GRAN não é contraindicado pra quem tem úlcera no estômago, né?",
+        "query": "O CLOPIDO-GRAN não é contraindicado pra quem tem úlcera no estômago?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
@@ -3020,7 +3219,7 @@
     },
     {
         "id": "q202",
-        "query": "Como o CLOPIDO-GRAN tem um antídoto pra reverter a superdose, dá pra ficar tranquilo se eu acabar tomando demais?",
+        "query": "Como o CLOPIDO-GRAN tem um antídoto pra reverter a superdose, não preciso me preocupar se eu acabar tomando demais?",
         "medicine_brand": "CLOPIDO-GRAN",
         "expected_medicine": "CLOPIDO-GRAN",
         "expected_sections": [
@@ -3084,7 +3283,7 @@
     },
     {
         "id": "q206",
-        "query": "O Amome não é contraindicado pra bebê de 1 ano de idade, né? Pode pingar no narizinho dele numa boa?",
+        "query": "O Amome não é contraindicado pra bebê de 1 ano de idade? Pode pingar no narizinho dele?",
         "medicine_brand": "Amome",
         "expected_medicine": "AMOME",
         "expected_sections": [
@@ -3244,7 +3443,7 @@
     },
     {
         "id": "q216",
-        "query": "O montelucaste não é contraindicado pra quem tem alergia a algum componente dele, né?",
+        "query": "O montelucaste não é contraindicado pra quem tem alergia a algum componente dele?",
         "medicine_brand": null,
         "expected_medicine": "montelucaste de sodio",
         "expected_sections": [
@@ -3533,7 +3732,7 @@
     },
     {
         "id": "q234",
-        "query": "A mupirocina não é contraindicada pra quem já teve alergia a ela, né?",
+        "query": "A mupirocina não é contraindicada pra quem já teve alergia a ela?",
         "medicine_brand": "MUPIROCINA",
         "expected_medicine": "MUPIROCINA",
         "expected_sections": [
@@ -3709,7 +3908,7 @@
     },
     {
         "id": "q245",
-        "query": "O Adorlan não é contraindicado pra quem tem alergia ao diclofenaco, né? Dá pra tomar numa boa?",
+        "query": "O Adorlan não é contraindicado pra quem tem alergia ao diclofenaco? Dá pra tomar?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -3725,7 +3924,7 @@
     },
     {
         "id": "q246",
-        "query": "Se a pessoa exagerar no Adorlan e intoxicar, fazer só hemodiálise não adianta pra tirar o tramadol do corpo, né?",
+        "query": "Se a pessoa exagerar no Adorlan e intoxicar, fazer só hemodiálise não adianta pra tirar o tramadol do corpo?",
         "medicine_brand": "ADORLAN",
         "expected_medicine": "ADORLAN",
         "expected_sections": [
@@ -3855,7 +4054,7 @@
     },
     {
         "id": "q254",
-        "query": "Pra quem tem problema no coração, o Medato não é contraindicado, né?",
+        "query": "Pra quem tem problema no coração, o Medato não é contraindicado?",
         "medicine_brand": "Medato",
         "expected_medicine": "MEDATO",
         "expected_sections": [
@@ -3871,7 +4070,7 @@
     },
     {
         "id": "q255",
-        "query": "Não é verdade que não posso beber álcool tomando Medato, né?",
+        "query": "Não é verdade que não posso beber álcool tomando Medato?",
         "medicine_brand": "Medato",
         "expected_medicine": "MEDATO",
         "expected_sections": [
@@ -3935,7 +4134,7 @@
     },
     {
         "id": "q259",
-        "query": "O Transpulmin xarope infantil não tem contraindicação nenhuma pra bebê de 1 ano, né?",
+        "query": "O Transpulmin xarope infantil não tem contraindicação nenhuma pra bebê de 1 ano?",
         "medicine_brand": "Transpulmin xarope infantil",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -3951,7 +4150,7 @@
     },
     {
         "id": "q260",
-        "query": "Não dá pra dizer que o Transpulmin xarope infantil é seguro pra quem tem porfiria, né?",
+        "query": "Não dá pra dizer que o Transpulmin xarope infantil é seguro pra quem tem porfiria?",
         "medicine_brand": "Transpulmin xarope infantil",
         "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
         "expected_sections": [
@@ -4369,7 +4568,7 @@
     },
     {
         "id": "q286",
-        "query": "Posso pegar o carro e sair dirigindo numa boa logo depois de tomar MIOSAN ODT?",
+        "query": "Posso pegar o carro e sair dirigindo logo depois de tomar MIOSAN ODT?",
         "medicine_brand": "MIOSAN ODT",
         "expected_medicine": "MIOSAN ODT",
         "expected_sections": [
@@ -4401,7 +4600,7 @@
     },
     {
         "id": "q288",
-        "query": "Quem tem problema no figado pode tomar Mirtax numa boa, ou precisa de cuidado porque esse remedio e processado pelo figado?",
+        "query": "Quem tem problema no fígado pode tomar Mirtax, ou precisa de cuidado porque esse remédio é processado pelo fígado?",
         "medicine_brand": "Mirtax",
         "expected_medicine": "MIRTAX",
         "expected_sections": [

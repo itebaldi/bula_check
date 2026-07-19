@@ -11,6 +11,7 @@ from bula_check.agents.protocol import BulaCheckConfig
 from bula_check.agents.protocol import LLMProvider
 from bula_check.evaluate import ExpectedResult
 from bula_check.evaluate import evaluate_results
+from bula_check.evaluate import print_stress_breakdown
 
 load_dotenv()
 
@@ -137,4 +138,5 @@ def test_evaluate_results(
     rag = "rag" if with_rag else "withoutRag"
     name = f"{rag}_{idx}"
     results_path = Path(f"outputs/evaluation/results/{name}.json")
-    evaluate_results(cfg, graph, items, results_path)
+    summary = evaluate_results(cfg, graph, items, results_path)
+    print_stress_breakdown(summary)

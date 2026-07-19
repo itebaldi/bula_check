@@ -380,9 +380,9 @@ def _score_medicine_match(
     return max(brand_score, ai_score)
 
 
-def normalize_text(text: str) -> str:
+def normalize_text(text: str | None) -> str:
     return pipe(
-        text,
+        text or "",
         uppercase_text,
         remove_text_accents,
         # remove_text_punctuation,

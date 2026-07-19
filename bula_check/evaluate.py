@@ -68,15 +68,25 @@ def evaluate_results(
     """
     answer_rows: list[dict[str, Any]] = []
     retrieval_rows: list[dict[str, float]] = []
+    slices: list[str] = []  # fatia de cada item: stress_category ou "representative"
+    ids: list[str] = []
 
     bulagratis_conn = _open_db(config["bulagratis_db_path"])
 
     try:
         for item in items:
+            ids.append(item.id)
+            slices.append(item.stress_category or "representative")
             state = make_initial_state(config)
             state["messages"].append(HumanMessage(content=item.query))
 
-            final_state = graph.invoke(state)  # type: ignore
+            try:
+                final_state = graph.invoke(state)  # type: ignore
+            except Exception as error:
+                # Um item que quebra o pipeline não deve abortar o benchmark
+                # inteiro; registra como miss total e segue.
+                print(f"[eval] falha no item {item.id}: {error}")
+                final_state = {}
 
             selected_medicine = final_state.get("selected_medicine")
             retrieved_chunks = final_state.get("retrieved_chunks", [])
@@ -173,79 +183,34 @@ def evaluate_results(
     finally:
         bulagratis_conn.close()
 
-    total = len(answer_rows)
+    summary = _aggregate(answer_rows, retrieval_rows)
 
-    summary: dict[str, Any] = {
-        "medicine_accuracy": sum(row["medicine_correct"] for row in answer_rows)
-        / total,
-        "section_accuracy": sum(row["section_correct"] for row in answer_rows)
-        / total,
-        "verdict_accuracy": sum(row["verdict_correct"] for row in answer_rows)
-        / total,
-    }
+    # Fatiamento para diagnóstico: mostra ONDE a falha se concentra (por modo de
+    # falha adversarial e representativas vs desafio) sem re-rodar o pipeline.
+    groups: dict[str, list[int]] = {}
+    for i, slice_name in enumerate(slices):
+        groups.setdefault(slice_name, []).append(i)
 
-    # Métricas de IR são médias por questão; vp/fp/vn/fn são contagens somadas
-    # (pooled/micro) entre as questões para formar a matriz de confusão de chunks.
-    confusion_keys = {"vp", "fp", "vn", "fn"}
-    chunk_totals = {"vp": 0, "fp": 0, "vn": 0, "fn": 0}
-    if retrieval_rows:
-        for key in retrieval_rows[0]:
-            column_sum = sum(row[key] for row in retrieval_rows)
-            if key in confusion_keys:
-                chunk_totals[key] = int(column_sum)
-            else:
-                summary[key] = column_sum / total
-
-        # Matriz de confusão de chunks — MICRO: soma das contagens de TODAS as
-        # questões (cada decisão-por-chunk pesa igual). Linhas = real
-        # (relevante/não); colunas = previsto (recuperado/não).
-        summary["chunk_confusion_matrix_micro"] = {
-            "relevante": {
-                "recuperado": chunk_totals["vp"],  # VP
-                "nao_recuperado": chunk_totals["fn"],  # FN
-            },
-            "nao_relevante": {
-                "recuperado": chunk_totals["fp"],  # FP
-                "nao_recuperado": chunk_totals["vn"],  # VN
-            },
-        }
-
-        # Precision/recall/F1 MICRO, derivados da matriz micro (pooled), para a
-        # matriz micro ser internamente reconciliável: quem recalcular P da
-        # matriz acha exatamente este número. As métricas semantic_* SEM sufixo
-        # são MACRO (média por questão, padrão TREC) e ponderam cada query 1/N;
-        # as _micro ponderam por tamanho do conjunto relevante/recuperado. F1
-        # micro = média harmônica de P e R POOLED (não a média dos f1_q, que
-        # seria matematicamente sem sentido). MAP/MRR/hit@1 NÃO têm versão micro
-        # — dependem do rank intra-query, que a matriz de contagens descarta.
-        vp_t, fp_t, fn_t = chunk_totals["vp"], chunk_totals["fp"], chunk_totals["fn"]
-        vn_t = chunk_totals["vn"]
-        precision_micro = vp_t / (vp_t + fp_t) if (vp_t + fp_t) else 0.0
-        recall_micro = vp_t / (vp_t + fn_t) if (vp_t + fn_t) else 0.0
-        summary["semantic_precision_micro"] = precision_micro
-        summary["semantic_recall_micro"] = recall_micro
-        summary["semantic_f1_micro"] = _harmonic_mean(precision_micro, recall_micro)
-
-        # Total de documentos (decisões chunk×query) analisados = soma das 4
-        # células da matriz micro = Σ N_q (pool pontuado por questão, somado).
-        chunk_total_docs = vp_t + fp_t + fn_t + vn_t
-        summary["chunk_total_docs"] = chunk_total_docs
-        # Acurácia de retrieval (chunk-level, micro) = (VP+VN)/total. CAVEAT: é
-        # dominada pelo VN (tende a ≈1, pouco informativa) e NÃO é comparável
-        # entre configs — o VN colapsa para 0 quando não há medicamento
-        # selecionado (baseline). É só o fechamento da matriz; para qualidade de
-        # busca use recall/precision/MRR.
-        summary["chunk_accuracy"] = (
-            (vp_t + vn_t) / chunk_total_docs if chunk_total_docs else 0.0
+    def _slice(idxs: list[int]) -> dict[str, Any]:
+        return _aggregate(
+            [answer_rows[i] for i in idxs],
+            [retrieval_rows[i] for i in idxs],
         )
 
-    # Matriz de confusão DO SISTEMA: sobre o veredito final. Cada questão é 1
-    # amostra → contagem direta sobre o dataset (sem ambiguidade micro/macro).
-    # 3x3 (descritiva, com inconclusive) + 2x2 (binária V/F, foco do artigo).
-    verdict_pairs = [
-        (row["expected_verdict"], row["predicted_verdict"]) for row in answer_rows
-    ]
-    summary["verdict_confusion_matrix"] = _verdict_confusion_matrix(verdict_pairs)
+    summary["by_stress_category"] = {
+        name: _slice(idxs) for name, idxs in sorted(groups.items())
+    }
+    # baseline = questões plain (sem padrão-desafio). Aceita None (legado) e
+    # "representativa" (rótulo explícito das representativas classificadas).
+    baseline = {"representative", "representativa"}
+    summary["stress_vs_representative"] = {
+        "representative": _slice(
+            [i for i, s in enumerate(slices) if s in baseline]
+        ),
+        "stress": _slice(
+            [i for i, s in enumerate(slices) if s not in baseline]
+        ),
+    }
 
     summary["config"] = {
         "llm_provider": str(config["llm_provider"]),
@@ -257,10 +222,155 @@ def evaluate_results(
         "semantic_weight": config["semantic_weight"],
     }
 
+    # Detalhe por questão → permite re-fatiar a análise offline (por categoria,
+    # veredito, medicamento) sem re-invocar o grafo (que custa OpenAI).
+    item_details = [
+        {
+            "id": ids[i],
+            "stress_category": (
+                None if slices[i] == "representative" else slices[i]
+            ),
+            "medicine_correct": answer_rows[i]["medicine_correct"],
+            "section_correct": answer_rows[i]["section_correct"],
+            "verdict_correct": answer_rows[i]["verdict_correct"],
+            "expected_verdict": answer_rows[i]["expected_verdict"],
+            "predicted_verdict": answer_rows[i]["predicted_verdict"],
+            "semantic_recall": retrieval_rows[i].get("semantic_recall"),
+            "semantic_hit_at_1": retrieval_rows[i].get("semantic_hit_at_1"),
+        }
+        for i in range(len(answer_rows))
+    ]
+
     if results_path:
         _to_json(summary, results_path)
+        _to_json(item_details, _items_path(results_path))
 
     return summary
+
+
+def _items_path(results_path: str | Path) -> Path:
+    """Caminho do detalhe por item: {name}.json -> {name}_items.json."""
+    path = Path(results_path)
+    return path.with_name(f"{path.stem}_items.json")
+
+
+def _aggregate(
+    answer_rows: list[dict[str, Any]],
+    retrieval_rows: list[dict[str, float]],
+) -> dict[str, Any]:
+    """
+    Agrega as métricas de um conjunto de questões (answer/retrieval rows
+    index-alinhados). Usado tanto para o summary global quanto para cada fatia
+    (stress_category / representativas vs desafio). Retorna {} com n=0 se vazio.
+
+    - accuracies (medicine/section/verdict): média por questão.
+    - semantic_* (sem sufixo): MACRO (média por questão, padrão TREC).
+    - semantic_*_micro + matriz de chunks: MICRO (contagens vp/fp/vn/fn somadas).
+    """
+    total = len(answer_rows)
+    if total == 0:
+        return {"n": 0}
+
+    out: dict[str, Any] = {
+        "n": total,
+        "medicine_accuracy": sum(r["medicine_correct"] for r in answer_rows) / total,
+        "section_accuracy": sum(r["section_correct"] for r in answer_rows) / total,
+        "verdict_accuracy": sum(r["verdict_correct"] for r in answer_rows) / total,
+    }
+
+    confusion_keys = {"vp", "fp", "vn", "fn"}
+    chunk_totals = {"vp": 0, "fp": 0, "vn": 0, "fn": 0}
+    if retrieval_rows:
+        for key in retrieval_rows[0]:
+            column_sum = sum(row[key] for row in retrieval_rows)
+            if key in confusion_keys:
+                chunk_totals[key] = int(column_sum)
+            else:
+                out[key] = column_sum / total
+
+        out["chunk_confusion_matrix_micro"] = {
+            "relevante": {
+                "recuperado": chunk_totals["vp"],  # VP
+                "nao_recuperado": chunk_totals["fn"],  # FN
+            },
+            "nao_relevante": {
+                "recuperado": chunk_totals["fp"],  # FP
+                "nao_recuperado": chunk_totals["vn"],  # VN
+            },
+        }
+
+        vp_t, fp_t, fn_t = chunk_totals["vp"], chunk_totals["fp"], chunk_totals["fn"]
+        vn_t = chunk_totals["vn"]
+        precision_micro = vp_t / (vp_t + fp_t) if (vp_t + fp_t) else 0.0
+        recall_micro = vp_t / (vp_t + fn_t) if (vp_t + fn_t) else 0.0
+        out["semantic_precision_micro"] = precision_micro
+        out["semantic_recall_micro"] = recall_micro
+        out["semantic_f1_micro"] = _harmonic_mean(precision_micro, recall_micro)
+
+        chunk_total_docs = vp_t + fp_t + fn_t + vn_t
+        out["chunk_total_docs"] = chunk_total_docs
+        out["chunk_accuracy"] = (
+            (vp_t + vn_t) / chunk_total_docs if chunk_total_docs else 0.0
+        )
+
+    verdict_pairs = [
+        (r["expected_verdict"], r["predicted_verdict"]) for r in answer_rows
+    ]
+    out["verdict_confusion_matrix"] = _verdict_confusion_matrix(verdict_pairs)
+    return out
+
+
+def print_stress_breakdown(summary: dict[str, Any]) -> None:
+    """Imprime uma tabela das métricas por fatia (para inspeção rápida)."""
+    by_cat = summary.get("by_stress_category", {})
+    cols = [
+        "n",
+        "medicine_accuracy",
+        "section_accuracy",
+        "verdict_accuracy",
+        "semantic_recall",
+        "semantic_hit_at_1",
+    ]
+    header = f"{'fatia':<18}" + "".join(f"{c[:10]:>12}" for c in cols)
+    print(header)
+    print("-" * len(header))
+    for name, metrics in by_cat.items():
+        cells = []
+        for col in cols:
+            value = metrics.get(col)
+            if value is None:
+                cells.append(f"{'-':>12}")
+            elif col == "n":
+                cells.append(f"{value:>12}")
+            else:
+                cells.append(f"{value:>12.3f}")
+        print(f"{name:<18}" + "".join(cells))
+
+
+def slice_from_items(items_path: str | Path) -> dict[str, dict[str, float]]:
+    """
+    Recomputa accuracies e recall/hit@1 médios por stress_category a partir do
+    arquivo {name}_items.json, sem re-rodar o grafo. Para iterar a análise de
+    erro offline.
+    """
+    items = json.loads(Path(items_path).read_text(encoding="utf-8"))
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for item in items:
+        key = item.get("stress_category") or "representative"
+        groups.setdefault(key, []).append(item)
+
+    out: dict[str, dict[str, float]] = {}
+    for key, rows in sorted(groups.items()):
+        n = len(rows)
+        out[key] = {
+            "n": n,
+            "medicine_accuracy": sum(r["medicine_correct"] for r in rows) / n,
+            "section_accuracy": sum(r["section_correct"] for r in rows) / n,
+            "verdict_accuracy": sum(r["verdict_correct"] for r in rows) / n,
+            "semantic_recall": sum((r["semantic_recall"] or 0) for r in rows) / n,
+            "semantic_hit_at_1": sum((r["semantic_hit_at_1"] or 0) for r in rows) / n,
+        }
+    return out
 
 
 _VERDICT_LABELS = ("confirmed", "refuted", "inconclusive")
