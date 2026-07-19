@@ -1,5 +1,7 @@
+import re
 import sqlite3
 from pathlib import Path
+from typing import Literal
 from typing import cast
 
 from langchain_core.messages import AIMessage
@@ -156,18 +158,27 @@ def node_find_medicine(state: BulaCheckState) -> dict:
             anvisa_conn.close()
 
     if not candidates:
-        # tenta buscar similares para sugestão
+        # Fuzzy: busca similares. Se a similaridade do melhor candidato for alta
+        # o bastante (ex: erro de digitação no nome), AUTO-SELECIONA; senão,
+        # devolve como sugestão para o usuário confirmar.
         bg_conn2 = _open_db(config["bulagratis_db_path"])
-        similars = []
-        if bg_conn2:
-            try:
-                similars = find_similar_medicines(
-                    bg_conn2,
-                    parsed["medicine_name"],
-                    limit=config["similarity_candidates"],
-                )
-            finally:
-                bg_conn2.close()
+        try:
+            similars = find_similar_medicines(
+                bg_conn2,
+                parsed["medicine_name"],
+                limit=config["similarity_candidates"],
+            )
+        finally:
+            bg_conn2.close()
+
+        threshold = config.get("fuzzy_autoselect_threshold", 0.75)
+        if similars and similars[0]["score"] >= threshold:
+            return {
+                "medicine_candidates": similars,
+                "selected_medicine": similars[0],
+                "search_attempted_bulagratis": True,
+                "search_attempted_anvisa": anvisa_conn is not None,
+            }
 
         return {
             "medicine_candidates": [],
@@ -246,7 +257,11 @@ REGRAS:
 1. Use APENAS as informações dos trechos fornecidos da bula
 2. Seja preciso e cite os trechos relevantes entre aspas duplas
 3. Indique a seção de origem de cada trecho citado
-4. Classifique o resultado como: CONFIRMADA, REFUTADA ou INCONCLUSIVA
+4. Classifique o resultado como CONFIRMADA, REFUTADA ou INCONCLUSIVA:
+   - CONFIRMADA: os trechos AFIRMAM a alegação.
+   - REFUTADA: os trechos AFIRMAM o CONTRÁRIO da alegação.
+   - INCONCLUSIVA: os trechos NÃO tratam do assunto, não confirmando nem
+     contradizendo. NUNCA use REFUTADA só porque a informação está AUSENTE.
 5. Responda em português, de forma clara e acessível ao paciente
 6. Máximo de {max_words} palavras na resposta final
 7. Formato da resposta:
@@ -284,6 +299,28 @@ REGRAS:
 **Análise:**
 [Sua análise com base em conhecimento farmacológico geral sobre {medicine_name}]
 """
+
+
+_VERDICT_LINE_RE = re.compile(
+    r"vered\w*[^A-Za-z]*(CONFIRMADA|REFUTADA|INCONCLUSIVA)",
+    re.IGNORECASE,
+)
+
+
+def _parse_verdict(
+    response_text: str,
+) -> Literal["confirmed", "refuted", "inconclusive"]:
+    """
+    Extrai o veredito preferindo a linha '**Veredicto:**'. Só cai na varredura do
+    texto todo (comportamento antigo, menos robusto) se a linha não existir.
+    """
+    match = _VERDICT_LINE_RE.search(response_text)
+    label = match.group(1).upper() if match else response_text.upper()
+    if "CONFIRMADA" in label:
+        return "confirmed"
+    if "REFUTADA" in label:
+        return "refuted"
+    return "inconclusive"
 
 
 def node_verify_claim(state: BulaCheckState) -> dict:
@@ -362,12 +399,7 @@ def node_verify_claim(state: BulaCheckState) -> dict:
     )
 
     response_text = cast(str, response.content)
-
-    verdict = "inconclusive"
-    if "CONFIRMADA" in response_text.upper():
-        verdict = "confirmed"
-    elif "REFUTADA" in response_text.upper():
-        verdict = "refuted"
+    verdict = _parse_verdict(response_text)
 
     result = VerificationResult(
         verdict=verdict,

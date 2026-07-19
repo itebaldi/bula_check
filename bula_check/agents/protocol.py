@@ -35,6 +35,7 @@ class BulaCheckConfig(TypedDict):
     top_k_chunks: int
     top_k_medicines: int
     similarity_candidates: int  # sugestões quando medicamento não é encontrado
+    fuzzy_autoselect_threshold: float  # auto-seleciona medicamento se sim >= isto
     lexical_weight: float | None  # peso busca lexical no score híbrido
     semantic_weight: float | None  # peso busca semântica no score híbrido
 
@@ -74,6 +75,7 @@ DEFAULT_CONFIG: BulaCheckConfig = {
     "top_k_chunks": 20,
     "top_k_medicines": 5,
     "similarity_candidates": 3,
+    "fuzzy_autoselect_threshold": 0.75,
     "lexical_weight": 0.4,
     "semantic_weight": 0.6,
     "return_chunks": "only_desired",

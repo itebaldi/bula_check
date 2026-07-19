@@ -1,7 +1,7 @@
 [
   {
     "id": "q001",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -12,18 +12,18 @@
   },
   {
     "id": "q002",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
-    "section_correct": false,
+    "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "inconclusive",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q003",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -34,7 +34,7 @@
   },
   {
     "id": "q004",
-    "stress_category": null,
+    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -45,51 +45,51 @@
   },
   {
     "id": "q005",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q006",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q007",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q008",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q009",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -100,7 +100,7 @@
   },
   {
     "id": "q010",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -111,7 +111,7 @@
   },
   {
     "id": "q011",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -122,7 +122,7 @@
   },
   {
     "id": "q012",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -133,7 +133,7 @@
   },
   {
     "id": "q013",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -144,7 +144,7 @@
   },
   {
     "id": "q014",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -155,7 +155,7 @@
   },
   {
     "id": "q015",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -166,7 +166,7 @@
   },
   {
     "id": "q016",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -177,7 +177,7 @@
   },
   {
     "id": "q017",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -188,7 +188,7 @@
   },
   {
     "id": "q018",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -199,7 +199,7 @@
   },
   {
     "id": "q019",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -210,18 +210,18 @@
   },
   {
     "id": "q020",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
-    "semantic_recall": 0.5,
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q021",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -232,7 +232,7 @@
   },
   {
     "id": "q022",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -243,7 +243,7 @@
   },
   {
     "id": "q023",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -254,7 +254,7 @@
   },
   {
     "id": "q024",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -265,7 +265,7 @@
   },
   {
     "id": "q025",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -276,7 +276,7 @@
   },
   {
     "id": "q026",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -287,7 +287,7 @@
   },
   {
     "id": "q027",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -298,7 +298,7 @@
   },
   {
     "id": "q028",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -309,7 +309,7 @@
   },
   {
     "id": "q029",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -320,7 +320,7 @@
   },
   {
     "id": "q030",
-    "stress_category": null,
+    "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -331,29 +331,29 @@
   },
   {
     "id": "q031",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q032",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q033",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -364,7 +364,7 @@
   },
   {
     "id": "q034",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -375,18 +375,18 @@
   },
   {
     "id": "q035",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
-    "section_correct": false,
+    "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
-    "semantic_recall": 0.0,
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q036",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -397,7 +397,7 @@
   },
   {
     "id": "q037",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -408,84 +408,84 @@
   },
   {
     "id": "q038",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q039",
-    "stress_category": null,
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": false,
-    "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
-  },
-  {
-    "id": "q040",
-    "stress_category": null,
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": false,
-    "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
-  },
-  {
-    "id": "q041",
-    "stress_category": null,
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": false,
-    "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
-  },
-  {
-    "id": "q042",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
+    "expected_verdict": "confirmed",
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
+  },
+  {
+    "id": "q040",
+    "stress_category": "representativa",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": true,
+    "expected_verdict": "confirmed",
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
+  },
+  {
+    "id": "q041",
+    "stress_category": "representativa",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
+  },
+  {
+    "id": "q042",
+    "stress_category": "representativa",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": false,
+    "expected_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q043",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q044",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": false,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q045",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -496,7 +496,7 @@
   },
   {
     "id": "q046",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -507,29 +507,29 @@
   },
   {
     "id": "q047",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q048",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q049",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -540,7 +540,7 @@
   },
   {
     "id": "q050",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -551,7 +551,7 @@
   },
   {
     "id": "q051",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -562,7 +562,7 @@
   },
   {
     "id": "q052",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -573,7 +573,7 @@
   },
   {
     "id": "q053",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -584,7 +584,7 @@
   },
   {
     "id": "q054",
-    "stress_category": null,
+    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": false,
     "verdict_correct": false,
@@ -595,7 +595,7 @@
   },
   {
     "id": "q055",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -606,29 +606,29 @@
   },
   {
     "id": "q056",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": false,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q057",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "predicted_verdict": "",
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q058",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -639,18 +639,18 @@
   },
   {
     "id": "q059",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
-    "section_correct": false,
-    "verdict_correct": false,
+    "section_correct": true,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "inconclusive",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q060",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -661,7 +661,7 @@
   },
   {
     "id": "q061",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -672,7 +672,7 @@
   },
   {
     "id": "q062",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -683,7 +683,7 @@
   },
   {
     "id": "q063",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -694,7 +694,7 @@
   },
   {
     "id": "q064",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -705,18 +705,18 @@
   },
   {
     "id": "q065",
-    "stress_category": null,
-    "medicine_correct": false,
+    "stress_category": "representativa",
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q066",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -727,7 +727,7 @@
   },
   {
     "id": "q067",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": false,
@@ -738,7 +738,7 @@
   },
   {
     "id": "q068",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": false,
     "verdict_correct": false,
@@ -749,7 +749,7 @@
   },
   {
     "id": "q069",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -760,18 +760,18 @@
   },
   {
     "id": "q070",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q071",
-    "stress_category": null,
+    "stress_category": "secao_enganosa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -782,7 +782,7 @@
   },
   {
     "id": "q072",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -793,18 +793,18 @@
   },
   {
     "id": "q073",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q074",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -815,7 +815,7 @@
   },
   {
     "id": "q075",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -826,7 +826,7 @@
   },
   {
     "id": "q076",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -837,40 +837,40 @@
   },
   {
     "id": "q077",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
-  },
-  {
-    "id": "q078",
-    "stress_category": null,
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": true,
-    "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
-  },
-  {
-    "id": "q079",
-    "stress_category": null,
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": false,
-    "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
+    "id": "q078",
+    "stress_category": "representativa",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": true,
+    "expected_verdict": "refuted",
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
+  },
+  {
+    "id": "q079",
+    "stress_category": "fidelidade",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": true,
+    "expected_verdict": "inconclusive",
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 0.0
+  },
+  {
     "id": "q080",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -881,73 +881,73 @@
   },
   {
     "id": "q081",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q082",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q083",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q084",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q085",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q086",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q087",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -958,7 +958,7 @@
   },
   {
     "id": "q088",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -969,29 +969,29 @@
   },
   {
     "id": "q089",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q090",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q091",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1002,18 +1002,18 @@
   },
   {
     "id": "q092",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q093",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1024,7 +1024,7 @@
   },
   {
     "id": "q094",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1035,7 +1035,7 @@
   },
   {
     "id": "q095",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1046,7 +1046,7 @@
   },
   {
     "id": "q096",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1057,18 +1057,18 @@
   },
   {
     "id": "q097",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q098",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1079,7 +1079,7 @@
   },
   {
     "id": "q099",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1090,7 +1090,7 @@
   },
   {
     "id": "q100",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1101,18 +1101,18 @@
   },
   {
     "id": "q101",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q102",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1123,7 +1123,7 @@
   },
   {
     "id": "q103",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1134,7 +1134,7 @@
   },
   {
     "id": "q104",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1145,7 +1145,7 @@
   },
   {
     "id": "q105",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1156,7 +1156,7 @@
   },
   {
     "id": "q106",
-    "stress_category": null,
+    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1167,7 +1167,7 @@
   },
   {
     "id": "q107",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1178,7 +1178,18 @@
   },
   {
     "id": "q108",
-    "stress_category": null,
+    "stress_category": "fidelidade",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": true,
+    "expected_verdict": "inconclusive",
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
+  },
+  {
+    "id": "q109",
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1188,19 +1199,8 @@
     "semantic_hit_at_1": 1.0
   },
   {
-    "id": "q109",
-    "stress_category": null,
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": false,
-    "expected_verdict": "inconclusive",
-    "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
-  },
-  {
     "id": "q110",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1211,7 +1211,7 @@
   },
   {
     "id": "q111",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1222,7 +1222,7 @@
   },
   {
     "id": "q112",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1233,7 +1233,7 @@
   },
   {
     "id": "q113",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1244,7 +1244,7 @@
   },
   {
     "id": "q114",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1255,7 +1255,7 @@
   },
   {
     "id": "q115",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": false,
     "verdict_correct": false,
@@ -1266,73 +1266,73 @@
   },
   {
     "id": "q116",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q117",
-    "stress_category": null,
+    "stress_category": "principio_ativo",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q118",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": false,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
+    "predicted_verdict": "refuted",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q119",
-    "stress_category": null,
+    "stress_category": "principio_ativo",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q120",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q121",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q122",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1343,7 +1343,7 @@
   },
   {
     "id": "q123",
-    "stress_category": null,
+    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1354,18 +1354,18 @@
   },
   {
     "id": "q124",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q125",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1376,7 +1376,7 @@
   },
   {
     "id": "q126",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1387,7 +1387,7 @@
   },
   {
     "id": "q127",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1398,7 +1398,7 @@
   },
   {
     "id": "q128",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1409,7 +1409,7 @@
   },
   {
     "id": "q129",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1420,7 +1420,7 @@
   },
   {
     "id": "q130",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1431,7 +1431,7 @@
   },
   {
     "id": "q131",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1442,7 +1442,7 @@
   },
   {
     "id": "q132",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1453,7 +1453,7 @@
   },
   {
     "id": "q133",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1464,7 +1464,7 @@
   },
   {
     "id": "q134",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1475,7 +1475,7 @@
   },
   {
     "id": "q135",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1486,7 +1486,7 @@
   },
   {
     "id": "q136",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1497,7 +1497,7 @@
   },
   {
     "id": "q137",
-    "stress_category": null,
+    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1508,40 +1508,40 @@
   },
   {
     "id": "q138",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q139",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q140",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
-    "section_correct": false,
+    "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 0.0,
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q141",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1552,18 +1552,18 @@
   },
   {
     "id": "q142",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q143",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1574,18 +1574,18 @@
   },
   {
     "id": "q144",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q145",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1596,7 +1596,7 @@
   },
   {
     "id": "q146",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1607,7 +1607,7 @@
   },
   {
     "id": "q147",
-    "stress_category": null,
+    "stress_category": "giria",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1618,7 +1618,7 @@
   },
   {
     "id": "q148",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1629,7 +1629,7 @@
   },
   {
     "id": "q149",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1640,7 +1640,7 @@
   },
   {
     "id": "q150",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1651,18 +1651,18 @@
   },
   {
     "id": "q151",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
-    "section_correct": false,
-    "verdict_correct": false,
+    "section_correct": true,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q152",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1673,7 +1673,7 @@
   },
   {
     "id": "q153",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1684,7 +1684,7 @@
   },
   {
     "id": "q154",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1695,40 +1695,40 @@
   },
   {
     "id": "q155",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q156",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": false,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q157",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q158",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1739,18 +1739,18 @@
   },
   {
     "id": "q159",
-    "stress_category": null,
-    "medicine_correct": true,
+    "stress_category": "representativa",
+    "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q160",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -1761,7 +1761,7 @@
   },
   {
     "id": "q161",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1772,18 +1772,18 @@
   },
   {
     "id": "q162",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q163",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1794,7 +1794,7 @@
   },
   {
     "id": "q164",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1805,7 +1805,7 @@
   },
   {
     "id": "q165",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1816,7 +1816,18 @@
   },
   {
     "id": "q166",
-    "stress_category": null,
+    "stress_category": "representativa",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": false,
+    "expected_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 0.0
+  },
+  {
+    "id": "q167",
+    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1826,30 +1837,19 @@
     "semantic_hit_at_1": 0.0
   },
   {
-    "id": "q167",
-    "stress_category": null,
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": true,
-    "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
-  },
-  {
     "id": "q168",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q169",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1860,7 +1860,7 @@
   },
   {
     "id": "q170",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1871,7 +1871,7 @@
   },
   {
     "id": "q171",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1882,7 +1882,7 @@
   },
   {
     "id": "q172",
-    "stress_category": null,
+    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1893,7 +1893,7 @@
   },
   {
     "id": "q173",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1904,7 +1904,7 @@
   },
   {
     "id": "q174",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1915,18 +1915,18 @@
   },
   {
     "id": "q175",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q176",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1937,7 +1937,7 @@
   },
   {
     "id": "q177",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1948,7 +1948,7 @@
   },
   {
     "id": "q178",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1959,18 +1959,18 @@
   },
   {
     "id": "q179",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q180",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -1981,18 +1981,18 @@
   },
   {
     "id": "q181",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q182",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -2003,7 +2003,7 @@
   },
   {
     "id": "q183",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -2014,18 +2014,18 @@
   },
   {
     "id": "q184",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q185",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -2036,29 +2036,29 @@
   },
   {
     "id": "q186",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q187",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q188",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -2069,7 +2069,7 @@
   },
   {
     "id": "q189",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -2080,7 +2080,7 @@
   },
   {
     "id": "q190",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -2091,7 +2091,7 @@
   },
   {
     "id": "q191",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -2102,18 +2102,18 @@
   },
   {
     "id": "q192",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q193",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
@@ -2124,7 +2124,7 @@
   },
   {
     "id": "q194",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -2135,7 +2135,7 @@
   },
   {
     "id": "q195",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -2146,7 +2146,7 @@
   },
   {
     "id": "q196",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -2157,7 +2157,7 @@
   },
   {
     "id": "q197",
-    "stress_category": null,
+    "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": true,
@@ -2168,7 +2168,7 @@
   },
   {
     "id": "q198",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": true,
     "verdict_correct": false,
@@ -2179,12 +2179,12 @@
   },
   {
     "id": "q199",
-    "stress_category": null,
+    "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -2193,10 +2193,10 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2204,22 +2204,22 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q202",
     "stress_category": "premissa_falsa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q203",
@@ -2228,30 +2228,30 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q204",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q205",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2259,9 +2259,9 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -2285,7 +2285,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q209",
@@ -2294,8 +2294,8 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2312,24 +2312,24 @@
   {
     "id": "q211",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q212",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q213",
@@ -2404,31 +2404,31 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
+    "predicted_verdict": "refuted",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q220",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q221",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q222",
@@ -2501,11 +2501,11 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q229",
@@ -2525,9 +2525,9 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q231",
@@ -2558,7 +2558,7 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -2567,9 +2567,9 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -2593,16 +2593,16 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q237",
     "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -2631,24 +2631,24 @@
   {
     "id": "q240",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q241",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q242",
@@ -2664,33 +2664,33 @@
   {
     "id": "q243",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q244",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q245",
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -2699,21 +2699,21 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q247",
     "stress_category": "premissa_falsa",
     "medicine_correct": true,
-    "section_correct": false,
-    "verdict_correct": true,
+    "section_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2741,13 +2741,13 @@
   {
     "id": "q250",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q251",
@@ -2767,7 +2767,7 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -2798,9 +2798,9 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -2813,7 +2813,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q257",
@@ -2875,21 +2875,21 @@
     "stress_category": "marca",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q263",
     "stress_category": "erro_digitacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2897,11 +2897,11 @@
     "stress_category": "erro_digitacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q265",
@@ -2940,10 +2940,10 @@
     "id": "q268",
     "stress_category": "giria",
     "medicine_correct": false,
-    "section_correct": true,
+    "section_correct": false,
     "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -2972,46 +2972,46 @@
   {
     "id": "q271",
     "stress_category": "fidelidade",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 0.5,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q272",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q273",
     "stress_category": "erro_digitacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q274",
     "stress_category": "erro_digitacao",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q275",
@@ -3033,7 +3033,7 @@
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q277",
@@ -3097,7 +3097,7 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
+    "predicted_verdict": "refuted",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -3143,7 +3143,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q287",
@@ -3165,7 +3165,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q289",
