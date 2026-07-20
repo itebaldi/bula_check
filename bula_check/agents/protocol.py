@@ -38,6 +38,7 @@ class BulaCheckConfig(TypedDict):
     fuzzy_autoselect_threshold: float  # auto-seleciona medicamento se sim >= isto
     lexical_weight: float | None  # peso busca lexical no score híbrido
     semantic_weight: float | None  # peso busca semântica no score híbrido
+    section_scope: Literal["hard", "all"]  # "hard": só seções previstas; "all": todas
 
     # Contexto dos chunks devolvidos ao LLM
     return_chunks: Literal["only_desired", "with_prev_and_next"]
@@ -78,6 +79,7 @@ DEFAULT_CONFIG: BulaCheckConfig = {
     "fuzzy_autoselect_threshold": 0.75,
     "lexical_weight": 0.4,
     "semantic_weight": 0.6,
+    "section_scope": "hard",
     "return_chunks": "only_desired",
     "max_response_words": 200,
     "decs_lang": "portuguese",

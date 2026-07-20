@@ -217,7 +217,10 @@ def node_fetch_chunks(state: BulaCheckState) -> dict:
     query_embedding: list[float] | None = None
 
     try:
-        query_text = f"{parsed['original_query']} {' '.join(keywords[:5])}"
+        # Embeda só a pergunta/alegação: a cauda de keywords (de um set, ordem
+        # aleatória, + nome do remédio + DeCS) diluía o sinal semântico. As
+        # keywords seguem alimentando o lado lexical/tfidf em hybrid_chunk_search.
+        query_text = parsed["original_query"]
         query_embedding = get_query_embedding.invoke({"text": query_text})
     except Exception:
         pass
@@ -255,13 +258,16 @@ verifique a alegação ou responda a pergunta do usuário.
 
 REGRAS:
 1. Use APENAS as informações dos trechos fornecidos da bula
-2. Seja preciso e cite os trechos relevantes entre aspas duplas
-3. Indique a seção de origem de cada trecho citado
-4. Classifique o resultado como CONFIRMADA, REFUTADA ou INCONCLUSIVA:
-   - CONFIRMADA: os trechos AFIRMAM a alegação.
-   - REFUTADA: os trechos AFIRMAM o CONTRÁRIO da alegação.
-   - INCONCLUSIVA: os trechos NÃO tratam do assunto, não confirmando nem
-     contradizendo. NUNCA use REFUTADA só porque a informação está AUSENTE.
+2. ANTES de classificar, decida: os trechos AFIRMAM a alegação, AFIRMAM o
+   CONTRÁRIO dela, ou não a sustentam? Mencionar o mesmo tema NÃO é confirmar a
+   alegação específica.
+3. Classifique com base nessa decisão:
+   - CONFIRMADA: algum trecho AFIRMA a alegação.
+   - REFUTADA: algum trecho AFIRMA o CONTRÁRIO (contradiz explicitamente).
+   - INCONCLUSIVA: os trechos tocam no tema mas não sustentam nem contradizem a
+     alegação, OU não tratam do assunto. NUNCA use REFUTADA por simples AUSÊNCIA
+     de informação nos trechos.
+4. Cite os trechos relevantes entre aspas duplas e indique a seção de cada um
 5. Responda em português, de forma clara e acessível ao paciente
 6. Máximo de {max_words} palavras na resposta final
 7. Formato da resposta:

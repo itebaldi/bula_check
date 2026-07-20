@@ -14,11 +14,11 @@
     "id": "q002",
     "stress_category": "marca",
     "medicine_correct": true,
-    "section_correct": true,
+    "section_correct": false,
     "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -29,7 +29,7 @@
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -40,13 +40,13 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q005",
     "stress_category": "marca",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
@@ -57,7 +57,7 @@
   {
     "id": "q006",
     "stress_category": "marca",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
@@ -68,7 +68,7 @@
   {
     "id": "q007",
     "stress_category": "marca",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
@@ -107,7 +107,7 @@
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q011",
@@ -125,9 +125,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -161,7 +161,7 @@
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -227,8 +227,8 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q022",
@@ -246,9 +246,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -257,9 +257,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -271,7 +271,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -279,9 +279,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -327,7 +327,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q031",
@@ -348,7 +348,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -370,8 +370,8 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q035",
@@ -381,7 +381,7 @@
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -403,7 +403,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -448,18 +448,18 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q042",
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q043",
@@ -477,9 +477,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": false,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "inconclusive",
+    "predicted_verdict": "refuted",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -502,17 +502,17 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q047",
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -521,9 +521,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -532,9 +532,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -557,8 +557,8 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q052",
@@ -598,9 +598,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -609,9 +609,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": false,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -641,11 +641,11 @@
     "id": "q059",
     "stress_category": "representativa",
     "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": true,
+    "section_correct": false,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -664,9 +664,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -675,10 +675,10 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
+    "predicted_verdict": "inconclusive",
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -708,9 +708,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -719,20 +719,20 @@
     "stress_category": "representativa",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q067",
     "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -741,9 +741,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": false,
     "section_correct": false,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -755,8 +755,8 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q070",
@@ -811,7 +811,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q075",
@@ -844,7 +844,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q078",
@@ -865,7 +865,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -876,7 +876,7 @@
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -888,7 +888,7 @@
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q082",
@@ -917,20 +917,20 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "refuted",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q085",
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -942,7 +942,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -972,9 +972,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -994,9 +994,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -1009,7 +1009,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q093",
@@ -1019,8 +1019,8 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q094",
@@ -1038,9 +1038,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -1064,7 +1064,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q098",
@@ -1074,7 +1074,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -1108,7 +1108,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q102",
@@ -1217,8 +1217,8 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q112",
@@ -1306,16 +1306,16 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q120",
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -1324,9 +1324,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -1361,7 +1361,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q125",
@@ -1379,9 +1379,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -1390,9 +1390,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -1449,7 +1449,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q133",
@@ -1511,11 +1511,11 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q139",
@@ -1553,24 +1553,24 @@
   {
     "id": "q142",
     "stress_category": "representativa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q143",
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q144",
@@ -1580,7 +1580,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -1588,9 +1588,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -1621,9 +1621,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -1643,9 +1643,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -1653,12 +1653,12 @@
     "id": "q151",
     "stress_category": "fidelidade",
     "medicine_correct": true,
-    "section_correct": true,
+    "section_correct": false,
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q152",
@@ -1687,9 +1687,9 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -1708,11 +1708,11 @@
     "id": "q156",
     "stress_category": "fidelidade",
     "medicine_correct": true,
-    "section_correct": false,
+    "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 0.0,
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -1724,7 +1724,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q158",
@@ -1740,7 +1740,7 @@
   {
     "id": "q159",
     "stress_category": "representativa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
@@ -1751,7 +1751,7 @@
   {
     "id": "q160",
     "stress_category": "representativa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
@@ -1764,22 +1764,22 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
     "id": "q162",
     "stress_category": "fidelidade",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q163",
@@ -1811,23 +1811,12 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
     "id": "q166",
     "stress_category": "representativa",
-    "medicine_correct": true,
-    "section_correct": true,
-    "verdict_correct": false,
-    "expected_verdict": "refuted",
-    "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
-  },
-  {
-    "id": "q167",
-    "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
@@ -1837,13 +1826,24 @@
     "semantic_hit_at_1": 0.0
   },
   {
+    "id": "q167",
+    "stress_category": "negacao",
+    "medicine_correct": true,
+    "section_correct": true,
+    "verdict_correct": false,
+    "expected_verdict": "refuted",
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
+  },
+  {
     "id": "q168",
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -1874,11 +1874,11 @@
     "stress_category": "representativa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "confirmed",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q172",
@@ -1966,7 +1966,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q180",
@@ -1988,7 +1988,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q182",
@@ -2010,7 +2010,7 @@
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q184",
@@ -2032,7 +2032,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q186",
@@ -2109,7 +2109,7 @@
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q193",
@@ -2125,7 +2125,7 @@
   {
     "id": "q194",
     "stress_category": "representativa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
@@ -2136,7 +2136,7 @@
   {
     "id": "q195",
     "stress_category": "representativa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
@@ -2147,7 +2147,7 @@
   {
     "id": "q196",
     "stress_category": "representativa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
@@ -2158,18 +2158,18 @@
   {
     "id": "q197",
     "stress_category": "representativa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q198",
     "stress_category": "fidelidade",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
@@ -2180,7 +2180,7 @@
   {
     "id": "q199",
     "stress_category": "fidelidade",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
@@ -2237,9 +2237,9 @@
     "stress_category": "erro_digitacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -2251,7 +2251,7 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2259,10 +2259,10 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "predicted_verdict": "refuted",
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2285,7 +2285,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q209",
@@ -2339,7 +2339,7 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2372,7 +2372,7 @@
     "verdict_correct": false,
     "expected_verdict": "refuted",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2395,7 +2395,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q219",
@@ -2404,7 +2404,7 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -2416,8 +2416,8 @@
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q221",
@@ -2427,8 +2427,8 @@
     "verdict_correct": true,
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q222",
@@ -2504,8 +2504,8 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q229",
@@ -2560,16 +2560,16 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q234",
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -2578,10 +2578,10 @@
     "stress_category": "negacao",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": true,
+    "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "predicted_verdict": "",
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -2603,8 +2603,8 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_recall": 0.0,
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q238",
@@ -2620,7 +2620,7 @@
   {
     "id": "q239",
     "stress_category": "marca",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
@@ -2670,7 +2670,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 1.0
+    "semantic_hit_at_1": 0.0
   },
   {
     "id": "q244",
@@ -2710,9 +2710,9 @@
     "stress_category": "premissa_falsa",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "inconclusive",
+    "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 0.0
   },
@@ -2757,7 +2757,7 @@
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.5,
     "semantic_hit_at_1": 1.0
   },
   {
@@ -2765,9 +2765,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "confirmed",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -2813,7 +2813,7 @@
     "expected_verdict": "refuted",
     "predicted_verdict": "refuted",
     "semantic_recall": 1.0,
-    "semantic_hit_at_1": 0.0
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q257",
@@ -2950,7 +2950,7 @@
   {
     "id": "q269",
     "stress_category": "giria",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "confirmed",
@@ -2961,7 +2961,7 @@
   {
     "id": "q270",
     "stress_category": "secao_enganosa",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",
@@ -2977,7 +2977,7 @@
     "verdict_correct": false,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 0.5,
+    "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
   {
@@ -3020,7 +3020,7 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -3050,12 +3050,12 @@
     "id": "q278",
     "stress_category": "giria",
     "medicine_correct": true,
-    "section_correct": false,
-    "verdict_correct": false,
+    "section_correct": true,
+    "verdict_correct": true,
     "expected_verdict": "refuted",
-    "predicted_verdict": "inconclusive",
-    "semantic_recall": 0.0,
-    "semantic_hit_at_1": 0.0
+    "predicted_verdict": "refuted",
+    "semantic_recall": 1.0,
+    "semantic_hit_at_1": 1.0
   },
   {
     "id": "q279",
@@ -3083,11 +3083,11 @@
     "id": "q281",
     "stress_category": "fidelidade",
     "medicine_correct": true,
-    "section_correct": true,
+    "section_correct": false,
     "verdict_correct": true,
     "expected_verdict": "inconclusive",
     "predicted_verdict": "inconclusive",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -3097,7 +3097,7 @@
     "section_correct": true,
     "verdict_correct": false,
     "expected_verdict": "confirmed",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
@@ -3120,7 +3120,7 @@
     "verdict_correct": true,
     "expected_verdict": "confirmed",
     "predicted_verdict": "confirmed",
-    "semantic_recall": 1.0,
+    "semantic_recall": 0.0,
     "semantic_hit_at_1": 0.0
   },
   {
@@ -3150,9 +3150,9 @@
     "stress_category": "fidelidade",
     "medicine_correct": true,
     "section_correct": true,
-    "verdict_correct": false,
+    "verdict_correct": true,
     "expected_verdict": "inconclusive",
-    "predicted_verdict": "refuted",
+    "predicted_verdict": "inconclusive",
     "semantic_recall": 1.0,
     "semantic_hit_at_1": 1.0
   },
@@ -3170,7 +3170,7 @@
   {
     "id": "q289",
     "stress_category": "principio_ativo",
-    "medicine_correct": false,
+    "medicine_correct": true,
     "section_correct": true,
     "verdict_correct": true,
     "expected_verdict": "refuted",

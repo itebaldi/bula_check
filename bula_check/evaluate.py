@@ -1,4 +1,5 @@
 import json
+import re
 import sqlite3
 from pathlib import Path
 from typing import Any
@@ -72,6 +73,7 @@ def evaluate_results(
     ids: list[str] = []
 
     bulagratis_conn = _open_db(config["bulagratis_db_path"])
+    anvisa_conn = _open_db(config["anvisa_db_path"])
 
     try:
         for item in items:
@@ -130,10 +132,12 @@ def evaluate_results(
 
             answer_rows.append(
                 {
-                    "medicine_correct": normalize_text(item.expected_medicine)
-                    in normalize_text(predicted_medicine)
-                    or normalize_text(item.expected_medicine)
-                    in normalize_text(predicted_active_ingredient),
+                    "medicine_correct": _medicine_correct(
+                        anvisa_conn,
+                        item.expected_medicine,
+                        predicted_medicine,
+                        predicted_active_ingredient,
+                    ),
                     "section_correct": _has_expected_sections(
                         retrieved_sections=predicted_sections,
                         expected_sections=item.expected_sections,
@@ -182,6 +186,7 @@ def evaluate_results(
             )
     finally:
         bulagratis_conn.close()
+        anvisa_conn.close()
 
     summary = _aggregate(answer_rows, retrieval_rows)
 
@@ -246,6 +251,76 @@ def evaluate_results(
         _to_json(item_details, _items_path(results_path))
 
     return summary
+
+
+# Sais / formas farmacêuticas — qualificadores que não identificam o fármaco.
+_SALT_FORMS = {
+    "cloridrato", "sulfato", "mesilato", "succinato", "maleato", "fosfato",
+    "hemifumarato", "fumarato", "sodico", "sodica", "sodio", "calcio",
+    "potassio", "dihidratado", "monoidratado", "acido", "besilato",
+    "bromidrato", "nitrato", "tartarato", "valerato", "dipropionato",
+    "medoxomila", "cilexetila", "dihidratada", "hidratado", "hidratada",
+    "trihidratado", "propionato", "acetato", "citrato", "estearato",
+}
+
+
+def _ingredient_tokens(text: str) -> set[str]:
+    """Tokens de princípio ativo (>=5 letras, sem sais/formas farmacêuticas)."""
+    tokens = re.split(r"[,+;/\s]+", normalize_text(text).lower())
+    return {t for t in tokens if len(t) >= 5 and t not in _SALT_FORMS}
+
+
+def _active_ingredients(anvisa_conn: sqlite3.Connection, name: str) -> set[str]:
+    """
+    Princípios ativos de um medicamento, resolvidos via ANVISA
+    (name -> active_ingredient, coluna preenchida em bulas_anvisa.db). Fallback:
+    tokeniza o próprio nome quando ele já é o genérico. Usado para creditar
+    equivalência marca <-> genérico em `medicine_correct`.
+    """
+    norm = normalize_text(name)
+    if not norm:
+        return set()
+    row = anvisa_conn.execute(
+        "SELECT active_ingredient FROM medicines "
+        "WHERE processed_name = ? AND active_ingredient IS NOT NULL "
+        "AND TRIM(active_ingredient) <> '' LIMIT 1",
+        (norm,),
+    ).fetchone()
+    if row is None:
+        row = anvisa_conn.execute(
+            "SELECT active_ingredient FROM medicines "
+            "WHERE processed_name LIKE ? AND active_ingredient IS NOT NULL "
+            "AND TRIM(active_ingredient) <> '' LIMIT 1",
+            (f"%{norm}%",),
+        ).fetchone()
+    if row and row[0]:
+        return _ingredient_tokens(row[0])
+    return _ingredient_tokens(name)
+
+
+def _medicine_correct(
+    anvisa_conn: sqlite3.Connection,
+    expected: str,
+    predicted_name: str,
+    predicted_ai: str,
+) -> bool:
+    """
+    Correto se o esperado casa por substring (comportamento antigo) OU se o
+    previsto compartilha o mesmo princípio ativo do esperado — credita resolução
+    marca <-> genérico (ex: expected "MENSYVA" vs previsto "HEMIFUMARATO DE
+    QUETIAPINA", ambos quetiapina). A equivalência exige que TODO princípio ativo
+    esperado esteja no previsto (subconjunto), evitando leniência entre fármacos
+    distintos que só compartilham um sal.
+    """
+    exp_norm = normalize_text(expected)
+    if exp_norm in normalize_text(predicted_name) or exp_norm in normalize_text(
+        predicted_ai
+    ):
+        return True
+    expected_ai = _active_ingredients(anvisa_conn, expected)
+    if not expected_ai:
+        return False
+    return expected_ai <= _active_ingredients(anvisa_conn, predicted_name)
 
 
 def _items_path(results_path: str | Path) -> Path:

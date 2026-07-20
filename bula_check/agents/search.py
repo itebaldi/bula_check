@@ -398,10 +398,15 @@ def hybrid_chunk_search(
     query_embedding: list[float] | None,
     cfg: BulaCheckConfig,
 ) -> list[RetrievedChunk]:
+    # section_scope="all": ignora as seções previstas e busca no medicamento
+    # inteiro, deixando o ranker decidir (ataca perguntas cuja resposta está numa
+    # seção não-óbvia). "hard" (default): mantém o escopo das seções previstas.
+    fetch_sections = None if cfg.get("section_scope") == "all" else sections
+
     chunks = _fetch_chunks_for_medicine(
         conn=conn,
         medicine_id=medicine_id,
-        sections=sections,
+        sections=fetch_sections,
     )
 
     if not chunks:
@@ -411,10 +416,13 @@ def hybrid_chunk_search(
 
     retrieval_query_text = " ".join(keywords)
 
-    lexical_scores = _score_chunks_tfidf(
-        chunks=chunks,
-        query_text=retrieval_query_text,
-    )  # {chunk_id: tfidf_score}
+    # Normaliza (min-max no pool) antes de combinar: tfidf e cosseno vivem em
+    # escalas diferentes, então sem isso os pesos lexical/semantic não têm o
+    # significado pretendido. Min-max é monotônica → não altera o ranking quando
+    # só uma modalidade está ativa; só passa a importar no híbrido.
+    lexical_scores = _minmax_normalize(
+        _score_chunks_tfidf(chunks=chunks, query_text=retrieval_query_text)
+    )  # {chunk_id: tfidf_score normalizado}
 
     semantic_scores: dict[str, float] = {}  # {chunk_id: semantic_score}
 
@@ -424,6 +432,7 @@ def hybrid_chunk_search(
                 query_embedding,
                 chunk["embedding"],
             )
+        semantic_scores = _minmax_normalize(semantic_scores)
 
     final_scores: list[tuple[str, float]] = []
 
@@ -643,6 +652,22 @@ def _parse_embedding(value: Any) -> list[float]:
         return json.loads(value.decode())
 
     return value
+
+
+def _minmax_normalize(scores: dict[str, float]) -> dict[str, float]:
+    """
+    Normaliza os scores para [0, 1] por min-max no pool. Monotônica: preserva o
+    ranking quando usada isoladamente; serve para pôr tfidf e cosseno na mesma
+    escala antes da combinação híbrida. Pool com valores iguais → tudo 0.0.
+    """
+    if not scores:
+        return scores
+    values = scores.values()
+    lo, hi = min(values), max(values)
+    if hi == lo:
+        return {key: 0.0 for key in scores}
+    span = hi - lo
+    return {key: (value - lo) / span for key, value in scores.items()}
 
 
 def _cosine(a: list[float], b: list[float]) -> float:
