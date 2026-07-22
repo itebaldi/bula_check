@@ -1,0 +1,2479 @@
+{
+  "panel": [
+    "openai:gpt-4o",
+    "openai:gpt-4.1",
+    "openai:gpt-4.1-mini"
+  ],
+  "n_items": 790,
+  "overall": {
+    "aprovado": 690,
+    "reprovado": 100
+  },
+  "by_dimension": {
+    "verdict_ok": {
+      "sim": 665,
+      "não": 94,
+      "incerto": 31
+    },
+    "medicine_ok": {
+      "sim": 762,
+      "incerto": 26,
+      "não": 2
+    },
+    "evidence_ok": {
+      "sim": 750,
+      "incerto": 29,
+      "não": 11
+    }
+  },
+  "by_stress_category": {
+    "erro_digitacao": {
+      "aprovado": 47,
+      "reprovado": 2
+    },
+    "fidelidade": {
+      "reprovado": 70,
+      "aprovado": 101
+    },
+    "giria": {
+      "aprovado": 46,
+      "reprovado": 2
+    },
+    "marca": {
+      "aprovado": 54,
+      "reprovado": 5
+    },
+    "negacao": {
+      "aprovado": 55,
+      "reprovado": 5
+    },
+    "premissa_falsa": {
+      "aprovado": 28
+    },
+    "principio_ativo": {
+      "aprovado": 16,
+      "reprovado": 1
+    },
+    "representativa": {
+      "aprovado": 305,
+      "reprovado": 14
+    },
+    "secao_enganosa": {
+      "aprovado": 38,
+      "reprovado": 1
+    }
+  },
+  "by_verdict": {
+    "confirmed": {
+      "aprovado": 336,
+      "reprovado": 7
+    },
+    "refuted": {
+      "aprovado": 264,
+      "reprovado": 14
+    },
+    "inconclusive": {
+      "reprovado": 79,
+      "aprovado": 90
+    }
+  },
+  "agreement": {
+    "n_items_clean": 739,
+    "judge_verdict": {
+      "pairwise_agreement": 0.9152,
+      "fleiss_kappa": 0.8546
+    },
+    "medicine_ok": {
+      "pairwise_agreement": 0.9937,
+      "fleiss_kappa": 0.2198
+    },
+    "evidence_ok": {
+      "pairwise_agreement": 0.9648,
+      "fleiss_kappa": 0.232
+    }
+  },
+  "n_flagged": 133,
+  "flagged": [
+    {
+      "id": "q016",
+      "query": "tomo olmesartana e apareceu uma tosse seca, isso é do remédio?",
+      "expected_medicine": "olmesartana medoxomila",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho menciona que a tosse é uma reação muito rara do medicamento. | openai:gpt-4.1: O texto afirma que tosse é uma reação muito rara durante o uso de olmesartana medoxomila. | openai:gpt-4.1-mini: O texto afirma: 'Reações muito raras ... tosse ... ocorrem em menos de 0,01% dos pacientes que utilizam este medicamento.'"
+    },
+    {
+      "id": "q024",
+      "query": "Se a pessoa tomar Mensyva demais, existe algum antídoto específico pra quetiapina?",
+      "expected_medicine": "MENSYVA",
+      "expected_verdict": "refuted",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que não há antídoto específico para a quetiapina. | openai:gpt-4.1: O trecho afirma claramente: 'não há antídoto específico para a quetiapina.' | openai:gpt-4.1-mini: Tratamento: não há antídoto específico para a quetiapina. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q026",
+      "query": "dá pra tomar mensyva pra dor de dente?",
+      "expected_medicine": "MENSYVA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Mensyva é indicado para transtornos psiquiátricos, não para dor de dente. | openai:gpt-4.1: O texto só indica Mensyva para transtornos psiquiátricos, não para dor de dente. | openai:gpt-4.1-mini: O trecho da seção Indicações afirma que Mensyva é indicado para transtornos psiquiátricos, não para dor de dente."
+    },
+    {
+      "id": "q027",
+      "query": "tomando o Microvlar certinho, eu não engravido mesmo?",
+      "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
+      "expected_verdict": "confirmed",
+      "stress_category": "marca",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que há casos de gravidez em mulheres que utilizam contraceptivos orais. | openai:gpt-4.1: O trecho afirma que há casos de gravidez mesmo com o uso correto do medicamento. | openai:gpt-4.1-mini: Embora os contraceptivos orais sejam altamente eficazes, há casos de gravidez em mulheres que os utilizam."
+    },
+    {
+      "id": "q032",
+      "query": "o Microvlar ajuda a emagrecer? queria entender como ele age no organismo pra isso",
+      "expected_medicine": "LEVONORGESTREL+ETINILESTRADIOL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona efeitos sobre emagrecimento, apenas sobre contracepção. | openai:gpt-4.1: O texto explica que o medicamento serve para contracepção, não para emagrecimento. | openai:gpt-4.1-mini: O texto afirma que o medicamento age suprimindo gonadotrofinas para contracepção, sem mencionar qualquer efeito de emagrecimento. [vereditos: inconclusive, refuted, refuted]"
+    },
+    {
+      "id": "q038",
+      "query": "o amome também serve pra tratar pressão alta?",
+      "expected_medicine": "AMOME",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de indicações não menciona tratamento para pressão alta. | openai:gpt-4.1: O trecho lista apenas indicações para rinite alérgica, rinossinusite e pólipos nasais, sem menção a pressão alta. | openai:gpt-4.1-mini: A seção Indicações afirma que Amome é indicado para rinite alérgica, rinossinusite e pólipos nasais, não mencionando pressão alta."
+    },
+    {
+      "id": "q043",
+      "query": "O Amytril serve pra controlar a pressão alta?",
+      "expected_medicine": "AMYTRIL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho indica que Amytril é para depressão e enurese, não para pressão alta. | openai:gpt-4.1: O trecho afirma que Amytril é indicado para depressão e enurese noturna, não mencionando controle de pressão alta. | openai:gpt-4.1-mini: A bula afirma que Amytril é indicado para depressão e enurese noturna, sem mencionar pressão alta."
+    },
+    {
+      "id": "q044",
+      "query": "O Amytril tem indicação pra ajudar a controlar a glicemia em quem tem diabetes?",
+      "expected_medicine": "AMYTRIL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que Amytril é usado para depressão e enurese, não menciona controle de glicemia. | openai:gpt-4.1: O trecho afirma que Amytril é utilizado principalmente para depressão e enurese noturna, sem menção a controle de glicemia ou diabetes. | openai:gpt-4.1-mini: O texto afirma que Amytril é usado para depressão e enurese noturna, sem mencionar controle de glicemia."
+    },
+    {
+      "id": "q049",
+      "query": "o mektovi serve pra baixar o colesterol?",
+      "expected_medicine": "MEKTOVI",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O Mektovi é um medicamento anticancerígeno, não indicado para baixar o colesterol. | openai:gpt-4.1: O texto afirma que Mektovi é indicado para melanoma, não para baixar colesterol. | openai:gpt-4.1-mini: O Mektovi® é um medicamento anticancerígeno usado para tratar melanoma, não para baixar o colesterol."
+    },
+    {
+      "id": "q050",
+      "query": "comecei a tomar mektovi essa semana e ando sem dormir, ele pode dar insônia?",
+      "expected_medicine": "MEKTOVI",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: A bula lista várias reações adversas, mas não menciona insônia ou dificuldade para dormir em nenhuma seção. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q055",
+      "query": "o tynna trata a asma?",
+      "expected_medicine": "TYNNA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que o medicamento é para rinoconjuntivite alérgica e urticária, não asma. | openai:gpt-4.1: O texto afirma que Tynna é indicado para rinoconjuntivite alérgica e urticária crônica, não mencionando asma. | openai:gpt-4.1-mini: A seção Indicações afirma que o medicamento é para rinoconjuntivite alérgica e urticária crônica, não mencionando asma."
+    },
+    {
+      "id": "q056",
+      "query": "o tynna não serve também pra baixar o colesterol?",
+      "expected_medicine": "TYNNA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Tynna é um anti-histamínico, não indicado para baixar o colesterol. | openai:gpt-4.1: O texto afirma que Tynna é um anti-histamínico, sem menção a efeito sobre colesterol. | openai:gpt-4.1-mini: O texto afirma que Tynna contém bilastina, um anti-histamínico, sem mencionar qualquer efeito sobre o colesterol."
+    },
+    {
+      "id": "q061",
+      "query": "A mupirocina serve pra tratar micose?",
+      "expected_medicine": "MUPIROCINA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A bula indica o uso para infecções bacterianas, não para micose. | openai:gpt-4.1: O texto indica uso para infecções bacterianas, não para micose (infecções fúngicas). | openai:gpt-4.1-mini: A bula indica tratamento para infecções de pele causadas por microrganismos sensíveis à mupirocina, sem mencionar micose."
+    },
+    {
+      "id": "q062",
+      "query": "É verdade que a mupirocina ajuda o cabelo a crescer em quem tem calvície?",
+      "expected_medicine": "MUPIROCINA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A bula descreve a mupirocina como um antibiótico para infecções de pele, sem menção a crescimento capilar. | openai:gpt-4.1: O texto apenas descreve a ação antibiótica da mupirocina, sem mencionar qualquer efeito sobre crescimento capilar ou calvície. | openai:gpt-4.1-mini: O texto afirma que a mupirocina é um antibiótico tópico para infecções de pele, sem mencionar qualquer efeito sobre crescimento capilar. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q067",
+      "query": "A candesartana também ajuda a baixar o colesterol?",
+      "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4o: A bula indica que o medicamento é para hipertensão, sem menção a colesterol. | openai:gpt-4.1: O texto só indica uso para hipertensão, não menciona efeito sobre colesterol. | openai:gpt-4.1-mini: A seção indica uso para hipertensão, não menciona efeito sobre colesterol. [vereditos: refuted, refuted, inconclusive]"
+    },
+    {
+      "id": "q068",
+      "query": "Posso tomar a candesartana como calmante pra ajudar a dormir melhor?",
+      "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A bula descreve a função do medicamento como controlador da pressão arterial, não como calmante. | openai:gpt-4.1: O trecho afirma que o medicamento serve para controlar a pressão arterial, não como calmante ou para ajudar a dormir. | openai:gpt-4.1-mini: A candesartana cilexetila + hidroclorotiazida reduz e controla a pressão arterial, não sendo indicada como calmante para ajudar a dormir."
+    },
+    {
+      "id": "q073",
+      "query": "dá pra passar trombofob gel pra secar espinha no rosto?",
+      "expected_medicine": "TROMBOFOB GEL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho indica que TROMBOFOB GEL é para condições como flebites e hematomas, não para acne. | openai:gpt-4.1: O texto só indica o uso para condições vasculares e lesões, não para acne ou espinhas. | openai:gpt-4.1-mini: A bula indica TROMBOFOB GEL para condições vasculares e lesões leves, não para secar espinha no rosto."
+    },
+    {
+      "id": "q079",
+      "query": "o vasogard serve pra tratar varizes na perna?",
+      "expected_medicine": "VASOGARD",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho indica que o medicamento é para doença vascular periférica, não varizes. | openai:gpt-4.1: O texto indica uso para doença vascular periférica arterial, não para varizes (veias). | openai:gpt-4.1-mini: A bula indica o medicamento para doença vascular periférica e prevenção de AVC, não para tratamento de varizes."
+    },
+    {
+      "id": "q080",
+      "query": "o vasogard pode dar insônia? ando dormindo bem mal ultimamente",
+      "expected_medicine": "VASOGARD",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: A seção menciona insônia como uma reação comum. | openai:gpt-4.1: O trecho afirma explicitamente: 'ansiedade, insônia e neuralgia (dor no nervo)'. | openai:gpt-4.1-mini: A bula lista insônia como reação comum: 'ansiedade, insônia e neuralgia (dor no nervo)'"
+    },
+    {
+      "id": "q085",
+      "query": "O clopido-gran serve pra baixar o colesterol alto?",
+      "expected_medicine": "CLOPIDO-GRAN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho indica que CLOPIDO-GRAN é para prevenção de eventos aterotrombóticos, não para baixar colesterol. | openai:gpt-4.1: O texto só indica o uso para prevenção de eventos trombóticos, não para baixar colesterol. | openai:gpt-4.1-mini: A seção Indicações não menciona o uso para baixar colesterol alto, apenas para prevenção de eventos aterotrombóticos e tromboembólicos."
+    },
+    {
+      "id": "q086",
+      "query": "O CLOPIDO-GRAN pode causar sonolência?",
+      "expected_medicine": "CLOPIDO-GRAN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: A seção 'Reações Adversas | 33953c67-3513-405f-867b-fa1b05459d8b' lista tontura e dor de cabeça, mas não menciona sonolência como reação adversa. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q091",
+      "query": "O NIBISNU serve pra enxaqueca?",
+      "expected_medicine": "NIBISNU",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A bula indica NIBISNU para tratamento de câncer, não menciona enxaqueca. | openai:gpt-4.1: O texto afirma que NIBISNU é indicado para cânceres específicos, não para enxaqueca. | openai:gpt-4.1-mini: NIBISNU é usado para tratar câncer, não enxaqueca, conforme indicado nas seções de indicações."
+    },
+    {
+      "id": "q092",
+      "query": "O NIBISNU vicia? Tenho medo de criar dependência tomando ele.",
+      "expected_medicine": "NIBISNU",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: A bula não menciona dependência ou vício; não há indicação de que NIBISNU (carmustina) cause dependência. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q097",
+      "query": "o nourin serve pra dor de cabeça ou só pra problema urinário mesmo?",
+      "expected_medicine": "NOURIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Nourin é indicado apenas para problemas urinários, não menciona dor de cabeça. | openai:gpt-4.1: O trecho lista apenas indicações relacionadas ao trato urinário, não menciona dor de cabeça. | openai:gpt-4.1-mini: A seção Indicações afirma que Nourin é indicado para problemas urinários, sem mencionar dor de cabeça."
+    },
+    {
+      "id": "q098",
+      "query": "o nourin engorda? tenho medo de ganhar peso tomando ele",
+      "expected_medicine": "NOURIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona ganho de peso como uma reação adversa. | openai:gpt-4.1: O trecho lista reações adversas e ganho de peso não é mencionado. | openai:gpt-4.1-mini: A bula lista perda do apetite como reação incomum, mas não menciona ganho de peso ou engordar."
+    },
+    {
+      "id": "q108",
+      "query": "será que o montelucaste ajuda a emagrecer? queria perder uns quilinhos",
+      "expected_medicine": "montelucaste de sodio",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "sim",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4o: O trecho citado não menciona perda de peso ou emagrecimento. | openai:gpt-4.1: Nenhum trecho menciona perda de peso ou emagrecimento relacionado ao montelucaste de sódio. | openai:gpt-4.1-mini: O trecho citado não menciona qualquer efeito do montelucaste sobre emagrecimento ou perda de peso."
+    },
+    {
+      "id": "q109",
+      "query": "o montelucaste tem indicação pra tratar hipertensão (pressão alta)?",
+      "expected_medicine": "montelucaste de sodio",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que o montelucaste é indicado para asma e rinite alérgica, não mencionando hipertensão. | openai:gpt-4.1: O texto afirma que o montelucaste é indicado para asma e rinite alérgica, não mencionando hipertensão. | openai:gpt-4.1-mini: O montelucaste de sódio é indicado para asma e rinite alérgica, não para hipertensão."
+    },
+    {
+      "id": "q115",
+      "query": "o tabrecta serve pra baixar a pressão alta?",
+      "expected_medicine": "TABRECTA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Tabrecta é indicado para câncer de pulmão, não para pressão alta. | openai:gpt-4.1: O trecho afirma que Tabrecta é usado para câncer de pulmão com mutação MET, não para pressão alta. | openai:gpt-4.1-mini: O texto afirma que Tabrecta® é usado para retardar ou interromper o crescimento do câncer de pulmão, não para baixar a pressão alta."
+    },
+    {
+      "id": "q120",
+      "query": "o clonidin serve pra emagrecer também, ajuda a perder peso?",
+      "expected_medicine": "CLONIDIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de indicações não menciona emagrecimento ou perda de peso. | openai:gpt-4.1: O trecho de Indicações não menciona emagrecimento ou perda de peso como indicação do Clonidin. | openai:gpt-4.1-mini: A seção Indicações afirma que o Clonidin é usado para analgesia e estabilização hemodinâmica, sem mencionar perda de peso ou emagrecimento."
+    },
+    {
+      "id": "q121",
+      "query": "dá pra usar o CLONIDIN pra clarear os dentes?",
+      "expected_medicine": "CLONIDIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de indicações não menciona clareamento dental. | openai:gpt-4.1: O texto só indica uso como analgésico e adjuvante anestésico, não para clareamento dental. | openai:gpt-4.1-mini: A bula não menciona clareamento dental, apenas indicações relacionadas a analgesia, anestesia e estabilização hemodinâmica."
+    },
+    {
+      "id": "q126",
+      "query": "Comecei a tomar isoniazida essa semana e fiquei na dúvida: ela também serve pra ajudar a controlar a pressão alta?",
+      "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A isoniazida é indicada para tuberculose, não para pressão alta. | openai:gpt-4.1: A bula só indica isoniazida para tuberculose (latente ou ativa), não menciona uso para pressão alta. | openai:gpt-4.1-mini: A bula indica a isoniazida para tratamento da tuberculose latente e ativa, sem mencionar qualquer uso para controle da pressão alta."
+    },
+    {
+      "id": "q127",
+      "query": "Esse remédio isoniazida também é usado pra tratar depressão?",
+      "expected_medicine": "FARMANGUINHOS - ISONIAZIDA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A bula não menciona o uso de isoniazida para tratar depressão, apenas tuberculose. | openai:gpt-4.1-mini: A bula indica o uso da isoniazida apenas para tratamento da tuberculose latente e ativa, sem mencionar depressão. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q132",
+      "query": "O Medato também serve pra tratar depressão?",
+      "expected_medicine": "MEDATO",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que Medato é usado para TDAH e narcolepsia, não menciona depressão. | openai:gpt-4.1: O trecho afirma que Medato é indicado para TDAH e narcolepsia, não mencionando depressão como indicação. | openai:gpt-4.1-mini: Medato® é utilizado para o tratamento do Transtorno de Déficit de Atenção/Hiperatividade e narcolepsia, não mencionando depressão."
+    },
+    {
+      "id": "q133",
+      "query": "Tomar Medato pode causar dor nas articulações?",
+      "expected_medicine": "MEDATO",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho 'Algumas reações adversas são comuns ... dor nas articulações;' confirma que Medato pode causar dor nas articulações. [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q138",
+      "query": "o isoforine serve pra tratar enxaqueca?",
+      "expected_medicine": "ISOFORINE",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Isoforine é indicado para anestesia geral, não para enxaqueca. | openai:gpt-4.1: O texto afirma que Isoforine é indicado apenas para anestesia geral e sedação, não para enxaqueca. | openai:gpt-4.1-mini: A bula afirma que Isoforine® (isoflurano) está indicado para anestesia geral, não para tratamento de enxaqueca."
+    },
+    {
+      "id": "q143",
+      "query": "tomei furosantisa demais sem querer, tem algum antídoto específico pra reverter isso?",
+      "expected_medicine": "FUROSANTISA",
+      "expected_verdict": "refuted",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Não se conhece antídoto específico para a furosemida. | openai:gpt-4.1: O texto afirma claramente: 'Não se conhece antídoto específico para a furosemida.' | openai:gpt-4.1-mini: O texto afirma: 'Não se conhece antídoto específico para a furosemida.' [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q145",
+      "query": "dá pra usar o furosantisa pra tratar depressão e ansiedade?",
+      "expected_medicine": "FUROSANTISA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de indicações não menciona depressão ou ansiedade. | openai:gpt-4.1: O trecho lista apenas indicações para inchaço, insuficiência cardíaca, gestose, entre outros, sem menção a depressão ou ansiedade. | openai:gpt-4.1-mini: A seção Indicações afirma que FUROSANTISA é indicado para inchaços e crises hipertensivas, não para depressão e ansiedade."
+    },
+    {
+      "id": "q150",
+      "query": "o miosan odt serve pra cólica menstrual?",
+      "expected_medicine": "MIOSAN ODT",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O medicamento é indicado para espasmos musculares associados a condições musculoesqueléticas, não para cólica menstrual. | openai:gpt-4.1: O texto limita as indicações a espasmos musculares associados a condições musculoesqueléticas, não mencionando cólica menstrual. | openai:gpt-4.1-mini: O texto afirma que o medicamento é indicado para espasmos musculares associados a condições musculoesqueléticas, não mencionando cólica menstrual."
+    },
+    {
+      "id": "q151",
+      "query": "andei lendo que relaxante muscular ajuda no cabelo, o miosan odt faz o cabelo crescer ou combate a calvície?",
+      "expected_medicine": "MIOSAN ODT",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A bula não menciona efeitos no cabelo ou calvície. | openai:gpt-4.1: O texto não menciona efeitos sobre cabelo, crescimento capilar ou calvície. | openai:gpt-4.1-mini: O texto afirma que MIOSAN ODT é um relaxante muscular e não menciona qualquer efeito sobre crescimento capilar ou combate à calvície. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q156",
+      "query": "O Adorlan também ajuda a emagrecer?",
+      "expected_medicine": "ADORLAN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: A bula não menciona que Adorlan ajuda a emagrecer; ao contrário, indica que pode causar apetite diminuído, mas não emagrecimento. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q157",
+      "query": "O Adorlan serve pra tratar calvície e fazer o cabelo crescer?",
+      "expected_medicine": "ADORLAN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Adorlan é indicado para alívio da dor inflamatória, não para tratar calvície. | openai:gpt-4.1: O texto afirma que Adorlan é indicado apenas para dor inflamatória aguda, não para calvície ou crescimento capilar. | openai:gpt-4.1-mini: Adorlan 25 e Adorlan 50 são indicados para o alívio da dor inflamatória aguda de intensidade moderada a grave."
+    },
+    {
+      "id": "q159",
+      "query": "comecei a tomar mirtax faz uns dias e tô com muito sono, isso é normal desse remédio?",
+      "expected_medicine": "MIRTAX",
+      "expected_verdict": "confirmed",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "não",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que sonolência é uma reação muito comum do medicamento. | openai:gpt-4.1: O texto trata de cloridrato de ciclobenzaprina, não de Mirtax (mirtazapina), então não é possível confirmar ou refutar a alegação. | openai:gpt-4.1-mini: O texto da bula refere-se ao cloridrato de ciclobenzaprina, não ao Mirtax (mirtazapina), portanto não é possível confirmar ou refutar a alegação sobre sonolência com Mirtax. [vereditos: confirmed, inconclusive, inconclusive]"
+    },
+    {
+      "id": "q162",
+      "query": "o mirtax serve pra ansiedade?",
+      "expected_medicine": "MIRTAX",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho indica que o medicamento é para espasmos musculares, não ansiedade. | openai:gpt-4.1: O trecho afirma que o medicamento é destinado ao tratamento de espasmos musculares e não menciona ansiedade. | openai:gpt-4.1-mini: A bula afirma que o medicamento é indicado para espasmos musculares e fibromialgia, não mencionando ansiedade."
+    },
+    {
+      "id": "q163",
+      "query": "tomar mirtax pode dar zumbido no ouvido?",
+      "expected_medicine": "MIRTAX",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho menciona tinnitus (zumbido no ouvido) como uma reação adversa incomum. | openai:gpt-4.1: O texto trata de ciclobenzaprina, não de Mirtax (mirtazapina), então não é possível confirmar ou refutar a alegação. | openai:gpt-4.1-mini: O texto afirma: 'tinnitus (zumbido no ouvido)' como reação adversa incomum do medicamento. [vereditos: confirmed, inconclusive, confirmed]"
+    },
+    {
+      "id": "q168",
+      "query": "esse aceclofenaco serve pra tratar ansiedade?",
+      "expected_medicine": "ACECLOFENACO",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O aceclofenaco está indicado para processos dolorosos e inflamatórios, não para ansiedade. | openai:gpt-4.1: O texto só indica aceclofenaco para dores e processos inflamatórios, não para ansiedade. | openai:gpt-4.1-mini: O aceclofenaco está indicado para o tratamento de processos dolorosos e inflamatórios, não para ansiedade."
+    },
+    {
+      "id": "q169",
+      "query": "o aceclofenaco pode causar impotência sexual ou queda na libido?",
+      "expected_medicine": "ACECLOFENACO",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1: O texto não menciona impotência sexual ou queda na libido entre as reações adversas. | openai:gpt-4.1-mini: A seção Reações Adversas não menciona impotência sexual ou queda na libido como efeitos adversos do aceclofenaco. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q175",
+      "query": "dá pra tomar frenotosse pra sinusite?",
+      "expected_medicine": "FRENOTOSSE",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Frenotosse é indicado para tratamento da tosse em gripes e resfriados, não sinusite. | openai:gpt-4.1: O texto afirma que é destinado ao tratamento da tosse em gripes e resfriados, não sinusite. | openai:gpt-4.1-mini: Frenotosse® xarope é um expectorante destinado ao tratamento da tosse em gripes e resfriados."
+    },
+    {
+      "id": "q180",
+      "query": "O Transpulmin serve pra baixar a pressão alta?",
+      "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Transpulmin é um expectorante para tosse, não para pressão alta. | openai:gpt-4.1: O trecho afirma que Transpulmin é um expectorante para tosse, não para pressão alta. | openai:gpt-4.1-mini: O trecho indica que Transpulmin é um expectorante para tosse, não para pressão alta."
+    },
+    {
+      "id": "q192",
+      "query": "o biovarixon serve pra baixar a pressão alta?",
+      "expected_medicine": "BIOVARIXON",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho indica que Biovarixon não é usado para baixar a pressão alta, mas para tratar insuficiência venosa. | openai:gpt-4.1: O texto afirma que Biovarixon é destinado ao tratamento de insuficiência venosa, não mencionando hipertensão arterial. | openai:gpt-4.1-mini: Biovarixon é destinado ao tratamento das manifestações da insuficiência venosa crônica, não para baixar a pressão alta."
+    },
+    {
+      "id": "q193",
+      "query": "o biovarixon pode dar tontura?",
+      "expected_medicine": "BIOVARIXON",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que tontura é uma reação rara do Biovarixon. | openai:gpt-4.1: O texto afirma: 'Reações raras... Tontura...' | openai:gpt-4.1-mini: Reações raras (ocorre entre 0,01% e 0,1% dos pacientes que utilizam este medicamento): - Tontura"
+    },
+    {
+      "id": "q195",
+      "query": "comecei a tomar azitromicina essa semana e fiquei na dúvida: posso tomar depois de comer ou tem que ser em jejum?",
+      "expected_medicine": "azitromicina di-hidratada",
+      "expected_verdict": "confirmed",
+      "stress_category": "representativa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: A azitromicina di-hidratada pode ser administrada com ou sem alimentos. [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q198",
+      "query": "a azitromicina serve pra tratar gripe?",
+      "expected_medicine": "azitromicina di-hidratada",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A azitromicina é indicada para infecções bacterianas, não para gripe, que é viral. | openai:gpt-4.1: O texto afirma que azitromicina trata infecções bacterianas, não gripe (que é viral). | openai:gpt-4.1-mini: A bula indica azitromicina para infecções bacterianas, não para gripe, que é viral."
+    },
+    {
+      "id": "q199",
+      "query": "tomar azitromicina por muito tempo pode viciar?",
+      "expected_medicine": "azitromicina di-hidratada",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: O texto não menciona qualquer risco de vício ou dependência associado ao uso prolongado de azitromicina di-hidratada. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q206",
+      "query": "O Amome não é contraindicado pra bebê de 1 ano de idade? Pode pingar no narizinho dele?",
+      "expected_medicine": "AMOME",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Este medicamento é contraindicado para menores de 2 anos. | openai:gpt-4.1: O texto afirma explicitamente: 'Este medicamento é contraindicado para menores de 2 anos.' | openai:gpt-4.1-mini: Este medicamento é contraindicado para menores de 2 anos. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q229",
+      "query": "Tomar Amytril costuma dar aquela boca seca chata? Esse efeito esta descrito no remedio?",
+      "expected_medicine": "AMYTRIL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que boca seca (xerostomia) é uma reação comum. | openai:gpt-4.1: O trecho afirma: 'As reações desagradáveis mais comuns, durante o tratamento da depressão, são: Xerostomia (boca seca)...' | openai:gpt-4.1-mini: O texto afirma: 'As reações desagradáveis mais comuns, durante o tratamento da depressão, são: Xerostomia (boca seca)...'"
+    },
+    {
+      "id": "q230",
+      "query": "Pode tomar bebida alcoolica junto com o Amytril ou o alcool aumenta a sonolencia e faz mal com esse remedio?",
+      "expected_medicine": "AMYTRIL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: A amitriptilina pode aumentar a resposta ao álcool e os efeitos dos depressores do SNC. | openai:gpt-4.1: O trecho afirma que a amitriptilina pode aumentar a resposta ao álcool e os efeitos de depressores do SNC. | openai:gpt-4.1-mini: A amitriptilina pode aumentar a resposta ao álcool e os efeitos dos barbitúricos e de outros depressores do SNC."
+    },
+    {
+      "id": "q238",
+      "query": "Usar a hidroclorotiazida deixa a pele mais sensível ao sol, com mais risco de queimar?",
+      "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho correto menciona que o tratamento com hidroclorotiazida pode aumentar o risco de câncer de pele e recomenda limitar a exposição ao sol. | openai:gpt-4.1: O trecho [1a411da8-d9f7-4ffe-abe4-2b417ce367b2] afirma que deve-se limitar a exposição ao sol devido ao risco aumentado de câncer de pele com hidroclorotiazida, confirmando maior sensibilidade ao sol; o trecho citado não trata do tema. | openai:gpt-4.1-mini: O texto afirma: 'O tratamento com hidroclorotiazida, particularmente o uso prolongado com altas doses, pode aumentar o risco de alguns tipos de câncer de pele e lábio... Portanto, enquanto estiver tomando candesartana cilexetila + hidroclorotiazida, limite a sua exposição à luz solar e aos raios UV, e proteja sua pele quando exposto ao sol.'"
+    },
+    {
+      "id": "q247",
+      "query": "Já que o Adorlan não causa dependência, dá pra usar por vários meses sem preocupação, certo?",
+      "expected_medicine": "ADORLAN",
+      "expected_verdict": "refuted",
+      "stress_category": "premissa_falsa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: A bula afirma: 'Dependência de drogas pode ocorrer', indicando que Adorlan pode causar dependência, contrariando a alegação do paciente. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q254",
+      "query": "Pra quem tem problema no coração, o Medato não é contraindicado?",
+      "expected_medicine": "MEDATO",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que Medato é contraindicado para quem tem problemas cardíacos. | openai:gpt-4.1: O texto afirma explicitamente: 'tem problemas cardíacos, como: ataque cardíaco, batimento cardíaco irregular, dor no peito (angina), insuficiência cardíaca, doença cardíaca ou se nasceu com problema do coração'. | openai:gpt-4.1-mini: Contraindicações: 'tem problemas cardíacos, como: ataque cardíaco, batimento cardíaco irregular, dor no peito (angina), insuficiência cardíaca, doença cardíaca ou se nasceu com problema do coração;' [vereditos: refuted, confirmed, confirmed]"
+    },
+    {
+      "id": "q255",
+      "query": "Não é verdade que não posso beber álcool tomando Medato?",
+      "expected_medicine": "MEDATO",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "incerto",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "refuted",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1: O trecho afirma claramente: 'Não ingira bebidas alcoólicas enquanto estiver tomando cloridrato de metilfenidato.' | openai:gpt-4.1-mini: Não ingira bebidas alcoólicas enquanto estiver tomando cloridrato de metilfenidato. O álcool pode piorar as reações adversas de cloridrato de metilfenidato. [vereditos: inconclusive, refuted, confirmed]"
+    },
+    {
+      "id": "q257",
+      "query": "O Tabrecta pode prejudicar o bebê se a mulher engravidar durante o tratamento? A bula manda usar anticoncepcional para evitar a gravidez enquanto toma o remédio?",
+      "expected_medicine": "TABRECTA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: Tabrecta pode prejudicar o feto e é necessário usar contraceptivo eficaz durante o tratamento. | openai:gpt-4.1: O trecho bdb7c756-e8c5-4a60-a9d1-7763a9165a3f afirma que Tabrecta pode prejudicar o feto e recomenda uso de contraceptivo eficaz durante o tratamento. | openai:gpt-4.1-mini: O trecho 'Tabrecta® pode prejudicar o feto... Você deverá usar um método contraceptivo eficaz enquanto estiver tomando Tabrecta® e por pelo menos 7 dias após parar de tomá-lo para evitar engravidar.' confirma a alegação."
+    },
+    {
+      "id": "q260",
+      "query": "Não dá pra dizer que o Transpulmin xarope infantil é seguro pra quem tem porfiria?",
+      "expected_medicine": "TRANSPULMIN XAROPE INFANTIL",
+      "expected_verdict": "confirmed",
+      "stress_category": "negacao",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: A bula afirma que a guaifenesina é considerada insegura para pacientes com porfiria. | openai:gpt-4.1: A bula afirma que a guaifenesina é considerada insegura para pacientes com porfiria. | openai:gpt-4.1-mini: A bula afirma: 'A guaifenesina é considerada insegura para pacientes com porfiria... Este medicamento é contraindicado...' [vereditos: refuted, refuted, confirmed]"
+    },
+    {
+      "id": "q262",
+      "query": "Se alguém exagerar na dose de clonidina, existe algum antídoto específico pra reverter esse excesso?",
+      "expected_medicine": "CLONIDIN",
+      "expected_verdict": "refuted",
+      "stress_category": "marca",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Inexiste antídoto específico para a superdose de clonidina. | openai:gpt-4.1: O trecho afirma claramente: 'Inexiste antídoto específico para a superdose de clonidina.' | openai:gpt-4.1-mini: Inexiste antídoto específico para a superdose de clonidina. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q279",
+      "query": "A tibolona ajuda a aumentar a vontade e o desejo sexual da mulher na menopausa?",
+      "expected_medicine": "tibolona",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: A tibolona tem efeito favorável sobre o desejo sexual. | openai:gpt-4.1: O trecho afirma efeito favorável sobre o desejo sexual: 'efeito benéfico sobre o tecido de revestimento da vagina e favorável sobre o humor e o desejo sexual.' | openai:gpt-4.1-mini: O trecho 04b44ba8-ff9f-44c2-92e8-b6cf2fd12165 afirma que a tibolona tem efeito favorável sobre o humor e o desejo sexual."
+    },
+    {
+      "id": "q281",
+      "query": "A tibolona mexe nas taxas de colesterol bom (HDL) e de triglicerides no sangue?",
+      "expected_medicine": "tibolona",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho citado não menciona efeitos da tibolona sobre colesterol HDL ou triglicerídeos; a bula não aborda diretamente alterações nas taxas de colesterol bom (HDL) ou triglicerídeos no sangue."
+    },
+    {
+      "id": "q287",
+      "query": "Alem de relaxar o musculo, o Mirtax tambem desinflama? Ele e anti-inflamatorio?",
+      "expected_medicine": "MIRTAX",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona propriedades anti-inflamatórias, apenas relaxante muscular. | openai:gpt-4.1: O texto afirma que Mirtax é um relaxante muscular e não menciona ação anti-inflamatória. | openai:gpt-4.1-mini: Mirtax, cujo princípio ativo é o cloridrato de ciclobenzaprina, é um relaxante muscular."
+    },
+    {
+      "id": "q288",
+      "query": "Quem tem problema no fígado pode tomar Mirtax, ou precisa de cuidado porque esse remédio é processado pelo fígado?",
+      "expected_medicine": "MIRTAX",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O uso de Mirtax não é recomendado em pacientes com insuficiência hepática de moderada a grave. | openai:gpt-4.1: O trecho '[Advertências e Precauções | 397d2195-1561-4f7f-945e-9bf8f9e8082f]' afirma que Mirtax deve ser usado com cautela em insuficiência hepática leve e não é recomendado em insuficiência hepática moderada a grave. | openai:gpt-4.1-mini: O trecho 'Insuficiência hepática Mirtax deve ser usado com cautela em pacientes com insuficiência hepática leve. Devido à falta de dados, o uso da ciclobenzaprina não é recomendado em pacientes com insuficiência hepática de moderada a grave.' confirma a necessidade de cuidado em pacientes com problemas no fígado."
+    },
+    {
+      "id": "q290",
+      "query": "Usar a hidroclorotiazida deixa a pele mais sensível ao sol, com mais risco de queimar?",
+      "expected_medicine": "CANDESARTANA CILEXETILA + HIDROCLOROTIAZIDA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho menciona que a hidroclorotiazida pode causar fotossensibilidade, aumentando a sensibilidade à luz. | openai:gpt-4.1-mini: hidroclorotiazida: Reação incomum (ocorre entre 0,1% e 1% dos pacientes que utilizam este medicamento): fotossensibilidade (sensibilidade à luz). ... Portanto, enquanto estiver tomando candesartana cilexetila + hidroclorotiazida, limite a sua exposição à luz solar e aos raios UV, e proteja sua pele quando exposto ao sol. [vereditos: confirmed, inconclusive, confirmed]"
+    },
+    {
+      "id": "q313",
+      "query": "Minha mãe tem deficiência de G6PD, ela pode tomar BENECTRIN sem nenhum cuidado especial?",
+      "expected_medicine": "BENECTRIN",
+      "expected_verdict": "refuted",
+      "stress_category": "representativa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: BENECTRIN® não deve ser utilizado por pacientes portadores de deficiência de G6PD, a não ser em casos de absoluta necessidade, e em doses mínimas. [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q315",
+      "query": "O uso de BENECTRIN atrapalha a capacidade de dirigir carro ou operar máquinas?",
+      "expected_medicine": "BENECTRIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho citado não menciona efeitos sobre a capacidade de dirigir ou operar máquinas."
+    },
+    {
+      "id": "q322",
+      "query": "Se um paciente receber, por engano, uma dose muito acima da recomendada de Bormib, existe algum antídoto específico para reverter o efeito?",
+      "expected_medicine": "BORMIB",
+      "expected_verdict": "refuted",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Não existe antídoto específico conhecido para uma dose excessiva deste medicamento. | openai:gpt-4.1: O trecho afirma claramente: 'Não existe antídoto específico conhecido para uma dose excessiva deste medicamento.' | openai:gpt-4.1-mini: Não existe antídoto específico conhecido para uma dose excessiva deste medicamento. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q324",
+      "query": "Entre as reações adversas do Bormib está a queda de cabelo?",
+      "expected_medicine": "BORMIB",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1: Nenhum dos trechos listados de reações adversas menciona queda de cabelo (alopecia). | openai:gpt-4.1-mini: O trecho da seção Reações Adversas lista diversas reações, mas não menciona queda de cabelo. [vereditos: inconclusive, refuted, refuted]"
+    },
+    {
+      "id": "q339",
+      "query": "A bula da rosuvastatina orienta evitar suco de toranja (grapefruit) durante o tratamento, por interação com o remédio?",
+      "expected_medicine": "rosuvastatina cálcica",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1: Nenhum trecho menciona suco de toranja (grapefruit) ou orienta evitá-lo; a lista de interações não inclui alimentos, apenas medicamentos. | openai:gpt-4.1-mini: O trecho cita medicamentos que devem ser evitados ou usados com cuidado, mas não menciona suco de toranja (grapefruit) como contraindicação ou precaução. [vereditos: inconclusive, refuted, refuted]"
+    },
+    {
+      "id": "q346",
+      "query": "Já que o Systen Sequi é um anticoncepcional, posso usar ele no lugar da pílula?",
+      "expected_medicine": "SYSTEN SEQUI",
+      "expected_verdict": "refuted",
+      "stress_category": "premissa_falsa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: Systen® Sequi não é um anticoncepcional. ... Systen® Sequi não deve ser usado como anticoncepcional. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q364",
+      "query": "Fiquei sabendo que quem faz o exame com Primovist não pode dirigir depois, por causa de algum efeito no sistema nervoso. Isso procede?",
+      "expected_medicine": "PRIMOVIST",
+      "expected_verdict": "refuted",
+      "stress_category": "representativa",
+      "verdict_ok": "sim",
+      "medicine_ok": "sim",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho correto é 'Não são conhecidos efeitos na habilidade de dirigir ou operar máquinas.' | openai:gpt-4.1-mini: Seção 'Efeitos na habilidade de dirigir ou operar máquinas': 'Não são conhecidos efeitos na habilidade de dirigir ou operar máquinas.' [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q365",
+      "query": "A bula do Primovist lista diarreia entre as reações adversas possíveis?",
+      "expected_medicine": "PRIMOVIST",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de reações adversas não lista diarreia como uma possível reação. | openai:gpt-4.1: Nenhuma menção a diarreia entre as reações adversas listadas no trecho citado. | openai:gpt-4.1-mini: O texto das reações adversas não menciona diarreia como efeito adverso do Primovist."
+    },
+    {
+      "id": "q381",
+      "query": "Já tive uma reação alérgica grave a essa vacina em uma dose anterior. Ainda assim posso tomar a próxima dose de Comirnaty?",
+      "expected_medicine": "COMIRNATY",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Comirnaty não deve ser administrada em pessoas que tiveram reação alérgica aos componentes. | openai:gpt-4.1: O trecho afirma que Comirnaty não deve ser administrada a quem já teve reação alérgica à vacina. | openai:gpt-4.1-mini: Comirnaty® não deve ser administrada em pessoas que tenham apresentado reação alérgica (hipersensibilidade) aos componentes dessa vacina. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q383",
+      "query": "A bula da Comirnaty lista perda de olfato entre as possíveis reações adversas da vacina?",
+      "expected_medicine": "COMIRNATY",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1: A lista detalhada de reações adversas não menciona perda de olfato em nenhum momento. | openai:gpt-4.1-mini: A seção 'Reações Adversas' lista várias reações, mas não menciona perda de olfato. [vereditos: inconclusive, refuted, refuted]"
+    },
+    {
+      "id": "q384",
+      "query": "Convulsões estão entre os efeitos colaterais relatados na bula da Comirnaty para crianças de 6 meses a 2 anos?",
+      "expected_medicine": "COMIRNATY",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona convulsões como efeito colateral para crianças de 6 meses a 2 anos. | openai:gpt-4.1: O trecho 3a3bb576-b4d1-4460-be79-524e1a894c00 lista todas as reações adversas para 6 meses a menos de 2 anos e não menciona convulsões. | openai:gpt-4.1-mini: No trecho para 6 meses a menos de 2 anos não há menção a convulsões entre as reações adversas listadas."
+    },
+    {
+      "id": "q387",
+      "query": "Depois da dose de reforço fiquei meio zonzo e sem nenhuma energia. Isso é esperado com a Comirnaty?",
+      "expected_medicine": "COMIRNATY",
+      "expected_verdict": "confirmed",
+      "stress_category": "giria",
+      "verdict_ok": "sim",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: A tontura e a astenia (fraqueza) são listadas como reações adversas incomuns após a dose de reforço. | openai:gpt-4.1: O trecho correto seria o [Reações Adversas | 3a3bb576-b4d1-4460-be79-524e1a894c00], que lista tontura e cansaço como reações após dose de reforço; o trecho citado não menciona tontura nem cansaço. | openai:gpt-4.1-mini: O texto afirma que após dose de reforço, reações muito comuns incluem cansaço e tontura (letargia), que correspondem a 'meio zonzo e sem energia'."
+    },
+    {
+      "id": "q398",
+      "query": "Tenho glaucoma, isso impede completamente o uso de cloridrato de paroxetina?",
+      "expected_medicine": "cloridrato de paroxetina",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "incerto",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4o: O texto afirma que o cloridrato de paroxetina deve ser usado com cautela em pacientes com glaucoma, não que é completamente impedido. | openai:gpt-4.1-mini: A bula menciona que cloridrato de paroxetina deve ser usado com cautela em pacientes com glaucoma, mas não afirma que o uso é completamente impedido. [vereditos: refuted, inconclusive, inconclusive]"
+    },
+    {
+      "id": "q399",
+      "query": "Posso beber uma taça de vinho no jantar enquanto tomo cloridrato de paroxetina, sem problema nenhum?",
+      "expected_medicine": "cloridrato de paroxetina",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho 'não é aconselhável ingerir bebidas alcoólicas durante o tratamento com cloridrato de paroxetina' indica que não é recomendado beber vinho durante o tratamento. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q403",
+      "query": "cloridrato de paroxetina reduz o efeito do anticoncepcional oral?",
+      "expected_medicine": "cloridrato de paroxetina",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho citado lista medicamentos que interferem na ação da paroxetina, mas não menciona anticoncepcionais orais nem redução de seu efeito."
+    },
+    {
+      "id": "q419",
+      "query": "O Pelgraz age estimulando a produção de plaquetas, além de aumentar os glóbulos brancos?",
+      "expected_medicine": "PELGRAZ",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que Pelgraz estimula a produção de glóbulos brancos, mas não menciona plaquetas. | openai:gpt-4.1: O texto afirma que Pelgraz estimula a produção de glóbulos brancos, mas não menciona plaquetas. | openai:gpt-4.1-mini: O texto afirma que Pelgraz estimula a produção de glóbulos brancos, mas não menciona a produção de plaquetas."
+    },
+    {
+      "id": "q430",
+      "query": "O tratamento com acetato de abiraterona costuma causar queda de cabelo?",
+      "expected_medicine": "acetato de abiraterona",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de reações adversas não menciona queda de cabelo como efeito colateral. | openai:gpt-4.1: A lista de reações adversas não menciona queda de cabelo (alopecia) como efeito do acetato de abiraterona. | openai:gpt-4.1-mini: A bula lista várias reações adversas, mas não menciona queda de cabelo como efeito do acetato de abiraterona."
+    },
+    {
+      "id": "q431",
+      "query": "Usar acetato de abiraterona pode comprometer a fertilidade do paciente?",
+      "expected_medicine": "acetato de abiraterona",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4.1-mini: O texto não menciona efeitos do acetato de abiraterona sobre a fertilidade do paciente; o trecho citado fala sobre precauções na gravidez e uso em mulheres, não sobre fertilidade masculina."
+    },
+    {
+      "id": "q432",
+      "query": "O acetato de abiraterona pode deixar o estômago embrulhado, com vontade de vomitar?",
+      "expected_medicine": "acetato de abiraterona",
+      "expected_verdict": "confirmed",
+      "stress_category": "giria",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho citado menciona náuseas e vômitos graves como possíveis sinais de problemas no fígado durante o uso do acetato de abiraterona. [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q433",
+      "query": "Posso partir o comprimido de acetato de abiaterona ao meio para facilitar a ingestão?",
+      "expected_medicine": "acetato de abiraterona",
+      "expected_verdict": "refuted",
+      "stress_category": "erro_digitacao",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Os comprimidos de acetato de abiraterona devem ser ingeridos inteiros, com água. Não quebre os comprimidos. | openai:gpt-4.1: O trecho correto é o primeiro, que afirma: 'Os comprimidos de acetato de abiraterona devem ser ingeridos inteiros, com água. Não quebre os comprimidos.' | openai:gpt-4.1-mini: O trecho 'Este medicamento não deve ser partido, aberto ou mastigado.' nega a possibilidade de partir o comprimido. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q453",
+      "query": "O Sinvastacor pode causar ganho de peso como efeito colateral?",
+      "expected_medicine": "SINVASTACOR",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona ganho de peso como efeito colateral. | openai:gpt-4.1-mini: O texto da seção Reações Adversas não menciona ganho de peso como efeito colateral do Sinvastacor. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q461",
+      "query": "Existe algum antídoto específico para os casos de superdose de Tâmisa 15?",
+      "expected_medicine": "TÂMISA 15",
+      "expected_verdict": "refuted",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que não há antídoto específico para superdose. | openai:gpt-4.1: O trecho afirma claramente: 'Não há antídoto específico'. | openai:gpt-4.1-mini: Não há antídoto específico, e se necessário, a superdose é tratada sintomaticamente. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q470",
+      "query": "Desde que comecei a tomar Ciprix fico com a boca seca o dia todo, isso é esperado?",
+      "expected_medicine": "CIPRIX",
+      "expected_verdict": "inconclusive",
+      "stress_category": "giria",
+      "verdict_ok": "incerto",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1: Nenhum dos trechos listados menciona boca seca (xerostomia) como reação adversa. | openai:gpt-4.1-mini: A bula não menciona boca seca como reação adversa, nem comum, nem rara, nem em qualquer frequência. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q472",
+      "query": "Posso tomar Ciprix junto com omeprazol sem nenhuma interação entre eles?",
+      "expected_medicine": "CIPRIX",
+      "expected_verdict": "refuted",
+      "stress_category": "marca",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho 'Uso simultâneo de Ciprix® e omeprazol ... pode levar a uma leve diminuição do efeito do ciprofloxacino' confirma a interação entre Ciprix e omeprazol. [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q473",
+      "query": "Posso dirigir sem problema depois de tomar Cipryx?",
+      "expected_medicine": "CIPRIX",
+      "expected_verdict": "refuted",
+      "stress_category": "erro_digitacao",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: As substâncias do tipo fluoroquinolonas, incluindo o ciprofloxacino, podem prejudicar a habilidade do paciente para dirigir veículos e operar máquinas, devido a uma possível redução de atenção. [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q477",
+      "query": "Se eu perder o horário marcado para a próxima infusão de ácido zoledrônico, existe uma orientação específica do que fazer nesse caso?",
+      "expected_medicine": "ácido zoledrônico",
+      "expected_verdict": "inconclusive",
+      "stress_category": "representativa",
+      "verdict_ok": "sim",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4o: O trecho citado não fornece orientação sobre o que fazer se perder a infusão. | openai:gpt-4.1: O trecho não traz orientação específica sobre perda do horário da infusão, apenas recomenda procurar o médico ou farmacêutico. | openai:gpt-4.1-mini: O trecho citado não contém orientação sobre o que fazer em caso de perda do horário da infusão."
+    },
+    {
+      "id": "q481",
+      "query": "A bula cita o tratamento de osteoporose comum, fora de um contexto de câncer, entre as indicações do ácido zoledrônico?",
+      "expected_medicine": "ácido zoledrônico",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de indicações não menciona o tratamento de osteoporose comum. | openai:gpt-4.1: O texto só cita indicações relacionadas a câncer e não menciona osteoporose comum fora desse contexto. | openai:gpt-4.1-mini: O texto indica uso em metástases ósseas, hipercalcemia por tumor e prevenção da perda óssea em câncer, não mencionando osteoporose comum."
+    },
+    {
+      "id": "q484",
+      "query": "Enquanto estou tomando cloridrato de paroxetina, posso beber álcool socialmente sem problema?",
+      "expected_medicine": "Roxetin",
+      "expected_verdict": "refuted",
+      "stress_category": "representativa",
+      "verdict_ok": "sim",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho correto afirma que o uso concomitante de cloridrato de paroxetina e álcool não é recomendado. | openai:gpt-4.1: O texto afirma claramente: 'O uso concomitante de cloridrato de paroxetina e álcool não é recomendado.' | openai:gpt-4.1-mini: O trecho correto está em [Advertências e Precauções | fb3623cf-a5c0-48a2-b2f3-1cbd2d4e84a2]: 'Assim como ocorre com o uso de outras drogas, não é aconselhável ingerir bebidas alcoólicas durante o tratamento com cloridrato de paroxetina.' O trecho citado pelo gabarito não aborda o consumo de álcool."
+    },
+    {
+      "id": "q490",
+      "query": "O uso de Capox pode causar queda de cabelo?",
+      "expected_medicine": "CAPOX",
+      "expected_verdict": "inconclusive",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de reações adversas não menciona queda de cabelo como efeito colateral. | openai:gpt-4.1: O texto lista diversas reações dermatológicas, mas não menciona queda de cabelo (alopecia) como reação adversa. | openai:gpt-4.1-mini: A seção de Reações Adversas lista várias reações dermatológicas, mas não menciona queda de cabelo."
+    },
+    {
+      "id": "q492",
+      "query": "Qual a dose máxima diária de Capos que posso tomar?",
+      "expected_medicine": "CAPOX",
+      "expected_verdict": "confirmed",
+      "stress_category": "erro_digitacao",
+      "verdict_ok": "sim",
+      "medicine_ok": "não",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: A pergunta é sobre Capos, mas o texto trata de captopril. | openai:gpt-4.1: O trecho afirma explicitamente: 'A dose diária máxima é de 450mg de captopril.' | openai:gpt-4.1-mini: O trecho 'A dose diária máxima é de 450mg de captopril.' confirma a dose máxima diária, mas o medicamento esperado é CAPOX, e o texto refere-se a captopril, indicando medicamento diferente. [vereditos: inconclusive, confirmed, confirmed]"
+    },
+    {
+      "id": "q497",
+      "query": "A linezolida pode causar queda de cabelo em quem faz o tratamento por mais tempo?",
+      "expected_medicine": "linezolida",
+      "expected_verdict": "inconclusive",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de reações adversas não menciona queda de cabelo como efeito colateral. | openai:gpt-4.1: O texto lista várias reações adversas, mas não menciona queda de cabelo (alopecia). | openai:gpt-4.1-mini: A bula não menciona queda de cabelo como reação adversa da linezolida. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q505",
+      "query": "As cápsulas de Naprix A podem ser mastigadas ou abertas antes de tomar, ou preciso engolir inteiras com água?",
+      "expected_medicine": "NAPRIX A",
+      "expected_verdict": "confirmed",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: Este medicamento não deve ser partido, aberto ou mastigado. | openai:gpt-4.1: O trecho afirma: 'Este medicamento não deve ser partido, aberto ou mastigado.' | openai:gpt-4.1-mini: O texto afirma: 'As cápsulas devem ser ingeridas inteiras e sem mastigar' e 'Este medicamento não deve ser partido, aberto ou mastigado.' [vereditos: refuted, refuted, confirmed]"
+    },
+    {
+      "id": "q509",
+      "query": "Esse remédio pode causar perda de peso como efeito colateral?",
+      "expected_medicine": "NAPRIX A",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho citado menciona aumento de peso, não perda de peso. | openai:gpt-4.1: O trecho cita aumento de peso como reação adversa, mas não menciona perda de peso. | openai:gpt-4.1-mini: O trecho cita 'aumento de peso' como reação adversa, mas não menciona perda de peso."
+    },
+    {
+      "id": "q514",
+      "query": "O Geodon é indicado para tratar quadros de depressão?",
+      "expected_medicine": "GEODON",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que Geodon não é indicado para tratar quadros de depressão. | openai:gpt-4.1: O texto não menciona indicação para depressão, apenas para esquizofrenia e transtorno bipolar. | openai:gpt-4.1-mini: A bula afirma que Geodon é indicado para esquizofrenia e transtorno bipolar, não mencionando depressão."
+    },
+    {
+      "id": "q529",
+      "query": "O líquido dentro do frasco desse colírio deveria ser transparente ou é normal vir meio turvo?",
+      "expected_medicine": "TOBRACULAR",
+      "expected_verdict": "confirmed",
+      "stress_category": "secao_enganosa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Aspecto do medicamento: Solução límpida, transparente, isenta de partículas e material estranho. | openai:gpt-4.1: O texto afirma que o aspecto deve ser solução límpida, transparente, isenta de partículas e material estranho. | openai:gpt-4.1-mini: Aspecto do medicamento: Solução límpida, transparente, isenta de partículas e material estranho. [vereditos: refuted, confirmed, refuted]"
+    },
+    {
+      "id": "q536",
+      "query": "As precauções da bula do Rosustatin recomendam fazer exames periódicos da função renal durante o tratamento?",
+      "expected_medicine": "ROSUSTATIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho citado não menciona exames periódicos da função renal. | openai:gpt-4.1: O texto recomenda monitoramento de enzimas do fígado, não da função renal. | openai:gpt-4.1-mini: O trecho 5011a1cc-286d-4ed4-8039-a951716a1700 recomenda monitoramento das enzimas do fígado, mas não menciona exames periódicos da função renal. [vereditos: inconclusive, refuted, refuted]"
+    },
+    {
+      "id": "q542",
+      "query": "O cloridrato de ciprofloxacino é indicado para tratar infecções dentárias?",
+      "expected_medicine": "CLORIDRATO DE CIPROFLOXACINO",
+      "expected_verdict": "inconclusive",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona infecções dentárias como indicação. | openai:gpt-4.1: O texto não menciona infecções dentárias entre as indicações listadas. | openai:gpt-4.1-mini: A bula lista infecções do trato respiratório, ouvido médio, seios paranasais, olhos, rins, órgãos reprodutores, cavidade abdominal, pele, ossos e articulações, mas não menciona infecções dentárias. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q544",
+      "query": "Já que o cloridrato de ciprofloxacino é liberado para gestantes, posso usar durante a gravidez sem nenhuma restrição?",
+      "expected_medicine": "CLORIDRATO DE CIPROFLOXACINO",
+      "expected_verdict": "refuted",
+      "stress_category": "premissa_falsa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: Não é recomendado o uso do cloridrato de ciprofloxacino durante a gravidez. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q546",
+      "query": "O Cloridrato de Ciproflaxacino pode causar problema no tendão, tipo uma inflamação?",
+      "expected_medicine": "CLORIDRATO DE CIPROFLOXACINO",
+      "expected_verdict": "confirmed",
+      "stress_category": "erro_digitacao",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho citado trata de problemas no fígado, não menciona tendinite ou inflamação de tendão; a evidência correta está no trecho [Advertências e Precauções | 8bb53350-53b8-4820-b124-4cc17989bec5] que afirma: 'Podem ocorrer tendinite e ruptura do tendão...' [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q550",
+      "query": "Em caso de overdose de Quinoflox, existe um antídoto específico que o hospital pode aplicar?",
+      "expected_medicine": "QUINOFLOX",
+      "expected_verdict": "inconclusive",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O texto não menciona um antídoto específico para overdose de Quinoflox. | openai:gpt-4.1: O texto não menciona antídoto específico, apenas medidas gerais de suporte e hidratação. | openai:gpt-4.1-mini: O texto afirma que não há antídoto específico, apenas medidas de suporte como hidratação e monitoramento renal."
+    },
+    {
+      "id": "q560",
+      "query": "É comum o uso de Pryltec levar a ganho de peso?",
+      "expected_medicine": "PRYLTEC",
+      "expected_verdict": "inconclusive",
+      "stress_category": "marca",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Nenhum trecho menciona ganho de peso como reação adversa. | openai:gpt-4.1: Nenhum dos trechos de reações adversas cita ganho de peso como efeito comum ou relatado. | openai:gpt-4.1-mini: O texto da seção Reações Adversas não menciona ganho de peso como efeito adverso do Pryltec (maleato de enalapril), listando outros efeitos, mas não ganho de peso."
+    },
+    {
+      "id": "q563",
+      "query": "O uso do creme Canesten pode dar sono ou sonolencia?",
+      "expected_medicine": "CANESTEN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona sono ou sonolência como reações adversas. | openai:gpt-4.1: O texto lista todas as reações adversas e não menciona sono ou sonolência. | openai:gpt-4.1-mini: A seção Reações Adversas não menciona sono ou sonolência como efeitos adversos do Canesten."
+    },
+    {
+      "id": "q572",
+      "query": "Minérgi costuma dar aquela correria pro banheiro, intestino meio solto?",
+      "expected_medicine": "MINÉRGI",
+      "expected_verdict": "inconclusive",
+      "stress_category": "giria",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não menciona diarreia ou intestino solto como reação adversa. | openai:gpt-4.1: O trecho lista prisão de ventre como reação comum, mas não menciona diarreia ou intestino solto. | openai:gpt-4.1-mini: O texto lista prisão de ventre como reação comum, mas não menciona intestino solto ou diarreia."
+    },
+    {
+      "id": "q581",
+      "query": "O CEDROXIL dá sono ou deixa a pessoa mais sonolenta durante o tratamento?",
+      "expected_medicine": "CEDROXIL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "marca",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho não lista sonolência como reação adversa. | openai:gpt-4.1: O trecho lista reações do sistema nervoso, mas não menciona sonolência ou sedação. | openai:gpt-4.1-mini: Na seção Reações Adversas, não há menção a sonolência ou sono como efeito adverso do CEDROXIL, e sintomas do sistema nervoso listados são alucinações, convulsões, confusão mental, tontura, inquietação, dor de cabeça, formigamento, mas não sonolência."
+    },
+    {
+      "id": "q586",
+      "query": "A bula do bissulfato de clopidogrel alerta que ele causa sonolência e que por isso é preciso evitar dirigir depois de tomar?",
+      "expected_medicine": "bissulfato de clopidogrel",
+      "expected_verdict": "refuted",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: Efeitos na capacidade de conduzir/operar máquinas: Não foi observada qualquer alteração na capacidade de condução ou desempenho psicométrico dos pacientes após administração de bissulfato de clopidogrel. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q587",
+      "query": "Queda de cabelo está entre as reações adversas listadas do bissulfato de clopidogrel?",
+      "expected_medicine": "bissulfato de clopidogrel",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção citada lista reações adversas, mas não menciona queda de cabelo. | openai:gpt-4.1: Nenhum dos trechos listados de reações adversas menciona queda de cabelo (alopecia) como reação adversa do bissulfato de clopidogrel. | openai:gpt-4.1-mini: Na seção 'Pele e anexos' do trecho [Reações Adversas | f53c9238-fd47-4480-904f-435660fa4d2e] não há menção à queda de cabelo entre as reações adversas listadas."
+    },
+    {
+      "id": "q589",
+      "query": "Esse remédio pode dar uma ânsia de vômito, tipo enjoo?",
+      "expected_medicine": "bissulfato de clopidogrel",
+      "expected_verdict": "confirmed",
+      "stress_category": "giria",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho cita 'Incomum: enjoo' na seção de Reações Adversas, confirmando que o medicamento pode causar ânsia de vômito/enjoo. [vereditos: inconclusive, inconclusive, confirmed]"
+    },
+    {
+      "id": "q596",
+      "query": "SALAZOPRIN é contraindicado para quem tem diabetes?",
+      "expected_medicine": "SALAZOPRIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de contraindicações não menciona diabetes como contraindicação. | openai:gpt-4.1: O texto não menciona diabetes como contraindicação para SALAZOPRIN. | openai:gpt-4.1-mini: A seção Contraindicações afirma que SALAZOPRIN é contraindicado em casos específicos, mas não menciona diabetes como contraindicação."
+    },
+    {
+      "id": "q597",
+      "query": "A sulfassalazina também é usada para tratar infecção urinária?",
+      "expected_medicine": "SALAZOPRIN",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de indicações não menciona infecção urinária como uma das condições tratadas. | openai:gpt-4.1: O trecho lista apenas indicações gastrointestinais e reumatológicas, não infecção urinária. | openai:gpt-4.1-mini: A seção Indicações afirma que o medicamento é usado para doenças gastrointestinais e reumatológicas, sem mencionar infecção urinária."
+    },
+    {
+      "id": "q613",
+      "query": "O tratamento com Perjeta costuma causar dor de cabeça com frequência?",
+      "expected_medicine": "Perjeta",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho citado não menciona dor de cabeça como uma reação adversa comum. | openai:gpt-4.1: O trecho lista as reações adversas mais comuns (>10%) e não menciona dor de cabeça, mas não afirma se ocorre com menor frequência. | openai:gpt-4.1-mini: O trecho citado não menciona dor de cabeça; a seção Reações Adversas lista as reações mais comuns e dor de cabeça não está entre elas. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q619",
+      "query": "A bula do UNIPRAZOL inclui gastrite entre as indicações de uso do medicamento?",
+      "expected_medicine": "UNIPRAZOL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "representativa",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção de indicações não menciona gastrite como uma condição tratada pelo medicamento. | openai:gpt-4.1: O trecho lista as indicações e não menciona gastrite entre elas. | openai:gpt-4.1-mini: A seção Indicações lista úlceras gástricas, duodenais, refluxo gastroesofágico, doença de Zollinger-Ellison, dispepsia e prevenção de sangramento, mas não menciona gastrite."
+    },
+    {
+      "id": "q642",
+      "query": "Mulheres que estão amamentando podem usar cloreto de sódio 0,9% sem nenhuma restrição?",
+      "expected_medicine": "CLORETO DE SÓDIO 0,9%",
+      "expected_verdict": "refuted",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4.1: O trecho afirma: 'Não existem dados suficientes sobre a utilização de Cloreto de Sódio 0,9% em mulheres grávidas ou lactantes.' | openai:gpt-4.1-mini: O trecho citado afirma: 'Não existem dados suficientes sobre a utilização de Cloreto de Sódio 0,9% em mulheres grávidas ou lactantes', não confirmando nem refutando o uso sem restrições durante a amamentação."
+    },
+    {
+      "id": "q652",
+      "query": "Posso tomar suco de toranja natural sem problema enquanto uso Ceci?",
+      "expected_medicine": "CECI",
+      "expected_verdict": "refuted",
+      "stress_category": "marca",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que o suco de toranja pode influenciar nos níveis de Ceci no sangue. | openai:gpt-4.1: O texto afirma explicitamente que o suco de toranja pode influenciar os níveis de Ceci® no sangue e afetar a ação da TRH. | openai:gpt-4.1-mini: O trecho 'suco de toranja (grapefruit)' está listado entre os medicamentos e substâncias que podem afetar a ação da terapia de reposição hormonal (TRH) com Ceci®. [vereditos: refuted, confirmed, confirmed]"
+    },
+    {
+      "id": "q664",
+      "query": "A bula lista enjoo e vômito como reações adversas comuns do Purinethol, na parte de efeitos colaterais?",
+      "expected_medicine": "PURINETHOL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "sim",
+      "medicine_ok": "sim",
+      "evidence_ok": "não",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4o: O trecho citado não menciona enjoo e vômito como reações adversas. | openai:gpt-4.1: O trecho não menciona enjoo ou vômito entre as reações adversas listadas. | openai:gpt-4.1-mini: O trecho citado não menciona enjoo ou vômito como reações adversas comuns."
+    },
+    {
+      "id": "q667",
+      "query": "Já que o Purinethol é liberado durante a gravidez, posso continuar o tratamento normalmente se engravidar?",
+      "expected_medicine": "PURINETHOL",
+      "expected_verdict": "refuted",
+      "stress_category": "premissa_falsa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: O uso de Purinethol® deve ser evitado sempre que possível durante a gravidez, principalmente durante o primeiro trimestre. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q672",
+      "query": "Se eu tomar esse remédio de manhã bem cedo, o efeito já passa a tempo de eu conseguir dirigir para o trabalho sem problema?",
+      "expected_medicine": "OXALATO DE ESCITALOPRAM",
+      "expected_verdict": "refuted",
+      "stress_category": "secao_enganosa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "inconclusive"
+      ],
+      "comments": "openai:gpt-4.1-mini: O trecho citado fala sobre fertilidade e alerta para não dirigir até saber se o medicamento afeta a atenção, mas não informa o tempo para o início ou fim do efeito para dirigir."
+    },
+    {
+      "id": "q717",
+      "query": "Já que o Profergan é seguro na gravidez, posso usá-lo à vontade enquanto estou grávida?",
+      "expected_medicine": "PROFERGAN",
+      "expected_verdict": "refuted",
+      "stress_category": "premissa_falsa",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: O uso de Profergan® não é recomendado durante a gravidez e deve ser usado apenas sob orientação médica, avaliando-se sempre a relação risco-benefício. [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q718",
+      "query": "Já que sonolência é uma reação adversa do Profergan, não tem problema dirigir logo depois de tomar, contanto que eu me sinta bem?",
+      "expected_medicine": "PROFERGAN",
+      "expected_verdict": "refuted",
+      "stress_category": "secao_enganosa",
+      "verdict_ok": "sim",
+      "medicine_ok": "sim",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho correto afirma que não se deve dirigir até saber como Profergan afeta você. | openai:gpt-4.1-mini: Profergan® pode causar sonolência, tonturas e visão turva. Você não deve dirigir um veículo ou operar máquinas até saber como Profergan® afeta você. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q729",
+      "query": "Clonazepam é indicado para tratar enxaqueca?",
+      "expected_medicine": "RIVOTRIL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "principio_ativo",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho indica que Rivotril não é indicado para tratar enxaqueca. | openai:gpt-4.1: O trecho de Indicações não menciona enxaqueca como indicação para Rivotril (clonazepam). | openai:gpt-4.1-mini: A seção Indicações lista as indicações do Rivotril e não menciona enxaqueca como indicação."
+    },
+    {
+      "id": "q730",
+      "query": "Tenho alergia a benzodiazepínicos, mas posso usar Rivotril mesmo assim numa emergência?",
+      "expected_medicine": "RIVOTRIL",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: Rivotril é contraindicado a pacientes com hipersensibilidade conhecida a clonazepam. | openai:gpt-4.1: O texto afirma que Rivotril é contraindicado a pacientes com hipersensibilidade conhecida a clonazepam (um benzodiazepínico). | openai:gpt-4.1-mini: Rivotril® é contraindicado a pacientes com hipersensibilidade conhecida a clonazepam ou a qualquer dos excipientes do medicamento [vereditos: refuted, confirmed, confirmed]"
+    },
+    {
+      "id": "q735",
+      "query": "Meu médico prescreveu ácido fusídico por via oral para uma infecção, posso continuar tomando Zinpass Eze normalmente nesse período?",
+      "expected_medicine": "ZINPASS® EZE",
+      "expected_verdict": "refuted",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "confirmed",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho ed810d05-dc0a-474a-bc2d-8668512ee8a9 menciona que a combinação de ácido fusídico e ZINPASS® EZE pode levar a graves problemas musculares (rabdomiólise). | openai:gpt-4.1: O trecho afirma que é necessário interromper temporariamente Zinpass Eze ao usar ácido fusídico oral devido ao risco de rabdomiólise. | openai:gpt-4.1-mini: A bula afirma: 'se você estiver tomando ou tomou nos últimos 7 dias um medicamento chamado ácido fusídico (um remédio para infecção bacteriana) por via oral ou por injeção... Você pode precisar parar de tomar ZINPASS® EZE por um curto período de tempo' e 'se você precisar tomar ácido fusídico via oral... você precisará interromper temporariamente o uso deste medicamento'. [vereditos: refuted, confirmed, confirmed]"
+    },
+    {
+      "id": "q750",
+      "query": "A bula do Lorsacor recomenda tomar em algum horário específico, como pela manhã ou à noite?",
+      "expected_medicine": "LORSACOR",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que o medicamento pode ser tomado a qualquer horário, sem especificar manhã ou noite. | openai:gpt-4.1: O texto afirma que pode ser tomado com ou sem alimentos e não recomenda horário específico, apenas sugere tomar sempre no mesmo horário para facilitar a lembrança. | openai:gpt-4.1-mini: O texto diz que pode ser tomado com ou sem alimentos e recomenda tomar no mesmo horário todos os dias, mas não especifica um horário específico como manhã ou noite."
+    },
+    {
+      "id": "q758",
+      "query": "Já que o Clize foi feito para tratamento prolongado, posso usá-lo continuamente por vários meses sem qualquer pausa?",
+      "expected_medicine": "CLIZE",
+      "expected_verdict": "refuted",
+      "stress_category": "fidelidade",
+      "verdict_ok": "incerto",
+      "medicine_ok": "incerto",
+      "evidence_ok": "incerto",
+      "judge_verdicts": [
+        "inconclusive",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4.1-mini: As indicações para o produto não preveem tratamento prolongado. O uso prolongado (6 ou mais dias) requer cuidados especiais [vereditos: inconclusive, inconclusive, refuted]"
+    },
+    {
+      "id": "q765",
+      "query": "Em caso de superdosagem de Dozoito, devo provocar vômito em casa antes de procurar socorro médico?",
+      "expected_medicine": "DOZOITO",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O texto instrui a procurar socorro médico imediatamente, sem mencionar provocar vômito. | openai:gpt-4.1: O texto orienta procurar socorro médico imediatamente e não menciona provocar vômito em casa. | openai:gpt-4.1-mini: O texto orienta a procurar socorro médico imediatamente, sem mencionar provocar vômito em casa."
+    },
+    {
+      "id": "q773",
+      "query": "O Traxonol trata infecção de ouvido (otite)?",
+      "expected_medicine": "TRAXONOL",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que Traxonol é usado para infecções fúngicas, mas não menciona infecção de ouvido (otite). | openai:gpt-4.1: O texto só indica uso para infecções fúngicas, não para otite (infecção de ouvido). | openai:gpt-4.1-mini: O texto afirma que Traxonol é para infecções fúngicas de vagina, pele, boca, olhos, unhas ou órgãos internos, não mencionando infecção de ouvido."
+    }
+  ],
+  "n_errors": 77,
+  "errors": [
+    {
+      "id": "q050",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29439, Requested 2006. Please try again in 2.89s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q050",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29302, Requested 2006. Please try again in 2.616s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q059",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29564, Requested 1148. Please try again in 1.424s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q086",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28434, Requested 2032. Please try again in 932ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q086",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28592, Requested 2032. Please try again in 1.248s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q092",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29702, Requested 2407. Please try again in 4.218s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q092",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29644, Requested 2407. Please try again in 4.102s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q127",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29662, Requested 1854. Please try again in 3.032s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q133",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29357, Requested 2081. Please try again in 2.876s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q133",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29665, Requested 2081. Please try again in 3.492s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q156",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28376, Requested 2960. Please try again in 2.672s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q156",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29004, Requested 2960. Please try again in 3.928s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q169",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29532, Requested 1129. Please try again in 1.322s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q195",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29803, Requested 1635. Please try again in 2.876s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q195",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29857, Requested 1635. Please try again in 2.984s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q199",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29283, Requested 1479. Please try again in 1.524s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q199",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29946, Requested 1479. Please try again in 2.85s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q247",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28187, Requested 2976. Please try again in 2.326s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q247",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29606, Requested 2976. Please try again in 5.164s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q255",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28794, Requested 2162. Please try again in 1.912s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q268",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 30000, Requested 1308. Please try again in 2.616s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q281",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 30000, Requested 3421. Please try again in 6.842s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q281",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29599, Requested 3421. Please try again in 6.04s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q290",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29460, Requested 2529. Please try again in 3.978s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q313",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29446, Requested 2503. Please try again in 3.898s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q313",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29263, Requested 2503. Please try again in 3.532s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q315",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29377, Requested 2501. Please try again in 3.756s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q315",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 30000, Requested 2501. Please try again in 5.002s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q324",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28878, Requested 2570. Please try again in 2.896s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q339",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29665, Requested 1873. Please try again in 3.076s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q346",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29826, Requested 2695. Please try again in 5.042s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q346",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28531, Requested 2695. Please try again in 2.452s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q364",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 27483, Requested 3219. Please try again in 1.404s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q366",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 30000, Requested 3211. Please try again in 6.422s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q383",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29457, Requested 2556. Please try again in 4.026s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q396",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29132, Requested 2612. Please try again in 3.488s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q398",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29136, Requested 3452. Please try again in 5.176s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q399",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 30000, Requested 3458. Please try again in 6.916s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q399",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29136, Requested 3458. Please try again in 5.188s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q403",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29453, Requested 3449. Please try again in 5.804s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q403",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28449, Requested 3449. Please try again in 3.796s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q431",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28811, Requested 2538. Please try again in 2.698s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q431",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28702, Requested 2538. Please try again in 2.48s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q432",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28852, Requested 2541. Please try again in 2.786s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q432",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28476, Requested 2541. Please try again in 2.034s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q453",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28424, Requested 1766. Please try again in 380ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q470",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29257, Requested 3178. Please try again in 4.87s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q472",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29146, Requested 5360. Please try again in 9.012s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q472",
+      "model": "openai:gpt-4.1",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4.1 in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 28834, Requested 5360. Please try again in 8.388s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    },
+    {
+      "id": "q473",
+      "model": "openai:gpt-4o",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-yZAnUszHjsfmpcjjxdeFXdvE on tokens per min (TPM): Limit 30000, Used 29225, Requested 5349. Please try again in 9.148s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}"
+    }
+  ]
+}

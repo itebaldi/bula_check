@@ -1,0 +1,71 @@
+[
+    {
+        "id": "q138",
+        "query": "o isoforine serve pra tratar enxaqueca?",
+        "medicine_brand": "ISOFORINE",
+        "expected_medicine": "ISOFORINE",
+        "expected_sections": [
+            "indications"
+        ],
+        "expected_verdict": "inconclusive",
+        "justification": "A bula não menciona qualquer uso para enxaqueca (dor de cabeça), indicando o produto apenas para indução e manutenção da anestesia geral e sedação.",
+        "expected_chunk_ids": [
+            "1cb64d87-ab58-4fb9-856c-7b92bed4ab5f"
+        ],
+        "validation": {
+            "verdict_ok": "não",
+            "medicine_ok": "sim",
+            "evidence_ok": "sim",
+            "validated_by": "llm-panel:gpt-4o+gemini-1.5-pro+llama-3.3-70b-versatile",
+            "comments": "openai:gpt-4o: Isoforine é indicado para anestesia geral, não para enxaqueca. | groq:llama-3.3-70b-versatile: Trecho de Indicações não menciona enxaqueca como indicação. [vereditos: refuted, inconclusive, refuted]",
+            "status": "reprovado"
+        },
+        "stress_category": "fidelidade"
+    },
+    {
+        "id": "q447",
+        "query": "Passei da dose sem perceber e agora estou com o estômago embrulhado e uma canseira fora do comum, isso combina com o que pode acontecer quando se exagera nesse remédio?",
+        "medicine_brand": null,
+        "expected_medicine": "ARTRINID",
+        "expected_sections": [
+            "overdose"
+        ],
+        "expected_verdict": "confirmed",
+        "justification": "\"Estômago embrulhado\" corresponde a náusea/dor no estômago e \"canseira fora do comum\" à letargia/sonolência; confirma ao listar que a superdose causou \"letargia... sonolência, náusea, vômito e dor no estômago\".",
+        "expected_chunk_ids": [
+            "ff6e33e5-0141-40a5-9e8e-ee8cf0793dd2"
+        ],
+        "validation": {
+            "verdict_ok": "sim",
+            "medicine_ok": "incerto",
+            "evidence_ok": "sim",
+            "validated_by": "llm-panel:gpt-4o+gemini-1.5-pro+llama-3.3-70b-versatile",
+            "comments": "openai:gpt-4o: O trecho menciona sintomas de superdose como letargia, náusea e dor no estômago. | groq:llama-3.3-70b-versatile: Sintomas como letargia, sonolência, náusea, vômito e dor no estômago estão descritos na seção de Superdosagem. [vereditos: confirmed, inconclusive, confirmed]",
+            "status": "aprovado"
+        },
+        "stress_category": "giria"
+    },
+    {
+        "id": "q218",
+        "query": "Já que o montelucaste corta a crise aguda de asma na hora, dá pra tomar ele no meio de um ataque forte?",
+        "medicine_brand": null,
+        "expected_medicine": "montelucaste de sodio",
+        "expected_sections": [
+            "warnings_and_precautions"
+        ],
+        "expected_verdict": "refuted",
+        "justification": "A pergunta traz uma premissa falsa: pressupõe que o montelucaste corta/trata a crise aguda de asma. A bula (m14c09, warnings_and_precautions) afirma: 'O montelucaste de sódio não é indicado para o tratamento de crises agudas de asma.' Como a premissa é falsa segundo o texto, a alegação é refutada.",
+        "expected_chunk_ids": [
+            "8c419d99-4d9c-4543-a7d2-80c3a1e82d2b"
+        ],
+        "stress_category": "premissa_falsa",
+        "validation": {
+            "verdict_ok": "sim",
+            "medicine_ok": "sim",
+            "evidence_ok": "sim",
+            "validated_by": "llm-panel:gpt-4o+gemini-1.5-pro+llama-3.3-70b-versatile",
+            "comments": "openai:gpt-4o: O trecho afirma que o montelucaste de sódio não é indicado para o tratamento de crises agudas de asma. | groq:llama-3.3-70b-versatile: O trecho 'O montelucaste de sódio não é indicado para o tratamento de crises agudas de asma' é decisivo. [vereditos: refuted, inconclusive, refuted]",
+            "status": "aprovado"
+        }
+    }
+]

@@ -1,0 +1,168 @@
+{
+  "panel": [
+    "openai:gpt-4o",
+    "openai:gpt-4.1",
+    "openai:gpt-4.1-mini"
+  ],
+  "n_items": 50,
+  "overall": {
+    "aprovado": 45,
+    "reprovado": 5
+  },
+  "by_dimension": {
+    "verdict_ok": {
+      "sim": 45,
+      "não": 5
+    },
+    "medicine_ok": {
+      "sim": 50
+    },
+    "evidence_ok": {
+      "sim": 50
+    }
+  },
+  "by_stress_category": {
+    "erro_digitacao": {
+      "aprovado": 3
+    },
+    "fidelidade": {
+      "aprovado": 7,
+      "reprovado": 4
+    },
+    "giria": {
+      "aprovado": 3
+    },
+    "marca": {
+      "aprovado": 4
+    },
+    "negacao": {
+      "aprovado": 3,
+      "reprovado": 1
+    },
+    "premissa_falsa": {
+      "aprovado": 2
+    },
+    "principio_ativo": {
+      "aprovado": 1
+    },
+    "representativa": {
+      "aprovado": 20
+    },
+    "secao_enganosa": {
+      "aprovado": 2
+    }
+  },
+  "by_verdict": {
+    "refuted": {
+      "aprovado": 17,
+      "reprovado": 1
+    },
+    "confirmed": {
+      "aprovado": 22
+    },
+    "inconclusive": {
+      "aprovado": 6,
+      "reprovado": 4
+    }
+  },
+  "agreement": {
+    "n_items_clean": 50,
+    "judge_verdict": {
+      "pairwise_agreement": 0.9333,
+      "fleiss_kappa": 0.886
+    },
+    "medicine_ok": {
+      "pairwise_agreement": 1.0,
+      "fleiss_kappa": 1.0
+    },
+    "evidence_ok": {
+      "pairwise_agreement": 1.0,
+      "fleiss_kappa": 1.0
+    }
+  },
+  "n_flagged": 5,
+  "flagged": [
+    {
+      "id": "q381",
+      "query": "Já tive uma reação alérgica grave a essa vacina em uma dose anterior. Ainda assim posso tomar a próxima dose de Comirnaty?",
+      "expected_medicine": "COMIRNATY",
+      "expected_verdict": "refuted",
+      "stress_category": "negacao",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "confirmed",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Comirnaty não deve ser administrada em pessoas que tiveram reação alérgica aos componentes. | openai:gpt-4.1: O trecho afirma que Comirnaty não deve ser administrada a quem já teve reação alérgica à vacina. | openai:gpt-4.1-mini: Comirnaty® não deve ser administrada em pessoas que tenham apresentado reação alérgica (hipersensibilidade) aos componentes dessa vacina. [vereditos: confirmed, confirmed, refuted]"
+    },
+    {
+      "id": "q587",
+      "query": "Queda de cabelo está entre as reações adversas listadas do bissulfato de clopidogrel?",
+      "expected_medicine": "bissulfato de clopidogrel",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: A seção citada lista reações adversas, mas não menciona queda de cabelo. | openai:gpt-4.1: Nenhum dos trechos listados de reações adversas menciona queda de cabelo (alopecia) como reação ao bissulfato de clopidogrel. | openai:gpt-4.1-mini: Na seção 'Reações Adversas | f53c9238-fd47-4480-904f-435660fa4d2e' não há menção à queda de cabelo entre as reações adversas listadas para o bissulfato de clopidogrel."
+    },
+    {
+      "id": "q062",
+      "query": "É verdade que a mupirocina ajuda o cabelo a crescer em quem tem calvície?",
+      "expected_medicine": "MUPIROCINA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O trecho afirma que a mupirocina é um antibiótico para infecções de pele, sem menção a crescimento capilar. | openai:gpt-4.1: O texto afirma que a mupirocina é um antibiótico tópico para infecções de pele, sem menção a crescimento capilar ou calvície. | openai:gpt-4.1-mini: O texto afirma que a mupirocina é um antibiótico tópico para infecções de pele, sem mencionar qualquer efeito sobre crescimento capilar."
+    },
+    {
+      "id": "q049",
+      "query": "o mektovi serve pra baixar o colesterol?",
+      "expected_medicine": "MEKTOVI",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: O Mektovi é um medicamento anticancerígeno, não indicado para baixar o colesterol. | openai:gpt-4.1: O texto afirma que Mektovi é indicado para melanoma, não para baixar colesterol. | openai:gpt-4.1-mini: O Mektovi® é um medicamento anticancerígeno usado para tratar melanoma, não para baixar o colesterol."
+    },
+    {
+      "id": "q056",
+      "query": "o tynna não serve também pra baixar o colesterol?",
+      "expected_medicine": "TYNNA",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "refuted",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Tynna é um anti-histamínico, não indicado para baixar o colesterol. | openai:gpt-4.1: O texto afirma que Tynna é um anti-histamínico, sem menção a efeito sobre colesterol. | openai:gpt-4.1-mini: O texto afirma que Tynna contém bilastina, um anti-histamínico, sem mencionar qualquer efeito para baixar o colesterol."
+    }
+  ],
+  "n_errors": 0,
+  "errors": []
+}

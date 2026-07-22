@@ -1,0 +1,115 @@
+{
+  "panel": [
+    "openai:gpt-4o",
+    "google:gemini-1.5-pro",
+    "groq:llama-3.3-70b-versatile"
+  ],
+  "n_items": 3,
+  "overall": {
+    "reprovado": 1,
+    "aprovado": 2
+  },
+  "by_dimension": {
+    "verdict_ok": {
+      "não": 1,
+      "sim": 2
+    },
+    "medicine_ok": {
+      "sim": 2,
+      "incerto": 1
+    },
+    "evidence_ok": {
+      "sim": 3
+    }
+  },
+  "by_stress_category": {
+    "fidelidade": {
+      "reprovado": 1
+    },
+    "giria": {
+      "aprovado": 1
+    },
+    "premissa_falsa": {
+      "aprovado": 1
+    }
+  },
+  "by_verdict": {
+    "inconclusive": {
+      "reprovado": 1
+    },
+    "confirmed": {
+      "aprovado": 1
+    },
+    "refuted": {
+      "aprovado": 1
+    }
+  },
+  "agreement": {
+    "n_items_clean": 0,
+    "judge_verdict": {
+      "pairwise_agreement": 0.0,
+      "fleiss_kappa": 0.0
+    },
+    "medicine_ok": {
+      "pairwise_agreement": 0.0,
+      "fleiss_kappa": 0.0
+    },
+    "evidence_ok": {
+      "pairwise_agreement": 0.0,
+      "fleiss_kappa": 0.0
+    }
+  },
+  "n_flagged": 2,
+  "flagged": [
+    {
+      "id": "q138",
+      "query": "o isoforine serve pra tratar enxaqueca?",
+      "expected_medicine": "ISOFORINE",
+      "expected_verdict": "inconclusive",
+      "stress_category": "fidelidade",
+      "verdict_ok": "não",
+      "medicine_ok": "sim",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "refuted",
+        "inconclusive",
+        "refuted"
+      ],
+      "comments": "openai:gpt-4o: Isoforine é indicado para anestesia geral, não para enxaqueca. | groq:llama-3.3-70b-versatile: Trecho de Indicações não menciona enxaqueca como indicação. [vereditos: refuted, inconclusive, refuted]"
+    },
+    {
+      "id": "q447",
+      "query": "Passei da dose sem perceber e agora estou com o estômago embrulhado e uma canseira fora do comum, isso combina com o que pode acontecer quando se exagera nesse remédio?",
+      "expected_medicine": "ARTRINID",
+      "expected_verdict": "confirmed",
+      "stress_category": "giria",
+      "verdict_ok": "sim",
+      "medicine_ok": "incerto",
+      "evidence_ok": "sim",
+      "judge_verdicts": [
+        "confirmed",
+        "inconclusive",
+        "confirmed"
+      ],
+      "comments": "openai:gpt-4o: O trecho menciona sintomas de superdose como letargia, náusea e dor no estômago. | groq:llama-3.3-70b-versatile: Sintomas como letargia, sonolência, náusea, vômito e dor no estômago estão descritos na seção de Superdosagem. [vereditos: confirmed, inconclusive, confirmed]"
+    }
+  ],
+  "n_errors": 3,
+  "errors": [
+    {
+      "id": "q138",
+      "model": "google:gemini-1.5-pro",
+      "error": "ChatGoogleGenerativeAIError: Error calling model 'gemini-1.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}"
+    },
+    {
+      "id": "q447",
+      "model": "google:gemini-1.5-pro",
+      "error": "ChatGoogleGenerativeAIError: Error calling model 'gemini-1.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}"
+    },
+    {
+      "id": "q218",
+      "model": "google:gemini-1.5-pro",
+      "error": "ChatGoogleGenerativeAIError: Error calling model 'gemini-1.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}"
+    }
+  ]
+}
