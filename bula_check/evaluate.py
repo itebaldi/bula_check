@@ -70,6 +70,7 @@ def evaluate_results(
     answer_rows: list[dict[str, Any]] = []
     retrieval_rows: list[dict[str, float]] = []
     slices: list[str] = []  # fatia de cada item: stress_category ou "representative"
+    val_status: list[str] = []  # parecer da validação: aprovado/reprovado/sem_parecer
     ids: list[str] = []
 
     bulagratis_conn = _open_db(config["bulagratis_db_path"])
@@ -79,6 +80,7 @@ def evaluate_results(
         for item in items:
             ids.append(item.id)
             slices.append(item.stress_category or "representative")
+            val_status.append((item.validation or {}).get("status") or "sem_parecer")
             state = make_initial_state(config)
             state["messages"].append(HumanMessage(content=item.query))
 
@@ -217,6 +219,21 @@ def evaluate_results(
         ),
     }
 
+    # Fatiamento pelo parecer da validação (juiz/farmacêutico). Só popula se os
+    # items carregarem o bloco `validation` (ex.: rodar sobre o dataset julgado).
+    # Permite reportar o número cheio (todas) e o recorte "só-aprovadas" sem
+    # descartar as questões contestadas — que são as mais difíceis (fidelidade).
+    val_groups: dict[str, list[int]] = {}
+    for i, status in enumerate(val_status):
+        val_groups.setdefault(status, []).append(i)
+    summary["by_validation"] = {
+        name: _slice(idxs) for name, idxs in sorted(val_groups.items())
+    }
+    summary["validated_vs_flagged"] = {
+        "aprovado": _slice([i for i, s in enumerate(val_status) if s == "aprovado"]),
+        "flagged": _slice([i for i, s in enumerate(val_status) if s == "reprovado"]),
+    }
+
     summary["config"] = {
         "llm_provider": str(config["llm_provider"]),
         "llm_model": config["llm_model"],
@@ -235,6 +252,7 @@ def evaluate_results(
             "stress_category": (
                 None if slices[i] == "representative" else slices[i]
             ),
+            "validation_status": val_status[i],
             "medicine_correct": answer_rows[i]["medicine_correct"],
             "section_correct": answer_rows[i]["section_correct"],
             "verdict_correct": answer_rows[i]["verdict_correct"],

@@ -17,6 +17,30 @@ load_dotenv()
 
 DATASET_PATH = Path("inputs/evaluation/dataset.json")
 DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
+DATASET_JUDGED_PATH = Path("outputs/validation/dataset_judged.json")
+DATASET_SLIDING_JUDGED_PATH = Path("outputs/validation/dataset_sliding_judged.json")
+
+
+def _load_dataset(sliding_db: bool) -> list:
+    """Carrega o dataset (fonte da verdade) e sobrepõe o parecer da validação.
+
+    As perguntas e expected_chunk_ids vêm sempre do dataset limpo (inputs/); o
+    bloco `validation` do painel (outputs/validation/*_judged.json) é sobreposto
+    por id quando existe, habilitando o fatiamento por status no eval sem
+    descartar nenhuma questão.
+    """
+    clean = DATASET_SLIDING_PATH if sliding_db else DATASET_PATH
+    judged = DATASET_SLIDING_JUDGED_PATH if sliding_db else DATASET_JUDGED_PATH
+    data = json.loads(clean.read_text(encoding="utf-8"))
+    if judged.exists():
+        val = {
+            j["id"]: j.get("validation")
+            for j in json.loads(judged.read_text(encoding="utf-8"))
+        }
+        for item in data:
+            if item.get("validation") is None:
+                item["validation"] = val.get(item["id"])
+    return data
 
 # LLMProvider.openai, "gpt-4o-mini"
 # LLMProvider.google,  "gemini-2.5-flash"
@@ -112,11 +136,7 @@ def test_evaluate_results(
     llm_provider: LLMProvider,
     llm_model: str,
 ):
-    dataset = json.loads(
-        DATASET_SLIDING_PATH.read_text(encoding="utf-8")
-        if sliding_db
-        else DATASET_PATH.read_text(encoding="utf-8")
-    )
+    dataset = _load_dataset(sliding_db)
 
     cfg: BulaCheckConfig = {
         **DEFAULT_CONFIG,
