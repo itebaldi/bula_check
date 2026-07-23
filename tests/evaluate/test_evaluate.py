@@ -1,4 +1,5 @@
 import json
+import random
 from pathlib import Path
 from typing import Literal
 
@@ -19,6 +20,11 @@ DATASET_PATH = Path("inputs/evaluation/dataset.json")
 DATASET_SLIDING_PATH = Path("inputs/evaluation/dataset_sliding.json")
 DATASET_JUDGED_PATH = Path("outputs/validation/dataset_judged.json")
 DATASET_SLIDING_JUDGED_PATH = Path("outputs/validation/dataset_sliding_judged.json")
+
+# Quantas perguntas avaliar. None = todas (790). Um inteiro faz uma amostra
+# estratificada por categoria (determinística) para acelerar rodadas de teste.
+MAX_QUERIES: int | None = 1
+SAMPLE_SEED = 7
 
 
 def _load_dataset(sliding_db: bool) -> list:
@@ -42,6 +48,30 @@ def _load_dataset(sliding_db: bool) -> list:
                 item["validation"] = val.get(item["id"])
     return data
 
+
+def _sample_dataset(data: list, n: int | None, seed: int = SAMPLE_SEED) -> list:
+    """Amostra n perguntas estratificando por stress_category (determinística).
+
+    Como o dataset é agrupado por medicamento, um corte simples data[:n] cobriria
+    poucos medicamentos; a estratificação garante que mesmo um n pequeno
+    represente todas as categorias. n None (ou >= total) avalia todas.
+    """
+    if n is None or n >= len(data):
+        return data
+    rng = random.Random(seed)
+    groups: dict[str, list] = {}
+    for item in data:
+        key = item.get("stress_category") or "representativa"
+        groups.setdefault(key, []).append(item)
+    picked: list = []
+    for cat in sorted(groups):
+        group = groups[cat]
+        k = max(1, round(n * len(group) / len(data)))
+        picked.extend(rng.sample(group, min(k, len(group))))
+    rng.shuffle(picked)
+    return sorted(picked[:n], key=lambda x: x["id"])
+
+
 # LLMProvider.openai, "gpt-4o-mini"
 # LLMProvider.google,  "gemini-2.5-flash"
 # LLMProvider.ollama, "llama3.1:8b"
@@ -54,7 +84,7 @@ def _load_dataset(sliding_db: bool) -> list:
     [
         # ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        ("0.3.2", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
+        # ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"), # FOI
         # ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
         # ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
         #### 
@@ -82,9 +112,9 @@ def _load_dataset(sliding_db: bool) -> list:
         # ("4.4", True, True, False, False, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
         # ("4.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "llama3.2:3b"),
         ####
-        # ("5.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
+        ("5.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"), # 2 FOI
         # ("5.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("5.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"), # 2
+        # ("5.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
         # ("5.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
         # ("5.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-5-mini"),
         ####
@@ -136,7 +166,7 @@ def test_evaluate_results(
     llm_provider: LLMProvider,
     llm_model: str,
 ):
-    dataset = _load_dataset(sliding_db)
+    dataset = _sample_dataset(_load_dataset(sliding_db), MAX_QUERIES)
 
     cfg: BulaCheckConfig = {
         **DEFAULT_CONFIG,
