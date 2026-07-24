@@ -22,6 +22,10 @@ from bula_check.agents.protocol import MedicineCandidate
 from bula_check.agents.protocol import MedicinesDict
 from bula_check.agents.protocol import RetrievedChunk
 
+# Score-sentinela dos chunks-vizinhos (modo with_prev_and_next): negativo para
+# distingui-los de chunks ranqueados que a normalização min-max levou a 0.0.
+NEIGHBOUR_SCORE = -1.0
+
 
 def find_medicine_candidates(
     bulagratis_conn: sqlite3.Connection,
@@ -482,8 +486,10 @@ def _expand_with_neighbours(
     (paragraph_idx, chunk_idx) para que o LLM receba o texto em ordem
     natural de leitura.
 
-    Chunks vizinhos são adicionados com score=0.0 para indicar que foram
-    incluídos por contexto, não por relevância direta.
+    Chunks vizinhos são adicionados com score=NEIGHBOUR_SCORE (sentinela negativo)
+    para indicar que foram incluídos por contexto, não por relevância direta —
+    e para que a avaliação consiga distingui-los de chunks ranqueados que a
+    normalização min-max legitimamente levou a 0.0.
     """
     if not retrieved:
         return retrieved
@@ -531,7 +537,7 @@ def _expand_with_neighbours(
 
     # Junta retrieved + vizinhos e ordena por (section, paragraph_idx, chunk_idx)
     all_retrieved: list[RetrievedChunk] = list(retrieved) + [
-        RetrievedChunk(chunk=nc, score=0.0) for nc in neighbour_chunks
+        RetrievedChunk(chunk=nc, score=NEIGHBOUR_SCORE) for nc in neighbour_chunks
     ]
 
     all_retrieved.sort(

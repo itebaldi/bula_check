@@ -45,16 +45,19 @@ def build_llm(config: BulaCheckConfig) -> BaseChatModel:
 
     if provider == LLMProvider.ollama:
         from langchain_ollama import ChatOllama
-        # sudo snap install ollama
-        # ollama serve
-        # ollama run qwen3:8b # baixar e rodar o modelo
-        # ollama pull qwen3:8b # baixar sem abrir o chat
-        # ollama rm qwen3:8b # remove o modelo
 
+        # num_ctx=8192: o prompt de verificação (até 20 chunks) tem ~5-6k tokens
+        # e era silenciosamente truncado no default 4096 do Ollama. num_predict
+        # limita o tamanho da resposta (o max_response_words é só instrução textual).
+        ollama_opts = {
+            "base_url": "http://localhost:11434",
+            "num_ctx": 8192,
+            "num_predict": 512,
+        }
         if temperature:
-            return ChatOllama(model=model, temperature=temperature)
+            return ChatOllama(model=model, temperature=temperature, **ollama_opts)
 
-        return ChatOllama(model=model, base_url="http://localhost:11434")
+        return ChatOllama(model=model, **ollama_opts)
 
     if provider == LLMProvider.groq:
         from langchain_groq import ChatGroq

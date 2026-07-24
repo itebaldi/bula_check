@@ -72,6 +72,9 @@ def evaluate_results(
     slices: list[str] = []  # fatia de cada item: stress_category ou "representative"
     val_status: list[str] = []  # parecer da validação: aprovado/reprovado/sem_parecer
     ids: list[str] = []
+    retrieved_ids: list[list[str]] = []  # chunk_ids recuperados (ordem do ranker)
+    gabarito_ids: list[list[str]] = []  # chunk_ids do gabarito (expected)
+    n_candidates_list: list[int] = []  # tamanho do pool pontuado (p/ recompute)
 
     bulagratis_conn = _open_db(config["bulagratis_db_path"])
     anvisa_conn = _open_db(config["anvisa_db_path"])
@@ -154,13 +157,15 @@ def evaluate_results(
                 bulagratis_conn, list(item.expected_chunk_ids)
             )
             # Filtra chunks-vizinhos injetados pelo modo "with_prev_and_next"
-            # (score=0.0 por convenção em search._expand_with_neighbours) e
-            # recupera a ordem por score. Sem isso, o modo de retorno polui as
-            # métricas de retrieval — que devem medir só o ranker, não a
-            # estratégia de contexto. O efeito do contexto aparece em
+            # (score negativo = NEIGHBOUR_SCORE em search._expand_with_neighbours)
+            # e recupera a ordem por score. Usa `>= 0` (não `> 0`): chunks
+            # ranqueados podem ter score 0.0 legítimo pela normalização min-max
+            # (ex.: o menor da seção, ou o único chunk de uma seção) e NÃO devem
+            # ser descartados — só os vizinhos (score < 0) saem. Sem isso, o modo
+            # de retorno poluiria as métricas; o efeito do contexto aparece em
             # verdict_accuracy.
             core_retrieved = sorted(
-                (rc for rc in retrieved_chunks if rc["score"] > 0),
+                (rc for rc in retrieved_chunks if rc["score"] >= 0),
                 key=lambda rc: -rc["score"],
             )
             retrieved_unwrapped = [rc["chunk"] for rc in core_retrieved]
@@ -186,6 +191,9 @@ def evaluate_results(
                     n_candidates=n_candidates,
                 )
             )
+            retrieved_ids.append([c["id"] for c in retrieved_unwrapped])
+            gabarito_ids.append(list(item.expected_chunk_ids))
+            n_candidates_list.append(n_candidates)
     finally:
         bulagratis_conn.close()
         anvisa_conn.close()
@@ -260,6 +268,11 @@ def evaluate_results(
             "predicted_verdict": answer_rows[i]["predicted_verdict"],
             "semantic_recall": retrieval_rows[i].get("semantic_recall"),
             "semantic_hit_at_1": retrieval_rows[i].get("semantic_hit_at_1"),
+            # ids para recomputar as métricas de retrieval offline (sem LLM),
+            # via recompute_metrics — ver docstring da função.
+            "retrieved_chunk_ids": retrieved_ids[i],
+            "gabarito_chunk_ids": gabarito_ids[i],
+            "n_candidates": n_candidates_list[i],
         }
         for i in range(len(answer_rows))
     ]
@@ -268,6 +281,89 @@ def evaluate_results(
         _to_json(summary, results_path)
         _to_json(item_details, _items_path(results_path))
 
+    return summary
+
+
+def recompute_metrics(
+    items_path: str | Path,
+    db_path: str | Path,
+    threshold: float = 0.80,
+) -> dict[str, Any]:
+    """Recalcula as métricas a partir de um `{name}_items.json`, sem LLM/grafo.
+
+    Usa os `retrieved_chunk_ids` / `gabarito_chunk_ids` / `n_candidates`
+    persistidos por `evaluate_results` e busca embeddings/seções por id no banco,
+    reaplicando `_semantic_ir_metrics` e `_aggregate`. Permite reavaliar mudanças
+    de métrica (threshold, regra de match) offline, sem re-rodar o pipeline.
+
+    Parameters
+    ----------
+    items_path : str | Path
+        Arquivo `{name}_items.json` gerado por `evaluate_results` (pós-fix, com os
+        campos de ids persistidos).
+    db_path : str | Path
+        Banco de chunks (mesmo usado no run: bulas_gratis.db ou o _sliding).
+    threshold : float
+        Limiar de cosseno para `_is_match`.
+
+    Returns
+    -------
+    dict[str, Any]
+        Summary no mesmo formato de `evaluate_results` (métricas + fatiamentos).
+    """
+    items = json.loads(Path(items_path).read_text(encoding="utf-8"))
+    conn = _open_db(Path(db_path))
+    try:
+        def _ordered(ids: list[str]) -> list[ChunksDict]:
+            by_id = {c["id"]: c for c in _fetch_chunks_by_ids(conn, list(ids))}
+            return [by_id[i] for i in ids if i in by_id]
+
+        answer_rows: list[dict[str, Any]] = []
+        retrieval_rows: list[dict[str, float]] = []
+        slices: list[str] = []
+        val_status: list[str] = []
+        for it in items:
+            answer_rows.append(
+                {
+                    "medicine_correct": it["medicine_correct"],
+                    "section_correct": it["section_correct"],
+                    "verdict_correct": it["verdict_correct"],
+                    "expected_verdict": it["expected_verdict"],
+                    "predicted_verdict": it["predicted_verdict"],
+                }
+            )
+            retrieval_rows.append(
+                _semantic_ir_metrics(
+                    retrieved=_ordered(it.get("retrieved_chunk_ids", [])),
+                    gabarito=_ordered(it.get("gabarito_chunk_ids", [])),
+                    threshold=threshold,
+                    n_candidates=it.get("n_candidates", 0),
+                )
+            )
+            slices.append(it.get("stress_category") or "representative")
+            val_status.append(it.get("validation_status") or "sem_parecer")
+    finally:
+        conn.close()
+
+    summary = _aggregate(answer_rows, retrieval_rows)
+
+    def _slice(idxs: list[int]) -> dict[str, Any]:
+        return _aggregate(
+            [answer_rows[i] for i in idxs], [retrieval_rows[i] for i in idxs]
+        )
+
+    groups: dict[str, list[int]] = {}
+    for i, name in enumerate(slices):
+        groups.setdefault(name, []).append(i)
+    summary["by_stress_category"] = {
+        name: _slice(idxs) for name, idxs in sorted(groups.items())
+    }
+    val_groups: dict[str, list[int]] = {}
+    for i, status in enumerate(val_status):
+        val_groups.setdefault(status, []).append(i)
+    summary["by_validation"] = {
+        name: _slice(idxs) for name, idxs in sorted(val_groups.items())
+    }
     return summary
 
 

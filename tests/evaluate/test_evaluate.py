@@ -1,7 +1,6 @@
 import json
 import random
 from pathlib import Path
-from typing import Literal
 
 import pytest
 from dotenv import load_dotenv
@@ -23,8 +22,33 @@ DATASET_SLIDING_JUDGED_PATH = Path("outputs/validation/dataset_sliding_judged.js
 
 # Quantas perguntas avaliar. None = todas (790). Um inteiro faz uma amostra
 # estratificada por categoria (determinística) para acelerar rodadas de teste.
-MAX_QUERIES: int | None = 1
+MAX_QUERIES: int | None = 300
 SAMPLE_SEED = 7
+
+# Vocabulário das configurações — mesmas strings da tabela do artigo.
+PROVIDER_BY_MODEL = {
+    "gpt-4o-mini": LLMProvider.openai,
+    "gpt-5-mini": LLMProvider.openai,
+    "qwen3:8b": LLMProvider.ollama,
+    "llama3.1:8b": LLMProvider.ollama,
+    "llama3.2:3b": LLMProvider.ollama,
+    "gemma3:4b": LLMProvider.ollama,
+}
+# fragmentação da bula
+BASE = {"sentenças": False, "janela desl.": True}
+# estratégia de busca -> (with_rag, lexical_weight, semantic_weight)
+BUSCA = {
+    "híbrida": (True, 0.4, 0.6),
+    "semântica": (True, None, 0.6),
+    "lexical": (True, 0.4, None),
+    "sem RAG": (False, None, None),
+}
+# contexto enviado ao modelo
+CHUNKS = {
+    "apenas recuperado": "only_desired",
+    "recuperado+vizinhos": "with_prev_and_next",
+    "–": "only_desired",
+}
 
 
 def _load_dataset(sliding_db: bool) -> list:
@@ -80,105 +104,105 @@ def _sample_dataset(data: list, n: int | None, seed: int = SAMPLE_SEED) -> list:
 
 # fmt: off
 @pytest.mark.parametrize(
-    "idx, with_rag, lexical_weight, semantic_weight, sliding_db, return_chunks, llm_provider, llm_model",
+    "idx, model, base, busca, chunks",
     [
-        # ("0.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("0.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("0.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"), # FOI
-        # ("0.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("0.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
+        # ("0.1",  "gpt-4o-mini", "sentenças",    "híbrida",   "apenas recuperado"), # FOI
+        # ("0.2",  "gpt-4o-mini", "sentenças",    "sem RAG",   "–"),
+        # ("0.3",  "gpt-4o-mini", "sentenças",    "semântica", "apenas recuperado"), # FOI
+        # ("0.4",  "gpt-4o-mini", "sentenças",    "lexical",   "apenas recuperado"),
+        # ("0.5",  "gpt-4o-mini", "sentenças",    "híbrida",   "recuperado+vizinhos"),
         #### 
-        # ("1.1", True, True, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("1.2", False, True, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("1.3", True, False, True, False, "only_desired", LLMProvider.ollama, "qwen3:8b"), # new 1
-        # ("1.4", True, True, False, False, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("1.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"), # 1
+        # ("1.1",  "qwen3:8b",    "sentenças",    "híbrida",   "apenas recuperado"), # FOI
+        # ("1.2",  "qwen3:8b",    "sentenças",    "sem RAG",   "–"), # FOI
+        # ("1.3",  "qwen3:8b",    "sentenças",    "semântica", "apenas recuperado"), # new 1 # FOI
+        ("1.4",  "qwen3:8b",    "sentenças",    "lexical",   "apenas recuperado"),
+        ("1.5",  "qwen3:8b",    "sentenças",    "híbrida",   "recuperado+vizinhos"), # 1
         ####
-        # ("2.1", True, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("2.2", False, True, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("2.3", True, False, True, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("2.4", True, True, False, False, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("2.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "llama3.1:8b"),
+        # ("2.1",  "llama3.1:8b", "sentenças",    "híbrida",   "apenas recuperado"),
+        # ("2.2",  "llama3.1:8b", "sentenças",    "sem RAG",   "–"),
+        # ("2.3",  "llama3.1:8b", "sentenças",    "semântica", "apenas recuperado"),
+        # ("2.4",  "llama3.1:8b", "sentenças",    "lexical",   "apenas recuperado"),
+        # ("2.5",  "llama3.1:8b", "sentenças",    "híbrida",   "recuperado+vizinhos"),
         ###  
-        # ("3.1", True, True, True, False, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("3.2", False, True, True, False, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("3.3", True, False, True, False, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("3.4", True, True, False, False, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("3.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "gemma3:4b"),
+        # ("3.1",  "gemma3:4b",   "sentenças",    "híbrida",   "apenas recuperado"),
+        # ("3.2",  "gemma3:4b",   "sentenças",    "sem RAG",   "–"),
+        # ("3.3",  "gemma3:4b",   "sentenças",    "semântica", "apenas recuperado"), # FOI
+        # ("3.4",  "gemma3:4b",   "sentenças",    "lexical",   "apenas recuperado"),
+        # ("3.5",  "gemma3:4b",   "sentenças",    "híbrida",   "recuperado+vizinhos"),
         ####
-        # ("4.1", True, True, True, False, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("4.2", False, True, True, False, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("4.3", True, False, True, False, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("4.4", True, True, False, False, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("4.5", True, True, True, False, "with_prev_and_next", LLMProvider.ollama, "llama3.2:3b"),
+        # ("4.1",  "llama3.2:3b", "sentenças",    "híbrida",   "apenas recuperado"),
+        # ("4.2",  "llama3.2:3b", "sentenças",    "sem RAG",   "–"),
+        ("4.3",  "llama3.2:3b", "sentenças",    "semântica", "apenas recuperado"),
+        # ("4.4",  "llama3.2:3b", "sentenças",    "lexical",   "apenas recuperado"),
+        # ("4.5",  "llama3.2:3b", "sentenças",    "híbrida",   "recuperado+vizinhos"),
         ####
-        ("5.1", True, True, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"), # 2 FOI
-        # ("5.2", False, True, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("5.3", True, False, True, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("5.4", True, True, False, False, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("5.5", True, True, True, False, "with_prev_and_next", LLMProvider.openai, "gpt-5-mini"),
+        ("5.1",  "gpt-5-mini",  "sentenças",    "híbrida",   "apenas recuperado"), # 2 FOI
+        ("5.2",  "gpt-5-mini",  "sentenças",    "sem RAG",   "–"),
+        ("5.3",  "gpt-5-mini",  "sentenças",    "semântica", "apenas recuperado"),
+        ("5.4",  "gpt-5-mini",  "sentenças",    "lexical",   "apenas recuperado"),
+        ("5.5",  "gpt-5-mini",  "sentenças",    "híbrida",   "recuperado+vizinhos"),
         ####
-        # ("s0.1", True, True, True, True, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("s0.2", False, True, True, True, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("s0.3", True, False, True, True, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("s0.4", True, True, False, True, "only_desired", LLMProvider.openai, "gpt-4o-mini"),
-        # ("s0.5", True, True, True, True, "with_prev_and_next", LLMProvider.openai, "gpt-4o-mini"),
+        # ("s0.1", "gpt-4o-mini", "janela desl.", "híbrida",   "apenas recuperado"),
+        # ("s0.2", "gpt-4o-mini", "janela desl.", "sem RAG",   "–"),
+        # ("s0.3", "gpt-4o-mini", "janela desl.", "semântica", "apenas recuperado"),
+        # ("s0.4", "gpt-4o-mini", "janela desl.", "lexical",   "apenas recuperado"),
+        # ("s0.5", "gpt-4o-mini", "janela desl.", "híbrida",   "recuperado+vizinhos"),
         #### 
-        # ("s1.1", True, True, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("s1.2", False, True, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("s1.3", True, False, True, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("s1.4", True, True, False, True, "only_desired", LLMProvider.ollama, "qwen3:8b"),
-        # ("s1.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "qwen3:8b"),
+        ("s1.1", "qwen3:8b",    "janela desl.", "híbrida",   "apenas recuperado"),
+        ("s1.2", "qwen3:8b",    "janela desl.", "sem RAG",   "–"),
+        ("s1.3", "qwen3:8b",    "janela desl.", "semântica", "apenas recuperado"),
+        ("s1.4", "qwen3:8b",    "janela desl.", "lexical",   "apenas recuperado"),
+        ("s1.5", "qwen3:8b",    "janela desl.", "híbrida",   "recuperado+vizinhos"),
         # ####
-        # ("s2.1", True, True, True, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("s2.2", False, True, True, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("s2.3", True, False, True, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("s2.4", True, True, False, True, "only_desired", LLMProvider.ollama, "llama3.1:8b"),
-        # ("s2.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "llama3.1:8b"),
+        # ("s2.1", "llama3.1:8b", "janela desl.", "híbrida",   "apenas recuperado"),
+        # ("s2.2", "llama3.1:8b", "janela desl.", "sem RAG",   "–"),
+        # ("s2.3", "llama3.1:8b", "janela desl.", "semântica", "apenas recuperado"),
+        # ("s2.4", "llama3.1:8b", "janela desl.", "lexical",   "apenas recuperado"),
+        ("s2.5", "llama3.1:8b", "janela desl.", "híbrida",   "recuperado+vizinhos"),
         # ###  
-        # ("s3.1", True, True, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("s3.2", False, True, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("s3.3", True, False, True, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("s3.4", True, True, False, True, "only_desired", LLMProvider.ollama, "gemma3:4b"),
-        # ("s3.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "gemma3:4b"),
+        # ("s3.1", "gemma3:4b",   "janela desl.", "híbrida",   "apenas recuperado"),
+        # ("s3.2", "gemma3:4b",   "janela desl.", "sem RAG",   "–"),
+        # ("s3.3", "gemma3:4b",   "janela desl.", "semântica", "apenas recuperado"),
+        # ("s3.4", "gemma3:4b",   "janela desl.", "lexical",   "apenas recuperado"),
+        # ("s3.5", "gemma3:4b",   "janela desl.", "híbrida",   "recuperado+vizinhos"),
         # # ####
-        # ("s4.1", True, True, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("s4.2", False, True, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("s4.3", True, False, True, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("s4.4", True, True, False, True, "only_desired", LLMProvider.ollama, "llama3.2:3b"),
-        # ("s4.5", True, True, True, True, "with_prev_and_next", LLMProvider.ollama, "llama3.2:3b"),
+        # ("s4.1", "llama3.2:3b", "janela desl.", "híbrida",   "apenas recuperado"),
+        # ("s4.2", "llama3.2:3b", "janela desl.", "sem RAG",   "–"),
+        # ("s4.3", "llama3.2:3b", "janela desl.", "semântica", "apenas recuperado"),
+        # ("s4.4", "llama3.2:3b", "janela desl.", "lexical",   "apenas recuperado"),
+        # ("s4.5", "llama3.2:3b", "janela desl.", "híbrida",   "recuperado+vizinhos"),
         ####
-        # ("s5.1", True, True, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("s5.2", False, True, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("s5.3", True, False, True, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("s5.4", True, True, False, True, "only_desired", LLMProvider.openai, "gpt-5-mini"),
-        # ("s5.5", True, True, True, True, "with_prev_and_next", LLMProvider.openai, "gpt-5-mini"),
+        ("s5.1", "gpt-5-mini",  "janela desl.", "híbrida",   "apenas recuperado"),
+        ("s5.2", "gpt-5-mini",  "janela desl.", "sem RAG",   "–"),
+        ("s5.3", "gpt-5-mini",  "janela desl.", "semântica", "apenas recuperado"),
+        ("s5.4", "gpt-5-mini",  "janela desl.", "lexical",   "apenas recuperado"),
+        ("s5.5", "gpt-5-mini",  "janela desl.", "híbrida",   "recuperado+vizinhos"),
     ],
 )
 # fmt: on
 def test_evaluate_results(
     idx: str,
-    with_rag: bool,
-    lexical_weight: bool,
-    semantic_weight: bool,
-    sliding_db: bool,
-    return_chunks: Literal["only_desired", "with_prev_and_next"],
-    llm_provider: LLMProvider,
-    llm_model: str,
+    model: str,
+    base: str,
+    busca: str,
+    chunks: str,
 ):
+    with_rag, lexical_weight, semantic_weight = BUSCA[busca]
+    sliding_db = BASE[base]
+
     dataset = _sample_dataset(_load_dataset(sliding_db), MAX_QUERIES)
 
     cfg: BulaCheckConfig = {
         **DEFAULT_CONFIG,
-        "llm_provider": llm_provider,
-        "llm_model": llm_model,
-        "return_chunks": return_chunks,
+        "llm_provider": PROVIDER_BY_MODEL[model],
+        "llm_model": model,
+        "return_chunks": CHUNKS[chunks], # type: ignore
         "bulagratis_db_path": Path(
             "bulas_gratis_sliding.db" if sliding_db else "bulas_gratis.db"
         ),
         "with_rag": with_rag,
-        "lexical_weight": 0.4 if lexical_weight else None,
-        "semantic_weight": 0.6 if semantic_weight else None,
+        "lexical_weight": lexical_weight,
+        "semantic_weight": semantic_weight,
     }
 
     graph = build_graph(cfg)
