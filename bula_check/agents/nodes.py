@@ -22,8 +22,47 @@ from bula_check.agents.search import hybrid_chunk_search
 from bula_check.agents.tools import expand_keywords_decs
 from bula_check.agents.tools import get_query_embedding
 from bula_check.agents.tools import parse_medicine_query
-from bula_check.protocol import Section
 from bula_check.protocol import pt_section_label
+
+
+def _parse_query_with_retry(
+    user_text: str,
+    config: BulaCheckConfig,
+    attempts: int = 2,
+) -> tuple[ParsedQuery, str | None]:
+    """
+    Extrai a query estruturada, com uma retentativa antes de desistir.
+
+    Em caso de falha devolve um ParsedQuery vazio junto do motivo. O fallback
+    antigo usava a mensagem inteira como nome do medicamento: além de nunca
+    resolver na busca (mais da metade dos tokens teria que casar em
+    _filter_low_match), ele inflava as métricas — `_medicine_correct` casa por
+    substring, então a query inteira "continha" o nome esperado, e a lista cheia
+    de seções creditava `section_correct` de graça.
+    """
+    error: Exception | None = None
+    for _ in range(attempts):
+        try:
+            parsed: ParsedQuery = parse_medicine_query.invoke(
+                {
+                    "user_message": user_text,
+                    "llm_provider": config["llm_provider"].value,
+                    "llm_model": config["llm_model"],
+                }
+            )
+            return parsed, None
+        except Exception as retry_error:  # noqa: PERF203
+            error = retry_error
+
+    fallback = ParsedQuery(
+        medicine_name="",
+        active_ingredient=None,
+        sections=[],
+        expanded_keywords=[user_text],
+        claim_type="question",
+        original_query=user_text,
+    )
+    return fallback, f"{type(error).__name__}: {error}"
 
 
 def node_parse_query(state: BulaCheckState) -> dict:
@@ -62,29 +101,11 @@ def node_parse_query(state: BulaCheckState) -> dict:
                 ],
             }
 
-    try:
-        parsed: ParsedQuery = parse_medicine_query.invoke(
-            {
-                "user_message": str(user_text),
-                "llm_provider": config["llm_provider"].value,
-                "llm_model": config["llm_model"],
-            }
-        )
-
-    except Exception as error:
-        # Fallback manual. #TODO revisar isso
-        print(error)
-        parsed = ParsedQuery(
-            medicine_name=str(user_text),
-            active_ingredient=None,
-            sections=list({s.value for s in Section}),
-            expanded_keywords=[str(user_text)],
-            claim_type="question",
-            original_query=str(user_text),
-        )
+    parsed, parse_error = _parse_query_with_retry(str(user_text), config)
 
     return {
         "parsed_query": parsed,
+        "parse_error": parse_error,
         "search_attempted_bulagratis": False,
         "search_attempted_anvisa": False,
         "awaiting_user_confirmation": False,
@@ -340,13 +361,34 @@ def node_verify_claim(state: BulaCheckState) -> dict:
         return {}
 
     is_closed_book = not config.get("with_rag", True)
+    # o nome fica vazio quando o parse falhou (ver _parse_query_with_retry)
     medicine_name = (
         medicine["medicine"]["name"] if medicine else parsed["medicine_name"]
-    )
+    ) or "esse medicamento"
 
-    # Guard original só vale em modo RAG
+    # Sem medicamento resolvido (só acontece em modo RAG) o veredito é um
+    # inconclusive explícito: o grafo não pode terminar sem verificação, senão o
+    # item vira `predicted_verdict: ""` no eval.
     if not is_closed_book and not medicine:
-        return {}
+        not_found_msg = (
+            f"Não encontrei **{medicine_name}** na base de bulas, então não "
+            "consigo verificar sua pergunta. Consulte um profissional de saúde."
+        )
+        result = VerificationResult(
+            verdict="inconclusive",
+            confidence=0.0,
+            explanation=not_found_msg,
+            supporting_chunks=[],
+            response_text=not_found_msg,
+        )
+        # Se o suggest_similar já perguntou "você quis dizer X?", o veredito fica
+        # só no estado (para o eval) e a conversa segue esperando a confirmação.
+        if state.get("awaiting_user_confirmation"):
+            return {"verification_result": result}
+        return {
+            "verification_result": result,
+            "messages": [AIMessage(content=not_found_msg)],
+        }
 
     # Mensagem "não encontrei" só em modo RAG com retrieval vazio
     if not is_closed_book and not chunks:
@@ -427,7 +469,7 @@ def node_suggest_similar(state: BulaCheckState) -> dict:
     similars: list[MedicineCandidate] = state.get("similar_medicines", [])
 
     if not similars:
-        name = parsed["medicine_name"] if parsed else "esse medicamento"
+        name = (parsed["medicine_name"] if parsed else "") or "esse medicamento"
         msg = (
             f"Não encontrei **{name}** na base de dados. "
             "Verifique o nome do medicamento e tente novamente."
@@ -435,7 +477,7 @@ def node_suggest_similar(state: BulaCheckState) -> dict:
         return {"messages": [AIMessage(content=msg)]}
 
     names = ", ".join(f"**{m['medicine']['name']}**" for m in similars)
-    name = parsed["medicine_name"] if parsed else "esse medicamento"
+    name = (parsed["medicine_name"] if parsed else "") or "esse medicamento"
     msg = (
         f"Não encontrei **{name}** diretamente. "
         f"Você quis dizer: {names}? (responda 'sim' para confirmar o primeiro resultado)"

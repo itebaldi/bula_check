@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import unicodedata
 
 from langchain_core.messages import HumanMessage
@@ -68,6 +69,62 @@ Regras:
 """
 _VALID_SECTIONS = {s.value for s in Section}
 
+_THINK_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)
+
+
+def _strip_reasoning(raw: str) -> str:
+    """
+    Remove o raciocínio dos modelos pensantes que o devolvem como <think>...
+    </think> dentro do content (varia por provedor e versão do cliente). Se a
+    resposta foi cortada no meio do raciocínio, descarta a cauda — não há JSON
+    ali. Se só o fechamento sobrou, fica com o que vem depois dele.
+    """
+    text = _THINK_RE.sub(" ", raw)
+    lowered = text.lower()
+    if "</think>" in lowered:
+        text = text[lowered.rindex("</think>") + len("</think>") :]
+        lowered = text.lower()
+    if "<think>" in lowered:
+        text = text[: lowered.index("<think>")]
+    return text
+
+
+def _extract_json(raw: str) -> dict:
+    """
+    Extrai o primeiro objeto JSON de uma resposta de LLM, tolerando raciocínio,
+    cerca de crase e prosa em volta. Levanta ValueError explícito quando não há
+    JSON ou quando o objeto ficou incompleto (resposta truncada), em vez do
+    JSONDecodeError opaco.
+    """
+    text = _strip_reasoning(raw).replace("```json", " ").replace("```", " ")
+
+    start = text.find("{")
+    if start < 0:
+        raise ValueError("resposta sem JSON")
+
+    depth = 0
+    in_string = False
+    escaped = False
+    for i, char in enumerate(text[start:], start):
+        if in_string:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+        elif char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return json.loads(text[start : i + 1])
+
+    raise ValueError("JSON incompleto (resposta truncada?)")
+
 
 @tool("parse_medicine_query")
 def parse_medicine_query(
@@ -88,7 +145,9 @@ def parse_medicine_query(
         "llm_provider": provider,
         "llm_model": llm_model,
     }
-    llm = build_llm(cfg)
+    # reasoning=False: extração estruturada não se beneficia do raciocínio, e
+    # nos modelos pensantes ele consumia o orçamento de tokens antes do JSON.
+    llm = build_llm(cfg, reasoning=False)
 
     response = llm.invoke(
         [
@@ -97,15 +156,7 @@ def parse_medicine_query(
         ]
     )
 
-    raw = response.content
-    # TODO melhorar tipagem e tirar esses ignores
-    if "```" in raw:
-        raw = raw.split("```")[1]  # type: ignore
-        if raw.startswith("json"):
-            raw = raw[4:]
-    raw = raw.strip()  # type: ignore
-
-    parsed = json.loads(raw)
+    parsed = _extract_json(str(response.content))
 
     # Sanitiza seções
     sections = [s for s in parsed.get("sections", []) if s in _VALID_SECTIONS]

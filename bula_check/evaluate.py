@@ -75,6 +75,9 @@ def evaluate_results(
     retrieved_ids: list[list[str]] = []  # chunk_ids recuperados (ordem do ranker)
     gabarito_ids: list[list[str]] = []  # chunk_ids do gabarito (expected)
     n_candidates_list: list[int] = []  # tamanho do pool pontuado (p/ recompute)
+    failure_reasons: list[str | None] = []  # estágio em que o item falhou
+    parsed_names: list[str] = []  # nome extraído pelo parse da query
+    selected_names: list[str] = []  # nome resolvido no banco (vazio = não achou)
 
     bulagratis_conn = _open_db(config["bulagratis_db_path"])
     anvisa_conn = _open_db(config["anvisa_db_path"])
@@ -87,6 +90,7 @@ def evaluate_results(
             state = make_initial_state(config)
             state["messages"].append(HumanMessage(content=item.query))
 
+            pipeline_error: str | None = None
             try:
                 final_state = graph.invoke(state)  # type: ignore
             except Exception as error:
@@ -94,6 +98,7 @@ def evaluate_results(
                 # inteiro; registra como miss total e segue.
                 print(f"[eval] falha no item {item.id}: {error}")
                 final_state = {}
+                pipeline_error = f"{type(error).__name__}: {error}"
 
             selected_medicine = final_state.get("selected_medicine")
             retrieved_chunks = final_state.get("retrieved_chunks", [])
@@ -123,6 +128,21 @@ def evaluate_results(
             if verification_result:
                 predicted_verdict = verification_result["verdict"]
 
+            failure_reason = _failure_reason(
+                pipeline_error=pipeline_error,
+                parse_error=final_state.get("parse_error"),
+                selected_medicine=selected_medicine,
+                retrieved_chunks=retrieved_chunks,
+                with_rag=config["with_rag"],
+            )
+            failure_reasons.append(failure_reason)
+            parsed_names.append(
+                parsed_query.get("medicine_name", "") if parsed_query else ""
+            )
+            selected_names.append(
+                selected_medicine["medicine"]["name"] if selected_medicine else ""
+            )
+
             # Para sections, no baseline cai no fallback do parse_query (que
             # mede entendimento da query, NÃO acerto do retrieval — semântica
             # ligeiramente diferente do RAG mode).
@@ -147,9 +167,16 @@ def evaluate_results(
                         retrieved_sections=predicted_sections,
                         expected_sections=item.expected_sections,
                     ),
-                    "verdict_correct": item.expected_verdict == predicted_verdict,
+                    # Abstenção não é acerto: quando o medicamento não é
+                    # resolvido, o `inconclusive` do verify_claim é um "não sei
+                    # do que você está falando", não um julgamento da alegação.
+                    "verdict_correct": (
+                        failure_reason not in _ABSTENTION_REASONS
+                        and item.expected_verdict == predicted_verdict
+                    ),
                     "expected_verdict": item.expected_verdict,
                     "predicted_verdict": predicted_verdict,
+                    "failure_reason": failure_reason,
                 }
             )
 
@@ -242,6 +269,15 @@ def evaluate_results(
         "flagged": _slice([i for i, s in enumerate(val_status) if s == "reprovado"]),
     }
 
+    # Fatiamento pelo estágio que falhou: responde "de onde vêm os vereditos
+    # ausentes/inconclusivos" sem abrir o arquivo de itens.
+    fail_groups: dict[str, list[int]] = {}
+    for i, reason in enumerate(failure_reasons):
+        fail_groups.setdefault(reason or "ok", []).append(i)
+    summary["by_failure_reason"] = {
+        name: _slice(idxs) for name, idxs in sorted(fail_groups.items())
+    }
+
     summary["config"] = {
         "llm_provider": str(config["llm_provider"]),
         "llm_model": config["llm_model"],
@@ -273,6 +309,12 @@ def evaluate_results(
             "retrieved_chunk_ids": retrieved_ids[i],
             "gabarito_chunk_ids": gabarito_ids[i],
             "n_candidates": n_candidates_list[i],
+            # Atribuição da falha: sem isto, um veredito ausente ou inconclusive
+            # não distingue "o pipeline quebrou" de "o parse falhou" de "o
+            # medicamento não está no banco".
+            "failure_reason": failure_reasons[i],
+            "parsed_medicine_name": parsed_names[i],
+            "selected_medicine_name": selected_names[i],
         }
         for i in range(len(answer_rows))
     ]
@@ -312,6 +354,11 @@ def recompute_metrics(
         Summary no mesmo formato de `evaluate_results` (métricas + fatiamentos).
     """
     items = json.loads(Path(items_path).read_text(encoding="utf-8"))
+    # Arquivos antigos (ex.: rag_5.1_items.json) não persistiram os ids dos
+    # chunks; sem o guard, _semantic_ir_metrics devolveria 0.0 em todas as
+    # métricas de retrieval e o summary recomputado apagaria os números da
+    # rodada. Nesses casos só as métricas de resposta são recalculadas.
+    has_ids = all("retrieved_chunk_ids" in it for it in items)
     conn = _open_db(Path(db_path))
     try:
         def _ordered(ids: list[str]) -> list[ChunksDict]:
@@ -322,6 +369,7 @@ def recompute_metrics(
         retrieval_rows: list[dict[str, float]] = []
         slices: list[str] = []
         val_status: list[str] = []
+        failure_reasons: list[str] = []
         for it in items:
             answer_rows.append(
                 {
@@ -330,26 +378,36 @@ def recompute_metrics(
                     "verdict_correct": it["verdict_correct"],
                     "expected_verdict": it["expected_verdict"],
                     "predicted_verdict": it["predicted_verdict"],
+                    "failure_reason": it.get("failure_reason"),
                 }
             )
-            retrieval_rows.append(
-                _semantic_ir_metrics(
-                    retrieved=_ordered(it.get("retrieved_chunk_ids", [])),
-                    gabarito=_ordered(it.get("gabarito_chunk_ids", [])),
-                    threshold=threshold,
-                    n_candidates=it.get("n_candidates", 0),
+            if has_ids:
+                retrieval_rows.append(
+                    _semantic_ir_metrics(
+                        retrieved=_ordered(it["retrieved_chunk_ids"]),
+                        gabarito=_ordered(it.get("gabarito_chunk_ids", [])),
+                        threshold=threshold,
+                        n_candidates=it.get("n_candidates", 0),
+                    )
                 )
-            )
             slices.append(it.get("stress_category") or "representative")
             val_status.append(it.get("validation_status") or "sem_parecer")
+            # Itens de rodadas antigas não têm o motivo; o que dá para afirmar é
+            # que ficaram sem veredito, não em qual estágio pararam.
+            failure_reasons.append(
+                it.get("failure_reason")
+                or ("unattributed_no_verdict" if not it["predicted_verdict"] else "ok")
+            )
     finally:
         conn.close()
 
     summary = _aggregate(answer_rows, retrieval_rows)
+    summary["retrieval_metrics_available"] = has_ids
 
     def _slice(idxs: list[int]) -> dict[str, Any]:
         return _aggregate(
-            [answer_rows[i] for i in idxs], [retrieval_rows[i] for i in idxs]
+            [answer_rows[i] for i in idxs],
+            [retrieval_rows[i] for i in idxs] if has_ids else [],
         )
 
     groups: dict[str, list[int]] = {}
@@ -364,7 +422,83 @@ def recompute_metrics(
     summary["by_validation"] = {
         name: _slice(idxs) for name, idxs in sorted(val_groups.items())
     }
+    fail_groups: dict[str, list[int]] = {}
+    for i, reason in enumerate(failure_reasons):
+        fail_groups.setdefault(reason, []).append(i)
+    summary["by_failure_reason"] = {
+        name: _slice(idxs) for name, idxs in sorted(fail_groups.items())
+    }
     return summary
+
+
+# Versão do formato de métricas gravado no summary:
+#   1 — matriz 3x3, com o veredito ausente ("") dobrado em `inconclusive`
+#   2 — matriz 3x4 com `sem_resposta`, mais answer_rate / accuracy_answered
+METRICS_VERSION = 2
+
+
+def rewrite_summaries(
+    results_dir: str | Path = "outputs/evaluation/results",
+    dry_run: bool = True,
+) -> dict[str, dict[str, Any]]:
+    """Reescreve os summaries já gravados no formato de métricas atual, offline.
+
+    Para cada `{name}_items.json` recomputa as métricas com `recompute_metrics` e
+    faz merge por cima do summary existente — o recompute não emite `config`,
+    `stress_vs_representative` nem `validated_vs_flagged`, que são a proveniência
+    da rodada e precisam sobreviver. O banco vem do `config.bulagratis_db` do
+    próprio arquivo. Summaries sem arquivo de itens não podem ser recomputados e
+    só recebem `metrics_version: 1`.
+
+    Parameters
+    ----------
+    results_dir : str | Path
+        Pasta com os `{name}.json` e `{name}_items.json`.
+    dry_run : bool
+        Se True (padrão) nada é gravado; devolve o que mudaria.
+
+    Returns
+    -------
+    dict[str, dict[str, Any]]
+        Por arquivo: `metrics_version`, `recomputed` e as diferenças de valor nas
+        métricas escalares que já existiam.
+    """
+    directory = Path(results_dir)
+    report: dict[str, dict[str, Any]] = {}
+
+    for summary_path in sorted(directory.glob("*.json")):
+        if summary_path.name.endswith("_items.json"):
+            continue
+        old = json.loads(summary_path.read_text(encoding="utf-8"))
+        items_path = _items_path(summary_path)
+
+        if not items_path.exists():
+            report[summary_path.name] = {"metrics_version": 1, "recomputed": False}
+            if not dry_run:
+                _to_json({**old, "metrics_version": 1}, summary_path)
+            continue
+
+        db_path = (old.get("config") or {}).get("bulagratis_db") or "bulas_gratis.db"
+        new = recompute_metrics(items_path, db_path)
+        merged = {**old, **new, "metrics_version": METRICS_VERSION}
+
+        changed = {
+            key: (old[key], new[key])
+            for key in old
+            if key in new
+            and isinstance(old[key], (int, float))
+            and old[key] != new[key]
+        }
+        report[summary_path.name] = {
+            "metrics_version": METRICS_VERSION,
+            "recomputed": True,
+            "retrieval_metrics_available": new["retrieval_metrics_available"],
+            "changed": changed,
+        }
+        if not dry_run:
+            _to_json(merged, summary_path)
+
+    return report
 
 
 # Sais / formas farmacêuticas — qualificadores que não identificam o fármaco.
@@ -437,10 +571,60 @@ def _medicine_correct(
     return expected_ai <= _active_ingredients(anvisa_conn, predicted_name)
 
 
+# Motivos em que o pipeline não chegou a julgar a alegação. O veredito
+# registrado nesses casos é o "não encontrei" do verify_claim — abstenção, não
+# resposta. Historicamente esses itens vinham como `""` (o grafo terminava sem
+# verificação); manter a distinção é o que deixa as duas séries comparáveis.
+_ABSTENTION_REASONS = frozenset(
+    {"pipeline_error", "parse_failed", "medicine_not_found"}
+)
+
+
+def _failure_reason(
+    pipeline_error: str | None,
+    parse_error: str | None,
+    selected_medicine: Any,
+    retrieved_chunks: list[Any],
+    with_rag: bool,
+) -> str | None:
+    """
+    Estágio em que o item falhou, do mais a montante para o mais a jusante.
+    None quando o fluxo completou (o veredito veio do LLM com evidência).
+
+    Returns
+    -------
+    str | None
+        "pipeline_error", "parse_failed", "medicine_not_found", "no_chunks" ou
+        None.
+    """
+    if pipeline_error:
+        return "pipeline_error"
+    if parse_error:
+        return "parse_failed"
+    if not with_rag:
+        return None
+    if not selected_medicine:
+        return "medicine_not_found"
+    if not retrieved_chunks:
+        return "no_chunks"
+    return None
+
+
 def _items_path(results_path: str | Path) -> Path:
     """Caminho do detalhe por item: {name}.json -> {name}_items.json."""
     path = Path(results_path)
     return path.with_name(f"{path.stem}_items.json")
+
+
+def _is_abstention(row: dict[str, Any]) -> bool:
+    """
+    O item não recebeu um julgamento da alegação: ou o veredito nunca foi
+    produzido (`""`, rodadas anteriores ao roteamento que sempre verifica), ou o
+    pipeline parou antes de ter evidência (`failure_reason` de abstenção).
+    """
+    if row.get("failure_reason") in _ABSTENTION_REASONS:
+        return True
+    return row["predicted_verdict"] not in _VERDICT_LABELS
 
 
 def _aggregate(
@@ -460,11 +644,21 @@ def _aggregate(
     if total == 0:
         return {"n": 0}
 
+    # Abstenções (veredito "" das rodadas antigas, ou o "não encontrei" do
+    # verify_claim nas novas) contam como erro em verdict_accuracy; answer_rate e
+    # verdict_accuracy_answered separam "errou o veredito" de "não respondeu".
+    answered = [r for r in answer_rows if not _is_abstention(r)]
     out: dict[str, Any] = {
         "n": total,
         "medicine_accuracy": sum(r["medicine_correct"] for r in answer_rows) / total,
         "section_accuracy": sum(r["section_correct"] for r in answer_rows) / total,
         "verdict_accuracy": sum(r["verdict_correct"] for r in answer_rows) / total,
+        "verdict_answer_rate": len(answered) / total,
+        "verdict_accuracy_answered": (
+            sum(r["verdict_correct"] for r in answered) / len(answered)
+            if answered
+            else 0.0
+        ),
     }
 
     confusion_keys = {"vp", "fp", "vn", "fn"}
@@ -503,7 +697,11 @@ def _aggregate(
         )
 
     verdict_pairs = [
-        (r["expected_verdict"], r["predicted_verdict"]) for r in answer_rows
+        (
+            r["expected_verdict"],
+            "" if _is_abstention(r) else r["predicted_verdict"],
+        )
+        for r in answer_rows
     ]
     out["verdict_confusion_matrix"] = _verdict_confusion_matrix(verdict_pairs)
     return out
@@ -563,35 +761,38 @@ def slice_from_items(items_path: str | Path) -> dict[str, dict[str, float]]:
 
 
 _VERDICT_LABELS = ("confirmed", "refuted", "inconclusive")
+_NO_ANSWER = "sem_resposta"
 
 
 def _norm_verdict(verdict: str) -> str:
     """
-    Mapeia o veredito para o espaço canônico (confirmed/refuted/inconclusive).
-    Um veredito ausente ("" — o pipeline não chegou ao verify_claim, ex:
-    medicamento não encontrado) é tratado como `inconclusive`, evitando uma
-    classe "none" fora do espaço de rótulos.
+    Mapeia o veredito previsto para o espaço de colunas da matriz. Um veredito
+    ausente ("" — o pipeline não chegou ao verify_claim) vira a classe própria
+    `sem_resposta`: dobrá-lo em `inconclusive` creditava como acerto uma falha de
+    pipeline e fazia a diagonal da matriz divergir de `verdict_accuracy`.
     """
-    return verdict if verdict in _VERDICT_LABELS else "inconclusive"
+    return verdict if verdict in _VERDICT_LABELS else _NO_ANSWER
 
 
 def _verdict_confusion_matrix(
     pairs: list[tuple[str, str]],
 ) -> dict[str, dict[str, int]]:
     """
-    Matriz 3x3 do veredito do sistema (confirmed/refuted/inconclusive). Linhas =
-    esperado, colunas = previsto; cada célula é a contagem de questões.
+    Matriz 3x4 do veredito do sistema: linhas = esperado
+    (confirmed/refuted/inconclusive), colunas = previsto, mais a coluna
+    `sem_resposta` para os itens em que o veredito nunca foi produzido.
 
     Uma questão é exatamente uma amostra, então é a matriz direta sobre o dataset
-    — sem ambiguidade micro/macro. Útil como tabela descritiva; note que, no
-    dataset atual, `inconclusive` tem poucos exemplos.
+    — sem ambiguidade micro/macro. Com a coluna extra a diagonal volta a
+    reproduzir `verdict_accuracy`.
     """
     matrix = {
-        expected: {predicted: 0 for predicted in _VERDICT_LABELS}
+        expected: {predicted: 0 for predicted in (*_VERDICT_LABELS, _NO_ANSWER)}
         for expected in _VERDICT_LABELS
     }
     for expected, predicted in pairs:
-        matrix[_norm_verdict(expected)][_norm_verdict(predicted)] += 1
+        row = expected if expected in _VERDICT_LABELS else "inconclusive"
+        matrix[row][_norm_verdict(predicted)] += 1
     return matrix
 
 

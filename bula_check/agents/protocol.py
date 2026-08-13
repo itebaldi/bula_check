@@ -155,6 +155,10 @@ class BulaCheckState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
 
     parsed_query: ParsedQuery | None
+    # motivo da falha do parse da query (None = parse ok). O fallback manual
+    # devolve um ParsedQuery degenerado, indistinguível de um parse bom; este
+    # campo é o que permite ao evaluate atribuir a falha ao estágio certo.
+    parse_error: str | None
 
     medicine_candidates: list[MedicineCandidate]
     selected_medicine: MedicineCandidate | None

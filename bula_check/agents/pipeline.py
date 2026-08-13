@@ -72,7 +72,7 @@ def build_graph(config: BulaCheckConfig) -> StateGraph:
         _route_after_suggest,
         {
             "fetch_chunks": "fetch_chunks",
-            "end": END,
+            "verify_claim": "verify_claim",
         },
     )
 
@@ -101,11 +101,16 @@ def _route_after_find_medicine(state: BulaCheckState) -> str:
 
 
 def _route_after_suggest(state: BulaCheckState) -> str:
-    """Após sugestão: se confirmado, busca chunks; senão encerra."""
+    """Após sugestão: se confirmado, busca chunks; senão registra o veredito.
+
+    Mesmo sem medicamento resolvido o fluxo passa por verify_claim. Antes o grafo
+    terminava aqui, deixando verification_result None — era isso que virava
+    `predicted_verdict: ""` no benchmark, sem distinção entre abstenção e erro.
+    """
     if state.get("selected_medicine"):
         return "fetch_chunks"
 
-    return "end"
+    return "verify_claim"
 
 
 def make_initial_state(cfg: BulaCheckConfig) -> BulaCheckState:
@@ -113,6 +118,7 @@ def make_initial_state(cfg: BulaCheckConfig) -> BulaCheckState:
     return BulaCheckState(
         messages=[],
         parsed_query=None,
+        parse_error=None,
         medicine_candidates=[],
         selected_medicine=None,
         similar_medicines=[],

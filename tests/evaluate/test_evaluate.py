@@ -22,7 +22,7 @@ DATASET_SLIDING_JUDGED_PATH = Path("outputs/validation/dataset_sliding_judged.js
 
 # Quantas perguntas avaliar. None = todas (790). Um inteiro faz uma amostra
 # estratificada por categoria (determinística) para acelerar rodadas de teste.
-MAX_QUERIES: int | None = 300
+MAX_QUERIES: int | None = None
 SAMPLE_SEED = 7
 
 # Vocabulário das configurações — mesmas strings da tabela do artigo.
@@ -106,17 +106,17 @@ def _sample_dataset(data: list, n: int | None, seed: int = SAMPLE_SEED) -> list:
 @pytest.mark.parametrize(
     "idx, model, base, busca, chunks",
     [
-        # ("0.1",  "gpt-4o-mini", "sentenças",    "híbrida",   "apenas recuperado"), # FOI
-        # ("0.2",  "gpt-4o-mini", "sentenças",    "sem RAG",   "–"),
-        # ("0.3",  "gpt-4o-mini", "sentenças",    "semântica", "apenas recuperado"), # FOI
-        # ("0.4",  "gpt-4o-mini", "sentenças",    "lexical",   "apenas recuperado"),
-        # ("0.5",  "gpt-4o-mini", "sentenças",    "híbrida",   "recuperado+vizinhos"),
+        # ("0.1",  "gpt-4o-mini", "sentenças",    "híbrida",   "apenas recuperado"), # FOI #d #e
+        # ("0.2",  "gpt-4o-mini", "sentenças",    "sem RAG",   "–"), #e
+        # ("0.3",  "gpt-4o-mini", "sentenças",    "semântica", "apenas recuperado"), # FOI #d #e
+        # ("0.4",  "gpt-4o-mini", "sentenças",    "lexical",   "apenas recuperado"), #e
+        # ("0.5",  "gpt-4o-mini", "sentenças",    "híbrida",   "recuperado+vizinhos"),  #e
         #### 
-        # ("1.1",  "qwen3:8b",    "sentenças",    "híbrida",   "apenas recuperado"), # FOI
-        # ("1.2",  "qwen3:8b",    "sentenças",    "sem RAG",   "–"), # FOI
-        # ("1.3",  "qwen3:8b",    "sentenças",    "semântica", "apenas recuperado"), # new 1 # FOI
-        ("1.4",  "qwen3:8b",    "sentenças",    "lexical",   "apenas recuperado"),
-        ("1.5",  "qwen3:8b",    "sentenças",    "híbrida",   "recuperado+vizinhos"), # 1
+        # ("1.1",  "qwen3:8b",    "sentenças",    "híbrida",   "apenas recuperado"), # FOI #d #e
+        # ("1.2",  "qwen3:8b",    "sentenças",    "sem RAG",   "–"), # FOI #d #e
+        ("1.3",  "qwen3:8b",    "sentenças",    "semântica", "apenas recuperado"), # new 1 # FOI #d #e 4h:31m
+        # ("1.4",  "qwen3:8b",    "sentenças",    "lexical",   "apenas recuperado"), #d #e
+        # ("1.5",  "qwen3:8b",    "sentenças",    "híbrida",   "recuperado+vizinhos"), # 1 #d
         ####
         # ("2.1",  "llama3.1:8b", "sentenças",    "híbrida",   "apenas recuperado"),
         # ("2.2",  "llama3.1:8b", "sentenças",    "sem RAG",   "–"),
@@ -126,39 +126,39 @@ def _sample_dataset(data: list, n: int | None, seed: int = SAMPLE_SEED) -> list:
         ###  
         # ("3.1",  "gemma3:4b",   "sentenças",    "híbrida",   "apenas recuperado"),
         # ("3.2",  "gemma3:4b",   "sentenças",    "sem RAG",   "–"),
-        # ("3.3",  "gemma3:4b",   "sentenças",    "semântica", "apenas recuperado"), # FOI
+        # ("3.3",  "gemma3:4b",   "sentenças",    "semântica", "apenas recuperado"), # FOI #d
         # ("3.4",  "gemma3:4b",   "sentenças",    "lexical",   "apenas recuperado"),
         # ("3.5",  "gemma3:4b",   "sentenças",    "híbrida",   "recuperado+vizinhos"),
         ####
         # ("4.1",  "llama3.2:3b", "sentenças",    "híbrida",   "apenas recuperado"),
         # ("4.2",  "llama3.2:3b", "sentenças",    "sem RAG",   "–"),
-        ("4.3",  "llama3.2:3b", "sentenças",    "semântica", "apenas recuperado"),
+        # ("4.3",  "llama3.2:3b", "sentenças",    "semântica", "apenas recuperado"), #d
         # ("4.4",  "llama3.2:3b", "sentenças",    "lexical",   "apenas recuperado"),
         # ("4.5",  "llama3.2:3b", "sentenças",    "híbrida",   "recuperado+vizinhos"),
         ####
-        ("5.1",  "gpt-5-mini",  "sentenças",    "híbrida",   "apenas recuperado"), # 2 FOI
-        ("5.2",  "gpt-5-mini",  "sentenças",    "sem RAG",   "–"),
-        ("5.3",  "gpt-5-mini",  "sentenças",    "semântica", "apenas recuperado"),
-        ("5.4",  "gpt-5-mini",  "sentenças",    "lexical",   "apenas recuperado"),
-        ("5.5",  "gpt-5-mini",  "sentenças",    "híbrida",   "recuperado+vizinhos"),
+        # ("5.1",  "gpt-5-mini",  "sentenças",    "híbrida",   "apenas recuperado"), # 2 FOI #d
+        # ("5.2",  "gpt-5-mini",  "sentenças",    "sem RAG",   "–"), #d
+        # ("5.3",  "gpt-5-mini",  "sentenças",    "semântica", "apenas recuperado"), #d
+        # ("5.4",  "gpt-5-mini",  "sentenças",    "lexical",   "apenas recuperado"), #d
+        # ("5.5",  "gpt-5-mini",  "sentenças",    "híbrida",   "recuperado+vizinhos"), #d
         ####
-        # ("s0.1", "gpt-4o-mini", "janela desl.", "híbrida",   "apenas recuperado"),
-        # ("s0.2", "gpt-4o-mini", "janela desl.", "sem RAG",   "–"),
-        # ("s0.3", "gpt-4o-mini", "janela desl.", "semântica", "apenas recuperado"),
-        # ("s0.4", "gpt-4o-mini", "janela desl.", "lexical",   "apenas recuperado"),
-        # ("s0.5", "gpt-4o-mini", "janela desl.", "híbrida",   "recuperado+vizinhos"),
+        # ("s0.1", "gpt-4o-mini", "janela desl.", "híbrida",   "apenas recuperado"), #e
+        # ("s0.2", "gpt-4o-mini", "janela desl.", "sem RAG",   "–"), #e
+        # ("s0.3", "gpt-4o-mini", "janela desl.", "semântica", "apenas recuperado"), #e
+        # ("s0.4", "gpt-4o-mini", "janela desl.", "lexical",   "apenas recuperado"), #e
+        # ("s0.5", "gpt-4o-mini", "janela desl.", "híbrida",   "recuperado+vizinhos"), #e
         #### 
-        ("s1.1", "qwen3:8b",    "janela desl.", "híbrida",   "apenas recuperado"),
-        ("s1.2", "qwen3:8b",    "janela desl.", "sem RAG",   "–"),
-        ("s1.3", "qwen3:8b",    "janela desl.", "semântica", "apenas recuperado"),
-        ("s1.4", "qwen3:8b",    "janela desl.", "lexical",   "apenas recuperado"),
-        ("s1.5", "qwen3:8b",    "janela desl.", "híbrida",   "recuperado+vizinhos"),
+        # ("s1.1", "qwen3:8b",    "janela desl.", "híbrida",   "apenas recuperado"), #d
+        # ("s1.2", "qwen3:8b",    "janela desl.", "sem RAG",   "–"), #d
+        # ("s1.3", "qwen3:8b",    "janela desl.", "semântica", "apenas recuperado"), #d
+        # ("s1.4", "qwen3:8b",    "janela desl.", "lexical",   "apenas recuperado"), #d
+        # ("s1.5", "qwen3:8b",    "janela desl.", "híbrida",   "recuperado+vizinhos"), #d
         # ####
         # ("s2.1", "llama3.1:8b", "janela desl.", "híbrida",   "apenas recuperado"),
         # ("s2.2", "llama3.1:8b", "janela desl.", "sem RAG",   "–"),
         # ("s2.3", "llama3.1:8b", "janela desl.", "semântica", "apenas recuperado"),
         # ("s2.4", "llama3.1:8b", "janela desl.", "lexical",   "apenas recuperado"),
-        ("s2.5", "llama3.1:8b", "janela desl.", "híbrida",   "recuperado+vizinhos"),
+        # ("s2.5", "llama3.1:8b", "janela desl.", "híbrida",   "recuperado+vizinhos"), #d
         # ###  
         # ("s3.1", "gemma3:4b",   "janela desl.", "híbrida",   "apenas recuperado"),
         # ("s3.2", "gemma3:4b",   "janela desl.", "sem RAG",   "–"),
@@ -172,11 +172,11 @@ def _sample_dataset(data: list, n: int | None, seed: int = SAMPLE_SEED) -> list:
         # ("s4.4", "llama3.2:3b", "janela desl.", "lexical",   "apenas recuperado"),
         # ("s4.5", "llama3.2:3b", "janela desl.", "híbrida",   "recuperado+vizinhos"),
         ####
-        ("s5.1", "gpt-5-mini",  "janela desl.", "híbrida",   "apenas recuperado"),
-        ("s5.2", "gpt-5-mini",  "janela desl.", "sem RAG",   "–"),
-        ("s5.3", "gpt-5-mini",  "janela desl.", "semântica", "apenas recuperado"),
-        ("s5.4", "gpt-5-mini",  "janela desl.", "lexical",   "apenas recuperado"),
-        ("s5.5", "gpt-5-mini",  "janela desl.", "híbrida",   "recuperado+vizinhos"),
+        # ("s5.1", "gpt-5-mini",  "janela desl.", "híbrida",   "apenas recuperado"), #d
+        # ("s5.2", "gpt-5-mini",  "janela desl.", "sem RAG",   "–"), #d
+        # ("s5.3", "gpt-5-mini",  "janela desl.", "semântica", "apenas recuperado"), #d
+        # ("s5.4", "gpt-5-mini",  "janela desl.", "lexical",   "apenas recuperado"), #d
+        # ("s5.5", "gpt-5-mini",  "janela desl.", "híbrida",   "recuperado+vizinhos"), #d
     ],
 )
 # fmt: on

@@ -49,6 +49,7 @@ from langchain_core.messages import SystemMessage
 from bula_check.agents.nodes import _open_db
 from bula_check.agents.protocol import DEFAULT_CONFIG
 from bula_check.agents.protocol import LLMProvider
+from bula_check.agents.tools import _extract_json
 from bula_check.protocol import pt_section_label
 from bula_check.review import _flag_state
 
@@ -192,11 +193,8 @@ def _build_user_prompt(item: dict, context: str) -> str:
 
 
 def _parse_json(raw: str) -> dict:
-    if "```" in raw:
-        raw = raw.split("```")[1]
-        if raw.startswith("json"):
-            raw = raw[4:]
-    return json.loads(raw.strip())
+    """Extrai o JSON do parecer do juiz (tolera raciocínio, cerca e prosa)."""
+    return _extract_json(raw)
 
 
 def _norm_flag(value: Any) -> str:
